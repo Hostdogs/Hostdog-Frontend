@@ -21,7 +21,14 @@ export default function SignUpForm() {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        fontFamily: "Sarabun",
+        margin: "auto",
+        width: "100%",
+        padding: "30px",
+      }}
+    >
       {!showHost && !showCustomer ? (
         <AskForm
           handleChangeValue={changeAskForm}

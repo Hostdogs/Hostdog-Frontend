@@ -34,7 +34,7 @@ const LoginModal = (props) => {
   const [passWord, setpassWord] = useState('')
   const [loginRes, setloginRes] = useState(" ")
   const loginBtn = () =>{
-    if(userName=='' || passWord == ''){
+    if(userName==='' || passWord === ''){
       setloginRes("กรุณากรอกชื่อผู้ใช้หรือรหัสผ่านให้ถูกต้อง")
     }else{
       setToken('mytoken',"hellothisistesttoken")

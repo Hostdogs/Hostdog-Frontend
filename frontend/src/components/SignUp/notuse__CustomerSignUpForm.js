@@ -10,7 +10,7 @@ import {
   FormText,
 } from "reactstrap";
 
-export default function CustomerSignUpForm() {
+export default function CustomerSignUpForm(props) {
   return (
     <div>
       <Container className="themed-container">

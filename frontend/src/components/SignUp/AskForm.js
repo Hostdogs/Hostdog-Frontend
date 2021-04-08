@@ -15,14 +15,13 @@ export default function AskForm({ handleChooseWhich, handleChangeValue }) {
   return (
     <div>
       <Container>
-        <Row xs="3">
-          <Col></Col>
-          <Col>
+        <Row >
+          
             <Form>
               <FormGroup tag="fieldset">
                 <legend>คุณต้องการสมัครเป็นอะไร</legend>
-                <Row form>
-                  <Col md={4}>
+                <Row >
+                  <Col>
                     <FormGroup check>
                       <Label check>
                         <Input
@@ -35,7 +34,7 @@ export default function AskForm({ handleChooseWhich, handleChangeValue }) {
                       </Label>
                     </FormGroup>
                   </Col>
-                  <Col md={6}>
+                  <Col>
                     <FormGroup check>
                       <Label check>
                         <Input
@@ -44,7 +43,7 @@ export default function AskForm({ handleChooseWhich, handleChangeValue }) {
                           value="Host"
                           onChange={handleChangeValue}
                         />{" "}
-                        พนักงงานรับฝากสุนัข
+                        ผู้รับฝากสุนัข
                       </Label>
                     </FormGroup>
                   </Col>
@@ -54,8 +53,8 @@ export default function AskForm({ handleChooseWhich, handleChangeValue }) {
                 ถัดไป
               </ButtonToggle>
             </Form>
-          </Col>
-          <Col></Col>
+          
+
         </Row>
       </Container>
     </div>

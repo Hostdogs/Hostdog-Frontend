@@ -38,6 +38,7 @@ const LoginModal = (props) => {
       setloginRes("กรุณากรอกชื่อผู้ใช้หรือรหัสผ่านให้ถูกต้อง")
     }else{
       setToken('mytoken',"hellothisistesttoken")
+      ///use history to route to Homepage
     }
     
   }

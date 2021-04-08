@@ -25,9 +25,9 @@ const NavbarNoAuth = (props) => {
 
   return (
     <div>
-      <Navbar style={{ backgroundColor: "#ffe080" }} light expand="md">
+      <Navbar style={{ backgroundColor: "#ffe080"}} light expand="md">
         <Link to='/'>
-          <NavbarBrand >HOSTDOG</NavbarBrand>
+          <NavbarBrand ><h3>HOSTDOG</h3></NavbarBrand>
         </Link>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>

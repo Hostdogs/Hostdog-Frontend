@@ -5,11 +5,18 @@ import HostList from "./HostList";
 
 export default function SearchHostPage() {
   return (
-    <div className>
+    <div>
       <NavbarIsAuth />
-      <SearchBox />
-      <FilterBox />
-      <HostList />
+      <div
+        style={{
+          margin: "auto",
+          padding: "30px",
+        }}
+      >
+        <SearchBox />
+        <FilterBox />
+        <HostList />
+      </div>
     </div>
   );
 }

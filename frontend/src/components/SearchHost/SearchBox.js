@@ -13,26 +13,22 @@ export default function SearchBox() {
       <Container>
         <Form>
           <Row form>
-            <Col md={3}>
-              <FormGroup>
-                <Input
-                  type="text"
-                  name="Location"
-                  id="location"
-                  placeholder="ที่อยู่"
-                ></Input>
-              </FormGroup>
-            </Col>
-            <Col md={1}>
-              <FormGroup>
-                <Button>GPS</Button>
-              </FormGroup>
-            </Col>
-            <Col md={1}>
-              <FormGroup>
-                <Button>ค้นหา</Button>
-              </FormGroup>
-            </Col>
+            <FormGroup>
+              <Input
+                type="text"
+                name="Location"
+                id="location"
+                placeholder="ที่อยู่"
+              ></Input>
+            </FormGroup>
+
+            <FormGroup>
+              <Button>GPS</Button>
+            </FormGroup>
+
+            <FormGroup>
+              <Button>ค้นหา</Button>
+            </FormGroup>
           </Row>
         </Form>
       </Container>

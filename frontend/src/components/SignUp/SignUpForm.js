@@ -1,66 +1,37 @@
-import React from 'react'
-import {Container, Row, Col, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { useState } from "react";
+import CustomerSignUpForm from "./CustomerSignUpForm";
+import HostSignUpForm from "./HostSignUpForm";
+import AskForm from "./AskForm";
+
 export default function SignUpForm() {
-    return (
-        <div>
-            <Container>
-  <Row>
-    <Col></Col>
-    <Col></Col>
-  </Row>
-  <Row>
-    <Col></Col>
-    <Col>
-    <Form>
-      <FormGroup>
-      <FormGroup tag="fieldset">
-        <legend>คุณต้องการสมัครเป็นอะไร</legend>
-        <FormGroup check>
-          <Label check>
-            <Input type="radio" name="radio1" />{' '}
-            ต้องการเป็น "ผู้ฝาก"
-          </Label>
-        </FormGroup>
-        <FormGroup check>
-          <Label check>
-            <Input type="radio" name="radio1" />{' '}
-            ต้องการเป็น  "ผู้รับฝาก"
-          </Label>
-        </FormGroup>
+  const [showCustomer, setShowCustomer] = useState(false);
+  const [showHost, setHost] = useState(false);
 
-        </FormGroup>
-        <Label >ชื่อ </Label>
-        <Input type="text"  />
-        <Label >นามสกุล </Label> 
-        <Input type="text"  /> 
-      </FormGroup>
-      <FormGroup>
-        <Label >อีเมลล์</Label>
-        <Input type="email" />
+  const [state, setState] = useState("");
 
-        <Label for="examplePassword">เบอร์โทรศัพท์</Label>
-        <Input type="text" />
-      </FormGroup>
-      <FormGroup>
-        <Label>กรอกรหัสผ่าน</Label>
-        <input type="password"/>
-      </FormGroup>
-      <FormGroup>
-        <Label>กรอกรหัสผ่านอีกครั้ง</Label>
-        <input type="password"/>
-      </FormGroup>
-      <FormGroup>
-        <Label>ที่อยู่</Label>
-        <Input type="textarea" />
-      </FormGroup>
-      <Button>Submit</Button>
+  const handleAskForm = () => {
+    if (state === "Host") {
+      setHost(true);
+    } else if (state === "Customer") {
+      setShowCustomer(true);
+    }
+  };
+  const changeAskForm = (e) => {
+    setState(e.target.value);
+  };
 
-    </Form>
+  return (
+    <div>
+      {!showHost && !showCustomer ? (
+        <AskForm
+          handleChangeValue={changeAskForm}
+          handleChooseWhich={handleAskForm}
+        />
+      ) : null}
 
-    </Col>
-    <Col></Col>
-  </Row>
-</Container>
-        </div>
-    )
+      {showCustomer ? <CustomerSignUpForm /> : null}
+
+      {showHost ? <HostSignUpForm /> : null}
+    </div>
+  );
 }

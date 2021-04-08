@@ -26,9 +26,25 @@ import {
   Col,
 } from "reactstrap";
 import {useCookies} from 'react-cookie'
+import { Link } from "react-router-dom";
 
 const LoginModal = (props) => {
   const [token,setToken] = useCookies(['mytoken'])
+  const [userName, setuserName] = useState('')
+  const [passWord, setpassWord] = useState('')
+  const [loginRes, setloginRes] = useState(" ")
+  const loginBtn = () =>{
+    if(userName=='' || passWord == ''){
+      setloginRes("กรุณากรอกชื่อผู้ใช้หรือรหัสผ่านให้ถูกต้อง")
+    }else{
+      setToken('mytoken',"hellothisistesttoken")
+    }
+    
+  }
+  const onClose = () => {
+    toggle();
+    setloginRes("")
+  }
   //////////////////UI FrameWork//////////////////////////
   const { buttonLabel, className } = props;
 
@@ -36,11 +52,6 @@ const LoginModal = (props) => {
   const [unmountOnClose, setUnmountOnClose] = useState(false);
   const [backdrop, setBackdrop] = useState(true);
 
-  const [activeTab, setActiveTab] = useState('1');
-
-  const toggleTab = tab => {
-    if (activeTab !== tab) setActiveTab(tab);
-  }
   const toggle = () => setModal(!modal);
   const changeUnmountOnClose = (e) => {
     let value = e.target.value;
@@ -50,7 +61,7 @@ const LoginModal = (props) => {
   return (
     <div>
       <Form inline onSubmit={(e) => e.preventDefault()}>
-        <Button onClick={toggle}>
+        <Button onClick={onClose}>
           {buttonLabel}
         </Button>
       </Form>
@@ -68,7 +79,7 @@ const LoginModal = (props) => {
             <InputGroupAddon addonType="prepend">
               <InputGroupText style={{width:"100px"}}>ชื่อผู้ใช้งาน</InputGroupText>
             </InputGroupAddon>
-            <Input placeholder="username" />
+            <Input onChange ={e=>setuserName(e.target.value)} placeholder="username" />
           </InputGroup>
           
           <br />
@@ -76,16 +87,18 @@ const LoginModal = (props) => {
             <InputGroupAddon addonType="prepend">
               <InputGroupText style={{width:"100px"}}>รหัสผ่าน</InputGroupText>
             </InputGroupAddon>
-            <Input placeholder="password" />
+            <Input onChange={e=>setpassWord(e.target.value)} placeholder="password" />
           </InputGroup>
-          <br />
-          <Button color="warning">LogIn</Button>
+          
+          <small style={{color:"red"}}>{loginRes}</small>
+          <br/><br />
+          <Button color="warning" onClick={loginBtn}>ยืนยัน</Button>
           <a style={{ marginLeft: "3%" }}>
-            <a href="#">ลืมรหัสผ่าน</a>
+            <a href="#" onClick={e=>console.log({userName},{passWord})}>ลืมรหัสผ่าน</a>
           </a>
           <br />
           <br />
-          <a>ยังไม่มีบัญชี?</a> <a href="#">สมัคร</a>
+          <a>ยังไม่มีบัญชี?</a> <a href="/signup">สมัคร</a>
         </ModalBody>
       </Modal>
     </div>

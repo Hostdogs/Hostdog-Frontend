@@ -1,6 +1,6 @@
 import React from 'react';
 import { Jumbotron, Button } from 'reactstrap';
-
+import { Link } from "react-router-dom";
 
 const ContentNoAuth = (props) => {
   return (
@@ -14,7 +14,8 @@ const ContentNoAuth = (props) => {
         <hr className="my-2" />
         <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
         <p className="lead">
-          <Button color="primary">อยากเสือกก็กด</Button>
+          <Link to="/signup"><Button color="primary">อยากเสือกก็กด</Button></Link>
+          
         </p>
       </Jumbotron>
     </div>

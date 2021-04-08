@@ -52,8 +52,7 @@ const NavbarIsAuth = (props) => {
             </UncontrolledDropdown>
           </Nav>
           <div>
-            <Button>Sign up</Button>{' '}
-            <Button>Log in</Button>{' '}
+            <NavbarText>Hello You are Loggedin</NavbarText>
           </div>
         </Collapse>
       </Navbar>

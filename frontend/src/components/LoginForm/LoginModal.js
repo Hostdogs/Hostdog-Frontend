@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Tab from './LoginTab'
+
 
 import {
   Button,
@@ -25,19 +25,21 @@ import {
   Row,
   Col,
 } from "reactstrap";
-
+import {useCookies} from 'react-cookie'
 
 const LoginModal = (props) => {
+  const [token,setToken] = useCookies(['mytoken'])
+  //////////////////UI FrameWork//////////////////////////
   const { buttonLabel, className } = props;
 
   const [modal, setModal] = useState(false);
-  const [unmountOnClose, setUnmountOnClose] = useState(true);
-  const [backdrop, setBackdrop] = useState("static");
+  const [unmountOnClose, setUnmountOnClose] = useState(false);
+  const [backdrop, setBackdrop] = useState(true);
 
   const [activeTab, setActiveTab] = useState('1');
 
   const toggleTab = tab => {
-    if(activeTab !== tab) setActiveTab(tab);
+    if (activeTab !== tab) setActiveTab(tab);
   }
   const toggle = () => setModal(!modal);
   const changeUnmountOnClose = (e) => {
@@ -48,7 +50,7 @@ const LoginModal = (props) => {
   return (
     <div>
       <Form inline onSubmit={(e) => e.preventDefault()}>
-        <Button color="danger" onClick={toggle}>
+        <Button onClick={toggle}>
           {buttonLabel}
         </Button>
       </Form>
@@ -59,9 +61,31 @@ const LoginModal = (props) => {
         unmountOnClose={unmountOnClose}
         backdrop={backdrop}
       >
-        <ModalHeader toggle={toggle}>Log In</ModalHeader>
+        <ModalHeader toggle={toggle}>เข้าสู่ระบบ</ModalHeader>
         <ModalBody>
-          <Tab />
+          <br />
+          <InputGroup>
+            <InputGroupAddon addonType="prepend">
+              <InputGroupText style={{width:"100px"}}>ชื่อผู้ใช้งาน</InputGroupText>
+            </InputGroupAddon>
+            <Input placeholder="username" />
+          </InputGroup>
+          
+          <br />
+          <InputGroup>
+            <InputGroupAddon addonType="prepend">
+              <InputGroupText style={{width:"100px"}}>รหัสผ่าน</InputGroupText>
+            </InputGroupAddon>
+            <Input placeholder="password" />
+          </InputGroup>
+          <br />
+          <Button color="warning">LogIn</Button>
+          <a style={{ marginLeft: "3%" }}>
+            <a href="#">ลืมรหัสผ่าน</a>
+          </a>
+          <br />
+          <br />
+          <a>ยังไม่มีบัญชี?</a> <a href="#">สมัคร</a>
         </ModalBody>
       </Modal>
     </div>

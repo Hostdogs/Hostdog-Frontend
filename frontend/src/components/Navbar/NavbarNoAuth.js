@@ -12,10 +12,11 @@ import {
   DropdownMenu,
   DropdownItem,
   NavbarText,
-  Button
+  Button,
+  ButtonGroup
 } from 'reactstrap';
-
-import {Link} from "react-router-dom";
+import LoginModal from '../LoginForm/LoginModal'
+import { Link } from "react-router-dom";
 
 const NavbarNoAuth = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,8 +25,10 @@ const NavbarNoAuth = (props) => {
 
   return (
     <div>
-      <Navbar style={{backgroundColor:"#ffe080"}} light expand="md">
-        <NavbarBrand href="/">HOSTDOG</NavbarBrand>
+      <Navbar style={{ backgroundColor: "#ffe080" }} light expand="md">
+        <Link to='/'>
+          <NavbarBrand >HOSTDOG</NavbarBrand>
+        </Link>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
@@ -53,12 +56,14 @@ const NavbarNoAuth = (props) => {
               </DropdownMenu>
             </UncontrolledDropdown>
           </Nav>
-          <div>
+          <ButtonGroup>
             <Link to="/signup">
             <Button>Sign up</Button>{' '}
-            </Link>
-            <Button>Log in</Button>{' '}
-          </div>
+          </Link>
+            <LoginModal buttonLabel="Log In" />{' '}
+            </ButtonGroup>
+
+
         </Collapse>
       </Navbar>
     </div>

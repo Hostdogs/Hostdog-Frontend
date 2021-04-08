@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import LoginModal from './components/LoginForm/LoginModal'
-import Tab from './components/LoginForm/LoginTab'
+import Tab from './components/LoginForm/notuse__LoginTab'
 
 import SignUpPage from './components/SignUp/SignUpPage'
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { Jumbotron, Button } from 'reactstrap';
 
 
-const Content = (props) => {
+const ContentNoAuth = (props) => {
   return (
     <div>
       <Jumbotron>
@@ -21,4 +21,4 @@ const Content = (props) => {
   );
 };
 
-export default Content;
+export default ContentNoAuth;

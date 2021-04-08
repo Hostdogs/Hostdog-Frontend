@@ -1,12 +1,12 @@
 import React from 'react'
 import NavbarNoAuth from '../Navbar/NavbarNoAuth'
-import Content from './Content'
+import ContentNoAuth from './Content/ContentNoAuth'
 
 export default function HomePageNoAuth() {
     return (
         <div>
             <NavbarNoAuth />
-            <Content />
+            <ContentNoAuth />
         </div>
     )
 }

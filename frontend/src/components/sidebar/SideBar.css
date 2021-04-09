@@ -17,15 +17,15 @@
 }
 
 .sidebar-header h1 {
-  font-family: "Times New Roman", Times, serif;
+  /* font-family: "Times New Roman", Times, serif;
   font-style: italic;
-  font-weight: bold;
-  color: rgb(77, 77, 77);
+  font-weight: bold; */
+  color: black; 
 }
 
 .nav-item:hover {
   color: #ffe080;
-  background: #fff;
+  background: #ffbb3cd5;
 }
 
 li a.dropdown-toggle::after {
@@ -49,14 +49,6 @@ li a.dropdown-toggle::after {
 }
 
 .side-menu::-webkit-scrollbar {
-  width: 10px;
+  width: 1px;
 }
 
-.side-menu::-webkit-scrollbar-thumb {
-  background: #5466b3;
-  border-radius: 3px;
-}
-
-.side-menu::-webkit-scrollbar-thumb:hover {
-  background: #3a4c99;
-}

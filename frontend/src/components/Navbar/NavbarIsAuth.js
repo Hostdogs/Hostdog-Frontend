@@ -22,7 +22,7 @@ const NavbarIsAuth = (props) => {
   const toggle = () => setIsOpen(!isOpen);
 
   const [isOpenSideBar, setSideBar] = useState(false);
-  const toggleSideBar = () => setIsOpen(!isOpenSideBar);
+  const toggleSideBar = () => setSideBar(!isOpenSideBar);
 
 
   return (

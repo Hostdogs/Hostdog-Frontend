@@ -15,13 +15,9 @@ import "./SideBar.css"
 
 const SideBar = ({ isOpen, toggle }) => (
   <div className={classNames("sidebar", { "is-open": isOpen })}>
-    <div className="sidebar-header">
-      <h1 style={{paddingLeft:"7%",paddingTop:"4%"}}>HOSTDOG</h1>
-      <hr style={{borderBottom:"3px solid #fff"}}/>
-    </div>
     <div className="side-menu">
       <Nav vertical className="list-unstyled pb-3">
-        <NavItem>
+        <NavItem style={{marginTop:"10%"}}>
           <NavLink tag={Link} to={"/ค้นหาผู้รับฝาก"} style={{color:"black"}}>
             <FontAwesomeIcon icon={faSearch} className="mr-2" />
             ค้นหาผู้รับฝาก
@@ -38,8 +34,12 @@ const SideBar = ({ isOpen, toggle }) => (
             <FontAwesomeIcon icon={faHistory} className="mr-2" />
             ประวัติการใช้บริการ
           </NavLink>
-        </NavItem>
-        <NavItem>
+        </NavItem >
+        <div>
+        <br/>
+        <hr style={{borderWidth:"1px",marginLeft:"5%"}}/>
+        </div>
+        <NavItem style={{marginTop:"10%"}}>
           <NavLink tag={Link} to={"/การรายงาน"} style={{color:"black"}}>
             <FontAwesomeIcon icon={faFlag} className="mr-2" />
             การรายงาน
@@ -57,11 +57,11 @@ const SideBar = ({ isOpen, toggle }) => (
             ออกจากระบบ
           </NavLink>
         </NavItem>
-        <p></p>
-        <p></p>
-        <p>ข้อกำหนด ความเป็นส่วนตัว</p>
-        <p>นโยบายและความปลอดภัย</p>
-        <p>© 2021 Hostdog</p>
+        <div>
+        <br/>
+        <hr style={{borderWidth:"1px",marginLeft:"5%"}}/>
+        <p style={{marginLeft:"7%", marginTop:"100%"}}>Hostdog © 2021 </p>
+        </div>
       </Nav>
     </div>
   </div>

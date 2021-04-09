@@ -8,7 +8,7 @@ import {
   faFlag,
   faSearch
 } from "@fortawesome/free-solid-svg-icons";
-import { NavItem, NavLink, Nav, NavbarBrand } from "reactstrap";
+import { NavItem, NavLink, Nav} from "reactstrap";
 import classNames from "classnames";
 import { Link } from "react-router-dom";
 import "./SideBar.css"

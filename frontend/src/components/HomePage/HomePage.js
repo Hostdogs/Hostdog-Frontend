@@ -11,12 +11,20 @@ export default function HomePage() {
     const[token,setToken,removeToken] = useCookies(['mytoken'])
 
     const [isOpenSideBar, setSideBar] = useState(false);
-    const toggleSideBar = () => setSideBar(!isOpenSideBar);
+    const toggleSideBar = () => {
+        
+        setSideBar(!isOpenSideBar);
+        console.log(isOpenSideBar);
+    }
 
     return (
         <div>
-            {token['mytoken'] ? (<NavbarIsAuth/>):(<NavbarNoAuth/>)}
-            {token['mytoken'] ? (<ContentIsAuth/>):(<ContentNoAuth/>)}
+            {token['mytoken'] ? (<NavbarIsAuth toggleSideBar={toggleSideBar}/>):(<NavbarNoAuth/>)}
+            {token['mytoken'] ? (
+            <div>
+                <ContentIsAuth/><SideBar isOpenSideBar={isOpenSideBar}/>
+            </div>
+            ):(<ContentNoAuth/>)}
             <Footer/>
         </div>
     )

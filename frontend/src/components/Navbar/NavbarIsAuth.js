@@ -17,13 +17,9 @@ import {
   Button
 } from 'reactstrap';
 
-const NavbarIsAuth = (props) => {
+const NavbarIsAuth = (props,{toggleSideBar}) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
-
-  const [isOpenSideBar, setSideBar] = useState(false);
-  const toggleSideBar = () => setSideBar(!isOpenSideBar);
-
 
   return (
     <div>

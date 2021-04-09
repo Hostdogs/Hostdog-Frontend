@@ -55,9 +55,9 @@ const NavbarNoAuth = (props) => {
             </UncontrolledDropdown>
           </Nav>
           <ButtonGroup>
-            <Link to="/signup">
+            <a href="/signup">
               <Button onClick={props.clear}>Sign up</Button>{" "}
-            </Link>
+            </a>
             <LoginModal buttonLabel="Log In" />{" "}
           </ButtonGroup>
         </Collapse>

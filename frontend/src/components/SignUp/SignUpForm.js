@@ -40,7 +40,7 @@ export default function SignUpForm() {
             <Col sm={4}>
               <legend>
                 ลงทะเบียนเป็น{" "}
-                <h2>"{selectState === "Host" ? Name[0] : Name[1]}"</h2>
+                <h2>"{selectState === "Host" ? Name[1] : Name[0]}"</h2>
               </legend>
               <FormGroup>
                 <Label for="Name">ชื่อ</Label>
@@ -91,7 +91,6 @@ export default function SignUpForm() {
                   placeholder="รหัสผ่านอีกครั้ง "
                 />
               </FormGroup>
-
               <FormGroup>
                 <Button>ถัดไป</Button>
               </FormGroup>

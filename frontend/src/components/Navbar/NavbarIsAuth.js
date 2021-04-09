@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAlignLeft } from "@fortawesome/free-solid-svg-icons";
 import {
   Collapse,
   Navbar,
@@ -17,12 +19,18 @@ import {
 
 const NavbarIsAuth = (props) => {
   const [isOpen, setIsOpen] = useState(false);
-
   const toggle = () => setIsOpen(!isOpen);
+
+  const [isOpenSideBar, setSideBar] = useState(false);
+  const toggleSideBar = () => setIsOpen(!isOpenSideBar);
+
 
   return (
     <div>
       <Navbar style={{backgroundColor:"#ffe080"}} light expand="md">
+        <Button color="warning" onClick={toggleSideBar} style={{marginRight:"1%"}}>
+          <FontAwesomeIcon icon={faAlignLeft} />
+        </Button>
         <NavbarBrand href="/">HOSTDOG</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
@@ -31,7 +39,7 @@ const NavbarIsAuth = (props) => {
               <NavLink href="/components/">Components</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="https://github.com/reactstrap/reactstrap">GitHub</NavLink>
+              <NavLink href="/">GitHub</NavLink>
             </NavItem>
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>

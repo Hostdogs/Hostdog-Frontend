@@ -56,7 +56,7 @@ const NavbarNoAuth = (props) => {
           </Nav>
           <ButtonGroup>
             <Link to="/signup">
-              <Button>Sign up</Button>{" "}
+              <Button onClick={props.clear}>Sign up</Button>{" "}
             </Link>
             <LoginModal buttonLabel="Log In" />{" "}
           </ButtonGroup>

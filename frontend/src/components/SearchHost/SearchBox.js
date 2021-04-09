@@ -7,13 +7,15 @@ import {
   FormGroup,
   Input,
 } from "reactstrap";
+import "./SearchHost.css";
+
 export default function SearchBox() {
   return (
     <div>
-      <Container>
-        <Form>
+      <Container className="searchbox-container ">
+        <Form className="form-search">
           <Row form>
-            <FormGroup>
+            <FormGroup className="searchbox">
               <Input
                 type="text"
                 name="Location"
@@ -22,11 +24,11 @@ export default function SearchBox() {
               ></Input>
             </FormGroup>
 
-            <FormGroup>
+            <FormGroup className="gps">
               <Button>GPS</Button>
             </FormGroup>
 
-            <FormGroup>
+            <FormGroup className="search">
               <Button>ค้นหา</Button>
             </FormGroup>
           </Row>

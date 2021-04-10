@@ -3,17 +3,20 @@
   max-width: 250px;
   background: #ffe080;
   color: rgb(77, 77, 77);
-  /* margin-left: -250px; */
+  margin-top: 50px;
+  margin-left: -250px;
   transition: all 0.5s;
+  position: fixed;
 }
 
 .sidebar.is-open {
-  margin-left: 0;
+  margin-left: 0px;
   transition: 0.5s;
+  /* position: fixed; */
 }
 
 .sidebar-header {
-  background: #ffe080;
+  background: #4b4944;
 }
 
 .sidebar-header h1 {
@@ -44,7 +47,7 @@ li a.dropdown-toggle::after {
   display: none;
 }
 .side-menu {
-  height: calc(100vh - 70px);
+  height: calc(100vh - 50px);
   overflow-y: scroll;
 }
 
@@ -52,3 +55,29 @@ li a.dropdown-toggle::after {
   width: 1px;
 }
 
+@media only screen and (max-width: 500px) {
+  body {
+    overflow: hidden;
+  }
+
+  .content.is-open {
+    margin-left: 100%;
+  }
+
+  .sidebar.is-open {
+    min-width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+    transition: all 0.5s, height 0s;
+  }
+
+  .sidebar.is-open > .sidebar-header span {
+    display: unset;
+  }
+
+  li a.dropdown-toggle::after {
+    display: inline-block;
+    position: relative;
+    left: 68%;
+  }
+}

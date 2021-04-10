@@ -1,5 +1,6 @@
-import {useState} from 'react'
+
 import Host from './Host'
+
 export default function HostList() {
   const hostdata =[
     {
@@ -25,7 +26,11 @@ export default function HostList() {
   return (
     <div>
       {hostdata.map((hd) => (
+        
+   
         <Host id={hd.id} host={hd}/>
+ 
+        
       ))}
     </div>
   );

@@ -69,10 +69,10 @@ export default function FilterBox() {
               <UncontrolledDropdown>
                 <DropdownToggle caret>พื้นที่เลี้ยง</DropdownToggle>
                 <DropdownMenu>
-                <DropdownItem>เท่าไหร่ก็ได้</DropdownItem>
-                  <DropdownItem>0-10 ตร.ม.</DropdownItem>
-                  <DropdownItem>11-20 ตร.ม.</DropdownItem>
-                  <DropdownItem>21-30 ตร.ม.</DropdownItem>
+                <DropdownItem>พื้นอะไรก็ได้</DropdownItem>
+                  <DropdownItem>พื้นหินแกรนิต</DropdownItem>
+                  <DropdownItem>พื้นคอนกรีต</DropdownItem>
+                  <DropdownItem>พื้นทราย</DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
             </Row>

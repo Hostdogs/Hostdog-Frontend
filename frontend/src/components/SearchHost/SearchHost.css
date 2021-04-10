@@ -1,0 +1,24 @@
+
+
+.search-container{
+
+max-width: 35%;
+min-width:300px;
+padding: 20px;
+ 
+}
+
+.searchbox{
+  min-width: 300px;
+}
+.host-container{
+background:#ffe080;
+width: 50%;
+min-width:300px;
+padding: 5px;
+border-radius: 5px;
+}
+.host{
+
+ margin:10px;
+}

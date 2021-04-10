@@ -2,20 +2,29 @@ import NavbarIsAuth from "../Navbar/NavbarIsAuth";
 import SearchBox from "./SearchBox";
 import FilterBox from "./FilterBox";
 import HostList from "./HostList";
-import { Container } from "reactstrap";
+import { Container,Row,Col } from "reactstrap";
 import "./SearchHost.css";
 export default function SearchHostPage() {
   return (
     <div>
       <NavbarIsAuth />
+    
+      <Container className="search-container">
 
-      <Container className="searchTop">
-        <SearchBox />
-        <FilterBox />
+          <Row>
+            <SearchBox />
+          </Row>
+          <Row>
+            <FilterBox />
+          </Row>
+
       </Container>
-      <Container>
+
+      <Container className="host-container">
         <HostList />
       </Container>
+
+   
     </div>
   );
 }

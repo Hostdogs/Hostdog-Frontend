@@ -9,23 +9,19 @@ import SideBar from '../sidebar/SideBar'
 
 export default function HomePage() {
     const[token,setToken,removeToken] = useCookies(['mytoken'])
-    const [SideBar, setSideBar] = useState(false);
-
-    const toggleSideBar = () => setSideBar(!SideBar);
-
-    const [isOpenSideBar, setSideBar] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
     const toggleSideBar = () => {
-        
-        setSideBar(!isOpenSideBar);
-        console.log(isOpenSideBar);
+        console.log("kb")
+        setIsOpen(!isOpen)
     }
+
 
     return (
         <div>
             {token['mytoken'] ? (<NavbarIsAuth toggleSideBar={toggleSideBar}/>):(<NavbarNoAuth/>)}
             {token['mytoken'] ? (
             <div>
-                <ContentIsAuth/><SideBar isOpenSideBar={isOpenSideBar}/>
+                <ContentIsAuth/><SideBar IsOpen={isOpen}/>
             </div>
             ):(<ContentNoAuth/>)}
             <Footer/>

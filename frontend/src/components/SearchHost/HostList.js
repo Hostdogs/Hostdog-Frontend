@@ -21,12 +21,18 @@ export default function HostList() {
       hostName: "Pat",
       dateAvail:"จันทร์-ศุกร์",
       distancefromCus: "40 กม.",
+    },
+    {
+      id:3,
+      hostName: "Pure",
+      dateAvail:"จันทร์-ศุกร์",
+      distancefromCus: "50 กม.",
     }
   ] ;
   return (
     <div>
       {hostdata.map((hd) => (
-        
+
    
         <Host id={hd.id} host={hd}/>
  

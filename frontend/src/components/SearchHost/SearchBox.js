@@ -11,6 +11,7 @@ import "./SearchHost.css";
 
 export default function SearchBox() {
   return (
+
         <Form className="form-search">
           <Row form>
             <FormGroup className="searchbox">

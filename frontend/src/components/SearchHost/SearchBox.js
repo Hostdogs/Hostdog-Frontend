@@ -11,8 +11,6 @@ import "./SearchHost.css";
 
 export default function SearchBox() {
   return (
-    <div>
-      <Container className="searchbox-container ">
         <Form className="form-search">
           <Row form>
             <FormGroup className="searchbox">
@@ -33,7 +31,6 @@ export default function SearchBox() {
             </FormGroup>
           </Row>
         </Form>
-      </Container>
-    </div>
+
   );
 }

@@ -26,18 +26,21 @@ import {
   Col,
 } from "reactstrap";
 import {useCookies} from 'react-cookie'
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const LoginModal = (props) => {
   const [token,setToken] = useCookies(['mytoken'])
   const [userName, setuserName] = useState('')
   const [passWord, setpassWord] = useState('')
   const [loginRes, setloginRes] = useState(" ")
+  let history = useHistory()
+
   const loginBtn = () =>{
     if(userName==='' || passWord === ''){
       setloginRes("กรุณากรอกชื่อผู้ใช้หรือรหัสผ่านให้ถูกต้อง")
     }else{
       setToken('mytoken',"hellothisistesttoken")
+      history.push('/')
     }
     
   }

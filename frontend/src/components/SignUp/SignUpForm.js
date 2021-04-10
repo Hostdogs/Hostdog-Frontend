@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Container,
   Row,
@@ -10,94 +10,89 @@ import {
   Input,
   FormText,
 } from "reactstrap";
-import AskForm from "./AskForm";
-import "./SignUp.css";
 
+import "./SignUp.css";
+import { Redirect } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import InformationForm from "./InformationForm";
 export default function SignUpForm() {
   const [isSelect, setisSelect] = useState(false);
   const [selectState, setselectState] = useState("");
   const Name = ["ผู้ฝากสุนัข", "ผู้รับฝากสุนัข"];
+  const [token, setToken] = useCookies(['mytoken'])
+
+
   const changeAskForm = (e) => {
     setselectState(e.target.value);
     console.log(e.target.value);
   };
 
   const handleAskForm = () => {
-    setisSelect(true);
-    console.log("PushSubmit");
+    if (selectState !== "") {
+      setisSelect(true);
+      console.log("PushSubmit");
+    }
+
   };
 
-  return (
-    <div>
-      {!isSelect ? (
-        <AskForm
-          handleChangeValue={changeAskForm}
-          handleChooseWhich={handleAskForm}
-        />
-      ) : (
-        <Container className="themed-container" fluid={true}>
-          <Form className="signup-container">
-            <Col sm={4}>
-              <legend>
-                ลงทะเบียนเป็น{" "}
-                <h2>"{selectState === "Host" ? Name[1] : Name[0]}"</h2>
-              </legend>
-              <FormGroup>
-                <Label for="Name">ชื่อ</Label>
-                <Input type="text" name="Name" placeholder="ชื่อ" />
-              </FormGroup>
-              <FormGroup>
-                <Label for="Name">นามสกุล</Label>
-                <Input type="text" name="Name" placeholder="นามสกุล" />
-              </FormGroup>
-              <FormGroup>
-                <Label for="Name">เบอร์โทรติดต่อ</Label>
-                <Input type="text" name="Tel" placeholder="เบอร์โทรติดต่อ" />
-              </FormGroup>
-              <FormGroup>
-                <Label for="exampleDate">วันเกิด</Label>
-                <Input
-                  type="date"
-                  name="date"
-                  id="exampleDate"
-                  placeholder="วัน/เดือน/ปี"
-                />
-              </FormGroup>
+  if (token['mytoken']) {
+    // console.log("redirect pls")
+    return <Redirect to="/" />
+  } else {
+    return (
+      <div>
+        <Container className="themed-container" fluid="sm">
+          <Form >
+            <FormGroup tag="fieldset">
+              <legend>คุณต้องการสมัครเป็นอะไร</legend>
+              <Row>
+                <Col>
+                  <FormGroup check style={{textAlign:"right"}}>
+                    <Label check>
+                      <Input
+                        type="radio"
+                        name="radio1"
+                        value="Customer"
+                        onChange={changeAskForm}
+                      />{" "}
+                      ผู้ฝากสุนัข
+                    </Label>
+                  </FormGroup>
+                </Col>
+                <Col style={{maxWidth:"10%"}}></Col>
+                <Col>
+                  <FormGroup check style={{textAlign:"left"}}>
+                    <Label check>
+                      <Input
+                        type="radio"
+                        name="radio1"
+                        value="Host"
+                        onChange={changeAskForm}
+                      />{" "}
+                      ผู้รับฝากสุนัข
+                    </Label>
+                  </FormGroup>
 
-              <FormGroup>
-                <Label for="exampleEmail">อีเมล</Label>
-                <Input
-                  type="email"
-                  name="email"
-                  id="exampleEmail"
-                  placeholder="อีเมล"
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label for="examplePassword">รหัสผ่าน</Label>
-                <Input
-                  type="password"
-                  name="password"
-                  id="examplePassword"
-                  placeholder="รหัสผ่าน "
-                />
-              </FormGroup>
+                </Col>
 
-              <FormGroup>
-                <Label for="againPassword">รหัสผ่านอีกครั้ง</Label>
-                <Input
-                  type="password"
-                  name="againPassword"
-                  placeholder="รหัสผ่านอีกครั้ง "
-                />
-              </FormGroup>
-              <FormGroup>
-                <Button>ถัดไป</Button>
-              </FormGroup>
-            </Col>
+              </Row>
+              {isSelect ? (
+                <InformationForm />
+              ) : (
+                <div><Button color="secondary" onClick={handleAskForm}>
+                  ถัดไป
+            </Button></div>)}
+            </FormGroup>
+
           </Form>
+
         </Container>
-      )}
-    </div>
-  );
+        
+      </div>
+
+
+
+    );
+  }
+
 }

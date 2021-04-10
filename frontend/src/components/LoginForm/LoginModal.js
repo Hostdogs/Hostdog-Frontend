@@ -62,8 +62,8 @@ const LoginModal = (props) => {
   };
 
   return (
-    <div>
-      <Form inline onSubmit={(e) => e.preventDefault()}>
+    <div style={{fontFamily:"kanit"}}>
+      <Form inline onSubmit={(e) => e.preventDefault()} >
         <Button onClick={onClose}>
           {buttonLabel}
         </Button>

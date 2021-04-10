@@ -27,6 +27,7 @@ import {
 } from "reactstrap";
 import {useCookies} from 'react-cookie'
 import { useHistory } from "react-router-dom";
+import './LoginModal.css'
 
 const LoginModal = (props) => {
   const [token,setToken] = useCookies(['mytoken'])
@@ -62,7 +63,7 @@ const LoginModal = (props) => {
   };
 
   return (
-    <div style={{fontFamily:"kanit"}}>
+    <div>
       <Form inline onSubmit={(e) => e.preventDefault()} >
         <Button onClick={onClose}>
           {buttonLabel}

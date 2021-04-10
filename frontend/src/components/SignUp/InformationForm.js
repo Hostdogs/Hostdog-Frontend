@@ -10,8 +10,22 @@ import {
     Input,
     FormText,
 } from "reactstrap";
-
+import moment from 'moment-timezone'
 export default function InformationForm() {
+    const [birthDate, setbirthDate] = useState("")
+    const dayformat = "YYYY-MM-DD"
+    const onSubmit = () =>{
+        console.log(moment().year()-18)
+        console.log(birthDate)
+    }
+
+    useEffect(() => {
+        
+        setbirthDate(moment(moment().year()-18+"-01-01",dayformat).format(dayformat))
+       
+  
+    }, [])
+
     return (
         <div>
             <Container fluid="sm" style={{ maxWidth: "60%", minWidth: "300px" }}>
@@ -25,7 +39,7 @@ export default function InformationForm() {
                     </Col>
 
                     <Col>
-                        <FormGroup>
+                        <FormGroup style={{ minWidth: "250px" }}>
 
                             <Input type="text" name="Name" placeholder="นามสกุล" />
                         </FormGroup>
@@ -44,7 +58,6 @@ export default function InformationForm() {
                     <Input
                         type="email"
                         name="email"
-                        id="exampleEmail"
                         placeholder="อีเมล"
                     />
                 </FormGroup>
@@ -53,7 +66,6 @@ export default function InformationForm() {
                     <Input
                         type="text"
                         name="username"
-                        id="exampleusername"
                         placeholder="ชื่อผู้ใช้งาน"
                     />
                 </FormGroup>
@@ -62,7 +74,6 @@ export default function InformationForm() {
                     <Input
                         type="password"
                         name="password"
-                        id="examplePassword"
                         placeholder="รหัสผ่าน "
                     />
                 </FormGroup>
@@ -80,8 +91,11 @@ export default function InformationForm() {
                     <Input
                         type="date"
                         name="date"
-                        id="exampleDate"
                         placeholder="วัน/เดือน/ปี"
+                        value={birthDate}
+                        onChange={ e=> setbirthDate(e.target.value)}
+                        max={moment().format(dayformat)}
+                        
                     />
                 </FormGroup>
                 <FormGroup>
@@ -94,13 +108,10 @@ export default function InformationForm() {
                             <Col>
                                 <CustomInput type="radio" id="exampleCustomRadio2" name="customRadio" label="หญิง" />
                             </Col>
-                            <Col style={{minWidth:"100px"}}>
+                            <Col style={{ minWidth: "100px" }}>
                                 <CustomInput type="radio" id="exampleCustomRadio3" name="customRadio" label="ไม่ระบุเพศ" />
                             </Col>
                         </Row>
-
-
-
 
                     </div>
                 </FormGroup>
@@ -111,10 +122,11 @@ export default function InformationForm() {
                         name="Address"
                         id="exampleusername"
                         placeholder="ที่อยู่"
+                        
                     />
                 </FormGroup>
                 <FormGroup>
-                    <Button>ถัดไป</Button>
+                    <Button onClick={onSubmit}>ถัดไป</Button>
                 </FormGroup>
             </Container>
         </div>

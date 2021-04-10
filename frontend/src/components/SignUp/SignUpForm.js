@@ -20,10 +20,11 @@ export default function SignUpForm() {
   const [selectState, setselectState] = useState("");
   const Name = ["ผู้ฝากสุนัข", "ผู้รับฝากสุนัข"];
   const [token, setToken] = useCookies(['mytoken'])
-
-
-  const changeAskForm = (e) => {
+  const [submitResponse, setsubmitResponse] = useState("")
+  
+  const selectRole = (e) => {
     setselectState(e.target.value);
+    setsubmitResponse("");
     console.log(e.target.value);
   };
 
@@ -31,9 +32,14 @@ export default function SignUpForm() {
     if (selectState !== "") {
       setisSelect(true);
       console.log("PushSubmit");
+    }else{
+      setsubmitResponse("กรุณาเลือกก่อนดำเนินการต่อ")
+      console.log("submit")
     }
 
   };
+  
+
 
   if (token['mytoken']) {
     // console.log("redirect pls")
@@ -54,7 +60,7 @@ export default function SignUpForm() {
                         type="radio"
                         name="radio1"
                         value="Customer"
-                        onChange={changeAskForm}
+                        onChange={selectRole}
                       />{" "}
                       ผู้ฝากสุนัข
                     </Label>
@@ -68,7 +74,7 @@ export default function SignUpForm() {
                         type="radio"
                         name="radio1"
                         value="Host"
-                        onChange={changeAskForm}
+                        onChange={selectRole}
                       />{" "}
                       ผู้รับฝากสุนัข
                     </Label>
@@ -80,7 +86,9 @@ export default function SignUpForm() {
               {isSelect ? (
                 <InformationForm />
               ) : (
-                <div><Button color="secondary" onClick={handleAskForm}>
+                <div>
+                  <small style={{color:"red"}}>{submitResponse}</small><br/><br/>
+                  <Button color="secondary" onClick={handleAskForm}>
                   ถัดไป
             </Button></div>)}
             </FormGroup>

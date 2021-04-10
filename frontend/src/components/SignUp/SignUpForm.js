@@ -42,6 +42,7 @@ export default function SignUpForm() {
     return (
       <div>
         <Container className="themed-container" fluid="sm">
+          <br/>
           <Form >
             <FormGroup tag="fieldset">
               <legend>คุณต้องการสมัครเป็นอะไร</legend>

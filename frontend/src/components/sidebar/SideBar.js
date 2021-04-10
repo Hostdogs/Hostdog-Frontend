@@ -62,11 +62,6 @@ export default function SideBar({isOpen}) {
             ออกจากระบบ
           </NavLink>
           </NavItem>
-          <div>
-            <br />
-            <hr style={{ borderWidth: "1px", marginLeft: "5%" }} />
-            <p style={{ marginLeft: "7%", marginTop: "100%" }}>Hostdog © 2021 </p>
-          </div>
         </Nav>
       </div>
     </div>

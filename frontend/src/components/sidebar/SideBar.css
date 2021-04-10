@@ -63,7 +63,12 @@ li a.dropdown-toggle::after {
   .content.is-open {
     margin-left: 100%;
   }
-
+  .sidebar{
+    min-width: 100%;
+    max-width: 100%;
+    margin-left: -500px;
+    margin-bottom: 3%;
+  }
   .sidebar.is-open {
     min-width: 100%;
     max-width: 100%;

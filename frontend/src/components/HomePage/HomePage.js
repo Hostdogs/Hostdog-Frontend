@@ -9,6 +9,9 @@ import SideBar from '../sidebar/SideBar'
 
 export default function HomePage() {
     const[token,setToken,removeToken] = useCookies(['mytoken'])
+    const [SideBar, setSideBar] = useState(false);
+
+    const toggleSideBar = () => setSideBar(!SideBar);
 
     const [isOpenSideBar, setSideBar] = useState(false);
     const toggleSideBar = () => {

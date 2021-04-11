@@ -4,9 +4,13 @@ import FilterBox from "./FilterBox";
 import HostList from "./HostList";
 import { Container,Row,Col } from "reactstrap";
 import "./SearchHost.css";
+
 export default function SearchHostPage() {
   return (
     <div>
+
+
+
       <NavbarIsAuth />
     
       <Container className="search-container">

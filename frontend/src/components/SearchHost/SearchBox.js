@@ -41,12 +41,12 @@ export default function SearchBox() {
   };
 
 
-  const reverseGeocoding=async()=>{
+  const reverseGeocoding=()=>{
 
     fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${state.lat},${state.long}&key=${googleAPIKey}&language=th`)
     .then(response=>response.json())
     .then(data=>(setUserAddress(data.results[0].formatted_address)))
-    .catch(error=>alert(error))
+    .catch(()=>alert("Please try again!"))
     
   }
 

@@ -5,6 +5,10 @@
   flex-direction: column;
   align-items: center;
   object-fit: contain;
-
+  
   padding: 30px;
+}
+
+.SignUpForm{
+  text-align: center;
 }

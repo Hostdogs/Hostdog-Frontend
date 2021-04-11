@@ -92,7 +92,7 @@ const LoginModal = (props) => {
             <InputGroupAddon addonType="prepend">
               <InputGroupText style={{width:"100px"}}>รหัสผ่าน</InputGroupText>
             </InputGroupAddon>
-            <Input onChange={e=>setpassWord(e.target.value)} placeholder="password" />
+            <Input type="password" onChange={e=>setpassWord(e.target.value)} placeholder="password" />
           </InputGroup>
           
           <small style={{color:"red"}}>{loginRes}</small>

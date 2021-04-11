@@ -23,9 +23,8 @@ export default function NavbarIsAuth({toggleSideBar}) {
   return (
     <div>
       <Navbar
-        className="Navbar-sticky"
-        style={{ backgroundColor: "#ffe080" }}
-        dark
+        style={{ backgroundColor: "#ffe080" ,position: "fixed",width:"100%" }}
+        light
       >
         <NavbarToggler onClick={toggleSideBar} className="mr-2" />
         <NavbarBrand href="/" className="mr-auto">

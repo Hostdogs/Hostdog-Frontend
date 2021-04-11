@@ -6,7 +6,9 @@ export default function SignUpPage() {
   return (
     <div>
       <NavbarNoAuth />
-      <SignUpForm />
+      <section className="SignUpForm"><SignUpForm /></section>
+      
     </div>
   );
 
+}

@@ -16,8 +16,8 @@ export default function SearchBox() {
   const googleAPIKey="AIzaSyBWV06MM0QFyVnkuA1nHJhQ4altZjovYNs";
 
   const [state, setState] = useState({
-    long: null,
-    lat: null,
+    long: "hello",
+    lat:"hello",
   });
 
   const [userAddress,setUserAddress ]=useState("");
@@ -28,7 +28,7 @@ export default function SearchBox() {
       long:position.coords.longitude
     });
 
-    reverseGeocoding();
+   
   }
 
   const getLocation = () => {
@@ -38,12 +38,14 @@ export default function SearchBox() {
     } else {
      alert("Location is not supported by this browser.");
     }
+
+    reverseGeocoding();
   };
 
 
   const reverseGeocoding=()=>{
 
-    fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${state.lat},${state.long}&key=${googleAPIKey}&language=th`)
+ fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${state.lat},${state.long}&key=${googleAPIKey}&language=th`)
     .then(response=>response.json())
     .then(data=>(setUserAddress(data.results[0].formatted_address)))
     .catch(()=>alert("Please try again!"))

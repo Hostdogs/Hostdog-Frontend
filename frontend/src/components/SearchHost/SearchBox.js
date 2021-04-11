@@ -12,45 +12,35 @@ import "./SearchHost.css";
 import { useState } from "react";
 
 export default function SearchBox() {
-
-  const googleAPIKey="AIzaSyBWV06MM0QFyVnkuA1nHJhQ4altZjovYNs";
+  const googleAPIKey = "AIzaSyBWV06MM0QFyVnkuA1nHJhQ4altZjovYNs";
 
   const [state, setState] = useState({
     long: "hello",
-    lat:"hello",
+    lat: "hello",
   });
 
-  const [userAddress,setUserAddress ]=useState("");
-
-  const setPosition=(position)=>{
-    setState({
-      lat:position.coords.latitude,
-      long:position.coords.longitude
-    });
-
-   
-  }
+  const [userAddress, setUserAddress] = useState("");
 
   const getLocation = () => {
-
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(setPosition);
+      navigator.geolocation.getCurrentPosition(reverseGeocoding);
     } else {
-     alert("Location is not supported by this browser.");
+      alert("Location is not supported by this browser.");
     }
-
-    reverseGeocoding();
   };
 
+  const reverseGeocoding = async (position) => {
+    setState({
+      long: position.coords.longitude,
+      lat: position.coords.latitude,
+    });
 
-  const reverseGeocoding=()=>{
+    const urlapi = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.coords.latitude},${position.coords.longitude}&key=${googleAPIKey}&language=th`;
 
- fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${state.lat},${state.long}&key=${googleAPIKey}&language=th`)
-    .then(response=>response.json())
-    .then(data=>(setUserAddress(data.results[0].formatted_address)))
-    .catch(()=>alert("Please try again!"))
-    
-  }
+    const response = await fetch(urlapi);
+    const data = await response.json();
+    setUserAddress(data.results[0].formatted_address);
+  };
 
   return (
     <Form className="form-search">

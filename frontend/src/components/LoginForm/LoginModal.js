@@ -26,19 +26,23 @@ import {
   Col,
 } from "reactstrap";
 import {useCookies} from 'react-cookie'
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import './LoginModal.css'
 
 const LoginModal = (props) => {
   const [token,setToken] = useCookies(['mytoken'])
   const [userName, setuserName] = useState('')
   const [passWord, setpassWord] = useState('')
   const [loginRes, setloginRes] = useState(" ")
+  let history = useHistory()
+
   const loginBtn = () =>{
-    if(userName=='' || passWord == ''){
+    if(userName==='' || passWord === ''){
       setloginRes("กรุณากรอกชื่อผู้ใช้หรือรหัสผ่านให้ถูกต้อง")
     }else{
       setToken('mytoken',"hellothisistesttoken")
-      ///use history to route to Homepage
+      history.push('/')
+
     }
     
   }
@@ -61,7 +65,7 @@ const LoginModal = (props) => {
 
   return (
     <div>
-      <Form inline onSubmit={(e) => e.preventDefault()}>
+      <Form inline onSubmit={(e) => e.preventDefault()} >
         <Button onClick={onClose}>
           {buttonLabel}
         </Button>
@@ -88,14 +92,14 @@ const LoginModal = (props) => {
             <InputGroupAddon addonType="prepend">
               <InputGroupText style={{width:"100px"}}>รหัสผ่าน</InputGroupText>
             </InputGroupAddon>
-            <Input onChange={e=>setpassWord(e.target.value)} placeholder="password" />
+            <Input type="password" onChange={e=>setpassWord(e.target.value)} placeholder="password" />
           </InputGroup>
           
           <small style={{color:"red"}}>{loginRes}</small>
           <br/><br />
           <Button color="warning" onClick={loginBtn}>ยืนยัน</Button>
           <a style={{ marginLeft: "3%" }}>
-            <a href="#" onClick={e=>console.log({userName},{passWord})}>ลืมรหัสผ่าน</a>
+            <a href="#" onClick={e=>console.log("{userName},{passWord}")}>ลืมรหัสผ่าน</a>
           </a>
           <br />
           <br />

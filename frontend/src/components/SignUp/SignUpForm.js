@@ -1,66 +1,107 @@
-import React from 'react'
-import {Container, Row, Col, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import React, { useState, useEffect } from "react";
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  Form,
+  FormGroup,
+  Label,
+  Input,
+  FormText,
+} from "reactstrap";
+
+import "./SignUp.css";
+import { Redirect } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import InformationForm from "./InformationForm";
 export default function SignUpForm() {
+  const [isSelect, setisSelect] = useState(false);
+  const [selectState, setselectState] = useState("");
+  const Name = ["ผู้ฝากสุนัข", "ผู้รับฝากสุนัข"];
+  const [token, setToken] = useCookies(['mytoken'])
+  const [submitResponse, setsubmitResponse] = useState("")
+  
+  const selectRole = (e) => {
+    setselectState(e.target.value);
+    setsubmitResponse("");
+    console.log(e.target.value);
+  };
+
+  const handleAskForm = () => {
+    if (selectState !== "") {
+      setisSelect(true);
+      console.log("PushSubmit");
+    }else{
+      setsubmitResponse("กรุณาเลือกก่อนดำเนินการต่อ")
+      console.log("submit")
+    }
+
+  };
+  
+
+
+  if (token['mytoken']) {
+    // console.log("redirect pls")
+    return <Redirect to="/" />
+  } else {
     return (
-        <div>
-            <Container>
-  <Row>
-    <Col></Col>
-    <Col></Col>
-  </Row>
-  <Row>
-    <Col></Col>
-    <Col>
-    <Form>
-      <FormGroup>
-      <FormGroup tag="fieldset">
-        <legend>คุณต้องการสมัครเป็นอะไร</legend>
-        <FormGroup check>
-          <Label check>
-            <Input type="radio" name="radio1" />{' '}
-            ต้องการเป็น "ผู้ฝาก"
-          </Label>
-        </FormGroup>
-        <FormGroup check>
-          <Label check>
-            <Input type="radio" name="radio1" />{' '}
-            ต้องการเป็น  "ผู้รับฝาก"
-          </Label>
-        </FormGroup>
+      <div>
+        <Container className="themed-container" fluid="sm">
+          <br/>
+          <Form >
+            <FormGroup tag="fieldset">
+              <legend>คุณต้องการสมัครเป็นอะไร</legend>
+              <Row>
+                <Col>
+                  <FormGroup check style={{textAlign:"right"}}>
+                    <Label check>
+                      <Input
+                        type="radio"
+                        name="radio1"
+                        value="Customer"
+                        onChange={selectRole}
+                      />{" "}
+                      ผู้ฝากสุนัข
+                    </Label>
+                  </FormGroup>
+                </Col>
+                <Col style={{maxWidth:"10%"}}></Col>
+                <Col>
+                  <FormGroup check style={{textAlign:"left"}}>
+                    <Label check>
+                      <Input
+                        type="radio"
+                        name="radio1"
+                        value="Host"
+                        onChange={selectRole}
+                      />{" "}
+                      ผู้รับฝากสุนัข
+                    </Label>
+                  </FormGroup>
 
-        </FormGroup>
-        <Label >ชื่อ </Label>
-        <Input type="text"  />
-        <Label >นามสกุล </Label> 
-        <Input type="text"  /> 
-      </FormGroup>
-      <FormGroup>
-        <Label >อีเมลล์</Label>
-        <Input type="email" />
+                </Col>
 
-        <Label for="examplePassword">เบอร์โทรศัพท์</Label>
-        <Input type="text" />
-      </FormGroup>
-      <FormGroup>
-        <Label>กรอกรหัสผ่าน</Label>
-        <input type="password"/>
-      </FormGroup>
-      <FormGroup>
-        <Label>กรอกรหัสผ่านอีกครั้ง</Label>
-        <input type="password"/>
-      </FormGroup>
-      <FormGroup>
-        <Label>ที่อยู่</Label>
-        <Input type="textarea" />
-      </FormGroup>
-      <Button>Submit</Button>
+              </Row>
+              {isSelect ? (
+                <InformationForm />
+              ) : (
+                <div>
+                  <small style={{color:"red"}}>{submitResponse}</small><br/><br/>
+                  <Button color="secondary" onClick={handleAskForm}>
+                  ถัดไป
+            </Button></div>)}
+            </FormGroup>
 
-    </Form>
+          </Form>
 
-    </Col>
-    <Col></Col>
-  </Row>
-</Container>
-        </div>
-    )
+        </Container>
+        
+      </div>
+
+
+
+    );
+  }
+
 }

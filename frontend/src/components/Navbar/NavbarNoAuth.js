@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Collapse,
   Navbar,
@@ -13,9 +13,9 @@ import {
   DropdownItem,
   NavbarText,
   Button,
-  ButtonGroup
-} from 'reactstrap';
-import LoginModal from '../LoginForm/LoginModal'
+  ButtonGroup,
+} from "reactstrap";
+import LoginModal from "../LoginForm/LoginModal";
 import { Link } from "react-router-dom";
 
 const NavbarNoAuth = (props) => {
@@ -25,9 +25,11 @@ const NavbarNoAuth = (props) => {
 
   return (
     <div>
-      <Navbar style={{ backgroundColor: "#ffe080"}} light expand="md">
-        <Link to='/'>
-          <NavbarBrand ><h3>HOSTDOG</h3></NavbarBrand>
+      <Navbar style={{ backgroundColor: "#ffe080" }} light expand="md">
+        <Link to="/">
+          <NavbarBrand>
+            <h3>HOSTDOG</h3>
+          </NavbarBrand>
         </Link>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
@@ -36,38 +38,32 @@ const NavbarNoAuth = (props) => {
               <NavLink href="/components/">Components</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="https://github.com/reactstrap/reactstrap">GitHub</NavLink>
+              <NavLink href="https://github.com/reactstrap/reactstrap">
+                GitHub
+              </NavLink>
             </NavItem>
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>
                 Options
               </DropdownToggle>
               <DropdownMenu right>
-                <DropdownItem>
-                  Option 1
-                </DropdownItem>
-                <DropdownItem>
-                  Option 2
-                </DropdownItem>
+                <DropdownItem>Option 1</DropdownItem>
+                <DropdownItem>Option 2</DropdownItem>
                 <DropdownItem divider />
-                <DropdownItem>
-                  Reset
-                </DropdownItem>
+                <DropdownItem>Reset</DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
           </Nav>
           <ButtonGroup>
-            <Link to="/signup">
-            <Button >Sign up</Button>{' '}
-          </Link>
-            <LoginModal buttonLabel="Log In" />{' '}
-            </ButtonGroup>
-
-
+            <a href="/signup">
+              <Button onClick={props.clear}>Sign up</Button>{" "}
+            </a>
+            <LoginModal buttonLabel="Log In" />{" "}
+          </ButtonGroup>
         </Collapse>
       </Navbar>
     </div>
   );
-}
+};
 
 export default NavbarNoAuth;

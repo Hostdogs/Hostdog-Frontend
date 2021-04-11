@@ -26,19 +26,23 @@ import {
   Col,
 } from "reactstrap";
 import {useCookies} from 'react-cookie'
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import './LoginModal.css'
 
 const LoginModal = (props) => {
   const [token,setToken] = useCookies(['mytoken'])
   const [userName, setuserName] = useState('')
   const [passWord, setpassWord] = useState('')
   const [loginRes, setloginRes] = useState(" ")
+  let history = useHistory()
+
   const loginBtn = () =>{
-    if(userName=='' || passWord == ''){
+    if(userName==='' || passWord === ''){
       setloginRes("กรุณากรอกชื่อผู้ใช้หรือรหัสผ่านให้ถูกต้อง")
     }else{
       setToken('mytoken',"hellothisistesttoken")
-      ///use history to route to Homepage
+      history.push('/')
+
     }
     
   }
@@ -61,7 +65,7 @@ const LoginModal = (props) => {
 
   return (
     <div>
-      <Form inline onSubmit={(e) => e.preventDefault()}>
+      <Form inline onSubmit={(e) => e.preventDefault()} >
         <Button onClick={onClose}>
           {buttonLabel}
         </Button>

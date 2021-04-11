@@ -99,7 +99,7 @@ const LoginModal = (props) => {
           <br/><br />
           <Button color="warning" onClick={loginBtn}>ยืนยัน</Button>
           <a style={{ marginLeft: "3%" }}>
-            <a href="#" onClick={e=>console.log({userName},{passWord})}>ลืมรหัสผ่าน</a>
+            <a href="#" onClick={e=>console.log("{userName},{passWord}")}>ลืมรหัสผ่าน</a>
           </a>
           <br />
           <br />

@@ -42,6 +42,7 @@ const LoginModal = (props) => {
     }else{
       setToken('mytoken',"hellothisistesttoken")
       history.push('/')
+
     }
     
   }

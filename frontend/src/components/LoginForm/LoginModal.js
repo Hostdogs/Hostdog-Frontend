@@ -24,7 +24,7 @@ const LoginModal = (props) => {
   const [passWord, setpassWord] = useState('')
   const [loginRes, setloginRes] = useState(" ")
   let history = useHistory()
-  const URL = "localhost:8000/"
+  const URL = "http://127.0.0.1:8000/"
   const loginBtn = () =>{
     if(userName==='' || passWord === ''){
       setloginRes("กรุณากรอกชื่อผู้ใช้หรือรหัสผ่านให้ถูกต้อง")
@@ -33,11 +33,12 @@ const LoginModal = (props) => {
       axios.post(URL+"api/token/",{ "username":userName, "password":passWord })
       .then(res=>{
         console.log(res)
-        
+        setToken('mytoken',res.data.token)
+        history.push('/')
       }).catch(error =>{
         console.log(error)
       })
-      history.push('/')
+      
 
     }
     

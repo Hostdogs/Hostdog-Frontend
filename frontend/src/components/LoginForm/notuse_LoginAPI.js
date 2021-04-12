@@ -3,7 +3,7 @@ const API_URL = "localhost:8000/"
 
 export default class LoginAPI{
 
-    Login(username,password){
+    createLogin(username,password){
         const url = `${API_URL}api/token/`;
         return axios.post(url,{ "username":username, "password":password });
     }

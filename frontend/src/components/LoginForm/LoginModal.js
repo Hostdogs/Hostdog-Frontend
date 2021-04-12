@@ -16,7 +16,7 @@ import {
 import {useCookies} from 'react-cookie'
 import { useHistory } from "react-router-dom";
 import './LoginModal.css'
-import LoginAPI from './LoginAPI'
+import axios from "axios";
 
 const LoginModal = (props) => {
   const [token,setToken] = useCookies(['mytoken'])
@@ -24,14 +24,18 @@ const LoginModal = (props) => {
   const [passWord, setpassWord] = useState('')
   const [loginRes, setloginRes] = useState(" ")
   let history = useHistory()
-
+  const URL = "localhost:8000/"
   const loginBtn = () =>{
     if(userName==='' || passWord === ''){
       setloginRes("กรุณากรอกชื่อผู้ใช้หรือรหัสผ่านให้ถูกต้อง")
     }else{
       // setToken('mytoken',"hellothisistesttoken")
-      LoginAPI.Login(userName,passWord).then(res=>{
+      axios.post(URL+"api/token/",{ "username":userName, "password":passWord })
+      .then(res=>{
         console.log(res)
+        
+      }).catch(error =>{
+        console.log(error)
       })
       history.push('/')
 

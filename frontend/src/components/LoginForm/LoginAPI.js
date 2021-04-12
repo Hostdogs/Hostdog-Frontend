@@ -1,6 +1,10 @@
 import axios from 'axios'
-const url = "localhost:8000/"
+const API_URL = "localhost:8000/"
 
-export default function LoginAPI(username,password) {
-    axios.post(url+"api/token",{"username":username,"password":password})
+export default class LoginAPI{
+
+    Login(username,password){
+        const url = `${API_URL}api/token/`;
+        return axios.post(url,{ "username":username, "password":password });
+    }
 }

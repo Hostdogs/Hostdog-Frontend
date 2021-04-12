@@ -20,16 +20,10 @@ export default function GoogleMapLocation({apikey ,handleDragEnd ,currentGeoCode
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={currentGeoCode}
-        zoom={10}
+        zoom={17}
       >
-        <Marker position={currentGeoCode} draggable={true}  onDragEnd={(e)=>handleDragEnd(e)} >
-
-
-        </Marker>
+        <Marker position={currentGeoCode} draggable={true}  onDragEnd={(e)=>handleDragEnd(e)} />
         
-        
-  
-        <></>
       </GoogleMap>
     </LoadScript>
         </div>

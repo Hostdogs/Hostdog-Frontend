@@ -12,6 +12,7 @@ import {
   Input,
 } from "reactstrap";
 
+
 import { useState } from "react";
 export default function FilterBox() {
   const [isOpen, setIsOpen] = useState(false);

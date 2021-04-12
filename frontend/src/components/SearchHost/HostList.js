@@ -1,6 +1,16 @@
 
 import Host from './Host'
-
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  Form,
+  FormGroup,
+  Input,
+  Label,
+} from "reactstrap";
+import FilterBox from "./FilterBox";
 export default function HostList() {
   const hostdata =[
     {
@@ -30,7 +40,9 @@ export default function HostList() {
     }
   ] ;
   return (
-    <div>
+    <Container className="host-container" >
+        <FilterBox />
+
       {hostdata.map((hd) => (
 
    
@@ -38,6 +50,7 @@ export default function HostList() {
  
         
       ))}
-    </div>
+
+    </Container>
   );
 }

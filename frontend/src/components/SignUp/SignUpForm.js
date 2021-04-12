@@ -73,7 +73,7 @@ export default function SignUpForm() {
                 <InformationForm />
               ) : (
                 <div>
-                  <small style={{ color: "red" }}>{submitResponse}</small><br /><br />
+                  <small style={{ color: "red" }}>{submitResponse}</small><br />
                   <Button color="secondary" onClick={handleAskForm}>
                     ถัดไป
             </Button></div>)}

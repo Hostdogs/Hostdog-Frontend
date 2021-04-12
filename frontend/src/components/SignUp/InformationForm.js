@@ -39,6 +39,7 @@ export default function InformationForm() {
     const dayformat = "YYYY-MM-DD"
 
     const onSubmit = () => {
+        
         console.log(Information)
     }
     const onChangeInformation = (e) => {
@@ -54,7 +55,7 @@ export default function InformationForm() {
     useEffect(() => {
 
         // setdob(moment(moment().year() - 18 + "-01-01", dayformat).format(dayformat))
-        setInformation(Object.assign({}, Information, { "dob": moment(moment().year() - 18 + "-01-01", dayformat).format(dayformat) }))
+        setInformation( {...Information, "dob": moment(moment().year() - 18 + "-01-01", dayformat).format(dayformat) })
 
 
     }, [])
@@ -64,7 +65,8 @@ export default function InformationForm() {
     return (
         <div>
             <Container fluid="sm" style={{ maxWidth: "60%", minWidth: "300px" }}>
-                <br />
+                <br /><br/>
+                <Label >รายละเอียดส่วนตัว</Label>
                 <Row>
                     <Col>
                         <FormGroup style={{ minWidth: "250px" }}>
@@ -158,10 +160,10 @@ export default function InformationForm() {
                         type="date"
                         name="dob"
                         placeholder="วัน/เดือน/ปี"
-                        value={Information["dob"]}
-                        onChange={e => setInformation(Object.assign({}, Information, { "dob": e.target.value }))}
+                        value={Information.dob}
+                        onChange={e => setInformation( {...Information, "dob": e.target.value })}
                         max={moment().format(dayformat)}
-                        onChange={onChangeInformation}
+                        
                     />
                 </FormGroup>
                 <FormGroup>
@@ -195,10 +197,11 @@ export default function InformationForm() {
                     <Button onClick={onSubmit}>ถัดไป</Button>
                 </FormGroup>
             </Container>
-
+            
             <UncontrolledPopover trigger="focus" placement="right" target="username">
                 <PopoverBody className="Popover" style={{ maxWidth: "150px" }}>ตัวอักษรภาษาหรือตัวเลขตั้งแต่5ถึง20ตัว</PopoverBody>
             </UncontrolledPopover>
+
         </div>
     )
 }

@@ -47,7 +47,7 @@ export default function SignUpForm() {
   } else {
     return (
       <div>
-        <br /><br /><br />
+        <br /><br />
         <Container className="themed-container" fluid="sm">
           <br />
           <Form >
@@ -82,10 +82,10 @@ export default function SignUpForm() {
           </Form>
 
         </Container>
-
+        
       </div>
 
-
+      
 
     );
   }

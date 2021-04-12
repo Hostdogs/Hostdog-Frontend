@@ -6,24 +6,12 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
-  ModalFooter,
   Input,
-  Label,
   Form,
-  FormGroup,
   InputGroup,
   InputGroupAddon,
   InputGroupText,
-  TabContent,
-  TabPane,
-  Nav,
-  NavItem,
-  NavLink,
-  Card,
-  CardTitle,
-  CardText,
-  Row,
-  Col,
+  
 } from "reactstrap";
 import {useCookies} from 'react-cookie'
 import { useHistory } from "react-router-dom";
@@ -54,7 +42,7 @@ const LoginModal = (props) => {
   const { buttonLabel, className } = props;
 
   const [modal, setModal] = useState(false);
-  const [unmountOnClose, setUnmountOnClose] = useState(false);
+  const [unmountOnClose, setUnmountOnClose] = useState(true);
   const [backdrop, setBackdrop] = useState(true);
 
   const toggle = () => setModal(!modal);

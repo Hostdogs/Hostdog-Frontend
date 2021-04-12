@@ -23,7 +23,7 @@ export default function NavbarIsAuth({toggleSideBar}) {
   return (
     <div>
       <Navbar
-        style={{ backgroundColor: "#ffe080" ,position: "fixed",width:"100%" }}
+        style={{ backgroundColor: "#ffe080" ,position: "fixed",width:"100%" ,zIndex:"10000" }}
         light
       >
         <NavbarToggler onClick={toggleSideBar} className="mr-2" />

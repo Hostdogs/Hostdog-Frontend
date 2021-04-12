@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const ContentNoAuth = (props) => {
   return (
-    <div >
+    <div className="content">
       <Jumbotron >
         <br/><br/>
         <div style={{textAlign:"center"}}>

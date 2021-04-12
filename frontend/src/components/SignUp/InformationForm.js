@@ -196,6 +196,7 @@ export default function InformationForm() {
                 <FormGroup>
                     <Button onClick={onSubmit}>ถัดไป</Button>
                 </FormGroup>
+                
             </Container>
             
             <UncontrolledPopover trigger="focus" placement="right" target="username">

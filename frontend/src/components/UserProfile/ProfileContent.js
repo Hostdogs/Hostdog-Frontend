@@ -4,7 +4,6 @@ import { Jumbotron, Container } from "reactstrap";
 export default function ProfileContent() {
   return (
     <div style={{ backgroundColor: "#ffe080" }}>
-      <Jumbotron style={{height:"90vh", backgroundColor:"wheat"}}>
         <Container>
           <h1 className="display-3">Jumbotron</h1>
           <p className="lead">
@@ -12,7 +11,6 @@ export default function ProfileContent() {
             space of its parent.
           </p>
         </Container>
-      </Jumbotron>
     </div>
   );
 }

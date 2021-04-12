@@ -15,7 +15,7 @@ const ContentNoAuth = (props) => {
         <hr className="my-2" />
         <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
         <p className="lead">
-          <Link to="/signup"><Button color="primary">อยากเสือกก็กด</Button></Link>
+          <Button href="/profile" color="primary">ทดลองหน้าโปรไฟล์</Button>
           
         </p>
       </Jumbotron>

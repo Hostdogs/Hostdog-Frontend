@@ -4,6 +4,7 @@ import ProfileCard from "./ProfileCard";
 import { Row, Col } from "reactstrap";
 import NavbarIsAuth from "../Navbar/NavbarIsAuth";
 import SideBar from "../sidebar/SideBar";
+import './ProfilePage.css'
 
 export default function ProfilePage() {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,20 +14,17 @@ export default function ProfilePage() {
   };
 
   return (
-    <div>
-      <div style={{zIndex:"5"}}>
-        <NavbarIsAuth toggleSideBar={toggleSideBar} />
-      </div>
-      <div>
-        <Row>
+    <div className="hideScrollbar">
+      <NavbarIsAuth toggleSideBar={toggleSideBar} />
+      <SideBar isOpen={isOpen} />
+      <Row>
         <Col
           style={{
-            minWidth: "25%",
+            minWidth: "300px",
             paddingTop: "0",
             paddingBottom: "0",
             paddingLeft: "0",
             paddingRight: "0",
-            backgroundColor: "tomato",
           }}
         ></Col>
         <Col
@@ -42,7 +40,7 @@ export default function ProfilePage() {
         </Col>
         <Col
           style={{
-            minWidth: "25%",
+            minWidth: "300px",
             paddingTop: "0",
             paddingBottom: "0",
             paddingLeft: "0",
@@ -52,7 +50,6 @@ export default function ProfilePage() {
           <ProfileCard />
         </Col>
       </Row>
-      </div>
     </div>
   );
 }

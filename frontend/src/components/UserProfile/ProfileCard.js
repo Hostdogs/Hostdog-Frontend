@@ -54,6 +54,7 @@ const ProfileCard = (props) => {
           </Alert>
         </CardText>
       </CardFooter>
+      <br/>
     </Card>
   );
 };

@@ -5,4 +5,4 @@ import App from "./App";
 import "bootstrap/dist/css/bootstrap.min.css";
 import ProfilePage from "./components/UserProfile/ProfilePage";
 
-ReactDOM.render(<ProfilePage />, document.getElementById("root"));
+ReactDOM.render(<App />, document.getElementById("root"));

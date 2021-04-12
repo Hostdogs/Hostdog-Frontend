@@ -29,8 +29,6 @@ export default function HomePage() {
                         <SideBar isOpen={isOpen} />
                         <ContentIsAuth />
                     </aside>
-
-
                 </div>
             ) : (<ContentNoAuth />)}
             <Footer/>

@@ -16,6 +16,7 @@ import {
 import {useCookies} from 'react-cookie'
 import { useHistory } from "react-router-dom";
 import './LoginModal.css'
+import LoginAPI from './LoginAPI'
 
 const LoginModal = (props) => {
   const [token,setToken] = useCookies(['mytoken'])
@@ -28,7 +29,10 @@ const LoginModal = (props) => {
     if(userName==='' || passWord === ''){
       setloginRes("กรุณากรอกชื่อผู้ใช้หรือรหัสผ่านให้ถูกต้อง")
     }else{
-      setToken('mytoken',"hellothisistesttoken")
+      // setToken('mytoken',"hellothisistesttoken")
+      LoginAPI.Login(userName,passWord).then(res=>{
+        console.log(res)
+      })
       history.push('/')
 
     }

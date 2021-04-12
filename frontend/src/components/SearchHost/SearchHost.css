@@ -1,18 +1,20 @@
 
 
-.search-container{
+.search-container,.map-container{
 
 
-padding: 10px;
+
 display :flex;
 
 justify-content: center;
 
-margin:0 auto;
+margin:20px auto;
+
 }
 
 
 .host-container{
+  
 background:#ffe080;
 width: 50%;
 min-width:300px;

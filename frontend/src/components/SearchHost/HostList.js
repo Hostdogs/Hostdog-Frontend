@@ -33,7 +33,7 @@ export default function HostList() {
       distancefromCus: "40 กม.",
     },
     {
-      id:3,
+      id:4,
       hostName: "Pure",
       dateAvail:"จันทร์-ศุกร์",
       distancefromCus: "50 กม.",
@@ -46,7 +46,7 @@ export default function HostList() {
       {hostdata.map((hd) => (
 
    
-        <Host id={hd.id} host={hd}/>
+        <Host key={hd.id} host={hd}/>
  
         
       ))}

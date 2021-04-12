@@ -30,8 +30,16 @@ const LoginModal = (props) => {
     if(userName==='' || passWord === ''){
       setloginRes("กรุณากรอกชื่อผู้ใช้หรือรหัสผ่านให้ถูกต้อง")
     }else{
-      const res = LoginAPI.Login(userName,passWord)
-      console.log(res)
+      var resp = LoginAPI.Login(userName,passWord).then(res => {
+        console.log(res)
+        resp = res.data
+        
+      }).catch(error =>{
+        console.log("error",error)
+        resp = 'error'
+
+      })
+      console.log(resp)
       //setToken('mytoken',res.data.token)
       
       // setToken('mytoken',"hellothisistesttoken")

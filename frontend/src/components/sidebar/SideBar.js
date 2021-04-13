@@ -35,7 +35,7 @@ export default function SideBar({isOpen}) {
           </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink tag={Link} to={"/ประวัติการใช้บริการ"} style={{ color: "black" }}>
+            <NavLink tag={Link} to={"/history"} style={{ color: "black" }}>
               <FontAwesomeIcon icon={faHistory} className="mr-2" />
             ประวัติการใช้บริการ
           </NavLink>

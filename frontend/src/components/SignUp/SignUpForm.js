@@ -47,7 +47,7 @@ export default function SignUpForm() {
   } else {
     return (
       <div>
-        <br /><br /><br />
+        <br /><br />
         <Container className="themed-container" fluid="sm">
           <br />
           <Form >
@@ -73,7 +73,7 @@ export default function SignUpForm() {
                 <InformationForm />
               ) : (
                 <div>
-                  <small style={{ color: "red" }}>{submitResponse}</small><br /><br />
+                  <small style={{ color: "red" }}>{submitResponse}</small><br />
                   <Button color="secondary" onClick={handleAskForm}>
                     ถัดไป
             </Button></div>)}
@@ -82,10 +82,10 @@ export default function SignUpForm() {
           </Form>
 
         </Container>
-
+        
       </div>
 
-
+      
 
     );
   }

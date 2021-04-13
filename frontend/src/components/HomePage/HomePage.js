@@ -18,10 +18,9 @@ export default function HomePage() {
 
 
     return (
-        <div>
-           
-                {token['mytoken'] ? (<NavbarIsAuth toggleSideBar={toggleSideBar} />) : (<NavbarNoAuth />)}
-   
+        <div >
+
+            {token['mytoken'] ? (<NavbarIsAuth toggleSideBar={toggleSideBar} />) : (<NavbarNoAuth />)}
 
             {token['mytoken'] ? (
                 <div>
@@ -33,8 +32,8 @@ export default function HomePage() {
 
                 </div>
             ) : (<ContentNoAuth />)}
-            <Footer/>
-            
+            <Footer />
+
         </div>
     )
 }

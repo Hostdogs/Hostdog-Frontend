@@ -6,28 +6,18 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
-  ModalFooter,
   Input,
-  Label,
   Form,
-  FormGroup,
   InputGroup,
   InputGroupAddon,
   InputGroupText,
-  TabContent,
-  TabPane,
-  Nav,
-  NavItem,
-  NavLink,
-  Card,
-  CardTitle,
-  CardText,
-  Row,
-  Col,
+  
 } from "reactstrap";
 import {useCookies} from 'react-cookie'
 import { useHistory } from "react-router-dom";
 import './LoginModal.css'
+import axios from "axios";
+import LoginAPI from "./LoginAPI"
 
 const LoginModal = (props) => {
   const [token,setToken] = useCookies(['mytoken'])
@@ -35,13 +25,32 @@ const LoginModal = (props) => {
   const [passWord, setpassWord] = useState('')
   const [loginRes, setloginRes] = useState(" ")
   let history = useHistory()
-
+  // const URL = "http://127.0.0.1:8000/"
   const loginBtn = () =>{
     if(userName==='' || passWord === ''){
       setloginRes("กรุณากรอกชื่อผู้ใช้หรือรหัสผ่านให้ถูกต้อง")
     }else{
-      setToken('mytoken',"hellothisistesttoken")
-      history.push('/')
+      LoginAPI.Login(userName,passWord).then(res => {
+        console.log(res)
+        setToken('mytoken',res.data.token)
+        history.push('/')
+      }).catch(error =>{
+        setloginRes("กรุณาตรวจสอบชื่อหรือรหัสผ่านของคุณ")
+
+      })
+      
+      //setToken('mytoken',res.data.token)
+      
+      // setToken('mytoken',"hellothisistesttoken")
+      // axios.post(URL+"api/token/",{ "username":userName, "password":passWord })
+      // .then(res=>{
+      //   console.log(res)
+      //   setToken('mytoken',res.data.token)
+      //   history.push('/')
+      // }).catch(error =>{
+      //   console.log(error)
+      // })
+      
 
     }
     
@@ -54,7 +63,7 @@ const LoginModal = (props) => {
   const { buttonLabel, className } = props;
 
   const [modal, setModal] = useState(false);
-  const [unmountOnClose, setUnmountOnClose] = useState(false);
+  const [unmountOnClose, setUnmountOnClose] = useState(true);
   const [backdrop, setBackdrop] = useState(true);
 
   const toggle = () => setModal(!modal);

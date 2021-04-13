@@ -1,8 +1,8 @@
 import { GoogleMap,Marker } from '@react-google-maps/api';
 
 const containerStyle = {
-    width: '600px',
-    height: '400px'
+    width: '100%', //ไอบาสทำ
+    height: '350px'
   };
   
 

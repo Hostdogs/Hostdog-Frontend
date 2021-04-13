@@ -107,11 +107,11 @@ export default function InformationForm() {
     const urlapi = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${loadScript.googleAPIKey}&language=th`;
     const response = await fetch(urlapi);
     const data = await response.json();
-   
+   console.log(data);
 
     data.status === "OK"
       ? setUserAddress(data.results[0].formatted_address)
-      : alert("กรุณาลองใหม่อีกครั้ง");
+      : alert("reverseGeoCoding error");
 
 
   };
@@ -122,9 +122,11 @@ export default function InformationForm() {
     const response = await fetch(urlapi);
     const data = await response.json();
     console.log(geocode);
+
+    console.log(data);
     data.status === "OK"
       ? setGeoCode(data.results[0].geometry.location)
-      : alert("กรุณาลองใหม่อีกครั้ง");
+      : alert("geocoding error");
 
   };
 
@@ -148,7 +150,7 @@ export default function InformationForm() {
 
   const onPlaceChanged = () => {
     const data = testAutoComplete.getPlace();
-
+console.log(testAutoComplete)
     if (
       testAutoComplete !== null &&
       typeof data.formatted_address !== "undefined"

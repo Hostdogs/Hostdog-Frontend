@@ -26,10 +26,7 @@ export default function SearchBox() {
     language: "th",
     libraries: ["places"],
   });
-  const onShowMap = () => {
-    setShowMap(true);
-  };
-
+ 
   const getCurrentLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(success);
@@ -64,7 +61,7 @@ export default function SearchBox() {
      data.status === "OK"
       ? setGeoCode(data.results[0].geometry.location)
        : alert("กรุณาลองใหม่อีกครั้ง");
-       setShowMap(true);
+       
   }
 
   const onMarkerDragEnd = (e) => {
@@ -80,19 +77,30 @@ export default function SearchBox() {
   const onLoad = (autocomplete) => {
 
     setTestAutoComplete(autocomplete);
+    console.log(testAutoComplete);
+    
   };
 
   const onPlaceChanged = () => {
     const data=testAutoComplete.getPlace();
 
-    if (testAutoComplete !== null) {
+   
+    if ((testAutoComplete !== null )&&typeof(data.formatted_address) !== "undefined") {
       setUserAddress(data.formatted_address);
       geoCoding(data.formatted_address);
-    
-    } else {
-      alert("กรุณากดปุ่ม F5 แล้วลองใหม่อีกครั้ง");
+      setShowMap(true);
+    } else if(testAutoComplete !== null ){
+
+      setUserAddress(testAutoComplete.gm_accessors_.place.Se.predictions[0].Jk);
+       geoCoding(testAutoComplete.gm_accessors_.place.Se.predictions[0].Jk);
+      setShowMap(true);
+    }
+    else{
+      alert("ขออภัยไม่พบที่อยู่ที่ระบุ");
     }
   };
+
+
 
   return (
     <>
@@ -105,7 +113,7 @@ export default function SearchBox() {
           <Row>
             <Form inline className="searchbox" onSubmit={(e)=>{
               e.preventDefault();
-              alert("สวัสดีค่ะบาสคุงบางขุนเทียน");
+              
             }}>
               <FormGroup>
                 <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
@@ -121,12 +129,11 @@ export default function SearchBox() {
                   ></Input>
                 </Autocomplete>
               </FormGroup>
-
               <FormGroup className="gps">
                 <Button
                   onClick={() => {
                     getCurrentLocation();
-                    onShowMap();
+                    setShowMap(true);
                   }}
                 >
                   GPS

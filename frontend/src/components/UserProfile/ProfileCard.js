@@ -12,12 +12,12 @@ import {
 
 const ProfileCard = (props) => {
   return (
-    <Card style={{maxHeight:"100%"}}>
+      <Card style={{maxHeight:"100%", }}>
       <CardBody
         style={{
           textAlign: "center",
           backgroundColor: "#ffbb3cd5",
-          height: "45vh",
+          height: "30%",
         }}
       >
         <div id="mainContainer" class="container">
@@ -36,7 +36,7 @@ const ProfileCard = (props) => {
         </CardSubtitle>
         <br />
       </CardBody>
-      <CardFooter style={{ backgroundColor: "transparent", height: "45vh" }}>
+      <CardFooter style={{ backgroundColor: "transparent", height: "70%" }}>
         <br />
         <CardText style={{ textAlign: "left" }}>
           <CardTitle tag="h5">รายละเอียด</CardTitle>
@@ -54,7 +54,6 @@ const ProfileCard = (props) => {
           </Alert>
         </CardText>
       </CardFooter>
-      <br/>
     </Card>
   );
 };

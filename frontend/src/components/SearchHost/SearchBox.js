@@ -55,9 +55,6 @@ export default function SearchBox() {
     data.status === "OK"
       ? setUserAddress(data.results[0].formatted_address)
       : alert("reverseGeocoding failed");
-
-     
-     
   };
   const geoCoding = async (address) => {
     const urlapi = `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${loadScript.googleAPIKey}&language=th`;
@@ -108,7 +105,6 @@ export default function SearchBox() {
     console.log(data);
     console.log("onPlaceChanged testAutoComplete");
     console.log(testAutoComplete);
-
   };
 
   return (
@@ -119,61 +115,51 @@ export default function SearchBox() {
           language={loadScript.language}
           libraries={loadScript.libraries}
         >
-          <Row>
-            <Col>
-            <Form
-              inline
-              className="searchbox"
-              onSubmit={(e) => {
-                e.preventDefault();
-              }}
-            >
-              <FormGroup>
-                <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
-                  <Input
-                    className="textlocation"
-                    type="text"
-                    name="Location"
-                    id="location"
-                    placeholder="ที่อยู่"
-                    value={userAddress}
-                    onChange={(e) => setUserAddress(e.target.value)}
-                    onSubmit={() => alert("สวัสดีค่ะบาสคุง")}
-                    // style={{ maxWidth: "60%", minWidth: "300px" }}
-                  ></Input>
-                </Autocomplete>
-              </FormGroup>
-              <FormGroup className="gps">
-                <Button
-                  onClick={() => {
-                    getCurrentLocation();
-                    setShowMap(true);
-                  }}
-                >
-                  GPS
-                </Button>
-              </FormGroup>
+          <Form
+            inline
+            className="searchbox"
+            onSubmit={(e) => {
+              e.preventDefault();
+            }}
+          >
+            <FormGroup>
+              <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
+                <Input
+                  className="textlocation"
+                  type="text"
+                  name="Location"
+                  id="location"
+                  placeholder="ที่อยู่"
+                  value={userAddress}
+                  onChange={(e) => setUserAddress(e.target.value)}
+                  onSubmit={() => alert("สวัสดีค่ะบาสคุง")}
+                  // style={{ maxWidth: "60%", minWidth: "300px" }}
+                ></Input>
+              </Autocomplete>
+            </FormGroup>
+            <FormGroup className="gps">
+              <Button
+                onClick={() => {
+                  getCurrentLocation();
+                  setShowMap(true);
+                }}
+              >
+                GPS
+              </Button>
+            </FormGroup>
 
-              <FormGroup className="search">
-                <Button onClick={() => alert("สวัสดีครับบาสคุง")}>ค้นหา</Button>
-              </FormGroup>
-            </Form>
-            </Col>
-          </Row>
-
-          <Row>
-            <Col>
-          
+            <FormGroup className="search">
+              <Button onClick={() => alert("สวัสดีครับบาสคุง")}>ค้นหา</Button>
+            </FormGroup>
+          </Form>
+          <Container className="map">
             {showMap ? (
               <GoogleMapLocation
                 handleDragEnd={(e) => onMarkerDragEnd(e)}
                 currentGeoCode={geocode}
               />
             ) : null}
-
-            </Col>
-          </Row>
-
+          </Container>
         </LoadScript>
       </Container>
     </>

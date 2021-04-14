@@ -1,18 +1,27 @@
 
 
-.search-container,.map-container{
+.search-container{
 
-
-
-display :flex;
-
-justify-content: center;
+max-width: 100%;
+width:50%;
 
 margin:20px auto;
+background: black;
 
 }
+.textlocation{
+
+min-width: 300px;
+width:80%;
 
 
+
+}
+.search{
+}
+.gps{
+
+}
 .host-container{
   
 background:#ffe080;

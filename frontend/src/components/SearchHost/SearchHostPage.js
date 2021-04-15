@@ -8,7 +8,6 @@ import "./SearchHost.css";
 export default function SearchHostPage() {
   return (
     <div>
-      <NavbarIsAuth />
       <SearchBox />
       <HostList />
     </div>

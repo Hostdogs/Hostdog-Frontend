@@ -30,26 +30,19 @@ const LoginModal = (props) => {
     if(userName==='' || passWord === ''){
       setloginRes("กรุณากรอกชื่อผู้ใช้หรือรหัสผ่านให้ถูกต้อง")
     }else{
-      LoginAPI.Login(userName,passWord).then(res => {
-        console.log(res)
-        setToken('mytoken',res.data.token)
-        history.push('/')
-      }).catch(error =>{
-        setloginRes("กรุณาตรวจสอบชื่อหรือรหัสผ่านของคุณ")
-
-      })
-      
-      //setToken('mytoken',res.data.token)
-      
-      // setToken('mytoken',"hellothisistesttoken")
-      // axios.post(URL+"api/token/",{ "username":userName, "password":passWord })
-      // .then(res=>{
+      // LoginAPI.Login(userName,passWord).then(res => {
       //   console.log(res)
       //   setToken('mytoken',res.data.token)
       //   history.push('/')
       // }).catch(error =>{
-      //   console.log(error)
+      //   setloginRes("กรุณาตรวจสอบชื่อหรือรหัสผ่านของคุณ")
+
       // })
+      
+      //fake Login///
+      setToken('mytoken',"hellothisisfaketoken")
+      history.push('/')
+      
       
 
     }

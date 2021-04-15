@@ -6,13 +6,8 @@ import "./App.css";
 import {BrowserRouter as Router,Route} from 'react-router-dom';
 import SignUpPage from './components/SignUp/SignUpPage';
 import HomePage from './components/HomePage/HomePage';
-import SideBar from './components/sidebar/SideBar';
-
 
 function App() {
-  const [sidebarIsOpen, setSidebarOpen] = useState(true);
-  const toggleSidebar = () => setSidebarOpen(!sidebarIsOpen);
-
 
   return (
     <Router>

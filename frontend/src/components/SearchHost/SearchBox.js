@@ -136,7 +136,7 @@ export default function SearchBox() {
                   value={userAddress}
                   onChange={(e) => setUserAddress(e.target.value)}
                   onSubmit={() => alert("สวัสดีค่ะบาสคุง")}
-                  // style={{ maxWidth: "60%", minWidth: "300px" }}
+       
                 ></Input>
               </Autocomplete>
             </FormGroup>

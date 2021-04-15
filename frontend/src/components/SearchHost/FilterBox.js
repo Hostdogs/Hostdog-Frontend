@@ -9,17 +9,16 @@ import {
   DropdownMenu,
   DropdownItem,
   Row,
-  Input,
-  Label,
-  FormGroup,
-  Col,
+Container,
 } from "reactstrap";
 import { addDays, addMonths, endOfMonth } from "date-fns";
-import { useState } from "react";
+import { useState,useEffect  } from "react";
 import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css";
 import "./SearchHost.css";
+
+
 export default function FilterBox() {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -54,8 +53,29 @@ export default function FilterBox() {
     },
   ]);
 
+  const [width, setWidth] = useState(window.innerWidth)
+  useEffect(() => {
+    function handleResize() {
+      setWidth(window.innerWidth)
+    
+}
+
+    window.addEventListener('resize', handleResize)
+
+    return _ => {
+      window.removeEventListener('resize', handleResize)
+    
+}
+  })
+
+
+
+
+
+
   return (
     <div>
+
       <Button
         color="secondary"
         onClick={toggle}
@@ -63,7 +83,7 @@ export default function FilterBox() {
       >
         ตัวกรอง
       </Button>
-      <Collapse isOpen={isOpen} className="filter-container">
+      <Collapse isOpen={isOpen}>
         <Card>
           <CardBody>
             <Row>
@@ -104,9 +124,8 @@ export default function FilterBox() {
               <DropdownToggle caret onClick={toggleDate}>
                 ช่วงเวลา
               </DropdownToggle>
-              <Collapse isOpen={isDateOpen}>
-                <Card  >
-                  <CardBody className="datacard">
+              <Collapse isOpen={isDateOpen} className="datecollapse" >
+      
                     <DateRange
                       className="daterangepick"
                       editableDateInputs={true}
@@ -116,10 +135,9 @@ export default function FilterBox() {
                       minDate={new Date()}
                       maxDate={endOfMonth(addMonths(new Date(), 1))}
                       months={2}
-                      direction="horizontal"
+                      direction={width>400?"horizontal":"vertical"}
                     />
-                  </CardBody>
-                </Card>
+
               </Collapse>
             </Row>
           </CardBody>

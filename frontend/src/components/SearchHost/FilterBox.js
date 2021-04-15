@@ -105,8 +105,8 @@ export default function FilterBox() {
                 ช่วงเวลา
               </DropdownToggle>
               <Collapse isOpen={isDateOpen}>
-                <Card>
-                  <CardBody>
+                <Card  >
+                  <CardBody className="datacard">
                     <DateRange
                       className="daterangepick"
                       editableDateInputs={true}
@@ -117,7 +117,6 @@ export default function FilterBox() {
                       maxDate={endOfMonth(addMonths(new Date(), 1))}
                       months={2}
                       direction="horizontal"
-                
                     />
                   </CardBody>
                 </Card>

@@ -115,14 +115,17 @@ export default function SearchBox() {
           language={loadScript.language}
           libraries={loadScript.libraries}
         >
+      
           <Form
             inline
-            className="searchbox"
+            className="search-form"
             onSubmit={(e) => {
               e.preventDefault();
             }}
           >
+  
             <FormGroup>
+            
               <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
                 <Input
                   className="textlocation"
@@ -151,8 +154,10 @@ export default function SearchBox() {
             <FormGroup className="search">
               <Button onClick={() => alert("สวัสดีครับบาสคุง")}>ค้นหา</Button>
             </FormGroup>
+   
           </Form>
-          <Container className="map">
+       
+          <Container className="map-container">
             {showMap ? (
               <GoogleMapLocation
                 handleDragEnd={(e) => onMarkerDragEnd(e)}

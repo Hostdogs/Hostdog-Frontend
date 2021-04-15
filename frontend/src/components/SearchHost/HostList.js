@@ -10,7 +10,7 @@ import {
   Input,
   Label,
 } from "reactstrap";
-import FilterBox from "./FilterBox";
+
 export default function HostList() {
   const hostdata =[
     {
@@ -40,9 +40,10 @@ export default function HostList() {
     }
   ] ;
   return (
+    <>
+   
     <Container className="host-container" >
-        <FilterBox />
-
+        
       {hostdata.map((hd) => (
 
    
@@ -52,5 +53,6 @@ export default function HostList() {
       ))}
 
     </Container>
+    </>
   );
 }

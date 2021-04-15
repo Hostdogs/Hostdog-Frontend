@@ -11,7 +11,7 @@ import {
 import "./SearchHost.css";
 import { useState } from "react";
 import GoogleMapLocation from "./GoogleMapLocation";
-
+import FilterBox from "./FilterBox";
 import { Autocomplete, LoadScript } from "@react-google-maps/api";
 
 export default function SearchBox() {
@@ -118,7 +118,6 @@ export default function SearchBox() {
       
           <Form
             inline
-            className="search-form"
             onSubmit={(e) => {
               e.preventDefault();
             }}
@@ -132,7 +131,7 @@ export default function SearchBox() {
                   type="text"
                   name="Location"
                   id="location"
-                  placeholder="ที่อยู่"
+                  placeholder="กรุณาใส่ที่อยู่เพื่อค้นหาผู้รับฝากใกล้ๆ"
                   value={userAddress}
                   onChange={(e) => setUserAddress(e.target.value)}
                   onSubmit={() => alert("สวัสดีค่ะบาสคุง")}
@@ -166,6 +165,7 @@ export default function SearchBox() {
             ) : null}
           </Container>
         </LoadScript>
+        <FilterBox />
       </Container>
     </>
   );

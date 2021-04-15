@@ -3,7 +3,7 @@ export default function Host({ host }) {
   return (
     <div className="host" >
 
-    <Card body outline color="warning" style={{background:"#fff3d0"}} >
+    <Card body outline color="warning" style={{background:"#fff3d0",height:"60vh"}} >
     <CardTitle tag="h5" >            {host.hostName}
             {"     "}
             {host.distancefromCus}</CardTitle>

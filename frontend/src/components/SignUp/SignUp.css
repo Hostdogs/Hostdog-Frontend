@@ -1,0 +1,18 @@
+.signup-container {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  object-fit: contain;
+  
+  padding: 30px;
+}
+
+.SignUpForm{
+  text-align: center;
+}
+
+.Popover{
+  font-family: 'Kanit', sans-serif;
+}

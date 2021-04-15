@@ -25,7 +25,7 @@ const NavbarNoAuth = (props) => {
 
   return (
     <div>
-      <Navbar style={{ backgroundColor: "#ffe080" }} light expand="md">
+      <Navbar style={{ backgroundColor: "#ffe080",position: "fixed",width:"100%" ,zIndex:"3"}} light expand="md">
         <Link to="/">
           <NavbarBrand>
             <h3>HOSTDOG</h3>
@@ -55,9 +55,9 @@ const NavbarNoAuth = (props) => {
             </UncontrolledDropdown>
           </Nav>
           <ButtonGroup>
-            <Link to="/signup">
-              <Button>Sign up</Button>{" "}
-            </Link>
+            <a href="/signup">
+              <Button onClick={props.clear}>Sign up</Button>{" "}
+            </a>
             <LoginModal buttonLabel="Log In" />{" "}
           </ButtonGroup>
         </Collapse>

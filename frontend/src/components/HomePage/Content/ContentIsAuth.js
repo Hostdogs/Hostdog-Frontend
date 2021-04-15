@@ -1,11 +1,12 @@
 import React from 'react';
 import { Jumbotron, Button } from 'reactstrap';
-
+import SideBar from '../../sidebar/SideBar';
 
 const ContentIsAuth = (props) => {
   return (
-    <div>
-      <Jumbotron>
+    <div >
+      <Jumbotron >
+        <br/><br/>
         <div style={{textAlign:"center"}}>
             <img src={process.env.PUBLIC_URL + '/doge.png'}width="250"height="338" /> 
         </div>

@@ -24,9 +24,10 @@ import {
   faSearch,
 } from "@fortawesome/free-solid-svg-icons";
 import { Autocomplete, LoadScript } from "@react-google-maps/api";
-import MapDragNotChange from "./MapDragNotChange";
+import SignUpMap from "./SignUpMap";
 import moment from "moment-timezone";
-export default function InformationForm() {
+import SignUpAPI from "./SignUpAPI"
+export default function InformationForm({selectState}) {
   const [repassword, setrepassword] = useState("");
 
   const [Information, setInformation] = useState({
@@ -46,6 +47,7 @@ export default function InformationForm() {
 
   const onSubmit = () => {
     console.log(Information);
+    
   };
   const onChangeInformation = (e) => {
     const name = e.target.name;
@@ -63,6 +65,15 @@ export default function InformationForm() {
     });
   }, []);
   //Google Map
+  useEffect(() => {
+    if(selectState==="Host"){
+      Information.is_host = true;
+    }else if(selectState==="Customer"){
+      Information.is_host = false;
+    }
+    // console.log(Information.is_host+selectState)
+    
+  },[selectState])
 
   const [geocode, setGeoCode] = useState({lat:13.729025,lng:100.775613});
 
@@ -163,7 +174,7 @@ console.log(testAutoComplete)
       geoCoding(testAutoComplete.gm_accessors_.place.Se.predictions[0].Jk);
 
     } else {
-      alert("ขออภัยไม่พบที่อยู่ที่ระบุ");
+      alert("ขออภัย ไม่พบที่อยู่ที่ระบุ");
     }
 
   };
@@ -355,7 +366,7 @@ console.log(testAutoComplete)
             <Label>ที่อยู่</Label>
             <Container>
          
-                <MapDragNotChange
+                <SignUpMap
                   handleDragEnd={(e) => onMarkerDragEnd(e)}
                   currentGeoCode={geocode}
                 />

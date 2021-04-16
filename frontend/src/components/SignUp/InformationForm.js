@@ -27,6 +27,11 @@ import { Autocomplete, LoadScript } from "@react-google-maps/api";
 import SignUpMap from "./SignUpMap";
 import moment from "moment-timezone";
 import SignUpAPI from "./SignUpAPI"
+const loadScript = {
+  googleAPIKey: "AIzaSyBWV06MM0QFyVnkuA1nHJhQ4altZjovYNs",
+  language: "th",
+  libraries: ["places"],
+};
 export default function InformationForm({selectState}) {
   const [repassword, setrepassword] = useState("");
 
@@ -82,11 +87,7 @@ export default function InformationForm({selectState}) {
   const [userAddress, setUserAddress] = useState("");
  
 
-  const loadScript = {
-    googleAPIKey: "AIzaSyBWV06MM0QFyVnkuA1nHJhQ4altZjovYNs",
-    language: "th",
-    libraries: ["places"],
-  };
+ 
 
   const getCurrentLocation = () => {
     if (navigator.geolocation) {

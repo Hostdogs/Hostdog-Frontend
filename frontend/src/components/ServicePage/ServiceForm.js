@@ -115,13 +115,16 @@ export default function ServiceForm() {
               <Row>
                 <Col>ปริมาณอาหารต่อวัน</Col>
                 <Col>
-                  <ButtonDropdown isOpen={dropdownFreqOpen} toggle={toggleFreq}>
+                  <ButtonDropdown
+                    isOpen={dropdownWeightOpen}
+                    toggle={toggleWeight}
+                  >
                     <DropdownToggle caret size="sm">
                       เลือกปริมาณอาหารต่อวัน
                     </DropdownToggle>
                     <DropdownMenu>
-                      <DropdownItem>1 ครั้ง/วัน</DropdownItem>
-                      <DropdownItem>2 ครั้ง/วัน</DropdownItem>
+                      <DropdownItem>20 กรัม</DropdownItem>
+                      <DropdownItem>30 กรัม</DropdownItem>
                     </DropdownMenu>
                   </ButtonDropdown>
                 </Col>

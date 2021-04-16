@@ -36,7 +36,7 @@ const loadScript = {
 };
 export default function InformationForm({ selectState }) {
   const [repassword, setrepassword] = useState("");
-  
+
   const [Information, setInformation] = useState({
     is_host: false,
     first_name: "",
@@ -56,25 +56,56 @@ export default function InformationForm({ selectState }) {
   const inputpassword = /^[A-Za-z0-9]/
   const inputemail = /^[A-Za-z@0-9.!#$%&'*+-/=?^_`{|}~;]+$/
 
-  const validatepassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
-  const validateemail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
   const dayformat = "YYYY-MM-DD";
   /////////validation//////////////
-  const [emailValid, setemailValid] = useState({valid:false,invalid:false})
- 
-  const isemailValidate = () =>{
-    if(validateemail.test(Information.email)){
-      emailValid.valid=true
-      emailValid.invalid=false
-    }else{
-      emailValid.valid=false
-      emailValid.invalid=true
+  const validatepassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,20}$/
+  const validateemail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  const validateusername = /^[A-Za-z0-9]{5,20}$/
+
+  const [emailValid, setemailValid] = useState({ valid: false, invalid: false })
+  const emailRes = ["กรุณาตรวจสอบอีเมลของคุณ", "ขออภัย อีเมลนี้ถูกใช้แล้ว"]
+  var emailResCode = -1
+  const [passwordValid, setpasswordValid] = useState({ valid: false, invalid: false })
+  const passwordRes = ["กรุณาตรวจสอบรหัสผ่านของคุณ", "ขออภัย อีเมลนี้ถูกใช้แล้ว"]
+  var passwordResCode = -1
+  const [usernameValid, setusernameValid] = useState({ valid: false, invalid: false })
+  const usernameRes = ["กรุณาตรวจสอบชื่อบัญชีของคุณ", "ขออภัย ชื่อบัญชีนี้ถูกใช้แล้ว"]
+  var usernameResCode = -1
+
+  const [repasswordValid, setrepasswordValid] = useState({ valid: false, invalid: false })
+
+  const isemailValidate = () => {
+    if (validateemail.test(Information.email)) {
+      setemailValid({ valid: true, invalid: false })
+    } else {
+      setemailValid({ valid: false, invalid: true })
     }
-    console.log(emailValid)
+
+  }
+  const ispasswordValidate = () => {
+    if (validatepassword.test(Information.password)) {
+      setpasswordValid({ valid: true, invalid: false })
+    } else {
+      setpasswordValid({ valid: false, invalid: true })
+    }
   }
 
+  const isusernameValidate = () => {
+    if (validateusername.test(Information.username)) {
+      setusernameValid({ valid: true, invalid: false })
+    } else {
+      setusernameValid({ valid: false, invalid: true })
+    }
+  }
 
-
+  const isrepasswordValidate = () => {
+    if (Information.password === repassword&&Information.password.length>=1) {
+      setrepasswordValid({ valid: true, invalid: false })
+    } else {
+      setrepasswordValid({ valid: false, invalid: true })
+    }
+    
+  }
 
   //////////////////////////////
   const onSubmit = (e) => {
@@ -102,16 +133,15 @@ export default function InformationForm({ selectState }) {
     // console.log(Information);
   };
 
+  const onChangeradio = (e) =>{
+    const name = e.target.name;
+    const value = e.target.value;
+    Information[name] = value;
+    console.log(name,Information[name])
+  }
 
 
-  // const onChangemobile = (e) =>{
-
-  //   const value = e.target.value
-  //   if(value===''||regexp.test(value)){
-  //     // 
-  //     setInformation({...Information,mobile:value})
-  //   }
-  // }
+  
 
   useEffect(() => {
     // setdob(moment(moment().year() - 18 + "-01-01", dayformat).format(dayformat))
@@ -285,18 +315,20 @@ export default function InformationForm({ selectState }) {
                   <FontAwesomeIcon icon={faAt} />
                 </InputGroupText>
               </InputGroupAddon>
-              <Input valid={false} invalid={false}
+              <Input valid={emailValid.valid} invalid={emailValid.invalid}
                 type="email"
                 name="email"
                 placeholder="อีเมล"
                 onChange={e => onChangeInformation(e, inputemail)}
                 value={Information.email}
                 onBlur={isemailValidate}
-                onFocus={
-                  emailValid.valid=false,
-                  emailValid.invalid=false
+                onFocus={e => {
+                  emailValid.valid = false
+                  emailValid.invalid = false
+                }
                 }
               />
+              <FormFeedback invalid={passwordValid.invalid}>กรุณาตรวจสอบอีเมลใหม่อีกครั้ง</FormFeedback>
             </InputGroup>
           </FormGroup>
           <FormGroup>
@@ -306,7 +338,7 @@ export default function InformationForm({ selectState }) {
                   <FontAwesomeIcon icon={faUserCircle} />
                 </InputGroupText>
               </InputGroupAddon>
-              <Input
+              <Input valid={usernameValid.valid} invalid={usernameValid.invalid}
                 type="text"
                 name="username"
                 placeholder="ชื่อผู้ใช้งาน"
@@ -314,6 +346,12 @@ export default function InformationForm({ selectState }) {
                 onChange={e => onChangeInformation(e, inputtextornumber)}
                 value={Information.username}
                 maxLength="20"
+                onBlur={isusernameValidate}
+                onFocus={e => {
+                  usernameValid.valid = false
+                  usernameValid.invalid = false
+                }
+                }
               />
             </InputGroup>
           </FormGroup>
@@ -324,7 +362,7 @@ export default function InformationForm({ selectState }) {
                   <FontAwesomeIcon icon={faLock} />
                 </InputGroupText>
               </InputGroupAddon>
-              <Input
+              <Input valid={passwordValid.valid} invalid={passwordValid.invalid}
                 type="password"
                 name="password"
                 id="password"
@@ -332,7 +370,15 @@ export default function InformationForm({ selectState }) {
                 onChange={e => onChangeInformation(e, inputpassword)}
                 value={Information.password}
                 maxLength="20"
+                onBlur={ispasswordValidate}
+                onFocus={e => {
+                  passwordValid.valid = false
+                  passwordValid.invalid = false
+                }
+
+                }
               />
+              <FormFeedback invalid={passwordValid.invalid}>กรุณาใส่รหัสผ่านให้ตรงตามเงื่อนไข</FormFeedback>
             </InputGroup>
           </FormGroup>
 
@@ -343,14 +389,21 @@ export default function InformationForm({ selectState }) {
                   <FontAwesomeIcon icon={faLock} />
                 </InputGroupText>
               </InputGroupAddon>
-              <Input
+              <Input valid={repasswordValid.valid} invalid={repasswordValid.invalid}
                 type="password"
                 name="Repassword"
                 placeholder="รหัสผ่านอีกครั้ง "
                 onChange={(e) => setrepassword(e.target.value)}
                 value={repassword}
                 maxLength="20"
+                onBlur={isrepasswordValidate}
+                onFocus={e => {
+                  repasswordValid.valid = false
+                  repasswordValid.invalid = false
+                }
+                }
               />
+              <FormFeedback invalid={repasswordValid.invalid}>กรุณาใส่รหัสผ่านให้ตรงกับรหัสผ่านก่อนหน้า</FormFeedback>
             </InputGroup>
           </FormGroup>
 
@@ -399,7 +452,7 @@ export default function InformationForm({ selectState }) {
                     id="exampleCustomRadio"
                     name="gender"
                     label="ชาย"
-                    onChange={onChangeInformation}
+                    onChange={onChangeradio}
                     value="Male"
                   />
                 </Col>
@@ -409,7 +462,7 @@ export default function InformationForm({ selectState }) {
                     id="exampleCustomRadio2"
                     name="gender"
                     label="หญิง"
-                    onChange={onChangeInformation}
+                    onChange={onChangeradio}
                     value="Female"
                   />
                 </Col>
@@ -419,14 +472,14 @@ export default function InformationForm({ selectState }) {
                     id="exampleCustomRadio3"
                     name="gender"
                     label="ไม่ระบุ"
-                    onChange={onChangeInformation}
+                    onChange={onChangeradio}
                     value="Other"
                   />
                 </Col>
               </Row>
             </div>
           </FormGroup>
-          <FormGroup onSubmit={e=>e.preventDefault()} >
+          <FormGroup onSubmit={e => e.preventDefault()} >
             <br />
             <LoadScript
               googleMapsApiKey={loadScript.googleAPIKey}
@@ -456,7 +509,7 @@ export default function InformationForm({ selectState }) {
                       onChangeInformation(e);
                       setUserAddress(e.target.value);
                     }}
-                    onSubmit={e=>{e.preventDefault()}}
+                    onSubmit={e => { e.preventDefault() }}
                     value={userAddress}
 
                   />
@@ -467,13 +520,13 @@ export default function InformationForm({ selectState }) {
                         e.preventDefault();
                         getCurrentLocation();
                       }}
-                      onSubmit={e=>{e.preventDefault()}}
+                      onSubmit={e => { e.preventDefault() }}
                     >
                       <FontAwesomeIcon icon={faMapMarkerAlt} />
                     </Button>
-                    <Button>
-                      <FontAwesomeIcon icon={faSearch} onClick={e=>e.preventDefault()} onSubmit={e=>e.preventDefault()}/>
-                    </Button>
+                    {/* <Button>
+                      <FontAwesomeIcon icon={faSearch} onClick={e => e.preventDefault()} onSubmit={e => e.preventDefault()} />
+                    </Button> */}
                   </InputGroupAddon>
                 </InputGroup>
               </Autocomplete>

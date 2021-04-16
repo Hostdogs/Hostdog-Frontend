@@ -30,7 +30,7 @@ export default function ServiceForm() {
     <div>
       <Container>
         <Form>
-          <FormGroup className="header-service">
+          <FormGroup>
             <h2>เลือกบริการของคุณ</h2>
           </FormGroup>
           <div className="list-service">
@@ -45,6 +45,7 @@ export default function ServiceForm() {
             <FormGroup>
               <Row>
                 <Col xs="5">ผู้รับฝาก</Col>
+                <Col>นายคำนวย บางขุนเทียน</Col>
               </Row>
             </FormGroup>
             <FormGroup>
@@ -220,6 +221,18 @@ export default function ServiceForm() {
               </Row>
             </FormGroup>
           </div>
+          <FormGroup>
+            <Row>
+              <h2>รายละเอียดเพิ่มเติมเพิ่มเติม</h2>
+              <Input
+                rows="5"
+                type="textarea"
+                name="bio"
+                placeholder="ระบุรายละเอียดเพิ่มเติม"
+              />
+            </Row>
+            <Row></Row>
+          </FormGroup>
         </Form>
       </Container>
     </div>

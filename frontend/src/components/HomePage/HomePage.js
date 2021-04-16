@@ -25,7 +25,9 @@ export default function HomePage() {
             {token['mytoken'] ? (
                 <div>
                     <aside>
+                        
                         <SideBar isOpen={isOpen}/>
+                        <br/><br/>
                         <ContentIsAuth />
                     </aside>
 

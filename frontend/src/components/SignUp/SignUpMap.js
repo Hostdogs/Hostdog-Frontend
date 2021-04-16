@@ -1,13 +1,13 @@
 import { GoogleMap,Marker } from '@react-google-maps/api';
 
 const containerStyle = {
-    width: '100%', //ไอบาสทำ
+    width: '100%', 
     height: '350px'
   };
   
 
 
-export default function MapDragNotChange({handleDragEnd ,currentGeoCode}) {
+export default function SignUpMap({handleDragEnd ,currentGeoCode}) {
 
 
     return (

@@ -25,7 +25,7 @@ export default function SignUpForm() {
   const selectRole = (e) => {
     setselectState(e.target.value);
     setsubmitResponse("");
-    console.log(e.target.value);
+    
   };
 
   const handleAskForm = () => {
@@ -70,7 +70,7 @@ export default function SignUpForm() {
               </div>
 
               {isSelect ? (
-                <InformationForm />
+                <InformationForm selectState={selectState}/>
               ) : (
                 <div>
                   <small style={{ color: "red" }}>{submitResponse}</small><br />

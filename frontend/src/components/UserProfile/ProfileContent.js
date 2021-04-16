@@ -14,6 +14,7 @@ import {
 } from "reactstrap";
 import classnames from "classnames";
 import DogProfileTab from "./DogProfileTab";
+import MainTab from "./MainTab";
 
 const ProfileContent = (props) => {
   const [activeTab, setActiveTab] = useState("1");
@@ -32,7 +33,7 @@ const ProfileContent = (props) => {
               toggle("1");
             }}
           >
-            โปรไฟล์สุนัข
+            หน้าหลัก
           </NavLink>
         </NavItem>
         <NavItem>
@@ -42,16 +43,29 @@ const ProfileContent = (props) => {
               toggle("2");
             }}
           >
+            สุนัข
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink
+            className={classnames({ active: activeTab === "3" })}
+            onClick={() => {
+              toggle("3");
+            }}
+          >
             ตั้งค่า
           </NavLink>
         </NavItem>
       </Nav>
       <TabContent activeTab={activeTab}>
         <TabPane tabId="1">
-          <DogProfileTab />
+            <MainTab />
         </TabPane>
 
         <TabPane tabId="2">
+          <DogProfileTab />
+        </TabPane>
+        <TabPane tabId="3">
           <Row>
             <Col sm="6">
               <Card body>

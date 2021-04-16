@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
 import { ListGroup, ListGroupItem, Row, Col, Button } from "reactstrap";
 
 const DogProfileTab = () => {
@@ -20,7 +21,7 @@ const DogProfileTab = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const posts = Array(count).fill(<AddedElement />);
 
-  const [postsPerPage] = useState(5);
+  const [postsPerPage] = useState(3);
 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
@@ -37,11 +38,9 @@ const DogProfileTab = () => {
     <div>
       <Row>
         <Col xs="12">
-          <h4 style={{ marginTop: "1%" }}>สุนัขของคุณ</h4>
-          <Button
-            color="primary"
+          <Button 
+            outline color="warning"
             onClick={() => setCount(count + 1)}
-            style={{ marginTop: "1%" }}
           >
             เพิ่มโปรไฟล์สุนัขของคุณ
           </Button>

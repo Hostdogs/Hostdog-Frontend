@@ -18,6 +18,7 @@ const ProfileCard = (props) => {
           textAlign: "center",
           backgroundColor: "#ffbb3cd5",
           height: "30%",
+          width:"100%"
         }}
       >
         <div id="mainContainer" class="container">
@@ -36,24 +37,6 @@ const ProfileCard = (props) => {
         </CardSubtitle>
         <br />
       </CardBody>
-      <CardFooter style={{ backgroundColor: "transparent", height: "70%" }}>
-        <br />
-        <CardText style={{ textAlign: "left" }}>
-          <CardTitle tag="h5">รายละเอียด</CardTitle>
-            <ul>
-              <li>เริ่มใช้งานตั้งแต่ 31/02/64</li>
-              <li>ออนไลน์ล่าสุด x ช.ม.</li>
-              <li>มีสุนัขทั้งหมด x ตัว</li>
-            </ul>
-          <CardTitle tag="h5">คำอธิบาย</CardTitle>
-          <Alert color="warning">
-            <div>
-              บาสนั่งตกปลาอยู่ริมตลิ่งที่บางขุนเทียน
-              ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
-            </div>
-          </Alert>
-        </CardText>
-      </CardFooter>
     </Card>
   );
 };

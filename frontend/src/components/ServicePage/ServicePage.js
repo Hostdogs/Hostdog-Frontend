@@ -11,13 +11,13 @@ export default function ServicePage() {
         <br />
         <br />
         <Row>
-          <Col xs="3" style={{ border: "4px solid black" }}>
+          <Col xs="2" style={{ border: "4px solid black" }}>
             สวัสดี
           </Col>
-          <Col xs="6">
+          <Col xs="8">
             <ServiceForm />
           </Col>
-          <Col xs="3" style={{ border: "4px solid black" }}>
+          <Col xs="2" style={{ border: "4px solid black" }}>
             .col-3
           </Col>
         </Row>

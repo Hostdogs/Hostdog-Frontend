@@ -14,24 +14,23 @@ export default function ProfilePage() {
 
   return (
     <div>
-      <header >
+      <header style={{ position: "fixed",width:"100%", zIndex:"1001"}}>
         <NavbarIsAuth toggleSideBar={toggleSideBar} />
       </header>
-        <SideBar isOpen={isOpen} marginTop="0px" />
+      <SideBar isOpen={isOpen} />
+      <div style={{paddingTop:"50px"}}>
       <Row>
         <Col
           style={{
             paddingLeft: "0",
             paddingRight: "0",
-            width: "33.33%",
           }}
         ></Col>
         <Col
           style={{
-            minWidth: "500px",
             paddingLeft: "0",
             paddingRight: "0",
-            width: "33.33%",
+            width: "80vw",
           }}
         >
           <ProfileCard />
@@ -41,10 +40,10 @@ export default function ProfilePage() {
           style={{
             paddingLeft: "0",
             paddingRight: "0",
-            width: "33.33%",
           }}
         ></Col>
       </Row>
+      </div>
     </div>
   );
 }

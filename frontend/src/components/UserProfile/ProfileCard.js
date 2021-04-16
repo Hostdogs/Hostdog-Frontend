@@ -12,7 +12,7 @@ import {
 
 const ProfileCard = (props) => {
   return (
-      <Card style={{maxHeight:"100%", }}>
+      <Card>
       <CardBody
         style={{
           textAlign: "center",

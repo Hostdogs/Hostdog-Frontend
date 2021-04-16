@@ -90,7 +90,7 @@ const LoginModal = (props) => {
           </InputGroup>
           
           <br />
-          <InputGroup>
+          <InputGroup >
             <InputGroupAddon addonType="prepend">
               <InputGroupText style={{width:"100px"}}>รหัสผ่าน</InputGroupText>
             </InputGroupAddon>

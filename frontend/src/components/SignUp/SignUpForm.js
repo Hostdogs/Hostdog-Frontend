@@ -50,7 +50,7 @@ export default function SignUpForm() {
         <br /><br />
         <Container className="themed-container" fluid="sm">
           <br />
-          <Form >
+          <Form onSubmit={e=>e.preventDefault()}>
 
             <FormGroup>
               <legend>คุณต้องการสมัครเป็นอะไร</legend>

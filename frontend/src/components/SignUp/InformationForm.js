@@ -6,6 +6,7 @@ import {
   Button,
   CustomInput,
   FormGroup,
+  Form,
   Label,
   Input,
   UncontrolledPopover,
@@ -32,7 +33,7 @@ const loadScript = {
   language: "th",
   libraries: ["places"],
 };
-export default function InformationForm({selectState}) {
+export default function InformationForm({ selectState }) {
   const [repassword, setrepassword] = useState("");
 
   const [Information, setInformation] = useState({
@@ -52,37 +53,43 @@ export default function InformationForm({selectState}) {
   const inputtfirstname = /^[ก-ฮะ-ไ่้๊๋็์ัํ]+$/
   const inputlastname = /^[ก-ฮะ-ไ่้๊๋็์ัํ ]+$/
   const inputpassword = /^[A-Za-z0-9]/
-  const inputemail = /^[]+$/
+  const inputemail = /^[A-Za-z@0-9.!#$%&'*+-/=?^_`{|}~;]+$/
 
   const validatepassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
   const validateemail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
   const dayformat = "YYYY-MM-DD";
 
-  const onSubmit = () => {
+  const onSubmit = (e) => {
+    e.preventDefault()
     console.log(Information);
     var response = SignUpAPI.checkInformation(Information)
     console.log(response)
-    
-    
+
+
   };
-  const onChangeInformation = (e,regexp) => {
+  const onChangeInformation = (e, regexp = null) => {
+    e.preventDefault()
     const name = e.target.name;
     const value = e.target.value;
     const change = {}
-    
     change[name] = value
-    console.log(value,regexp.test(value))
-    if(value===''||regexp.test(value)){
-      setInformation({...Information,...change})
+    if (regexp) {
+      console.log(value, regexp.test(value))
+      if (value === '' || regexp.test(value)) {
+        setInformation({ ...Information, ...change })
+      }
+    } else {
+      setInformation({ ...Information, ...change })
     }
-    
+
+
     // console.log(Information);
   };
 
 
 
   // const onChangemobile = (e) =>{
-    
+
   //   const value = e.target.value
   //   if(value===''||regexp.test(value)){
   //     // 
@@ -100,23 +107,23 @@ export default function InformationForm({selectState}) {
 
   //Google Map
   useEffect(() => {
-    if(selectState==="Host"){
+    if (selectState === "Host") {
       Information.is_host = true;
-    }else if(selectState==="Customer"){
+    } else if (selectState === "Customer") {
       Information.is_host = false;
     }
     // console.log(Information.is_host+selectState)
-    
-  },[selectState])
 
-  const [geocode, setGeoCode] = useState({lat:13.729025,lng:100.775613});
+  }, [selectState])
 
- 
+  const [geocode, setGeoCode] = useState({ lat: 13.729025, lng: 100.775613 });
+
+
 
   const [userAddress, setUserAddress] = useState("");
- 
 
- 
+
+
 
   const getCurrentLocation = () => {
     if (navigator.geolocation) {
@@ -124,7 +131,7 @@ export default function InformationForm({selectState}) {
     } else {
       alert("Location is not supported by this browser.");
     }
-    
+
 
   };
 
@@ -148,7 +155,7 @@ export default function InformationForm({selectState}) {
     const urlapi = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${loadScript.googleAPIKey}&language=th`;
     const response = await fetch(urlapi);
     const data = await response.json();
-   console.log(data);
+    console.log(data);
 
     data.status === "OK"
       ? setUserAddress(data.results[0].formatted_address)
@@ -156,7 +163,7 @@ export default function InformationForm({selectState}) {
 
 
   };
- 
+
 
   const geoCoding = async (address) => {
     const urlapi = `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${loadScript.googleAPIKey}&language=th`;
@@ -191,7 +198,7 @@ export default function InformationForm({selectState}) {
 
   const onPlaceChanged = () => {
     const data = testAutoComplete.getPlace();
-console.log(testAutoComplete)
+    console.log(testAutoComplete)
     if (
       testAutoComplete !== null &&
       typeof data.formatted_address !== "undefined"
@@ -214,245 +221,250 @@ console.log(testAutoComplete)
   return (
     <div>
       <Container fluid="sm" style={{ maxWidth: "60%", minWidth: "300px" }}>
-        <br />
-        <Label>รายละเอียดส่วนตัว</Label>
-        <Row>
-          <Col>
-            <FormGroup style={{ minWidth: "250px" }}>
-              <InputGroup>
-                <InputGroupAddon addonType="prepend">
-                  <InputGroupText style={{ minWidth: "45px" }}>
-                    ชื่อ
+        <Form onSubmit={e => e.preventDefault()}>
+          <br />
+          <Label>รายละเอียดส่วนตัว</Label>
+          <Row>
+            <Col>
+              <FormGroup style={{ minWidth: "250px" }}>
+                <InputGroup>
+                  <InputGroupAddon addonType="prepend">
+                    <InputGroupText style={{ minWidth: "45px" }}>
+                      ชื่อ
                   </InputGroupText>
-                </InputGroupAddon>
-                <Input
-                  type="text"
-                  name="first_name"
-                  placeholder="ชื่อ"
-                  onChange={e=>onChangeInformation(e,inputtfirstname)}
-                  value={Information.first_name}
-                />
-              </InputGroup>
-            </FormGroup>
-          </Col>
+                  </InputGroupAddon>
+                  <Input
+                    type="text"
+                    name="first_name"
+                    placeholder="ชื่อ"
+                    onChange={e => onChangeInformation(e, inputtfirstname)}
+                    value={Information.first_name}
 
-          <Col>
-            <FormGroup style={{ minWidth: "250px" }}>
-              <InputGroup>
-                <InputGroupAddon addonType="prepend">
-                  <InputGroupText>นามสกุล</InputGroupText>
-                </InputGroupAddon>
-                <Input
-                  type="text"
-                  name="last_name"
-                  placeholder="นามสกุล"
-                  onChange={e=>onChangeInformation(e,inputlastname)}
-                  value={Information.last_name}
+                  />
+                </InputGroup>
+              </FormGroup>
+            </Col>
 
-                />
-              </InputGroup>
-            </FormGroup>
-          </Col>
-        </Row>
-        <FormGroup>
-          <InputGroup>
-            <InputGroupAddon addonType="prepend">
-              <InputGroupText style={{ minWidth: "45px" }}>
-                <FontAwesomeIcon icon={faAt} />
-              </InputGroupText>
-            </InputGroupAddon>
+            <Col>
+              <FormGroup style={{ minWidth: "250px" }}>
+                <InputGroup>
+                  <InputGroupAddon addonType="prepend">
+                    <InputGroupText>นามสกุล</InputGroupText>
+                  </InputGroupAddon>
+                  <Input
+                    type="text"
+                    name="last_name"
+                    placeholder="นามสกุล"
+                    onChange={e => onChangeInformation(e, inputlastname)}
+                    value={Information.last_name}
+
+                  />
+                </InputGroup>
+              </FormGroup>
+            </Col>
+          </Row>
+          <FormGroup>
+            <InputGroup>
+              <InputGroupAddon addonType="prepend">
+                <InputGroupText style={{ minWidth: "45px" }}>
+                  <FontAwesomeIcon icon={faAt} />
+                </InputGroupText>
+              </InputGroupAddon>
+              <Input
+                type="email"
+                name="email"
+                placeholder="อีเมล"
+                onChange={e => onChangeInformation(e, inputemail)}
+                value={Information.email}
+
+              />
+            </InputGroup>
+          </FormGroup>
+          <FormGroup>
+            <InputGroup>
+              <InputGroupAddon addonType="prepend">
+                <InputGroupText style={{ minWidth: "45px" }}>
+                  <FontAwesomeIcon icon={faUserCircle} />
+                </InputGroupText>
+              </InputGroupAddon>
+              <Input
+                type="text"
+                name="username"
+                placeholder="ชื่อผู้ใช้งาน"
+                id="username"
+                onChange={e => onChangeInformation(e, inputtextornumber)}
+                value={Information.username}
+                maxLength="20"
+              />
+            </InputGroup>
+          </FormGroup>
+          <FormGroup>
+            <InputGroup>
+              <InputGroupAddon addonType="prepend">
+                <InputGroupText style={{ minWidth: "45px" }}>
+                  <FontAwesomeIcon icon={faLock} />
+                </InputGroupText>
+              </InputGroupAddon>
+              <Input
+                type="password"
+                name="password"
+                id="password"
+                placeholder="รหัสผ่าน "
+                onChange={e => onChangeInformation(e, inputpassword)}
+                value={Information.password}
+                maxLength="20"
+              />
+            </InputGroup>
+          </FormGroup>
+
+          <FormGroup>
+            <InputGroup>
+              <InputGroupAddon addonType="prepend">
+                <InputGroupText style={{ minWidth: "45px" }}>
+                  <FontAwesomeIcon icon={faLock} />
+                </InputGroupText>
+              </InputGroupAddon>
+              <Input
+                type="password"
+                name="Repassword"
+                placeholder="รหัสผ่านอีกครั้ง "
+                onChange={(e) => setrepassword(e.target.value)}
+                value={repassword}
+                maxLength="20"
+              />
+            </InputGroup>
+          </FormGroup>
+
+          <FormGroup >
+            <InputGroup>
+              <InputGroupAddon addonType="prepend">
+                <InputGroupText style={{ minWidth: "45px" }}>
+                  <FontAwesomeIcon icon={faMobileAlt} />
+                </InputGroupText>
+              </InputGroupAddon>
+              <Input
+                type="text"
+                name="mobile"
+                placeholder="หมายเลขโทรศัพท์มือถือ"
+                onChange={e => onChangeInformation(e, inputnumberonly)}
+                value={Information.mobile}
+                maxLength="10"
+              />
+            </InputGroup>
+          </FormGroup>
+
+          <FormGroup>
+            <br />
+            <Label>วัน/เดือน/ปีเกิด</Label>
+
             <Input
-              type="email"
-              name="email"
-              placeholder="อีเมล"
-              onChange={e=>onChangeInformation(e,inputtextornumber)}
-              value={Information.email}
+              type="date"
+              name="dob"
+              placeholder="วัน/เดือน/ปี"
+              value={Information.dob}
+              onKeyPress={e => e.preventDefault()}
+              onChange={(e) =>
+                setInformation({ ...Information, dob: e.target.value })
+              }
+              max={moment().format(dayformat)}
             />
-          </InputGroup>
-        </FormGroup>
-        <FormGroup>
-          <InputGroup>
-            <InputGroupAddon addonType="prepend">
-              <InputGroupText style={{ minWidth: "45px" }}>
-                <FontAwesomeIcon icon={faUserCircle} />
-              </InputGroupText>
-            </InputGroupAddon>
-            <Input
-              type="text"
-              name="username"
-              placeholder="ชื่อผู้ใช้งาน"
-              id="username"
-              onChange={e=>onChangeInformation(e,inputtextornumber)}
-              value={Information.username}
-              maxLength="20"
-            />
-          </InputGroup>
-        </FormGroup>
-        <FormGroup>
-          <InputGroup>
-            <InputGroupAddon addonType="prepend">
-              <InputGroupText style={{ minWidth: "45px" }}>
-                <FontAwesomeIcon icon={faLock} />
-              </InputGroupText>
-            </InputGroupAddon>
-            <Input
-              type="password"
-              name="password"
-              id="password"
-              placeholder="รหัสผ่าน "
-              onChange={e=>onChangeInformation(e,inputpassword)}
-              value={Information.password}
-              maxLength="20"
-            />
-          </InputGroup>
-        </FormGroup>
+          </FormGroup>
+          <FormGroup >
+            <br />
+            <Label>เพศ</Label>
+            <div>
+              <Row>
+                <Col>
+                  <CustomInput
+                    type="radio"
+                    id="exampleCustomRadio"
+                    name="gender"
+                    label="ชาย"
+                    onChange={onChangeInformation}
+                    value="Male"
+                  />
+                </Col>
+                <Col>
+                  <CustomInput
+                    type="radio"
+                    id="exampleCustomRadio2"
+                    name="gender"
+                    label="หญิง"
+                    onChange={onChangeInformation}
+                    value="Female"
+                  />
+                </Col>
+                <Col style={{ minWidth: "100px" }}>
+                  <CustomInput
+                    type="radio"
+                    id="exampleCustomRadio3"
+                    name="gender"
+                    label="ไม่ระบุ"
+                    onChange={onChangeInformation}
+                    value="Other"
+                  />
+                </Col>
+              </Row>
+            </div>
+          </FormGroup>
+          <FormGroup onSubmit={e=>e.preventDefault()} >
+            <br />
+            <LoadScript
+              googleMapsApiKey={loadScript.googleAPIKey}
+              language={loadScript.language}
+              libraries={loadScript.libraries}
+            >
+              <Label>ที่อยู่</Label>
+              <Container>
 
-        <FormGroup>
-          <InputGroup>
-            <InputGroupAddon addonType="prepend">
-              <InputGroupText style={{ minWidth: "45px" }}>
-                <FontAwesomeIcon icon={faLock} />
-              </InputGroupText>
-            </InputGroupAddon>
-            <Input
-              type="password"
-              name="Repassword"
-              placeholder="รหัสผ่านอีกครั้ง "
-              onChange={(e) => setrepassword(e.target.value)}
-              value={repassword}
-              maxLength="20"
-            />
-          </InputGroup>
-        </FormGroup>
-
-        <FormGroup >
-          <InputGroup>
-            <InputGroupAddon addonType="prepend">
-              <InputGroupText style={{ minWidth: "45px" }}>
-                <FontAwesomeIcon icon={faMobileAlt} />
-              </InputGroupText>
-            </InputGroupAddon>
-            <Input
-              type="text"
-              name="mobile"
-              placeholder="หมายเลขโทรศัพท์มือถือ"
-              onChange={e=>onChangeInformation(e,inputnumberonly)}
-              value={Information.mobile}
-              maxLength="10"
-            />
-          </InputGroup>
-        </FormGroup>
-
-        <FormGroup>
-          <br />
-          <Label>วัน/เดือน/ปีเกิด</Label>
-
-          <Input
-            type="date"
-            name="dob"
-            placeholder="วัน/เดือน/ปี"
-            value={Information.dob}
-            onChange={(e) =>
-              setInformation({ ...Information, dob: e.target.value })
-            }
-            max={moment().format(dayformat)}
-          />
-        </FormGroup>
-        <FormGroup > 
-          <br />
-          <Label>เพศ</Label>
-          <div>
-            <Row>
-              <Col>
-                <CustomInput
-                  type="radio"
-                  id="exampleCustomRadio"
-                  name="gender"
-                  label="ชาย"
-                  onChange={onChangeInformation}
-                  value="Male"
-                />
-              </Col>
-              <Col>
-                <CustomInput
-                  type="radio"
-                  id="exampleCustomRadio2"
-                  name="gender"
-                  label="หญิง"
-                  onChange={onChangeInformation}
-                  value="Female"
-                />
-              </Col>
-              <Col style={{ minWidth: "100px" }}>
-                <CustomInput
-                  type="radio"
-                  id="exampleCustomRadio3"
-                  name="gender"
-                  label="ไม่ระบุ"
-                  onChange={onChangeInformation}
-                  value="Other"
-                />
-              </Col>
-            </Row>
-          </div>
-        </FormGroup>
-        <FormGroup
-          onSubmit={onSubmit}
-        >
-          <br />
-          <LoadScript
-            googleMapsApiKey={loadScript.googleAPIKey}
-            language={loadScript.language}
-            libraries={loadScript.libraries}
-          >
-            <Label>ที่อยู่</Label>
-            <Container>
-         
                 <SignUpMap
                   handleDragEnd={(e) => onMarkerDragEnd(e)}
                   currentGeoCode={geocode}
                 />
-     
-            </Container>
-       
-            <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged} >
-              <InputGroup >
-             
-                <Input
-                  type="text"
-                  name="address"
-                  id="exampleusername"
-                  placeholder="ที่อยู่"
-                  onChange={(e) => {
-                    onChangeInformation(e);
-                    setUserAddress(e.target.value);
-                  }}
-                  value={userAddress}
-                  
-                />
 
-                <InputGroupAddon addonType="append">
-                  <Button
-                    onClick={() => {
-                      getCurrentLocation();
+              </Container>
+
+              <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged} >
+                <InputGroup >
+
+                  <Input
+                    type="text"
+                    name="address"
+                    id="exampleusername"
+                    placeholder="ที่อยู่"
+                    onChange={(e) => {
+                      onChangeInformation(e);
+                      setUserAddress(e.target.value);
                     }}
-                  >
-                    <FontAwesomeIcon icon={faMapMarkerAlt} />
-                  </Button>
-                  <Button>
-                    <FontAwesomeIcon icon={faSearch} />
-                  </Button>
-                </InputGroupAddon>
-              </InputGroup>
-            </Autocomplete>
-          </LoadScript>
-        </FormGroup>
+                    onSubmit={e=>{e.preventDefault()}}
+                    value={userAddress}
 
-        <FormGroup>
-          <Button onClick={onSubmit}>ถัดไป</Button>
-        </FormGroup>
+                  />
+
+                  <InputGroupAddon addonType="append">
+                    <Button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        getCurrentLocation();
+                      }}
+                    >
+                      <FontAwesomeIcon icon={faMapMarkerAlt} />
+                    </Button>
+                    <Button>
+                      <FontAwesomeIcon icon={faSearch} onClick={e=>e.preventDefault()}/>
+                    </Button>
+                  </InputGroupAddon>
+                </InputGroup>
+              </Autocomplete>
+            </LoadScript>
+          </FormGroup>
+
+          <FormGroup>
+            <Button onClick={e => onSubmit}>ถัดไป</Button>
+          </FormGroup>
+
+        </Form>
       </Container>
-
       <UncontrolledPopover trigger="focus" placement="top" target="username">
         <PopoverBody className="Popover">
           <div>

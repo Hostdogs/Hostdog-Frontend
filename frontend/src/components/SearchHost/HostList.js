@@ -41,36 +41,30 @@ export default function HostList() {
     }
   ] ;
 
-  const [stateInfiniteScroll,setStateInfiniteScroll]=useState({
-    items:hostdata,
-    hasMore:true,
-  })
+  const [hostData,setHostData]=useState(hostdata);
+
+  const [hasMore,setHasMore]=useState(true);
 
   const fetchMoreData = () => {
-    console.log("0");
-    console.log(stateInfiniteScroll);
+ 
 
-    if (stateInfiniteScroll.items.length >= 100) {
+    if (hostData.length >= 12) {
 
-      setStateInfiniteScroll({ hasMore:false });
-      console.log("1");
-      console.log(stateInfiniteScroll);
+      setHasMore(false);
+
       return;
     }
-    console.log("2");
-    console.log(stateInfiniteScroll);
+
     // a fake async api call like which sends
-    // 20 more records in .5 secs
+    // 20 more records in 1.5 secs
     setTimeout(() => {
-      setStateInfiniteScroll({
-        items: stateInfiniteScroll.items.concat(hostdata)
-      });
-      console.log("3");
-      console.log(stateInfiniteScroll);
+      setHostData(
+        hostData.concat(hostdata),
+      );
+
       
     }, 1500);
-console.log("4");
-    console.log(stateInfiniteScroll);
+
   };
 
 const scrollToTop=()=>{
@@ -83,25 +77,20 @@ const scrollToTop=()=>{
   return (
     <>
     <InfiniteScroll
-          dataLength={stateInfiniteScroll.items.length}
+          dataLength={hostData.length}
           next={fetchMoreData}
-          hasMore={stateInfiniteScroll.hasMore}
+          hasMore={hasMore}
           loader={<h4 style={{textAlign: "center"}}>Loading...</h4>}
           endMessage={
             <p style={{ textAlign: "center" }}>
               <b>หมดแล้วครับ</b>
             </p>
           }
-
 >
+
 <Container className="host-container" >
-        
-        {stateInfiniteScroll.items.map((hd) => (
-  
-     
+        {hostData.map((hd) => (
           <Host key={hd.id} host={hd}/>
-   
-          
         ))}
 
 <Button onClick={scrollToTop} style={{position: "fixed", bottom: 0, right: 0}}>

@@ -47,20 +47,47 @@ export default function InformationForm({selectState}) {
     address: "",
     gender: "",
   });
+  const inputnumberonly = /^[0-9\b]+$/
+  const inputtextornumber = /^[A-Za-z0-9]+$/
+  const inputtfirstname = /^[ก-ฮะ-ไ่้็๊๋ํ]+$/
+  const inputlastname = /^[ก-ฮะ-ไ่้็๊๋ํ ]+$/
+  const inputpassword = /^[A-Za-z0-9]/
 
+  const validatepassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
+  const validateemail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
   const dayformat = "YYYY-MM-DD";
 
   const onSubmit = () => {
     console.log(Information);
+    var response = SignUpAPI.checkInformation(Information)
+    console.log(response)
+    
     
   };
-  const onChangeInformation = (e) => {
+  const onChangeInformation = (e,regexp) => {
     const name = e.target.name;
     const value = e.target.value;
-
-    Information[name] = value;
-    console.log(Information);
+    const change = {}
+    
+    change[name] = value
+    console.log(value,regexp.test(value))
+    if(value===''||regexp.test(value)){
+      setInformation({...Information,...change})
+    }
+    
+    // console.log(Information);
   };
+
+
+
+  // const onChangemobile = (e) =>{
+    
+  //   const value = e.target.value
+  //   if(value===''||regexp.test(value)){
+  //     // 
+  //     setInformation({...Information,mobile:value})
+  //   }
+  // }
 
   useEffect(() => {
     // setdob(moment(moment().year() - 18 + "-01-01", dayformat).format(dayformat))
@@ -69,6 +96,7 @@ export default function InformationForm({selectState}) {
       dob: moment(moment().year() - 18 + "-01-01", dayformat).format(dayformat),
     });
   }, []);
+
   //Google Map
   useEffect(() => {
     if(selectState==="Host"){
@@ -200,7 +228,8 @@ console.log(testAutoComplete)
                   type="text"
                   name="first_name"
                   placeholder="ชื่อ"
-                  onChange={onChangeInformation}
+                  onChange={e=>onChangeInformation(e,inputtfirstname)}
+                  value={Information.first_name}
                 />
               </InputGroup>
             </FormGroup>
@@ -216,7 +245,9 @@ console.log(testAutoComplete)
                   type="text"
                   name="last_name"
                   placeholder="นามสกุล"
-                  onChange={onChangeInformation}
+                  onChange={e=>onChangeInformation(e,inputlastname)}
+                  value={Information.last_name}
+
                 />
               </InputGroup>
             </FormGroup>
@@ -233,7 +264,8 @@ console.log(testAutoComplete)
               type="email"
               name="email"
               placeholder="อีเมล"
-              onChange={onChangeInformation}
+              onChange={e=>onChangeInformation(e,inputtextornumber)}
+              value={Information.email}
             />
           </InputGroup>
         </FormGroup>
@@ -249,7 +281,9 @@ console.log(testAutoComplete)
               name="username"
               placeholder="ชื่อผู้ใช้งาน"
               id="username"
-              onChange={onChangeInformation}
+              onChange={e=>onChangeInformation(e,inputtextornumber)}
+              value={Information.username}
+              maxLength="10"
             />
           </InputGroup>
         </FormGroup>
@@ -265,7 +299,8 @@ console.log(testAutoComplete)
               name="password"
               id="password"
               placeholder="รหัสผ่าน "
-              onChange={onChangeInformation}
+              onChange={e=>onChangeInformation(e,inputpassword)}
+              value={Information.password}
             />
           </InputGroup>
         </FormGroup>
@@ -282,6 +317,7 @@ console.log(testAutoComplete)
               name="Repassword"
               placeholder="รหัสผ่านอีกครั้ง "
               onChange={(e) => setrepassword(e.target.value)}
+              value={repassword}
             />
           </InputGroup>
         </FormGroup>
@@ -297,7 +333,9 @@ console.log(testAutoComplete)
               type="text"
               name="mobile"
               placeholder="หมายเลขโทรศัพท์มือถือ"
-              onChange={onChangeInformation}
+              onChange={e=>onChangeInformation(e,inputnumberonly)}
+              value={Information.mobile}
+              maxLength="10"
             />
           </InputGroup>
         </FormGroup>
@@ -428,7 +466,7 @@ console.log(testAutoComplete)
             <br />
             ตัวเลข (0-9) หรือ
             <br />
-            อักขระพิเศษ (!@#$%) ตั้งแต่ 5 ถึง 20 ตัว
+            อักขระพิเศษ (_!@#$%) ตั้งแต่ 5 ถึง 20 ตัว
           </div>
         </PopoverBody>
       </UncontrolledPopover>

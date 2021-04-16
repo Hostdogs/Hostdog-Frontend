@@ -31,27 +31,37 @@ export default function ServiceForm() {
       <Container>
         <Form>
           <FormGroup>
-            <h2>เลือกบริการของคุณ</h2>
+            <h3>เลือกบริการของคุณ</h3>
           </FormGroup>
           <div className="list-service">
             <FormGroup>
               <Row>
-                <Col xs="5">เลือกสุนัขของคุณ</Col>
-                <Col>
-                  <Button color="primary">เลือก</Button>
+                <Col xs="6" sm="4">
+                  เลือกสุนัขของคุณ
+                </Col>
+                <Col xs="6" sm="4">
+                  <Button color="primary" size="sm">
+                    เลือก
+                  </Button>
                 </Col>
               </Row>
             </FormGroup>
             <FormGroup>
               <Row>
-                <Col xs="5">ผู้รับฝาก</Col>
-                <Col>นายคำนวย บางขุนเทียน</Col>
+                <Col xs="12" sm="4">
+                  ผู้รับฝาก
+                </Col>
+                <Col xs="12" sm="4">
+                  นายคำนวย บางขุนเทียน
+                </Col>
               </Row>
             </FormGroup>
             <FormGroup>
               <Row>
-                <Col xs="5">ประเภทการฝาก</Col>
-                <Col>
+                <Col xs="12" sm="4">
+                  ประเภทการฝาก
+                </Col>
+                <Col xs="6" sm="4">
                   <CustomInput
                     type="radio"
                     id="DeTypeRadio"
@@ -59,31 +69,35 @@ export default function ServiceForm() {
                     label="ฝากระหว่างวัน"
                   />
                 </Col>
-                <Col>
+                <Col xs="6" sm="4">
                   <CustomInput
                     type="radio"
                     id="DeTypeRadio2"
                     name="DeTypeRadio"
-                    label="ฝากระหว่างวัน"
+                    label="ฝากข้ามคืน"
                   />
                 </Col>
               </Row>
             </FormGroup>
             <FormGroup>
               <Row>
-                <Col xs="5">วันที่ใช้บริการฝาก</Col>
-                <Col xs="3">
+                <Col xs="12" sm="4">
+                  วันที่ใช้บริการฝาก
+                </Col>
+                <Col xs="12" sm="4">
                   <Input type="date" name="start-service" />
                 </Col>
-                <Col xs="3">
+                <Col xs="12" sm="4">
                   <Input type="date" name="end-service" />
                 </Col>
               </Row>
             </FormGroup>
             <FormGroup>
               <Row>
-                <Col xs="5">ประเภทอาหาร</Col>
-                <Col>
+                <Col xs="12" sm="4">
+                  ประเภทอาหาร
+                </Col>
+                <Col xs="12" sm="4">
                   <ButtonDropdown isOpen={dropdownTypeOpen} toggle={toggleType}>
                     <DropdownToggle caret size="sm">
                       เลือกประเภทอาหาร
@@ -98,8 +112,10 @@ export default function ServiceForm() {
             </FormGroup>
             <FormGroup>
               <Row>
-                <Col xs="5">ความถี่ในการให้อาหาร</Col>
-                <Col>
+                <Col xs="12" sm="4">
+                  ความถี่ในการให้อาหาร
+                </Col>
+                <Col xs="12" sm="4">
                   <ButtonDropdown isOpen={dropdownFreqOpen} toggle={toggleFreq}>
                     <DropdownToggle caret size="sm">
                       เลือกความถี่ในการให้อาหาร
@@ -114,8 +130,10 @@ export default function ServiceForm() {
             </FormGroup>
             <FormGroup>
               <Row>
-                <Col xs="5">ปริมาณอาหารต่อวัน</Col>
-                <Col>
+                <Col xs="12" sm="4">
+                  ปริมาณอาหารต่อวัน
+                </Col>
+                <Col xs="12" sm="4">
                   <ButtonDropdown
                     isOpen={dropdownWeightOpen}
                     toggle={toggleWeight}
@@ -133,13 +151,15 @@ export default function ServiceForm() {
             </FormGroup>
           </div>
           <FormGroup>
-            <h2>บริการเพิ่มเติม</h2>
+            <h3>บริการเพิ่มเติม</h3>
           </FormGroup>
           <div className="list-service">
             <FormGroup>
               <Row>
-                <Col xs="5">พาไปสุนัขเดินเล่น</Col>
-                <Col>
+                <Col xs="12" sm="4">
+                  พาไปสุนัขเดินเล่น
+                </Col>
+                <Col xs="6" sm="4">
                   <CustomInput
                     type="radio"
                     id="walkRadio"
@@ -147,7 +167,7 @@ export default function ServiceForm() {
                     label="ต้องการ"
                   />
                 </Col>
-                <Col>
+                <Col xs="6" sm="4">
                   <CustomInput
                     type="radio"
                     id="walkRadio2"
@@ -159,8 +179,10 @@ export default function ServiceForm() {
             </FormGroup>
             <FormGroup>
               <Row>
-                <Col xs="5">ให้ผู้รับฝากไปรับสุนัข</Col>
-                <Col>
+                <Col xs="12" sm="4">
+                  ให้ผู้รับฝากไปรับสุนัข
+                </Col>
+                <Col xs="6" sm="4">
                   <CustomInput
                     type="radio"
                     id="getDogRadio"
@@ -168,7 +190,7 @@ export default function ServiceForm() {
                     label="ต้องการ"
                   />
                 </Col>
-                <Col>
+                <Col xs="6" sm="4">
                   <CustomInput
                     type="radio"
                     id="getDogRadio2"
@@ -180,8 +202,10 @@ export default function ServiceForm() {
             </FormGroup>
             <FormGroup>
               <Row>
-                <Col xs="5">ให้ผู้รับฝากไปส่งสุนัข</Col>
-                <Col>
+                <Col xs="12" sm="4">
+                  ให้ผู้รับฝากไปส่งสุนัข
+                </Col>
+                <Col xs="6" sm="4">
                   <CustomInput
                     type="radio"
                     id="sendDogRadio"
@@ -189,7 +213,7 @@ export default function ServiceForm() {
                     label="ต้องการ"
                   />
                 </Col>
-                <Col>
+                <Col xs="6" sm="4">
                   <CustomInput
                     type="radio"
                     id="sendDogRadio2"
@@ -201,8 +225,10 @@ export default function ServiceForm() {
             </FormGroup>
             <FormGroup>
               <Row>
-                <Col xs="5">อาบน้ำสุนัข</Col>
-                <Col>
+                <Col xs="12" sm="4">
+                  อาบน้ำสุนัข
+                </Col>
+                <Col xs="6" sm="4">
                   <CustomInput
                     type="radio"
                     id="bathDogRadio"
@@ -210,7 +236,7 @@ export default function ServiceForm() {
                     label="ต้องการ"
                   />
                 </Col>
-                <Col>
+                <Col xs="6" sm="4">
                   <CustomInput
                     type="radio"
                     id="bathDogRadio2"
@@ -223,7 +249,7 @@ export default function ServiceForm() {
           </div>
           <FormGroup>
             <Row>
-              <h2>รายละเอียดเพิ่มเติมเพิ่มเติม</h2>
+              <h3>รายละเอียดเพิ่มเติมเพิ่มเติม</h3>
               <Input
                 rows="5"
                 type="textarea"

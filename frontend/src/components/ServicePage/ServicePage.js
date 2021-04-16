@@ -10,7 +10,8 @@ export default function ServicePage() {
         <br />
         <br />
         <br />
-        <Row>
+        <ServiceForm />
+        {/* <Row>
           <Col xs="3" style={{ border: "4px solid black" }}>
             สวัสดีท่านสมาชิก
           </Col>
@@ -20,7 +21,7 @@ export default function ServicePage() {
           <Col xs="3" style={{ border: "4px solid black" }}>
             ชมรมคนเขียน React
           </Col>
-        </Row>
+        </Row> */}
       </container>
     </div>
   );

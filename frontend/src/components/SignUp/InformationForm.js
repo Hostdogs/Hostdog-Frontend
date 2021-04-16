@@ -14,6 +14,7 @@ import {
   InputGroupAddon,
   InputGroupText,
   InputGroup,
+  FormFeedback
 } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -35,7 +36,7 @@ const loadScript = {
 };
 export default function InformationForm({ selectState }) {
   const [repassword, setrepassword] = useState("");
-
+  
   const [Information, setInformation] = useState({
     is_host: false,
     first_name: "",
@@ -58,12 +59,27 @@ export default function InformationForm({ selectState }) {
   const validatepassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
   const validateemail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
   const dayformat = "YYYY-MM-DD";
+  /////////validation//////////////
+  const [emailValid, setemailValid] = useState({valid:false,invalid:false})
+ 
+  const isemailValidate = () =>{
+    if(validateemail.test(Information.email)){
+      emailValid.valid=true
+      emailValid.invalid=false
+    }else{
+      emailValid.valid=false
+      emailValid.invalid=true
+    }
+    console.log(emailValid)
+  }
 
+
+
+
+  //////////////////////////////
   const onSubmit = (e) => {
     e.preventDefault()
     console.log(Information);
-    var response = SignUpAPI.checkInformation(Information)
-    console.log(response)
 
 
   };
@@ -239,7 +255,6 @@ export default function InformationForm({ selectState }) {
                     placeholder="ชื่อ"
                     onChange={e => onChangeInformation(e, inputtfirstname)}
                     value={Information.first_name}
-
                   />
                 </InputGroup>
               </FormGroup>
@@ -270,13 +285,17 @@ export default function InformationForm({ selectState }) {
                   <FontAwesomeIcon icon={faAt} />
                 </InputGroupText>
               </InputGroupAddon>
-              <Input
+              <Input valid={false} invalid={false}
                 type="email"
                 name="email"
                 placeholder="อีเมล"
                 onChange={e => onChangeInformation(e, inputemail)}
                 value={Information.email}
-
+                onBlur={isemailValidate}
+                onFocus={
+                  emailValid.valid=false,
+                  emailValid.invalid=false
+                }
               />
             </InputGroup>
           </FormGroup>
@@ -424,7 +443,7 @@ export default function InformationForm({ selectState }) {
 
               </Container>
 
-              <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged} >
+              <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
                 <InputGroup >
 
                   <Input
@@ -433,6 +452,7 @@ export default function InformationForm({ selectState }) {
                     id="exampleusername"
                     placeholder="ที่อยู่"
                     onChange={(e) => {
+                      e.preventDefault()
                       onChangeInformation(e);
                       setUserAddress(e.target.value);
                     }}
@@ -447,11 +467,12 @@ export default function InformationForm({ selectState }) {
                         e.preventDefault();
                         getCurrentLocation();
                       }}
+                      onSubmit={e=>{e.preventDefault()}}
                     >
                       <FontAwesomeIcon icon={faMapMarkerAlt} />
                     </Button>
                     <Button>
-                      <FontAwesomeIcon icon={faSearch} onClick={e=>e.preventDefault()}/>
+                      <FontAwesomeIcon icon={faSearch} onClick={e=>e.preventDefault()} onSubmit={e=>e.preventDefault()}/>
                     </Button>
                   </InputGroupAddon>
                 </InputGroup>
@@ -460,7 +481,7 @@ export default function InformationForm({ selectState }) {
           </FormGroup>
 
           <FormGroup>
-            <Button onClick={e => onSubmit}>ถัดไป</Button>
+            <Button onClick={onSubmit}>ถัดไป</Button>
           </FormGroup>
 
         </Form>

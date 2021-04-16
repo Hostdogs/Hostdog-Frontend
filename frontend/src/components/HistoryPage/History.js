@@ -1,6 +1,14 @@
 import { faAlignRight } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
-import { Card, CardTitle, CardText, Button, Col, Row } from "reactstrap";
+import {
+  Container,
+  Card,
+  CardTitle,
+  CardText,
+  Button,
+  Col,
+  Row,
+} from "reactstrap";
 export default function History({ history }) {
   return (
     <div>
@@ -31,13 +39,15 @@ export default function History({ history }) {
               <h4>{history.status}</h4>
             </Col>
           </Row>
-          <Row>
 
-              <Button style={{ width: "100%", minWidth: "100px",float:"right " }}>
+            <Container style={{background:"black"}}>
+              <Button
+                style={{ width: "15vw", minWidth: "100px", float: "right" }}
+              >
                 รายละเอียดเพิ่มเติม
               </Button>
- 
-          </Row>
+            </Container>
+
         </CardText>
       </Card>
     </div>

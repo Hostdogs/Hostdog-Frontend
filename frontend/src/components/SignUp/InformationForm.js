@@ -44,9 +44,10 @@ export default function InformationForm({selectState}) {
   });
   const inputnumberonly = /^[0-9\b]+$/
   const inputtextornumber = /^[A-Za-z0-9]+$/
-  const inputtfirstname = /^[ก-ฮะ-ไ่้็๊๋ํ]+$/
-  const inputlastname = /^[ก-ฮะ-ไ่้็๊๋ํ ]+$/
+  const inputtfirstname = /^[ก-ฮะ-ไ่้๊๋็์ัํ]+$/
+  const inputlastname = /^[ก-ฮะ-ไ่้๊๋็์ัํ ]+$/
   const inputpassword = /^[A-Za-z0-9]/
+  const inputemail = /^[]+$/
 
   const validatepassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
   const validateemail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -282,7 +283,7 @@ console.log(testAutoComplete)
               id="username"
               onChange={e=>onChangeInformation(e,inputtextornumber)}
               value={Information.username}
-              maxLength="10"
+              maxLength="20"
             />
           </InputGroup>
         </FormGroup>
@@ -300,6 +301,7 @@ console.log(testAutoComplete)
               placeholder="รหัสผ่าน "
               onChange={e=>onChangeInformation(e,inputpassword)}
               value={Information.password}
+              maxLength="20"
             />
           </InputGroup>
         </FormGroup>
@@ -317,6 +319,7 @@ console.log(testAutoComplete)
               placeholder="รหัสผ่านอีกครั้ง "
               onChange={(e) => setrepassword(e.target.value)}
               value={repassword}
+              maxLength="20"
             />
           </InputGroup>
         </FormGroup>

@@ -44,10 +44,12 @@ export default function InformationForm({selectState}) {
   });
   const inputnumberonly = /^[0-9\b]+$/
   const inputtextornumber = /^[A-Za-z0-9]+$/
-  const inputthaionly = /^[ก-ฮะ-ไ่้็๊๋ํ]+$/
+  const inputtfirstname = /^[ก-ฮะ-ไ่้็๊๋ํ]+$/
+  const inputlastname = /^[ก-ฮะ-ไ่้็๊๋ํ ]+$/
   const inputpassword = /^[A-Za-z0-9]/
-  // const regpassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
 
+  const validatepassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
+  const validateemail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
   const dayformat = "YYYY-MM-DD";
 
   const onSubmit = () => {
@@ -225,7 +227,7 @@ console.log(testAutoComplete)
                   type="text"
                   name="first_name"
                   placeholder="ชื่อ"
-                  onChange={e=>onChangeInformation(e,inputthaionly)}
+                  onChange={e=>onChangeInformation(e,inputtfirstname)}
                   value={Information.first_name}
                 />
               </InputGroup>
@@ -242,7 +244,7 @@ console.log(testAutoComplete)
                   type="text"
                   name="last_name"
                   placeholder="นามสกุล"
-                  onChange={e=>onChangeInformation(e,inputthaionly)}
+                  onChange={e=>onChangeInformation(e,inputlastname)}
                   value={Information.last_name}
 
                 />
@@ -463,7 +465,7 @@ console.log(testAutoComplete)
             <br />
             ตัวเลข (0-9) หรือ
             <br />
-            อักขระพิเศษ (!@#$%) ตั้งแต่ 5 ถึง 20 ตัว
+            อักขระพิเศษ (_!@#$%) ตั้งแต่ 5 ถึง 20 ตัว
           </div>
         </PopoverBody>
       </UncontrolledPopover>

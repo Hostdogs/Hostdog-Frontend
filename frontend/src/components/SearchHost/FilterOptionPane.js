@@ -19,7 +19,7 @@ import "react-date-range/dist/theme/default.css";
 import "./SearchHost.css";
 
 
-export default function FilterBox() {
+export default function FilterOptionPane() {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
@@ -71,13 +71,7 @@ export default function FilterBox() {
   return (
     <div>
 
-      <Button
-        color="secondary"
-        onClick={toggle}
-        style={{ marginBottom: "1rem" }}
-      >
-        ตัวกรอง
-      </Button>
+      
       <Collapse isOpen={isOpen}>
         <Card>
           <CardBody>

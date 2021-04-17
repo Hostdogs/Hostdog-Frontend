@@ -7,13 +7,17 @@ import {
   FormGroup,
   Input,
   Label,
+  InputGroupAddon,
+  InputGroup,
+  ButtonToggle,
+
 } from "reactstrap";
 import "./SearchHost.css";
 import { useState } from "react";
 import GoogleMapLocation from "./GoogleMapLocation";
-import FilterBox from "./FilterBox";
 import { Autocomplete, LoadScript } from "@react-google-maps/api";
-
+import {faFilter, faMapMarkerAlt, faSearch, faSearchLocation} from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 export default function SearchBox() {
   const [geocode, setGeoCode] = useState({});
 
@@ -115,47 +119,49 @@ export default function SearchBox() {
           language={loadScript.language}
           libraries={loadScript.libraries}
         >
-      
+
           <Form
             inline
             onSubmit={(e) => {
               e.preventDefault();
             }}
           >
-  
-            <FormGroup>
-            
-              <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
-                <Input
-                  className="textlocation"
-                  type="text"
-                  name="Location"
-                  id="location"
-                  placeholder="กรุณาใส่ที่อยู่เพื่อค้นหาผู้รับฝากใกล้ๆ"
-                  value={userAddress}
-                  onChange={(e) => setUserAddress(e.target.value)}
-                  onSubmit={() => alert("สวัสดีค่ะบาสคุง")}
-       
-                ></Input>
-              </Autocomplete>
-            </FormGroup>
-            <FormGroup className="gps">
-              <Button
-                onClick={() => {
-                  getCurrentLocation();
-                  setShowMap(true);
-                }}
-              >
-                GPS
-              </Button>
-            </FormGroup>
 
-            <FormGroup className="search">
-              <Button onClick={() => alert("สวัสดีครับบาสคุง")}>ค้นหา</Button>
+            <FormGroup>
+              <InputGroup>
+                <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
+                  <Input
+                    className="textlocation"
+                    type="text"
+                    name="Location"
+                    id="location"
+                    placeholder="กรุณาใส่ที่อยู่เพื่อค้นหาผู้รับฝากใกล้ๆ"
+                    value={userAddress}
+                    onChange={(e) => setUserAddress(e.target.value)}
+                    onSubmit={() => alert("สวัสดีค่ะบาสคุง")}
+
+                  style={{minWidth:"300px",width:"40vw"}}/>
+                </Autocomplete>
+                <InputGroupAddon addonType="append">
+                  <Button
+                    onClick={() => {
+                      getCurrentLocation();
+                      setShowMap(true);
+                    }}
+                  >
+                    <FontAwesomeIcon icon={faMapMarkerAlt}/>
+              </Button>
+              <Button onClick={() => alert("สวัสดีครับบาสคุง")}><FontAwesomeIcon icon={faSearch}/></Button>
+              <ButtonToggle><FontAwesomeIcon icon={faFilter}/></ButtonToggle>
+                </InputGroupAddon>
+               
+              </InputGroup>
+
             </FormGroup>
-   
+           
+
           </Form>
-       
+
           <Container className="map-container">
             {showMap ? (
               <GoogleMapLocation
@@ -165,7 +171,6 @@ export default function SearchBox() {
             ) : null}
           </Container>
         </LoadScript>
-        <FilterBox />
       </Container>
     </>
   );

@@ -5,3 +5,7 @@
 .list-service {
   margin-left: 15px;
 }
+
+.host-image {
+  max-width: 300px;
+}

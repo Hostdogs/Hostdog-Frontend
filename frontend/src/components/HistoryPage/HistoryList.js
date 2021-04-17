@@ -1,98 +1,154 @@
-import React from 'react'
-import {Container,Button} from 'reactstrap'
-import { useState } from "react";
+import React from "react";
+import { Container, Button } from "reactstrap";
+import { useState, useEffect } from "react";
 import History from "./History";
-import InfiniteScroll from 'react-infinite-scroll-component';
-const historyList=[
-{
-    id:1,
-    date:"24 พ.ย. 65",
+import InfiniteScroll from "react-infinite-scroll-component";
+import FilterBox from "./FilterBox";
+const historyList = [
+  {
+    id: 1,
+    date: "24 พ.ย. 65",
     dog: "น้องบาส บางขุนเทียน พันธุ์ทาง",
-    host:"เพียว",
+    host: "เพียว",
     status: "บริการสำเร็จ",
-},
-{
-    id:2,
-    date:"24 พ.ย. 65",
+  },
+  {
+    id: 2,
+    date: "24 พ.ย. 65",
     dog: "น้องบาส บางขุนเทียน พันธุ์ทาง",
-    host:"เพียว",
-    status: "บริการสำเร็จ",
-},
-{
-    id:3,
-    date:"24 พ.ย. 65",
+    host: "พล",
+    status: "ยกเลิกบริการ",
+  },
+  {
+    id: 3,
+    date: "24 พ.ย. 65",
     dog: "น้องบาส บางขุนเทียน พันธุ์ทาง",
-    host:"เพียว",
-    status: "บริการสำเร็จ",
-},
-{
-    id:4,
-    date:"24 พ.ย. 65",
+    host: "แพท",
+    status: "กำลังรอผู้รับฝากตอบรับ",
+  },
+  {
+    id: 4,
+    date: "24 พ.ย. 65",
     dog: "น้องบาส บางขุนเทียน พันธุ์ทาง",
-    host:"เพียว",
+    host: "คำนับ",
+    status: "กำลังใช้บริการ",
+  },
+];
+const tempData=[
+  {
+    id: 5,
+    date: "24 พ.ย. 65",
+    dog: "น้องบาส บางขุนเทียน พันธุ์ทาง",
+    host: "เพียว",
     status: "บริการสำเร็จ",
-}
+  },
+  {
+    id: 6,
+    date: "24 พ.ย. 65",
+    dog: "น้องบาส บางขุนเทียน พันธุ์ทาง",
+    host: "พล",
+    status: "ยกเลิกบริการ",
+  },
+  {
+    id: 7,
+    date: "24 พ.ย. 65",
+    dog: "น้องบาส บางขุนเทียน พันธุ์ทาง",
+    host: "แพท",
+    status: "กำลังรอผู้รับฝากตอบรับ",
+  },
+  {
+    id: 8,
+    date: "24 พ.ย. 65",
+    dog: "น้องบาส บางขุนเทียน พันธุ์ทาง",
+    host: "คำนับ",
+    status: "กำลังใช้บริการ",
+  },
 ]
+
+const filterItems = [
+  "ทั้งหมด",
+  "บริการสำเร็จ",
+  "กำลังรอผู้รับฝากตอบรับ",
+  "กำลังใช้บริการ",
+  "ยกเลิกบริการ",
+];
 export default function HistoryList() {
 
-    const [historyData,setHistoryData]=useState(historyList);
+  const [historyData, setHistoryData] = useState(historyList);
 
-    const [hasMore,setHasMore]=useState(true);
-  
-    const fetchMoreData = () => {
-   
-  
-      if (historyData.length >= 12) {
-  
-        setHasMore(false);
-  
-        return;
-      }
-  
-      // a fake async api call like which sends
-      // 20 more records in 1.5 secs
-      setTimeout(() => {
-        setHistoryData(
-            historyData.concat(historyList),
-        );
-  
-        
-      }, 1500);
-  
-    };
-  
-  const scrollToTop=()=>{
+  const [hasMore, setHasMore] = useState(true);
+
+
+  const fetchMoreData = () => {
+    console.log("fetchMoreData working");
+    if (historyData.length >= 8) {
+      setHasMore(false);
+
+      return;
+    }
+
+    // a fake async api call like which sends
+    // 20 more records in 1.5 secs
+    setTimeout(() => {
+
+      setHistoryData(historyData.concat(tempData));
+    }, 1500);
+  };
+
+  const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: "smooth"
+      behavior: "smooth",
     });
-  }
-    return (
-        <>
-               <InfiniteScroll
-          dataLength={historyData.length}
-          next={fetchMoreData}
-          hasMore={hasMore}
-          loader={<h4 style={{textAlign: "center"}}>Loading...</h4>}
-          endMessage={
-            <p style={{ textAlign: "center" }}>
-              <b>หมดแล้วครับ</b>
-            </p>
-          }
->
+  };
 
-            <Container style={{maxWidth:"60vw"}}>
-                <br/><br/><br/><h1>ประวัติการใช้บริการ</h1>
-               {historyData.map((hd)=>(
-                   <History key={hd.id} history={hd}/>
-               ))}
+  const [filterIndex, setFilterIndex] = useState(0);
 
-            </Container>
-            </InfiniteScroll>
-            <Button onClick={scrollToTop} style={{position: "fixed", bottom: 0, right: 0}}>
-ขึ้นข้างบน
-        
-</Button>
-        </>
-    )
+  const handleFilter = (fi) => {
+    setFilterIndex(fi);
+
+  };
+ 
+  return (
+    <>
+      <InfiniteScroll
+        dataLength={historyData.length}
+        next={fetchMoreData}
+        scrollThreshold={0.00001}
+        hasMore={hasMore}
+        loader={<h4 style={{ textAlign: "center" }}>Loading...</h4>}
+        endMessage={
+          <p style={{ textAlign: "center" }}>
+            <b>หมดแล้วครับ</b>
+          </p>
+  
+        }
+      >
+        <Container style={{ maxWidth: "60vw" }}>
+          <br />
+          <br />
+          <br />
+          <h1>บริการของคุณ</h1>
+          <FilterBox onFilter={handleFilter} />
+          {historyData
+            .filter((history)=>{
+              if(filterIndex>0){
+                return history.status===filterItems[filterIndex];
+              }else{
+                return history;
+              }
+            })
+            .map((hd) => (
+              <History key={hd.id} history={hd} />
+            ))}
+        </Container>
+      </InfiniteScroll>
+      <Button
+        onClick={scrollToTop}
+        style={{ position: "fixed", bottom: 0, right: 0 }}
+      >
+        ขึ้นข้างบน
+      </Button>
+    </>
+  );
 }

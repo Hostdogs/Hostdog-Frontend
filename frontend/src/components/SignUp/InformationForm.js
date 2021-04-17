@@ -59,6 +59,7 @@ export default function InformationForm({ selectState }) {
 
 
   const dayformat = "YYYY-MM-DD";
+
   /////////validation//////////////
   const validatepassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,20}$/
   const validateemail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -525,7 +526,6 @@ export default function InformationForm({ selectState }) {
                         e.preventDefault();
                         getCurrentLocation();
                       }}
-                      onSubmit={e => { e.preventDefault() }}
                     >
                       <FontAwesomeIcon icon={faMapMarkerAlt} />
                     </Button>

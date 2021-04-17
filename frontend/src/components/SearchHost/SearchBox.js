@@ -18,7 +18,11 @@ import GoogleMapLocation from "./GoogleMapLocation";
 import { Autocomplete, LoadScript } from "@react-google-maps/api";
 import {faFilter, faMapMarkerAlt, faSearch, faSearchLocation} from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import FilterOptionPane from "./FilterOptionPane";
 export default function SearchBox() {
+  const [isOpenPane, setisOpenPane] = useState(false)
+  const togglePane = () => setisOpenPane(!isOpenPane)
+
   const [geocode, setGeoCode] = useState({});
 
   const [showMap, setShowMap] = useState(false);
@@ -127,8 +131,8 @@ export default function SearchBox() {
             }}
           >
 
-            <FormGroup>
-              <InputGroup>
+            <FormGroup >
+              <InputGroup >
                 <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
                   <Input
                     className="textlocation"
@@ -152,7 +156,7 @@ export default function SearchBox() {
                     <FontAwesomeIcon icon={faMapMarkerAlt}/>
               </Button>
               <Button onClick={() => alert("สวัสดีครับบาสคุง")}><FontAwesomeIcon icon={faSearch}/></Button>
-              <ButtonToggle><FontAwesomeIcon icon={faFilter}/></ButtonToggle>
+              <ButtonToggle onClick={togglePane}><FontAwesomeIcon icon={faFilter}/></ButtonToggle>
                 </InputGroupAddon>
                
               </InputGroup>
@@ -161,6 +165,7 @@ export default function SearchBox() {
            
 
           </Form>
+          <FilterOptionPane isOpenPane={isOpenPane}/>
 
           <Container className="map-container">
             {showMap ? (

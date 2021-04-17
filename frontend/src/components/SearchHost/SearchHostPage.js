@@ -3,16 +3,16 @@ import React,{useState} from 'react'
 import HostList from "./HostList";
 
 import "./SearchHost.css";
-import Filterbox from './FilterOptionPane'
-import FilterOption from './FilterOption';
+import SearchBox from './SearchBox'
+
 
 export default function SearchHostPage() {
   const [isSearch, setisSearch] = useState(true)
+  
   return (
     <div>
-      
-      <FilterOption/>
-
+      <br/>
+      <SearchBox/>
       {isSearch ? (<HostList />):(null)}
     </div>
   );

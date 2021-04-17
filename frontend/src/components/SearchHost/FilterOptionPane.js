@@ -9,20 +9,22 @@ import {
   DropdownMenu,
   DropdownItem,
   Row,
-Container,
+  Col,
+  Container,
+  Form,
+  FormGroup,
+  Label,
 } from "reactstrap";
 import { addDays, addMonths, endOfMonth } from "date-fns";
-import { useState,useEffect  } from "react";
+import { useState, useEffect } from "react";
 import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css";
 import "./SearchHost.css";
+import SearchBox from "./SearchBox";
 
 
-export default function FilterOptionPane() {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggle = () => setIsOpen(!isOpen);
+export default function FilterOptionPane({ isOpenPane }) {
 
   const [isDateOpen, setIsDateOpen] = useState(false);
   const toggleDate = () => setIsDateOpen(!isDateOpen);
@@ -57,25 +59,70 @@ export default function FilterOptionPane() {
   useEffect(() => {
     function handleResize() {
       setWidth(window.innerWidth)
-    
-}
+      console.log(width)
+
+    }
 
     window.addEventListener('resize', handleResize)
 
     return _ => {
       window.removeEventListener('resize', handleResize)
-    
-}
+
+    }
   })
 
   return (
     <div>
 
-      
-      <Collapse isOpen={isOpen}>
-        <Card>
+
+      <Collapse isOpen={isOpenPane} style={{ minWidth: "300px", width: "60vw" }}>
+        <Card >
           <CardBody>
-            <Row>
+
+            <Form >
+              <FormGroup>
+                <Row>
+                  <Col style={{width:"40%"}}>
+                    <Label>ค้นหาในระยะ</Label>
+                  </Col>
+                  <Col>
+                  </Col>
+                </Row>
+
+              </FormGroup>
+              <FormGroup>
+                <Row>
+                  <Col style={{width:"40%"}}>
+                    <Label>ขนาดบริเวณพื้นที่เลี้ยงขั้นต่ำ</Label>
+                  </Col>
+                  <Col>
+                  </Col>
+                </Row>
+
+              </FormGroup>
+              <FormGroup >
+                
+                 
+                    <Label>ช่วงเวลาที่ต้องการฝาก</Label>
+                  
+                    <DateRange
+                      className="daterangepick"
+                      editableDateInputs={true}
+                      onChange={(item) => setSelectionRange([item.selection])}
+                      moveRangeOnFirstSelection={false}
+                      ranges={selectionRange}
+                      minDate={new Date()}
+                      maxDate={addMonths(new Date(), 2)}
+                      months={2}
+                      direction={width > 1400 ? "horizontal" : "vertical"}
+                      style={{width:"40vw",minWidth:"250px"}}
+                    />
+               
+
+
+              </FormGroup>
+            </Form>
+            {/* <Row>
               <UncontrolledDropdown>
                 <DropdownToggle caret>
                   {distance[choiceDistance]}
@@ -128,7 +175,7 @@ export default function FilterOptionPane() {
                     />
 
               </Collapse>
-            </Row>
+            </Row> */}
           </CardBody>
         </Card>
       </Collapse>

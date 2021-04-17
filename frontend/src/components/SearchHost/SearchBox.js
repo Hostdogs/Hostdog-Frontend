@@ -10,18 +10,17 @@ import {
   InputGroupAddon,
   InputGroup,
   ButtonToggle,
+  ButtonGroup,
 
 } from "reactstrap";
 import "./SearchHost.css";
 import { useState } from "react";
 import GoogleMapLocation from "./GoogleMapLocation";
 import { Autocomplete, LoadScript } from "@react-google-maps/api";
-import {faFilter, faMapMarkerAlt, faSearch, faSearchLocation} from "@fortawesome/free-solid-svg-icons"
+import { faFilter, faMapMarkerAlt, faSearch, faSearchLocation } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FilterOptionPane from "./FilterOptionPane";
 export default function SearchBox() {
-  const [isOpenPane, setisOpenPane] = useState(false)
-  const togglePane = () => setisOpenPane(!isOpenPane)
 
   const [geocode, setGeoCode] = useState({});
 
@@ -117,66 +116,64 @@ export default function SearchBox() {
 
   return (
     <>
-      <Container className="search-container">
-        <LoadScript
-          googleMapsApiKey={loadScript.googleAPIKey}
-          language={loadScript.language}
-          libraries={loadScript.libraries}
-        >
 
-          <Form
-            inline
-            onSubmit={(e) => {
-              e.preventDefault();
-            }}
-          >
+      <LoadScript
+        googleMapsApiKey={loadScript.googleAPIKey}
+        language={loadScript.language}
+        libraries={loadScript.libraries}
+      >
 
-            <FormGroup >
-              <InputGroup >
-                <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
-                  <Input
-                    className="textlocation"
-                    type="text"
-                    name="Location"
-                    id="location"
-                    placeholder="กรุณาใส่ที่อยู่เพื่อค้นหาผู้รับฝากใกล้ๆ"
-                    value={userAddress}
-                    onChange={(e) => setUserAddress(e.target.value)}
-                    onSubmit={() => alert("สวัสดีค่ะบาสคุง")}
+        <Form onSubmit={(e) => { e.preventDefault(); }}>
 
-                  style={{minWidth:"300px",width:"40vw"}}/>
-                </Autocomplete>
-                <InputGroupAddon addonType="append">
-                  <Button
-                    onClick={() => {
-                      getCurrentLocation();
-                      setShowMap(true);
-                    }}
-                  >
-                    <FontAwesomeIcon icon={faMapMarkerAlt}/>
+          <FormGroup >
+            <Label>ที่อยู่ของคุณ</Label>
+            <ButtonGroup style={{marginLeft:"5px",marginBottom:"5px",}}>
+              <Button 
+                onClick={() => {
+                  getCurrentLocation();
+                  // setShowMap(true);
+                }}
+              >
+                <FontAwesomeIcon icon={faMapMarkerAlt} />
               </Button>
-              <Button onClick={() => alert("สวัสดีครับบาสคุง")}><FontAwesomeIcon icon={faSearch}/></Button>
-              <ButtonToggle onClick={togglePane}><FontAwesomeIcon icon={faFilter}/></ButtonToggle>
-                </InputGroupAddon>
-               
-              </InputGroup>
+              <Button onClick={() => alert("สวัสดีครับบาสคุง")}><FontAwesomeIcon icon={faSearch} /></Button>
+            </ButtonGroup>
 
-            </FormGroup>
-           
 
-          </Form>
-          <FilterOptionPane isOpenPane={isOpenPane}/>
 
-          <Container className="map-container">
+            <InputGroup style={{paddingLeft:"5%"}}>
+              <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
+                <Input
+                  className="textlocation"
+                  type="text"
+                  name="Location"
+                  id="location"
+                  placeholder="กรุณาใส่ที่อยู่เพื่อค้นหาผู้รับฝากใกล้ๆ"
+                  value={userAddress}
+                  onChange={(e) => setUserAddress(e.target.value)}
+                  onSubmit={() => alert("สวัสดีค่ะบาสคุง")}
+
+                />
+              </Autocomplete>
+
+
+            </InputGroup>
+
+          </FormGroup>
+
+
+        </Form>
+
+        {/* <Container className="map-container">
             {showMap ? (
               <GoogleMapLocation
                 handleDragEnd={(e) => onMarkerDragEnd(e)}
                 currentGeoCode={geocode}
               />
             ) : null}
-          </Container>
-        </LoadScript>
-      </Container>
+          </Container> */}
+      </LoadScript>
+
     </>
   );
 }

@@ -4,6 +4,7 @@ import HostList from "./HostList";
 
 import "./SearchHost.css";
 import SearchBox from './SearchBox'
+import FilterOptionPane from './FilterOptionPane';
 
 
 export default function SearchHostPage() {
@@ -12,7 +13,7 @@ export default function SearchHostPage() {
   return (
     <div>
       <br/>
-      <SearchBox/>
+      <FilterOptionPane/>
       {isSearch ? (<HostList />):(null)}
     </div>
   );

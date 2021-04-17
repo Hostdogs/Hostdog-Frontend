@@ -75,53 +75,86 @@ export default function FilterOptionPane({ isOpenPane }) {
     <div>
 
 
-      <Collapse isOpen={isOpenPane} style={{ minWidth: "300px", width: "60vw" }}>
+      <Container fluid="md" >
         <Card >
           <CardBody>
-
+            <Label><h1>ค้นหาผู้รับฝาก</h1></Label>
+            <Container style={{paddingLeft:"10%",paddingRight:"10%"}}>
             <Form >
-              <FormGroup>
-                <Row>
-                  <Col style={{width:"40%"}}>
-                    <Label>ค้นหาในระยะ</Label>
-                  </Col>
-                  <Col>
-                  </Col>
-                </Row>
+              
+                
+                <SearchBox />
+             
 
+              <FormGroup>
+
+                
+                <UncontrolledDropdown>
+                <Label style={{width:"300px"}}>ค้นหาในระยะ</Label>
+                  <DropdownToggle caret>
+                    {distance[choiceDistance]}
+                  </DropdownToggle>
+                  <DropdownMenu>
+                    <DropdownItem onClick={() => setChoiceDistance(0)}>
+                      {distance[0]}
+                    </DropdownItem>
+                    <DropdownItem onClick={() => setChoiceDistance(1)}>
+                      {distance[1]}
+                    </DropdownItem>
+                    <DropdownItem onClick={() => setChoiceDistance(2)}>
+                      {distance[2]}
+                    </DropdownItem>
+                  </DropdownMenu>
+                </UncontrolledDropdown>
               </FormGroup>
               <FormGroup>
-                <Row>
-                  <Col style={{width:"40%"}}>
-                    <Label>ขนาดบริเวณพื้นที่เลี้ยงขั้นต่ำ</Label>
-                  </Col>
-                  <Col>
-                  </Col>
-                </Row>
+
+                
+                <UncontrolledDropdown>
+                <Label style={{width:"300px"}}>ขนาดบริเวณพื้นที่เลี้ยงขั้นต่ำ</Label>
+                  <DropdownToggle caret>{area[choiceArea]}</DropdownToggle>
+                  <DropdownMenu>
+                    <DropdownItem onClick={() => setChoiceArea(0)}>
+                      {area[0]}
+                    </DropdownItem>
+                    <DropdownItem onClick={() => setChoiceArea(1)}>
+                      {area[1]}
+                    </DropdownItem>
+                    <DropdownItem onClick={() => setChoiceArea(2)}>
+                      {area[2]}
+                    </DropdownItem>
+                    <DropdownItem onClick={() => setChoiceArea(3)}>
+                      {area[3]}
+                    </DropdownItem>
+                  </DropdownMenu>
+                </UncontrolledDropdown>
 
               </FormGroup>
               <FormGroup >
-                
-                 
-                    <Label>ช่วงเวลาที่ต้องการฝาก</Label>
+                <Label style={{width:"300px"}}>ช่วงเวลาที่ต้องการฝาก</Label>
+                <div style={{textAlign:"center"}}>
+                <DateRange
+                  className="daterangepick"
+                  editableDateInputs={true}
+                  onChange={(item) => setSelectionRange([item.selection])}
+                  moveRangeOnFirstSelection={false}
+                  ranges={selectionRange}
+                  minDate={new Date()}
+                  maxDate={addMonths(new Date(), 2)}
+                  months={2}
+                  direction={width > 1400 ? "horizontal" : "vertical"}
+                  style={{width:"auto" }}
                   
-                    <DateRange
-                      className="daterangepick"
-                      editableDateInputs={true}
-                      onChange={(item) => setSelectionRange([item.selection])}
-                      moveRangeOnFirstSelection={false}
-                      ranges={selectionRange}
-                      minDate={new Date()}
-                      maxDate={addMonths(new Date(), 2)}
-                      months={2}
-                      direction={width > 1400 ? "horizontal" : "vertical"}
-                      style={{width:"40vw",minWidth:"250px"}}
-                    />
-               
-
-
+                />
+                </div>
+                
+              </FormGroup>
+              <FormGroup>
+                <Button>ค้นหา</Button>
               </FormGroup>
             </Form>
+            </Container>
+            
             {/* <Row>
               <UncontrolledDropdown>
                 <DropdownToggle caret>
@@ -178,7 +211,9 @@ export default function FilterOptionPane({ isOpenPane }) {
             </Row> */}
           </CardBody>
         </Card>
-      </Collapse>
+      </Container>
+
+
     </div>
   );
 }

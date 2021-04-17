@@ -258,7 +258,7 @@ export default function InformationForm({ selectState }) {
         );
         geoCoding(testAutoComplete.gm_accessors_.place.Ve.predictions[0].Lk);
       }
-      else{
+      else if(testAutoComplete.gm_accessors_.place.Ve.place.name==="") {
        setShowLocationWarn(true);
       }
     } else {

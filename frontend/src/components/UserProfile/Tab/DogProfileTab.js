@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { ListGroup, ListGroupItem, Row, Col, Button } from "reactstrap";
-import ModalDogForm from "./ModalDogForm";
+import DogProfileAddForm from "./DogProfileAddForm";
 
 const DogProfileTab = (props) => {
+
+  const [newdogToggle, setnewdogToggle] = useState(false)
+  const addtoggle = () => setnewdogToggle(!newdogToggle)
   //Add ListItem
   const AddedElement = () => (
     <ListGroupItem>
@@ -30,18 +33,19 @@ const DogProfileTab = (props) => {
   }
   const paginate = (pageNumbers) => setCurrentPage(pageNumbers);
 
-  console.log(count);
+  // console.log(count);
   return (
     <div>
+      <DogProfileAddForm toggleModal={newdogToggle} />
       <Row>
         <Col xs="12">
           <Button 
             outline color="warning"
-            onClick={() => setCount(count + 1)}
+            onClick={addtoggle}
           >
             เพิ่มโปรไฟล์สุนัขของคุณ
           </Button>
-          <ModalDogForm buttonLabel="เพิ่มโปรไฟล์สุนัขของคุณ" />{" "}
+          
           <hr />
         </Col>
       </Row>

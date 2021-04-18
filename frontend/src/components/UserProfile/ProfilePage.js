@@ -11,7 +11,7 @@ export default function ProfilePage() {
     console.log("kb");
     setIsOpen(!isOpen);
   };
-
+  const [pageCollapse, setpageCollapse] = useState(true)
   return (
     <div>
       <header style={{ position: "fixed", width: "100%", zIndex: "1001" }}>
@@ -19,9 +19,9 @@ export default function ProfilePage() {
       </header>
       <SideBar isOpen={isOpen} />
       <div style={{ paddingTop: "50px" }}>
-        <Container>
-          <ProfileCard />
-          <ProfileContent />
+        <Container fluid="md">
+          <ProfileCard pageCollapse={pageCollapse}/>
+          <ProfileContent setpageCollapse={setpageCollapse}/>
         </Container>
       </div>
     </div>

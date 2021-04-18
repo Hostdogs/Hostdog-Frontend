@@ -7,10 +7,11 @@ import {
   CardBody,
   Alert,
   CardFooter,
-  List
+  List,
+  Collapse
 } from "reactstrap";
 
-const ProfileCard = (props) => {
+const ProfileCard = ({pageCollapse}) => {
   return (
       <Card>
       <CardBody
@@ -21,21 +22,27 @@ const ProfileCard = (props) => {
           width:"100%"
         }}
       >
+        <Collapse isOpen={pageCollapse}>
         <div id="mainContainer" class="container">
           <div class="panel-body">
+            <br/>
             <img
-              src={process.env.PUBLIC_URL + "/บาสพันธุ์ทาง.png"}
+              src={process.env.PUBLIC_URL + "/user_placeholder.png"}
               class="img-responsive center-block"
-              style={{ borderRadius: "50%", width: "110px", height: "100%" }}
+              style={{ borderRadius: "50%", width: "120px", height: "100%" }}
             />
           </div>
         </div>
+        </Collapse>
+        
         <br />
-        <CardTitle tag="h3">บาส พันธุ์ทาง</CardTitle>
+        <CardTitle tag="h3">ควยแพท</CardTitle>
         <CardSubtitle tag="h6" className="mb-2 text-muted">
           ผู้ใช้งานทั่วไป
         </CardSubtitle>
-        <br />
+        <Collapse isOpen={pageCollapse}>
+          <br/>
+        </Collapse>
       </CardBody>
     </Card>
   );

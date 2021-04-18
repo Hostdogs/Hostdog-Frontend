@@ -2,6 +2,11 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { ListGroup, ListGroupItem, Row, Col, Button } from "reactstrap";
 import DogProfileAddForm from "./DogProfileAddForm";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faPlus
+} from "@fortawesome/free-solid-svg-icons";
+
 
 const DogProfileTab = (props) => {
 
@@ -40,10 +45,10 @@ const DogProfileTab = (props) => {
       <Row>
         <Col xs="12">
           <Button 
-            outline color="warning"
+             color="warning"
             onClick={addtoggle}
           >
-            เพิ่มโปรไฟล์สุนัขของคุณ
+            <FontAwesomeIcon icon={faPlus}/> เพิ่มสุนัข
           </Button>
           
           <hr />

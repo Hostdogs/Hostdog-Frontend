@@ -33,6 +33,7 @@ export default function History({ history, }) {
         color="warning"
         className="history"
         style={{
+          border:"none",
           background: "#fff3d0",
           height: "42vh",
           margin: "5px 0px",
@@ -57,7 +58,7 @@ export default function History({ history, }) {
 
             <Container className="detial-container" >
               <Button
-                style={{ width: "15vw", minWidth: "100px",float:"right" ,backgroundColor:filterColor[filterItems.indexOf(history.status)]}}
+                style={{ border:"none",width: "15vw", minWidth: "100px",float:"right" ,backgroundColor:filterColor[filterItems.indexOf(history.status)]}}
               >
                 รายละเอียดเพิ่มเติม
               </Button>

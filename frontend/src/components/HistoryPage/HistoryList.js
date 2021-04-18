@@ -140,12 +140,16 @@ export default function HistoryList() {
           </p>
   
         }
-      >
-        <Container style={{ maxWidth: "80vw" }}>
-          <br />
-          <br />
-          <br />
-          <h1>บริการของคุณ</h1>
+      > 
+      <Container style={{ maxWidth: "80vw"}}>
+        <br />
+        <br />
+        <br />
+         <h1>บริการของคุณ</h1>
+         </Container>
+        <Container style={{ maxWidth: "80vw",background:"#ffe080",paddingTop:"10px" ,paddingBottom:"10px"  ,borderRadius:"5px"}}>
+     
+         
           <FilterBox onFilter={handleFilter} fetchMore={fetchMoreData}/>
           {historyData
             .filter((history)=>{

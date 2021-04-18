@@ -13,7 +13,7 @@ export default function HistoryPage() {
         <div>
             
             <NavbarisAuth toggleSideBar={toggleSideBar}/>
-            <SideBar isOpen={isOpen} />
+            <SideBar isOpen={isOpen}/>
             <HistoryList/>
         </div>
     )

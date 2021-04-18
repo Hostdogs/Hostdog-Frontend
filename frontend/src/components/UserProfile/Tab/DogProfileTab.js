@@ -1,17 +1,13 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { ListGroup, ListGroupItem, Row, Col, Button } from "reactstrap";
+import ModalDogForm from "./ModalDogForm";
 
-const DogProfileTab = () => {
+const DogProfileTab = (props) => {
   //Add ListItem
   const AddedElement = () => (
     <ListGroupItem>
-      <img
-        src={process.env.PUBLIC_URL + "/doge.png"}
-        width="125"
-        height="169"
-      />
-      kuyBasLeng {count}
+        
     </ListGroupItem>
   );
 
@@ -34,6 +30,7 @@ const DogProfileTab = () => {
   }
   const paginate = (pageNumbers) => setCurrentPage(pageNumbers);
 
+  console.log(count);
   return (
     <div>
       <Row>
@@ -44,6 +41,7 @@ const DogProfileTab = () => {
           >
             เพิ่มโปรไฟล์สุนัขของคุณ
           </Button>
+          <ModalDogForm buttonLabel="เพิ่มโปรไฟล์สุนัขของคุณ" />{" "}
           <hr />
         </Col>
       </Row>

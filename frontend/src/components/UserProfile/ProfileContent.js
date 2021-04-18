@@ -13,8 +13,8 @@ import {
   Col,
 } from "reactstrap";
 import classnames from "classnames";
-import DogProfileTab from "./DogProfileTab";
-import MainTab from "./MainTab";
+import DogProfileTab from "./Tab/DogProfileTab";
+import MainTab from "./Tab/MainTab";
 
 const ProfileContent = (props) => {
   const [activeTab, setActiveTab] = useState("1");

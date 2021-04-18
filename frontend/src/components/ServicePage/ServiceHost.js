@@ -4,16 +4,15 @@ import { Container, UncontrolledCarousel, Row, Col } from "reactstrap";
 export default function ServiceHost() {
   const items = [
     {
-      src: "logo192.png",
+      src: "host.jpg",
       key: "1",
     },
     {
-      src: "logo192.png",
-
+      src: "host.jpg",
       key: "2",
     },
     {
-      src: "logo192.png",
+      src: "host.jpg",
       key: "3",
     },
   ];
@@ -23,11 +22,21 @@ export default function ServiceHost() {
       <Container>
         <Row>
           <Col>
-            <UncontrolledCarousel items={items} />;
+            <UncontrolledCarousel items={items} />
           </Col>
         </Row>
-        <Row style={{ height: "200px" }}>Google Map</Row>
-        <Row>ที่อยู่</Row>
+        <br />
+        <br />
+        <Row>
+          <Col>
+            <img style={{ width: "100%" }} src="map.jpg" />
+          </Col>
+        </Row>
+        <br />
+        <br />
+        <Row>
+          <h4>ที่อยู่</h4>
+        </Row>
       </Container>
     </div>
   );

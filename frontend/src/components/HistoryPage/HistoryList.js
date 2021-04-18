@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import History from "./History";
 import InfiniteScroll from "react-infinite-scroll-component";
 import FilterBox from "./FilterBox";
+
 const historyList = [
   {
     id: 1,
@@ -34,7 +35,17 @@ const historyList = [
     status: "กำลังใช้บริการ",
   },
 ];
-const tempData=[
+
+
+const filterItems = [
+  "ทั้งหมด",
+  "บริการสำเร็จ",
+  "กำลังรอผู้รับฝากตอบรับ",
+  "กำลังใช้บริการ",
+  "ยกเลิกบริการ",
+];
+
+const testData=[
   {
     id: 5,
     date: "24 พ.ย. 65",
@@ -64,19 +75,12 @@ const tempData=[
     status: "กำลังใช้บริการ",
   },
 ]
-
-const filterItems = [
-  "ทั้งหมด",
-  "บริการสำเร็จ",
-  "กำลังรอผู้รับฝากตอบรับ",
-  "กำลังใช้บริการ",
-  "ยกเลิกบริการ",
-];
 export default function HistoryList() {
 
   const [historyData, setHistoryData] = useState(historyList);
 
   const [hasMore, setHasMore] = useState(true);
+
 
 
   const fetchMoreData = () => {
@@ -91,7 +95,7 @@ export default function HistoryList() {
     // 20 more records in 1.5 secs
     setTimeout(() => {
 
-      setHistoryData(historyData.concat(tempData));
+      setHistoryData(historyData.concat(testData));
     }, 1500);
   };
 
@@ -114,7 +118,6 @@ export default function HistoryList() {
       <InfiniteScroll
         dataLength={historyData.length}
         next={fetchMoreData}
-        scrollThreshold={0.00001}
         hasMore={hasMore}
         loader={<h4 style={{ textAlign: "center" }}>Loading...</h4>}
         endMessage={
@@ -129,7 +132,7 @@ export default function HistoryList() {
           <br />
           <br />
           <h1>บริการของคุณ</h1>
-          <FilterBox onFilter={handleFilter} />
+          <FilterBox onFilter={handleFilter} fetchMore={fetchMoreData}/>
           {historyData
             .filter((history)=>{
               if(filterIndex>0){
@@ -145,6 +148,7 @@ export default function HistoryList() {
       </InfiniteScroll>
       <Button
         onClick={scrollToTop}
+     
         style={{ position: "fixed", bottom: 0, right: 0 }}
       >
         ขึ้นข้างบน

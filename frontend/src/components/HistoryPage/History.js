@@ -9,7 +9,19 @@ import {
   Col,
   Row,
 } from "reactstrap";
-export default function History({ history }) {
+const filterItems = [
+  "บริการสำเร็จ",
+  "กำลังรอผู้รับฝากตอบรับ",
+  "กำลังใช้บริการ",
+  "ยกเลิกบริการ",
+];
+const filterColor = [
+  "#28a745",
+  "#ffc107",
+  "#17a2b8",
+  "#c82333",
+];
+export default function History({ history, }) {
   return (
     <div>
       <Card
@@ -36,13 +48,13 @@ export default function History({ history }) {
           <p>สุนัข:{history.dog}</p>
           <Row>
             <Col>
-              <h4>{history.status}</h4>
+              <h4 style={{color:filterColor[filterItems.indexOf(history.status)]}}>{history.status}</h4>
             </Col>
           </Row>
 
-            <Container style={{background:"black"}}>
+            <Container >
               <Button
-                style={{ width: "15vw", minWidth: "100px", float: "right" }}
+                style={{ width: "15vw", minWidth: "100px", float: "right" ,backgroundColor:filterColor[filterItems.indexOf(history.status)]}}
               >
                 รายละเอียดเพิ่มเติม
               </Button>

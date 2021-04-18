@@ -11,17 +11,20 @@ import {
   InputGroup,
   ButtonToggle,
   ButtonGroup,
-
 } from "reactstrap";
 import "./SearchHost.css";
 import { useState } from "react";
 import GoogleMapLocation from "./GoogleMapLocation";
 import { Autocomplete, LoadScript } from "@react-google-maps/api";
-import { faFilter, faMapMarkerAlt, faSearch, faSearchLocation } from "@fortawesome/free-solid-svg-icons"
+import {
+  faFilter,
+  faMapMarkerAlt,
+  faSearch,
+  faSearchLocation,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FilterOptionPane from "./FilterOptionPane";
 export default function SearchBox() {
-
   const [geocode, setGeoCode] = useState({});
 
   const [showMap, setShowMap] = useState(false);
@@ -115,56 +118,59 @@ export default function SearchBox() {
   };
 
   return (
-    <>
-
-      <LoadScript
-        googleMapsApiKey={loadScript.googleAPIKey}
-        language={loadScript.language}
-        libraries={loadScript.libraries}
+    <LoadScript
+      googleMapsApiKey={loadScript.googleAPIKey}
+      language={loadScript.language}
+      libraries={loadScript.libraries}
+    >
+      <Form
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
       >
+        <FormGroup>
+          <Label>ที่อยู่ของคุณ</Label>
+          <Button
+            onClick={() => {
+              getCurrentLocation();
+              // setShowMap(true);
+            }}
+            style={{
+              backgroundColor: "#ffe080",
+              border: "0px",
+              marginLeft: "1%",
+            }}
+          >
+            <FontAwesomeIcon icon={faMapMarkerAlt} style={{color:"black"}} />
+          </Button>
+          <Button
+            onClick={() => alert("สวัสดีครับบาสคุง")}
+            style={{
+              backgroundColor: "#ffe080",
+              border: "0px",
+              marginLeft: "0.5%",
+            }}
+          >
+            <FontAwesomeIcon icon={faSearch} style={{color:"black"}}/>
+          </Button>
+          <InputGroup style={{marginTop:"1%"}}>
+            <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
+              <Input
+                className="textlocation"
+                type="text"
+                name="Location"
+                id="location"
+                placeholder="กรุณาใส่ที่อยู่เพื่อค้นหาผู้รับฝากใกล้ๆ"
+                value={userAddress}
+                onChange={(e) => setUserAddress(e.target.value)}
+                onSubmit={() => alert("สวัสดีค่ะบาสคุง")}
+              />
+            </Autocomplete>
+          </InputGroup>
+        </FormGroup>
+      </Form>
 
-        <Form onSubmit={(e) => { e.preventDefault(); }}>
-
-          <FormGroup >
-            <Label>ที่อยู่ของคุณ</Label>
-            <ButtonGroup style={{marginLeft:"5px",marginBottom:"5px",}}>
-              <Button 
-                onClick={() => {
-                  getCurrentLocation();
-                  // setShowMap(true);
-                }}
-              >
-                <FontAwesomeIcon icon={faMapMarkerAlt} />
-              </Button>
-              <Button onClick={() => alert("สวัสดีครับบาสคุง")}><FontAwesomeIcon icon={faSearch} /></Button>
-            </ButtonGroup>
-
-
-
-            <InputGroup style={{paddingLeft:"5%"}}>
-              <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
-                <Input
-                  className="textlocation"
-                  type="text"
-                  name="Location"
-                  id="location"
-                  placeholder="กรุณาใส่ที่อยู่เพื่อค้นหาผู้รับฝากใกล้ๆ"
-                  value={userAddress}
-                  onChange={(e) => setUserAddress(e.target.value)}
-                  onSubmit={() => alert("สวัสดีค่ะบาสคุง")}
-
-                />
-              </Autocomplete>
-
-
-            </InputGroup>
-
-          </FormGroup>
-
-
-        </Form>
-
-        {/* <Container className="map-container">
+      {/* <Container className="map-container">
             {showMap ? (
               <GoogleMapLocation
                 handleDragEnd={(e) => onMarkerDragEnd(e)}
@@ -172,8 +178,6 @@ export default function SearchBox() {
               />
             ) : null}
           </Container> */}
-      </LoadScript>
-
-    </>
+    </LoadScript>
   );
 }

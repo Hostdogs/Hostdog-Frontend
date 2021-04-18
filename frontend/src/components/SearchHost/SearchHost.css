@@ -1,37 +1,50 @@
+.search-container {
+  display: flex;
 
+  flex-direction: column;
+  align-items: center;
+  object-fit: contain;
+  justify-content: center;
 
-.search-container{
-
-
-display: flex; 
-
-flex-direction: column;
-align-items: center;
-object-fit: contain;
-justify-content: center;
-
-width:80vw;
+  width: 80vw;
 }
 
-.textlocation{
-
-min-width:45vw;
-
+.textlocation {
+  min-width: 45vw;
 }
-.map-container{
+.map-container {
+  margin: 10px auto;
+  max-width: 500px;
+}
+
+.host-container {
+  background: #ffe080;
+
+  max-width: 80vw;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+@media only screen and (max-width: 499px) {
+  .rdrDateDisplayWrapper {
+    width: 100% !important;
+  }
+  .rdrMonthAndYearWrapper {
+    width: 100% !important;
+  }
+  .rdrCalendarWrapper,
+  .rdrDateRangeWrapper,
+  .rdrMonth,
+  .rdr.NextButton {
+    width: 100% !important;
+  }
+  .FontSize{
+      font-size: calc(1.5rem + 3vw);
+  }
+
+
+  .rdrNextPrevButton {
+    display: none !important;
+  }
   
-    margin:10px auto;
-    max-width: 500px;
-
-
-}
-
-
-.host-container{
-  
-background:#ffe080;
-
-max-width:80vw;
-padding:10px;
-border-radius: 5px;
 }

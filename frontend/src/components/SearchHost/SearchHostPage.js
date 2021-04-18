@@ -11,9 +11,10 @@ export default function SearchHostPage() {
   const [isSearch, setisSearch] = useState(true)
   
   return (
-    <div>
+    <div style={{overflowX:"hidden"}}>
       <br/>
       <FilterOptionPane/>
+      <br/>
       {isSearch ? (<HostList />):(null)}
     </div>
   );

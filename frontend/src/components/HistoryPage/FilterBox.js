@@ -1,6 +1,6 @@
 import { UncontrolledButtonDropdown, DropdownMenu, DropdownItem, DropdownToggle } from 'reactstrap';
 import { useState } from "react";
-const filterText=["ทั้งหมด","บริการสำเร็จ","กำลังรอผู้รับฝากตอบรับ","กำลังใช้บริการ","ยกเลิกบริการ"];
+const filterText=["ทั้งหมด","บริการสำเร็จ","กำลังรอการตอบรับ","กำลังใช้บริการ","ยกเลิกบริการ"];
 const color=["secondary","success","warning","info","danger"]
 export default function FilterBox({onFilter,fetchMore}) {
 

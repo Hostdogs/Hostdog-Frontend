@@ -25,7 +25,7 @@ const historyList = [
     date: "24 พ.ย. 65",
     dog: "น้องบาส บางขุนเทียน พันธุ์ทาง",
     host: "แพท",
-    status: "กำลังรอผู้รับฝากตอบรับ",
+    status: "กำลังรอการตอบรับ",
   },
   {
     id: 4,
@@ -40,12 +40,12 @@ const historyList = [
 const filterItems = [
   "ทั้งหมด",
   "บริการสำเร็จ",
-  "กำลังรอผู้รับฝากตอบรับ",
+  "กำลังรอการตอบรับ",
   "กำลังใช้บริการ",
   "ยกเลิกบริการ",
 ];
 
-const testData=[
+const testDataList=[
   {
     id: 5,
     date: "24 พ.ย. 65",
@@ -65,7 +65,7 @@ const testData=[
     date: "24 พ.ย. 65",
     dog: "น้องบาส บางขุนเทียน พันธุ์ทาง",
     host: "แพท",
-    status: "กำลังรอผู้รับฝากตอบรับ",
+    status: "กำลังรอการตอบรับ",
   },
   {
     id: 8,
@@ -81,11 +81,24 @@ export default function HistoryList() {
 
   const [hasMore, setHasMore] = useState(true);
 
+  const [testData,setTestData]=useState(testDataList);
 
+  const genTestData=()=>{
+  
+  const newTestData=testData.map((data,index)=>{
+    const newId=data.id+4;
+    const updatedItem={
+    ...data,id:newId,
+  };
+  return updatedItem;
+  })
+  
+  setTestData(newTestData);
+  }
 
   const fetchMoreData = () => {
     console.log("fetchMoreData working");
-    if (historyData.length >= 8) {
+    if (historyData.length >= 24) {
       setHasMore(false);
 
       return;
@@ -94,6 +107,7 @@ export default function HistoryList() {
     // a fake async api call like which sends
     // 20 more records in 1.5 secs
     setTimeout(() => {
+      genTestData();
 
       setHistoryData(historyData.concat(testData));
     }, 1500);
@@ -127,7 +141,7 @@ export default function HistoryList() {
   
         }
       >
-        <Container style={{ maxWidth: "60vw" }}>
+        <Container style={{ maxWidth: "80vw" }}>
           <br />
           <br />
           <br />

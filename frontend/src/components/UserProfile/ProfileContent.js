@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import {
   TabContent,
   TabPane,
@@ -17,12 +17,20 @@ import DogProfileTab from "./Tab/DogProfileTab";
 import MainTab from "./Tab/MainTab";
 import SettingTab from "./Tab/SettingTab";
 
-const ProfileContent = (props) => {
+const ProfileContent = ({setpageCollapse}) => {
   const [activeTab, setActiveTab] = useState("1");
 
   const toggle = (tab) => {
     if (activeTab !== tab) setActiveTab(tab);
   };
+
+  useEffect(() => {
+    if(activeTab==="1"){
+      setpageCollapse(true)
+    }else{
+      setpageCollapse(false)
+    }
+  }, [activeTab])
 
   return (
     <div>

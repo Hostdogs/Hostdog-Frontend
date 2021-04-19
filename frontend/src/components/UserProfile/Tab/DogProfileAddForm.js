@@ -11,25 +11,25 @@ import {
   Input,
 } from "reactstrap";
 
-const ModalDogForm = (props) => {
-  const { buttonLabel, className } = props;
 
-  const [modal, setModal] = useState(false);
 
-  const toggle = () => setModal(!modal);
+export default function DogProfileAddForm({toggleModal}) {
+
 
   const [name, setName] = useState("");
   const [age, setAge] = useState(0);
   const [weight, setWeight] = useState(0);
 
-  console.log({name,age,weight});
+  // console.log({name,age,weight});
+  const handleSubmit = () =>{
+    console.log({name,age,weight});
+    toggleModal()
+  }
+
   return (
     <div>
-      <Button color="warning" onClick={toggle}>
-        {buttonLabel}
-      </Button>
-      <Modal isOpen={modal} toggle={toggle} className={className}>
-        <ModalHeader toggle={toggle}>กรอกโปรไฟล์สุนัข</ModalHeader>
+      <Modal isOpen={toggleModal}>
+        <ModalHeader >กรอกโปรไฟล์สุนัข</ModalHeader>
         <ModalBody>
           <Form>
             <FormGroup>
@@ -47,16 +47,15 @@ const ModalDogForm = (props) => {
           </Form>
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={toggle} >
+          <Button color="primary" onClick={handleSubmit} >
             Submit
           </Button>{" "}
-          <Button color="secondary" onClick={toggle}>
+          <Button color="secondary" onClick={toggleModal}>
             Cancel
           </Button>
         </ModalFooter>
       </Modal>
     </div>
-  );
-};
+  )
+}
 
-export default ModalDogForm;

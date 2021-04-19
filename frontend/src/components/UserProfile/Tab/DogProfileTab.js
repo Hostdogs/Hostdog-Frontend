@@ -1,9 +1,17 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { ListGroup, ListGroupItem, Row, Col, Button } from "reactstrap";
-import ModalDogForm from "./ModalDogForm";
+import DogProfileAddForm from "./DogProfileAddForm";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faPlus
+} from "@fortawesome/free-solid-svg-icons";
+
 
 const DogProfileTab = (props) => {
+
+  const [newdogToggle, setnewdogToggle] = useState(false)
+  const addtoggle = () => setnewdogToggle(!newdogToggle)
   //Add ListItem
   const AddedElement = () => (
     <ListGroupItem>
@@ -30,18 +38,19 @@ const DogProfileTab = (props) => {
   }
   const paginate = (pageNumbers) => setCurrentPage(pageNumbers);
 
-  console.log(count);
+  // console.log(count);
   return (
     <div>
+      <DogProfileAddForm toggleModal={newdogToggle} />
       <Row>
         <Col xs="12">
           <Button 
-            outline color="warning"
-            onClick={() => setCount(count + 1)}
+             color="warning"
+            onClick={addtoggle}
           >
-            เพิ่มโปรไฟล์สุนัขของคุณ
+            <FontAwesomeIcon icon={faPlus}/> เพิ่มสุนัข
           </Button>
-          <ModalDogForm buttonLabel="เพิ่มโปรไฟล์สุนัขของคุณ" />{" "}
+          
           <hr />
         </Col>
       </Row>

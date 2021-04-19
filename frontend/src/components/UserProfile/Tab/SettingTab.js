@@ -108,7 +108,7 @@ export default function SettingTab({
               <h6>
                 <a>ชื่อ</a> <a style={{ marginLeft: "5%" }}>{Name}</a>{" "}
                 <a style={{ marginLeft: "3%" }}>{Surname}</a>
-                <span style={{ float: "right" }}>แก้ไข</span>
+                <a href="##" style={{ float: "right", color:"black" }}>แก้ไข</a>
               </h6>
             </ListGroupItem>
           </button>

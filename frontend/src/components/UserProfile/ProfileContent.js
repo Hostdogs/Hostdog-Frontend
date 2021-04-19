@@ -15,6 +15,7 @@ import {
 import classnames from "classnames";
 import DogProfileTab from "./Tab/DogProfileTab";
 import MainTab from "./Tab/MainTab";
+import SettingTab from "./Tab/SettingTab";
 
 const ProfileContent = (props) => {
   const [activeTab, setActiveTab] = useState("1");
@@ -66,28 +67,7 @@ const ProfileContent = (props) => {
           <DogProfileTab />
         </TabPane>
         <TabPane tabId="3">
-          <Row>
-            <Col sm="6">
-              <Card body>
-                <CardTitle>Special Title Treatment</CardTitle>
-                <CardText>
-                  With supporting text below as a natural lead-in to additional
-                  content.
-                </CardText>
-                <Button>Go somewhere</Button>
-              </Card>
-            </Col>
-            <Col sm="6">
-              <Card body>
-                <CardTitle>Special Title Treatment</CardTitle>
-                <CardText>
-                  With supporting text below as a natural lead-in to additional
-                  content.
-                </CardText>
-                <Button>Go somewhere</Button>
-              </Card>
-            </Col>
-          </Row>
+          <SettingTab />
         </TabPane>
       </TabContent>
     </div>

@@ -23,15 +23,18 @@ export default function ServiceForm() {
   const [dropdownFreqOpen, setFreqOpen] = useState(false);
   const toggleFreq = () => setFreqOpen(!dropdownFreqOpen);
 
-  const [dropdownWeightOpen, setWeightOpen] = useState(false);
-  const toggleWeight = () => setWeightOpen(!dropdownWeightOpen);
-
   const mealPerDays = [
     { label: "1 ครั้ง/วัน", value: 1 },
     { label: "2 ครั้ง/วัน", value: 2 },
     { label: "3 ครั้ง/วัน", value: 3 },
     { label: "4 ครั้ง/วัน", value: 4 },
     { label: "5 ครั้ง/วัน", value: 5 },
+  ];
+
+  const mealTypes = [
+    { label: "อาหารเปียก", value: 1 },
+    { label: "อาหารแห้ง", value: 2 },
+    { label: "เนื้อสด", value: 3 },
   ];
 
   const [serviceInfo, setServiceInfo] = useState({
@@ -44,9 +47,9 @@ export default function ServiceForm() {
     service_end_time: null,
     service_send_time: null,
     service_get_time: null,
-    service_meal_type: null,
+    service_meal_type: "เลือกประเภทอาหาร",
     service_meal_per_day: "เลือกความถี่ในการให้อาหาร",
-    service_meal_weight: null,
+    service_meal_weight: 100,
     service_is_walk: false,
     service_is_get_dog: false,
     service_is_deliver_dog: false,
@@ -56,15 +59,15 @@ export default function ServiceForm() {
     service_rating: null,
   });
 
-  function changeValue(data) {
-    if (data === "true" || data === true) {
+  function changeValue(name, value) {
+    if (value === "true" || value === true) {
       return true;
-    } else if (data === "false" || data === false) {
+    } else if (value === "false" || value === false) {
       return false;
-    } else if (!isNaN(data)) {
-      return Number(data);
+    } else if (!isNaN(value) && name !== "service_bio") {
+      return Number(value);
     } else {
-      return data;
+      return value;
     }
   }
   function onServiceInfoChange(event) {
@@ -72,7 +75,7 @@ export default function ServiceForm() {
     setServiceInfo((prevServiceInfo) => {
       return {
         ...prevServiceInfo,
-        [name]: changeValue(value),
+        [name]: changeValue(name, value),
       };
     });
   }
@@ -84,12 +87,25 @@ export default function ServiceForm() {
   const mealPerDayElements = mealPerDays.map((mealPerDay, index) => {
     return (
       <DropdownItem
-        id={index}
+        key={index}
         name="service_meal_per_day"
         value={mealPerDay.value}
         onClick={onServiceInfoChange}
       >
         {mealPerDay.label}
+      </DropdownItem>
+    );
+  });
+
+  const mealTypeElements = mealTypes.map((mealType, index) => {
+    return (
+      <DropdownItem
+        key={index}
+        name="service_meal_type"
+        value={mealType.value}
+        onClick={onServiceInfoChange}
+      >
+        {mealType.label}
       </DropdownItem>
     );
   });
@@ -180,12 +196,9 @@ export default function ServiceForm() {
                 <Col xs="12" sm="4">
                   <ButtonDropdown isOpen={dropdownTypeOpen} toggle={toggleType}>
                     <DropdownToggle caret size="sm">
-                      เลือกประเภทอาหาร
+                      {serviceInfo.service_meal_type}
                     </DropdownToggle>
-                    <DropdownMenu>
-                      <DropdownItem>อาหารเปียก</DropdownItem>
-                      <DropdownItem>อาหารแห้ง</DropdownItem>
-                    </DropdownMenu>
+                    <DropdownMenu>{mealTypeElements}</DropdownMenu>
                   </ButtonDropdown>
                 </Col>
               </Row>
@@ -214,19 +227,19 @@ export default function ServiceForm() {
                 <Col xs="12" sm="4">
                   ปริมาณอาหารต่อวัน
                 </Col>
-                <Col xs="12" sm="4">
-                  <ButtonDropdown
-                    isOpen={dropdownWeightOpen}
-                    toggle={toggleWeight}
-                  >
-                    <DropdownToggle caret size="sm">
-                      เลือกปริมาณอาหารต่อวัน
-                    </DropdownToggle>
-                    <DropdownMenu>
-                      <DropdownItem>20 กรัม</DropdownItem>
-                      <DropdownItem>30 กรัม</DropdownItem>
-                    </DropdownMenu>
-                  </ButtonDropdown>
+                <Col xs="7" sm="4">
+                  <Input
+                    type="range"
+                    id="weightRange"
+                    name="service_meal_weight"
+                    min="30"
+                    max="200"
+                    value={serviceInfo.service_meal_weight}
+                    onChange={onServiceInfoChange}
+                  />
+                </Col>
+                <Col xs="5" sm="4">
+                  {serviceInfo.service_meal_weight} กรัม/วัน
                 </Col>
               </Row>
             </FormGroup>

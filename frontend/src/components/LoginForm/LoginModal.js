@@ -21,16 +21,16 @@ import LoginAPI from "./LoginAPI"
 
 const LoginModal = (props) => {
   const [token,setToken] = useCookies(['mytoken'])
-  const [userName, setuserName] = useState('')
-  const [passWord, setpassWord] = useState('')
+  const [username, setusername] = useState('')
+  const [password, setpassword] = useState('')
   const [loginRes, setloginRes] = useState(" ")
   let history = useHistory()
   // const URL = "http://127.0.0.1:8000/"
   const loginBtn = () =>{
-    if(userName==='' || passWord === ''){
+    if(username==='' || password === ''){
       setloginRes("กรุณากรอกชื่อผู้ใช้หรือรหัสผ่านให้ถูกต้อง")
     }else{
-      // LoginAPI.Login(userName,passWord).then(res => {
+      // LoginAPI.Login(username,password).then(res => {
       //   console.log(res)
       //   setToken('mytoken',res.data.token)
       //   history.push('/')
@@ -64,6 +64,20 @@ const LoginModal = (props) => {
     let value = e.target.value;
     setUnmountOnClose(JSON.parse(value));
   };
+  ///////////////regexp/////////////////////////////////
+  const inputusername = /^[A-Za-z0-9]+$/
+  const inputpassword = /^[A-Za-z0-9]/
+  const handleChangeusername = (e) =>{
+    if (e.target.value === '' || inputusername.test(e.target.value)) {
+      setusername(e.target.value)
+    }
+  }
+  const handleChangepassword = (e) =>{
+    if (e.target.value === '' || inputpassword.test(e.target.value)) {
+      setpassword(e.target.value)
+    }
+  }
+
 
   return (
     <div>
@@ -86,7 +100,7 @@ const LoginModal = (props) => {
             <InputGroupAddon addonType="prepend">
               <InputGroupText style={{width:"100px"}}>ชื่อผู้ใช้งาน</InputGroupText>
             </InputGroupAddon>
-            <Input onChange ={e=>setuserName(e.target.value)} placeholder="username" />
+            <Input onChange ={handleChangeusername} placeholder="username" value={username}/>
           </InputGroup>
           
           <br />
@@ -94,14 +108,14 @@ const LoginModal = (props) => {
             <InputGroupAddon addonType="prepend">
               <InputGroupText style={{width:"100px"}}>รหัสผ่าน</InputGroupText>
             </InputGroupAddon>
-            <Input type="password" onChange={e=>setpassWord(e.target.value)} placeholder="password" />
+            <Input type="password" onChange={handleChangepassword} placeholder="password" value={password}/>
           </InputGroup>
           
           <small style={{color:"red"}}>{loginRes}</small>
           <br/><br />
           <Button color="warning" onClick={loginBtn}>ยืนยัน</Button>
           <a style={{ marginLeft: "3%" }}>
-            <a href="#" onClick={e=>console.log("{userName},{passWord}")}>ลืมรหัสผ่าน</a>
+            <a href="#" onClick={e=>console.log("{username},{password}")}>ลืมรหัสผ่าน</a>
           </a>
           <br />
           <br />

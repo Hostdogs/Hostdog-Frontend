@@ -50,7 +50,7 @@ export default function InformationForm({ selectState }) {
     gender: "",
   });
   const inputnumberonly = /^[0-9\b]+$/
-  const inputtextornumber = /^[A-Za-z0-9]+$/
+  const inputusername = /^[A-Za-z0-9]+$/
   const inputtfirstname = /^[ก-ฮะ-ไ่้๊๋็์ัํ]+$/
   const inputlastname = /^[ก-ฮะ-ไ่้๊๋็์ัํ ]+$/
   const inputpassword = /^[A-Za-z0-9]/
@@ -343,7 +343,7 @@ export default function InformationForm({ selectState }) {
                 name="username"
                 placeholder="ชื่อผู้ใช้งาน"
                 id="username"
-                onChange={e => onChangeInformation(e, inputtextornumber)}
+                onChange={e => onChangeInformation(e, inputusername)}
                 value={Information.username}
                 maxLength="20"
                 onBlur={isusernameValidate}

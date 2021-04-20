@@ -19,6 +19,7 @@ export default function ServicePage() {
           </Col>
           <Col xs="12" sm="12" md="12" lg="9">
             <ServiceForm />
+            <br />
           </Col>
         </Row>
       </div>

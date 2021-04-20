@@ -408,7 +408,9 @@ export default function ServiceForm() {
           <ServiceDetail serviceInfo={serviceInfo} />
 
           <Row>
-            <Button onClick={onServiceSubmit}>ยืนยัน</Button>
+            <Col align="right">
+              <Button onClick={onServiceSubmit}>ยืนยัน</Button>
+            </Col>
           </Row>
         </Col>
       </Row>

@@ -6,7 +6,7 @@ export default function ServiceDetail(props) {
   let detailServices = [
     { name: "", price: 1000, isSelect: false },
     { name: "", price: 0, isSelect: false },
-    { name: "", price: 0, isSelect: false },
+    { name: "", price: 100, isSelect: false },
     { name: "", price: 0, isSelect: false },
     { name: "", price: 0, isSelect: false },
     { name: "", price: 0, isSelect: false },
@@ -73,20 +73,40 @@ export default function ServiceDetail(props) {
   const detailServiceElements = selectedService.map((detail, index) => {
     return (
       <Row key={index}>
-        <Col xs="7">{detail.name}</Col>
-        <Col xs="5">{detail.price} บาท</Col>
+        <Col xs="7">
+          <p>- {detail.name}</p>
+        </Col>
+        <Col xs="5" align="right">
+          {detail.price} บาท
+        </Col>
       </Row>
     );
   });
+
+  let totalPrice = 0;
+  selectedService.forEach((service) => {
+    totalPrice += service.price;
+  });
+
   return (
     <div>
       <Row>
         <h4>รายละเอียด</h4>
       </Row>
       {detailServiceElements}
+      <hr></hr>
       <Row>
-        <h4>ราคารวม</h4>
+        <Col xs="12" align="right">
+          <h4>ราคารวม</h4>
+        </Col>
       </Row>
+      <Row>
+        <Col xs="12" align="right">
+          <p>{totalPrice} บาท</p>
+          <hr></hr>
+        </Col>
+      </Row>
+      <br />
     </div>
   );
 }

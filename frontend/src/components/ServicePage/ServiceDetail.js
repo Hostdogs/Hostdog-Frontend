@@ -4,7 +4,7 @@ import { Container, Row, Col } from "reactstrap";
 export default function ServiceDetail(props) {
   const { serviceInfo } = props;
   let detailServices = [
-    { name: "", price: 0, isSelect: false },
+    { name: "", price: 1000, isSelect: false },
     { name: "", price: 0, isSelect: false },
     { name: "", price: 0, isSelect: false },
     { name: "", price: 0, isSelect: false },
@@ -73,8 +73,8 @@ export default function ServiceDetail(props) {
   const detailServiceElements = selectedService.map((detail, index) => {
     return (
       <Row key={index}>
-        <Col xs="6">{detail.name}</Col>
-        <Col xs="6">{detail.price} บาท</Col>
+        <Col xs="7">{detail.name}</Col>
+        <Col xs="5">{detail.price} บาท</Col>
       </Row>
     );
   });

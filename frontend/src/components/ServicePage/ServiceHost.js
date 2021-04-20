@@ -119,48 +119,46 @@ export default function ServiceHost() {
 
   return (
     <div>
-      <Container>
-        <Row className="host-row">
-          <Col>
-            <Carousel
-              className="hostImage-content-small"
+      <Row>
+        <Col>
+          <Carousel
+            className="hostImage-content-small"
+            activeIndex={activeIndex}
+            next={next}
+            previous={previous}
+          >
+            <CarouselIndicators
+              items={items}
               activeIndex={activeIndex}
-              next={next}
-              previous={previous}
-            >
-              <CarouselIndicators
-                items={items}
-                activeIndex={activeIndex}
-                onClickHandler={goToIndex}
-              />
-              {slides}
-              <CarouselControl
-                direction="prev"
-                directionText="Previous"
-                onClickHandler={previous}
-              />
-              <CarouselControl
-                direction="next"
-                directionText="Next"
-                onClickHandler={next}
-              />
-            </Carousel>
-          </Col>
-        </Row>
-        <br />
-        <br />
-        <Row className="host-row">
-          <Col>
-            <img style={{ width: "100%" }} src="map.jpg" />
-          </Col>
-        </Row>
-        <br />
-        <br />
-        <Row className="host-row">
-          <h4>ที่อยู่</h4>
-        </Row>
-        <Row>{imageHost}</Row>
-      </Container>
+              onClickHandler={goToIndex}
+            />
+            {slides}
+            <CarouselControl
+              direction="prev"
+              directionText="Previous"
+              onClickHandler={previous}
+            />
+            <CarouselControl
+              direction="next"
+              directionText="Next"
+              onClickHandler={next}
+            />
+          </Carousel>
+        </Col>
+      </Row>
+      <br />
+      <br />
+      <Row className="host-row">
+        <Col>
+          <img style={{ width: "100%" }} src="map.jpg" />
+        </Col>
+      </Row>
+      <br />
+      <br />
+      <Row className="host-row">
+        <h4>ที่อยู่</h4>
+      </Row>
+      <Row>{imageHost}</Row>
     </div>
   );
 }

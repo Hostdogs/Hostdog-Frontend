@@ -5,37 +5,41 @@ import {
   Row,
   Col,
   Button,
-  Form,
-  FormGroup,
-  Input,
-  Label,
+  Dropdown, 
+  DropdownToggle, 
+  DropdownMenu, 
+  DropdownItem
 } from "reactstrap";
 import { useState } from "react";
 import InfiniteScroll from 'react-infinite-scroll-component';
 export default function HostList() {
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const toggle = () => setDropdownOpen(prevState => !prevState);
+
   const hostdata =[
     {
       id:1,
-      hostName: "Phol",
+      hostName: "Pholargardake Pholphol",
       dateAvail:"ทุกวัน",
       distancefromCus: "25 กม.",
 
     },
     {
       id:2,
-      hostName: "Bas",
+      hostName: "Kumnuy Ruaypeun",
       dateAvail:"เสาร์,อาทิตย์",
       distancefromCus: "30 กม.",
     },
     {
       id:3,
-      hostName: "Pat",
+      hostName: "Patpum Findingglass",
       dateAvail:"จันทร์-ศุกร์",
       distancefromCus: "40 กม.",
     },
     {
       id:4,
-      hostName: "Pure",
+      hostName: "Pure9D P9deaw",
       dateAvail:"จันทร์-ศุกร์",
       distancefromCus: "50 กม.",
     }
@@ -88,7 +92,22 @@ const scrollToTop=()=>{
           }
 >
 
-<Container className="host-container" >
+<Container className="host-container" fluid="xl">
+<Dropdown isOpen={dropdownOpen} toggle={toggle}>
+      <DropdownToggle caret>
+        Dropdown
+      </DropdownToggle>
+      <DropdownMenu>
+        <DropdownItem header>Header</DropdownItem>
+        <DropdownItem>Some Action</DropdownItem>
+        <DropdownItem text>Dropdown Item Text</DropdownItem>
+        <DropdownItem disabled>Action (disabled)</DropdownItem>
+        <DropdownItem divider />
+        <DropdownItem>Foo Action</DropdownItem>
+        <DropdownItem>Bar Action</DropdownItem>
+        <DropdownItem>Quo Action</DropdownItem>
+      </DropdownMenu>
+    </Dropdown>
         {hostData.map((hd) => (
           <Host key={hd.id} host={hd}/>
         ))}

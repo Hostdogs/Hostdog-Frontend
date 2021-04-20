@@ -28,7 +28,7 @@ import {
 import { Autocomplete, LoadScript } from "@react-google-maps/api";
 import SignUpMap from "./SignUpMap";
 import moment from "moment-timezone";
-import SignUpAPI from "./SignUpAPI"
+import SignUpAPI from "./SignUpAPI";
 const loadScript = {
   googleAPIKey: "AIzaSyBWV06MM0QFyVnkuA1nHJhQ4altZjovYNs",
   language: "th",
@@ -49,6 +49,7 @@ export default function InformationForm({ selectState }) {
     address: "",
     gender: "",
   });
+
   const inputnumberonly = /^[0-9\b]+$/
   const inputusername = /^[A-Za-z0-9]+$/
   const inputtfirstname = /^[ก-ฮะ-ไ่้๊๋็์ัํ]+$/
@@ -56,7 +57,9 @@ export default function InformationForm({ selectState }) {
   const inputpassword = /^[A-Za-z0-9]/
   const inputemail = /^[A-Za-z@0-9.!#$%&'*+-/=?^_`{|}~;]+$/
 
+
   const dayformat = "YYYY-MM-DD";
+
   /////////validation//////////////
   const validatepassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,20}$/
   const validateemail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -99,49 +102,49 @@ export default function InformationForm({ selectState }) {
   }
 
   const isrepasswordValidate = () => {
-    if (Information.password === repassword&&Information.password.length>=1) {
+    if (Information.password === repassword && Information.password.length >= 1) {
       setrepasswordValid({ valid: true, invalid: false })
     } else {
       setrepasswordValid({ valid: false, invalid: true })
     }
-    
+
   }
 
   //////////////////////////////
   const onSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     console.log(Information);
-
 
   };
   const onChangeInformation = (e, regexp = null) => {
-    e.preventDefault()
+    e.preventDefault();
     const name = e.target.name;
     const value = e.target.value;
-    const change = {}
-    change[name] = value
+    const change = {};
+    change[name] = value;
     if (regexp) {
-      console.log(value, regexp.test(value))
-      if (value === '' || regexp.test(value)) {
-        setInformation({ ...Information, ...change })
+      console.log(value, regexp.test(value));
+      if (value === "" || regexp.test(value)) {
+        setInformation({ ...Information, ...change });
       }
     } else {
-      setInformation({ ...Information, ...change })
+      setInformation({ ...Information, ...change });
     }
-
 
     // console.log(Information);
   };
 
-  const onChangeradio = (e) =>{
+
+  const onChangeradio = (e) => {
     const name = e.target.name;
     const value = e.target.value;
     Information[name] = value;
-    console.log(name,Information[name])
+    console.log(name, Information[name])
   }
 
 
-  
+
+
 
   useEffect(() => {
     // setdob(moment(moment().year() - 18 + "-01-01", dayformat).format(dayformat))
@@ -159,26 +162,18 @@ export default function InformationForm({ selectState }) {
       Information.is_host = false;
     }
     // console.log(Information.is_host+selectState)
-
-  }, [selectState])
+  }, [selectState]);
 
   const [geocode, setGeoCode] = useState({ lat: 13.729025, lng: 100.775613 });
 
-
-
   const [userAddress, setUserAddress] = useState("");
-
-
-
 
   const getCurrentLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(success);
     } else {
-      alert("Location is not supported by this browser.");
+      setShowLocationWarn(true);
     }
-
-
   };
 
   const success = (position) => {
@@ -192,74 +187,83 @@ export default function InformationForm({ selectState }) {
       parseFloat(position.coords.latitude),
       parseFloat(position.coords.longitude)
     );
-
-    console.log(geocode);
-
   };
 
   const reverseGeocoding = async (lat, lng) => {
+    setShowLocationWarn(false);
     const urlapi = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${loadScript.googleAPIKey}&language=th`;
     const response = await fetch(urlapi);
     const data = await response.json();
+    console.log("reverseGeocoding");
     console.log(data);
 
     data.status === "OK"
       ? setUserAddress(data.results[0].formatted_address)
-      : alert("reverseGeoCoding error");
-
-
+      : setShowLocationWarn(true);
   };
 
-
   const geoCoding = async (address) => {
+
+    setShowLocationWarn(false);
     const urlapi = `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${loadScript.googleAPIKey}&language=th`;
     const response = await fetch(urlapi);
     const data = await response.json();
+
+    data.status === "OK"
+      ? setGeoCode(data.results[0].geometry.location)
+      : setShowLocationWarn(true);
+
+    console.log("geoCoding");
     console.log(geocode);
 
     console.log(data);
-    data.status === "OK"
-      ? setGeoCode(data.results[0].geometry.location)
-      : alert("geocoding error");
-
   };
 
   const onMarkerDragEnd = (e) => {
+
     const lat = parseFloat(e.latLng.lat());
     const lng = parseFloat(e.latLng.lng());
 
     setGeoCode({ lat, lng });
-
+    setShowLocationWarn(false);
+    console.log("onMarkerDragEnd");
     console.log(geocode);
   };
-
 
   const [testAutoComplete, setTestAutoComplete] = useState("");
 
   const onLoad = (autocomplete) => {
     setTestAutoComplete(autocomplete);
-
+    setShowLocationWarn(false);
+    console.log("onLoad ");
     console.log(testAutoComplete);
   };
+  const [showlocationWarn, setShowLocationWarn] = useState(false);
+
 
   const onPlaceChanged = () => {
+
     const data = testAutoComplete.getPlace();
-    console.log(testAutoComplete)
-    if (
-      testAutoComplete !== null &&
-      typeof data.formatted_address !== "undefined"
-    ) {
-      setUserAddress(data.formatted_address);
-      geoCoding(data.formatted_address);
-
-    } else if (testAutoComplete !== null) {
-      setUserAddress(testAutoComplete.gm_accessors_.place.Se.predictions[0].Jk);
-      geoCoding(testAutoComplete.gm_accessors_.place.Se.predictions[0].Jk);
-
+    console.log("onPlaceChanged");
+    console.log(testAutoComplete);
+    console.log(data);
+    if (typeof testAutoComplete !== "undefined" && typeof data !== "undefined") {
+      setShowLocationWarn(false);
+      if (typeof data.formatted_address !== "undefined") {
+        setUserAddress(data.formatted_address);
+        geoCoding(data.formatted_address);
+      } else if (testAutoComplete.gm_accessors_.place.Ve.predictions.length > 0) {
+        setUserAddress(
+          testAutoComplete.gm_accessors_.place.Ve.predictions[0].Lk
+        );
+        geoCoding(testAutoComplete.gm_accessors_.place.Ve.predictions[0].Lk);
+      }
+      else if (testAutoComplete.gm_accessors_.place.Ve.place.name === "") {
+        setShowLocationWarn(true);
+      }
     } else {
-      alert("ขออภัย ไม่พบที่อยู่ที่ระบุ");
+      setShowLocationWarn(true);
     }
-
   };
 
   //Google Map
@@ -267,7 +271,7 @@ export default function InformationForm({ selectState }) {
   return (
     <div>
       <Container fluid="sm" style={{ maxWidth: "60%", minWidth: "300px" }}>
-        <Form onSubmit={e => e.preventDefault()}>
+        <Form onSubmit={(e) => e.preventDefault()}>
           <br />
           <Label>รายละเอียดส่วนตัว</Label>
           <Row>
@@ -277,13 +281,13 @@ export default function InformationForm({ selectState }) {
                   <InputGroupAddon addonType="prepend">
                     <InputGroupText style={{ minWidth: "45px" }}>
                       ชื่อ
-                  </InputGroupText>
+                    </InputGroupText>
                   </InputGroupAddon>
                   <Input
                     type="text"
                     name="first_name"
                     placeholder="ชื่อ"
-                    onChange={e => onChangeInformation(e, inputtfirstname)}
+                    onChange={(e) => onChangeInformation(e, inputtfirstname)}
                     value={Information.first_name}
                   />
                 </InputGroup>
@@ -300,9 +304,8 @@ export default function InformationForm({ selectState }) {
                     type="text"
                     name="last_name"
                     placeholder="นามสกุล"
-                    onChange={e => onChangeInformation(e, inputlastname)}
+                    onChange={(e) => onChangeInformation(e, inputlastname)}
                     value={Information.last_name}
-
                   />
                 </InputGroup>
               </FormGroup>
@@ -319,14 +322,16 @@ export default function InformationForm({ selectState }) {
                 type="email"
                 name="email"
                 placeholder="อีเมล"
-                onChange={e => onChangeInformation(e, inputemail)}
+                onChange={(e) => onChangeInformation(e, inputemail)}
                 value={Information.email}
+
                 onBlur={isemailValidate}
                 onFocus={e => {
                   emailValid.valid = false
                   emailValid.invalid = false
                 }
                 }
+
               />
               <FormFeedback invalid={passwordValid.invalid}>กรุณาตรวจสอบอีเมลใหม่อีกครั้ง</FormFeedback>
             </InputGroup>
@@ -367,7 +372,7 @@ export default function InformationForm({ selectState }) {
                 name="password"
                 id="password"
                 placeholder="รหัสผ่าน "
-                onChange={e => onChangeInformation(e, inputpassword)}
+                onChange={(e) => onChangeInformation(e, inputpassword)}
                 value={Information.password}
                 maxLength="20"
                 onBlur={ispasswordValidate}
@@ -407,7 +412,7 @@ export default function InformationForm({ selectState }) {
             </InputGroup>
           </FormGroup>
 
-          <FormGroup >
+          <FormGroup>
             <InputGroup>
               <InputGroupAddon addonType="prepend">
                 <InputGroupText style={{ minWidth: "45px" }}>
@@ -418,7 +423,7 @@ export default function InformationForm({ selectState }) {
                 type="text"
                 name="mobile"
                 placeholder="หมายเลขโทรศัพท์มือถือ"
-                onChange={e => onChangeInformation(e, inputnumberonly)}
+                onChange={(e) => onChangeInformation(e, inputnumberonly)}
                 value={Information.mobile}
                 maxLength="10"
               />
@@ -434,14 +439,14 @@ export default function InformationForm({ selectState }) {
               name="dob"
               placeholder="วัน/เดือน/ปี"
               value={Information.dob}
-              onKeyPress={e => e.preventDefault()}
+              onKeyPress={(e) => e.preventDefault()}
               onChange={(e) =>
                 setInformation({ ...Information, dob: e.target.value })
               }
               max={moment().format(dayformat)}
             />
           </FormGroup>
-          <FormGroup >
+          <FormGroup>
             <br />
             <Label>เพศ</Label>
             <div>
@@ -479,7 +484,9 @@ export default function InformationForm({ selectState }) {
               </Row>
             </div>
           </FormGroup>
+
           <FormGroup onSubmit={e => e.preventDefault()} >
+
             <br />
             <LoadScript
               googleMapsApiKey={loadScript.googleAPIKey}
@@ -488,17 +495,15 @@ export default function InformationForm({ selectState }) {
             >
               <Label>ที่อยู่</Label>
               <Container>
-
                 <SignUpMap
                   handleDragEnd={(e) => onMarkerDragEnd(e)}
                   currentGeoCode={geocode}
                 />
-
               </Container>
 
               <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
-                <InputGroup >
 
+                <InputGroup >
                   <Input
                     type="text"
                     name="address"
@@ -509,9 +514,10 @@ export default function InformationForm({ selectState }) {
                       onChangeInformation(e);
                       setUserAddress(e.target.value);
                     }}
-                    onSubmit={e => { e.preventDefault() }}
-                    value={userAddress}
 
+                    onSubmit={e => { e.preventDefault() }}
+
+                    value={userAddress}
                   />
 
                   <InputGroupAddon addonType="append">
@@ -520,13 +526,19 @@ export default function InformationForm({ selectState }) {
                         e.preventDefault();
                         getCurrentLocation();
                       }}
-                      onSubmit={e => { e.preventDefault() }}
                     >
                       <FontAwesomeIcon icon={faMapMarkerAlt} />
                     </Button>
-                    {/* <Button>
-                      <FontAwesomeIcon icon={faSearch} onClick={e => e.preventDefault()} onSubmit={e => e.preventDefault()} />
-                    </Button> */}
+
+                    <Button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        geoCoding(userAddress);
+                      }}
+                    >
+                      <FontAwesomeIcon icon={faSearch} />
+                    </Button>
+
                   </InputGroupAddon>
                 </InputGroup>
               </Autocomplete>
@@ -534,9 +546,11 @@ export default function InformationForm({ selectState }) {
           </FormGroup>
 
           <FormGroup>
-            <Button onClick={onSubmit}>ถัดไป</Button>
-          </FormGroup>
 
+            {showlocationWarn ? (<div><small style={{ color: "red" }}>ขออภัย กรุณาลองใหม่</small></div>) : null}
+            <Button onClick={(e) => onSubmit}>ถัดไป</Button>
+
+          </FormGroup>
         </Form>
       </Container>
       <UncontrolledPopover trigger="focus" placement="top" target="username">

@@ -86,25 +86,27 @@ export default function SearchBox() {
 
   const onPlaceChanged = () => {
     const data = testAutoComplete.getPlace();
-
-    if (
-      testAutoComplete !== null &&
-      typeof data.formatted_address !== "undefined"
-    ) {
-      setUserAddress(data.formatted_address);
-      geoCoding(data.formatted_address);
-      setShowMap(true);
-    } else if (testAutoComplete !== null) {
-      setUserAddress(testAutoComplete.gm_accessors_.place.Se.predictions[0].Jk);
-      geoCoding(testAutoComplete.gm_accessors_.place.Se.predictions[0].Jk);
-      setShowMap(true);
-    } else {
-      alert("onPlaceChanged failed");
-    }
     console.log("onPlaceChanged data");
     console.log(data);
     console.log("onPlaceChanged testAutoComplete");
     console.log(testAutoComplete);
+    
+    if (typeof testAutoComplete !== "undefined") {
+      if (typeof data.formatted_address !== "undefined") {
+        setUserAddress(data.formatted_address);
+        geoCoding(data.formatted_address);
+        
+      } else {
+        setUserAddress(
+          testAutoComplete.gm_accessors_.place.Ve.predictions[0].Lk
+        );
+        geoCoding(testAutoComplete.gm_accessors_.place.Ve.predictions[0].Lk);
+      }
+      setShowMap(true);
+    } else {
+      alert("ขออภัย ไม่พบที่อยู่ที่ระบุ");
+    }
+
   };
 
   return (

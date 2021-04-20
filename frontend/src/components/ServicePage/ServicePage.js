@@ -12,18 +12,17 @@ export default function ServicePage() {
       <br />
       <br />
       {/* <ServiceForm /> */}
-
-      <Row>
-        <Col xs="12" sm="12" md="12" lg="3">
-          <ServiceHost />
-        </Col>
-        <Col xs="12" sm="12" md="12" lg="6">
-          <ServiceForm />
-        </Col>
-        <Col xs="12" sm="12" md="12" lg="3">
-          <ServiceDetail />
-        </Col>
-      </Row>
+      <div className="content">
+        <Row>
+          <Col xs="12" sm="12" md="12" lg="3">
+            <ServiceHost />
+          </Col>
+          <Col xs="12" sm="12" md="12" lg="9">
+            <ServiceForm />
+            <br />
+          </Col>
+        </Row>
+      </div>
     </div>
   );
 }

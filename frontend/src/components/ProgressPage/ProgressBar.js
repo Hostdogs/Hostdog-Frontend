@@ -44,7 +44,6 @@ export default function ProgressBar({ onCancel }) {
     }
   };
   const handleCancel = () => {
-    setProgressValue(100);
     setColorIndex(4);
     setLabelIndex(5);
     setGifIndex(5);

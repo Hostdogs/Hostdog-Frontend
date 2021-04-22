@@ -72,24 +72,20 @@ export default function PasswordSetting({ setSelected, Selected }) {
 
             <Collapse isOpen={Selected === 2}>
                 <Form onSubmit={infoSet} >
-                    <br />
+
                     <ListGroupItem
                         style={{
-                            borderColor: "#f9ad6a",
-                            borderLeft: "0px",
-                            borderRight: "0px",
-                            borderTop: "0px",
-                            borderWidth: "3px",
                             justifyContent: "center"
                         }}
                     >
+                        <br />
                         <InputGroup style={{ justifyContent: "center" }}>
                             <InputGroupAddon addonType="prepend">
                                 <InputGroupText
                                     style={{
                                         backgroundColor: "#f9e07f",
                                         color: "black",
-                                        width: "80px",
+                                        width: "120px",
                                         justifyContent: "center"
                                     }}
                                 >
@@ -97,7 +93,7 @@ export default function PasswordSetting({ setSelected, Selected }) {
                                     พาสเวิร์ดเดิม
                   </InputGroupText>
                             </InputGroupAddon>
-                            <Input onChange={(e) => setoldPassword(e.target.value)} value={oldPassword} style={{ minWidth: "150px", maxWidth: "30vw" }}></Input>
+                            <Input onChange={(e) => setoldPassword(e.target.value)} value={oldPassword} style={{ minWidth: "150px", maxWidth: "30vw" }} type="password"></Input>
                         </InputGroup>
 
                         <InputGroup
@@ -111,14 +107,14 @@ export default function PasswordSetting({ setSelected, Selected }) {
                                     style={{
                                         backgroundColor: "#f9e07f",
                                         color: "black",
-                                        width: "80px",
+                                        width: "120px",
                                         justifyContent: "center"
                                     }}
                                 >
                                     พาสเวิร์ดใหม่
                   </InputGroupText>
                             </InputGroupAddon>
-                            <Input onChange={(e) => setnewPassword(e.target.value)} value={newPassword} style={{ minWidth: "150px", maxWidth: "30vw" }}></Input>
+                            <Input onChange={(e) => setnewPassword(e.target.value)} value={newPassword} style={{ minWidth: "150px", maxWidth: "30vw" }} type="password"></Input>
                         </InputGroup>
                         <InputGroup
                             style={{
@@ -131,14 +127,14 @@ export default function PasswordSetting({ setSelected, Selected }) {
                                     style={{
                                         backgroundColor: "#f9e07f",
                                         color: "black",
-                                        width: "80px",
+                                        width: "120px",
                                         justifyContent: "center"
                                     }}
                                 >
-                                    พาสเวิร์ดใหม่อีกครั้ง
+                                    พาสเวิร์ดอีกครั้ง
                   </InputGroupText>
                             </InputGroupAddon>
-                            <Input onChange={(e) => setconfirmPassword(e.target.value)} value={confirmPassword} style={{ minWidth: "150px", maxWidth: "30vw" }}></Input>
+                            <Input onChange={(e) => setconfirmPassword(e.target.value)} value={confirmPassword} style={{ minWidth: "150px", maxWidth: "30vw" }} type="password"></Input>
                         </InputGroup>
 
                         <div style={{ marginTop: "1%", textAlign: "right" }}>

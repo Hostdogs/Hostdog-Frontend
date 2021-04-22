@@ -13,7 +13,7 @@ import {
 } from "reactstrap";
 
 
-export default function NameSetting({setSelected,Selected}) {
+export default function NameSetting({ setSelected, Selected }) {
 
     const [FakeData, setFakeData] = useState({ Name: "สวัสดี", Surname: "ท่านสมาชิก" })
     const [Name, setName] = useState(FakeData.Name);
@@ -37,11 +37,9 @@ export default function NameSetting({setSelected,Selected}) {
 
             {/*////////////////////////// Name Setting Part///////////////////////////////*/}
             <a
-                onClick={e=>setSelected(1)}
+                onClick={e => setSelected(1)}
                 style={{
-                    
                     padding: "0px",
-                    zIndex: "1001"
                 }}
             >
                 <ListGroupItem
@@ -60,21 +58,18 @@ export default function NameSetting({setSelected,Selected}) {
                     </h6>
                 </ListGroupItem>
             </a>
-            
 
-            <Collapse isOpen={Selected===1}>
+
+            <Collapse isOpen={Selected === 1}>
                 <Form onSubmit={infoSet} >
-                    <br/>
+
                     <ListGroupItem
                         style={{
-                            borderColor: "#f9ad6a",
-                            borderLeft: "0px",
-                            borderRight: "0px",
-                            borderTop: "0px",
-                            borderWidth: "3px",
+
                             justifyContent: "center"
                         }}
                     >
+                        <br />
                         <InputGroup style={{ justifyContent: "center" }}>
                             <InputGroupAddon addonType="prepend">
                                 <InputGroupText

@@ -1,3 +1,16 @@
-.content{
-    width: auto;
+.p{
+    word-wrap: break-word;
+}
+
+@media screen and (max-width: 1080px) {
+    .display-3{
+        font-size: 6vw !important;
+    }
+    
+}
+
+@media screen and (max-width: 410px){
+    .p{
+        font-size: 8vw !important;
+    }
 }

@@ -28,7 +28,7 @@ export default function NavbarIsAuth({toggleSideBar}) {
       >
         <NavbarToggler onClick={toggleSideBar} className="mr-2" />
         <NavbarBrand href="/" className="mr-auto">
-          HOSTDOG
+        <h3 style={{color:"#264d59", margin:"5%"}}>HOSTDOG</h3>
         </NavbarBrand>
       </Navbar>
     </div>

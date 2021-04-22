@@ -94,6 +94,7 @@ const LoginModal = (props) => {
         backdrop={backdrop}
       >
         <ModalHeader toggle={toggle}>เข้าสู่ระบบ</ModalHeader>
+        <Form>
         <ModalBody>
           <br />
           <InputGroup>
@@ -113,7 +114,7 @@ const LoginModal = (props) => {
           
           <small style={{color:"red"}}>{loginRes}</small>
           <br/><br />
-          <Button color="warning" onClick={loginBtn}>ยืนยัน</Button>
+          <Button color="warning" type="submit" onClick={loginBtn}>ยืนยัน</Button>
           <a style={{ marginLeft: "3%" }}>
             <a href="#" onClick={e=>console.log("{username},{password}")}>ลืมรหัสผ่าน</a>
           </a>
@@ -121,6 +122,7 @@ const LoginModal = (props) => {
           <br />
           <a>ยังไม่มีบัญชี?</a> <a href="/signup">สมัคร</a>
         </ModalBody>
+        </Form>
       </Modal>
     </div>
   );

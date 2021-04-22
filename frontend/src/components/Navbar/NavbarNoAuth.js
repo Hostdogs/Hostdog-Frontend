@@ -18,17 +18,17 @@ import {
 import LoginModal from "../LoginForm/LoginModal";
 import { Link } from "react-router-dom";
 
-const NavbarNoAuth = (props, MouseOver, MouseLeave) => {
+const NavbarNoAuth = (props) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
 
-  MouseOver = (e) => {
+  const MouseOver = (e) => {
     e.target.style.background = '#f9e07f';
     e.target.style.color = '#264d59';
   }
 
-  MouseLeave = (e) => {
+  const MouseLeave = (e) => {
     e.target.style.background = '#264d59';
     e.target.style.color = '#f9e07f';
   }
@@ -39,7 +39,7 @@ const NavbarNoAuth = (props, MouseOver, MouseLeave) => {
       <Navbar style={{ backgroundColor: "#f9e07f", position: "fixed", width:"100%" , zIndex:"3"}} light expand="md">
         <Link to="/">
           <NavbarBrand>
-            <h3 style={{color:"#264d59"}}>HOSTDOG</h3>
+            <h3 style={{color:"#264d59", margin:"5%"}}>HOSTDOG</h3>
           </NavbarBrand>
         </Link>
         <NavbarToggler onClick={toggle} />
@@ -69,9 +69,9 @@ const NavbarNoAuth = (props, MouseOver, MouseLeave) => {
               Sign Up{" "}
             </a>
             <a href="/signup">
-              <Button onClick={props.clear} onMouseOver={MouseOver} onMouseLeave={MouseLeave} style={{marginRight:"10px", borderWidth:"3px",borderColor:"#264d59", backgroundColor:"#264d59",color:"#f9e07f",borderRadius:"7px", fontSize:"20px"}}>Log In</Button>{" "}
+              <Button onClick={props.clear} onMouseOver={MouseOver} onMouseLeave={MouseLeave} style={{paddingRight:"10px", borderWidth:"3px",borderColor:"#264d59", backgroundColor:"#264d59",color:"#f9e07f",borderRadius:"7px", fontSize:"20px"}}>Log In</Button>{" "}
             </a>
-            {/* <LoginModal buttonLabel="Log In" />{" "} */}
+            <LoginModal buttonLabel="Log In" />{" "}
         </Collapse>
       </Navbar>
     </div>

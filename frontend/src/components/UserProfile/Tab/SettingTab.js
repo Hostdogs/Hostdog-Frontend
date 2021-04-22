@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import {
   Container,
   Input,
@@ -8,73 +8,64 @@ import {
   ListGroup,
   ListGroupItem,
   Button,
+  Collapse,
 } from "reactstrap";
 import "./SettingTab.css";
+import NameSetting from "./Setting/NameSetting"
+import PasswordSetting from "./Setting/PasswordSetting"
+export default function SettingTab() {
+  
+  // const [Password, setPassword] = useState("");
+  // const [Phone, setPhone] = useState("");
+  // const [Address, setAddress] = useState("");
 
-export default function SettingTab({
-  toggleNameSetting,
-  NoChangeNameSetting,
-  togglePasswordSetting,
-  NoChangePasswordSetting,
-  togglePhoneSetting,
-  NoChangePhoneSetting,
-  toggleAddressSetting,
-  NoChangeAddressSetting
-}) {
-  const [Name, setName] = useState("");
-  const [Surname, setSurname] = useState("");
-  const [Password, setPassword] = useState("");
-  const [Phone, setPhone] = useState("");
-  const [Address, setAddress] = useState("");
+ 
 
-  const [NameSetting, showNameSetting] = useState(false);
-  toggleNameSetting = (e) => {
-    showNameSetting(!NameSetting);
-    showPasswordSetting(false);
-    showPhoneSetting(false);
-    showAddressSetting(false);
-    e.preventDefault();
-  };
-  NoChangeNameSetting = (e) => {
-    showNameSetting(!NameSetting);
-  };
 
-  const [PasswordSetting, showPasswordSetting] = useState(false);
-  togglePasswordSetting = (e) => {
-    showPasswordSetting(!PasswordSetting);
-    showNameSetting(false);
-    showPhoneSetting(false);
-    showAddressSetting(false);
-    e.preventDefault();
-  };
-  NoChangePasswordSetting = (e) => {
-    showPasswordSetting(!PasswordSetting);
-  };
+  // const [PasswordSetting, showPasswordSetting] = useState(false);
+  // togglePasswordSetting = (e) => {
+  //   showPasswordSetting(!PasswordSetting);
+  //   showPhoneSetting(false);
+  //   showAddressSetting(false);
+  //   e.preventDefault();
+  // };
+  // NoChangePasswordSetting = (e) => {
+  //   showPasswordSetting(!PasswordSetting);
+  // };
 
-  const [PhoneSetting, showPhoneSetting] = useState(false);
-  togglePhoneSetting = (e) => {
-    showPhoneSetting(!PhoneSetting);
-    showNameSetting(false);
-    showPasswordSetting(false);
-    showAddressSetting(false);
-    e.preventDefault();
-  };
-  NoChangePhoneSetting = (e) => {
-    showPhoneSetting(!PhoneSetting);
-  };
+  // const [PhoneSetting, showPhoneSetting] = useState(false);
+  // togglePhoneSetting = (e) => {
+  //   showPhoneSetting(!PhoneSetting);
+  //   showPasswordSetting(false);
+  //   showAddressSetting(false);
+  //   e.preventDefault();
+  // };
+  // NoChangePhoneSetting = (e) => {
+  //   showPhoneSetting(!PhoneSetting);
+  // };
 
-  const [AddressSetting, showAddressSetting] = useState(false);
-  toggleAddressSetting = (e) => {
-    showAddressSetting(!AddressSetting);
-    showNameSetting(false);
-    showPasswordSetting(false);
-    showPhoneSetting(false);
-    e.preventDefault();
-  };
-  NoChangeAddressSetting = (e) => {
-    showAddressSetting(!AddressSetting);
+  // const [AddressSetting, showAddressSetting] = useState(false);
+  // toggleAddressSetting = (e) => {
+  //   showAddressSetting(!AddressSetting);
+  //   showPasswordSetting(false);
+  //   showPhoneSetting(false);
+  //   e.preventDefault();
+  // };
+  // NoChangeAddressSetting = (e) => {
+  //   showAddressSetting(!AddressSetting);
     
-  };
+  // };
+  ///////props parameter///////////////
+      /// will implement for props ////
+  ///////////////////////////////////////
+ 
+
+  const [Selected, setSelected] = useState(0)
+
+  useEffect(() => {
+    console.log(Selected)
+  }, [Selected])
+  
 
   return (
     <div>
@@ -82,104 +73,13 @@ export default function SettingTab({
         <hr style={{ borderWidth: "3px", backgroundColor: "#f9ad6a" }}/>
         <h1>การตั้งค่าโปรไฟล์ทั่วไป</h1>
         <hr style={{ borderWidth: "3px", backgroundColor: "#f9ad6a" }} />
-
         <ListGroup>
-          {/*////////////////////////// Name Setting Part///////////////////////////////*/}
-          <button
-            onClick={toggleNameSetting}
-            style={{
-              backgroundColor: "#f9e07f",
-              borderColor: "#f9ad6a",
-              borderLeft: "0px",
-              borderRight: "0px",
-              borderRadius: "0px",
-              padding: "0px",
-              zIndex:"1001"
-            }}
-          >
-            <ListGroupItem
-              style={{
-                backgroundColor: "#f9e07f",
-                border: "0px",
-                textAlign: "left",
-                color: "black",
-              }}
-            >
-              <h6>
-                <a>ชื่อ</a> <a style={{ marginLeft: "5%" }}>{Name}</a>{" "}
-                <a style={{ marginLeft: "3%" }}>{Surname}</a>
-                <a href="##" style={{ float: "right", color:"black" }}>แก้ไข</a>
-              </h6>
-            </ListGroupItem>
-          </button>
 
-          {NameSetting == true ? (
-            <ListGroupItem
-              style={{
-                borderColor: "#f9ad6a",
-                borderLeft: "0px",
-                borderRight: "0px",
-                borderTop: "0px",
-                borderWidth: "3px",
-              }}
-            >
-              <InputGroup style={{ paddingLeft: "10%", paddingRight: "10%" }}>
-                <InputGroupAddon addonType="prepend">
-                  <InputGroupText
-                    style={{
-                      backgroundColor: "#f9e07f",
-                      color: "black",
-                      width: "100px",
-                    }}
-                  >
-                    ชื่อ
-                  </InputGroupText>
-                </InputGroupAddon>
-                <Input onChange={(e) => setName(e.target.value)}></Input>
-              </InputGroup>
-
-              <InputGroup
-                style={{
-                  marginTop: "1%",
-                  paddingLeft: "10%",
-                  paddingRight: "10%",
-                }}
-              >
-                <InputGroupAddon addonType="prepend">
-                  <InputGroupText
-                    style={{
-                      backgroundColor: "#f9e07f",
-                      color: "black",
-                      width: "100px",
-                    }}
-                  >
-                    นามสกุล
-                  </InputGroupText>
-                </InputGroupAddon>
-                <Input onChange={(e) => setSurname(e.target.value)}></Input>
-              </InputGroup>
-
-              <div style={{ marginTop: "1%" }}>
-                <Button
-                  style={{ float: "right", marginRight: "0.5%", border:"0px", backgroundColor:"grey" }}
-                  onClick={NoChangeNameSetting}
-                >
-                  ยกเลิก
-                </Button>
-                <Button
-                  style={{ float: "right", marginRight: "1%", border:"0px", backgroundColor:"#f9e07f", color:"black" }}
-                  onClick={toggleNameSetting}
-                >
-                  ยืนยัน
-                </Button>
-                
-              </div>
-            </ListGroupItem>
-          ) : (
-            ""
-          )}
+          <NameSetting setSelected={setSelected} Selected={Selected}/>
+          <PasswordSetting setSelected={setSelected} Selected={Selected}/>
+          {/* <NameSetting setSelected={setSelected} Selected={Selected}/> */}
           {/*////////////////////////// Password Setting Part///////////////////////////////*/}
-          <button
+          {/* <button
             onClick={togglePasswordSetting}
             style={{
               backgroundColor: "#f9e07f",
@@ -289,9 +189,9 @@ export default function SettingTab({
             </ListGroupItem>
           ) : (
             ""
-          )}
+          )} */}
           {/*////////////////////////// Phone Setting Part///////////////////////////////*/}
-          <button
+          {/* <button
             onClick={togglePhoneSetting}
             style={{
               backgroundColor: "#f9e07f",
@@ -360,9 +260,9 @@ export default function SettingTab({
             </ListGroupItem>
           ) : (
             ""
-          )}
+          )} */}
             {/*////////////////////////// Address Setting Part///////////////////////////////*/}
-                    <button
+                    {/* <button
             onClick={toggleAddressSetting}
             style={{
               backgroundColor: "#f9e07f",
@@ -431,7 +331,7 @@ export default function SettingTab({
             </ListGroupItem>
           ) : (
             ""
-          )}
+          )} */}
         </ListGroup>
       </Container>
     </div>

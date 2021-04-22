@@ -4,7 +4,7 @@ import { Container, Row, Col } from "reactstrap";
 export default function ServiceDetail(props) {
   const { serviceInfo } = props;
   let detailServices = [
-    { name: "", price: 1000, isSelect: false },
+    { name: "", price: 0, isSelect: false },
     { name: "", price: 0, isSelect: false },
     { name: "", price: 100, isSelect: false },
     { name: "", price: 0, isSelect: false },
@@ -18,8 +18,10 @@ export default function ServiceDetail(props) {
     detailServices[0].isSelect = true;
     if (serviceInfo.service_is_over_night === true) {
       detailServices[0].name = "ฝากข้ามคืน";
+      detailServices[0].price = 500;
     } else {
       detailServices[0].name = "ฝากระหว่างวัน";
+      detailServices[0].price = 300;
     }
   }
 

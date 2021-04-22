@@ -10,7 +10,7 @@ const ContentNoAuth = (props) => {
 
         <h1
           className="display-3"
-          style={{ fontWeight: "bold", color:"white", textShadow:"1px 1px 5px black"}}
+          style={{ fontWeight: "bold", color:"white", textShadow:"0.5px 0.5px 2.5px black"}}
         >
           คุณกำลังมองหาพี่เลี้ยงสุนัขใช่ไหม?<br/>
           ให้เราเป็นตัวช่วย
@@ -20,7 +20,7 @@ const ContentNoAuth = (props) => {
         <br/>
         <hr style={{borderWidth:"3px", marginRight:"40%", backgroundColor:"white"}} />
         <br />
-        <div style={{  wordWrap:"break-word", color:"white" }}>
+        <div style={{  wordWrap:"break-word", color:"white" ,textShadow:"0.5px 0.5px 2.5px black"}}>
           <p className="p">เว็บไซต์ฝากสุนัข<b style={{fontSize:"30px"}}> อันดับที่ 1<small style={{fontSize:"13px"}}> (แสน)</small> ในประเทศไทย</b></p>
           <p>
             รับประกันความลำบาก และใช้งานยาก

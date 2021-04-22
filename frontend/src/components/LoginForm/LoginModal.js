@@ -19,7 +19,7 @@ import './LoginModal.css'
 import axios from "axios";
 import LoginAPI from "./LoginAPI"
 
-const LoginModal = (props) => {
+const LoginModal = ({buttonLabel,className,MouseOver,MouseLeave}) => {
   const [token,setToken] = useCookies(['mytoken'])
   const [username, setusername] = useState('')
   const [password, setpassword] = useState('')
@@ -53,7 +53,7 @@ const LoginModal = (props) => {
     setloginRes("")
   }
   //////////////////UI FrameWork//////////////////////////
-  const { buttonLabel, className } = props;
+  
 
   const [modal, setModal] = useState(false);
   const [unmountOnClose, setUnmountOnClose] = useState(true);
@@ -82,7 +82,7 @@ const LoginModal = (props) => {
   return (
     <div>
       <Form inline onSubmit={(e) => e.preventDefault()} >
-        <Button onClick={onClose}>
+        <Button onClick={onClose} onMouseLeave={MouseLeave} onMouseOver={MouseOver} style={{ paddingRight: "10px", borderWidth: "3px", borderColor: "#264d59", backgroundColor: "#264d59", color: "#f9e07f", borderRadius: "7px", fontSize: "20px" }}>
           {buttonLabel}
         </Button>
       </Form>

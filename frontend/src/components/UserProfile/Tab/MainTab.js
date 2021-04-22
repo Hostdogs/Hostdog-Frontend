@@ -39,9 +39,9 @@ const MainTab = () => {
               editDescription
               } />
             {editable? (
-              <Button onClick={onSetDescription} style={{position:"relative",top:"-40px",float:"right",marginRight:"15px",marginTop:"-5px",backgroundColor:"rgba(212,108,78,0.75)",borderWidth:"0px",color:"#264d59"}}>แก้ไข</Button>
+              <Button onClick={onSetDescription} >แก้ไข</Button>
             ):(null)}
-            
+            {/* style={{position:"relative",top:"-40px",float:"right",marginRight:"15px",marginTop:"-5px",backgroundColor:"rgba(212,108,78,0.75)",borderWidth:"0px",color:"#264d59"}} */}
               
            
               

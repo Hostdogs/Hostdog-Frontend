@@ -36,7 +36,7 @@ const ProfileCard = ({pageCollapse}) => {
         </Collapse>
         
         <br />
-        <CardTitle tag="h3">บาสตั้งใจทำงานหน่อยครับ อย่าทำเป็นเล่น</CardTitle>
+        <CardTitle tag="h3">พลอากาศเอกพลพล</CardTitle>
         <CardSubtitle tag="h6" className="mb-2 text-muted">
           ผู้ใช้งานทั่วไป
         </CardSubtitle>

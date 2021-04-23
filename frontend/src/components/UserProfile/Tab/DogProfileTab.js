@@ -60,6 +60,7 @@ const DogProfileTab = (props) => {
           ))}
         </ul>
       </nav>
+      
     </div>
   );
 };

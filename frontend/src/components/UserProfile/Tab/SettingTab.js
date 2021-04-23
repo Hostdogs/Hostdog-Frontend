@@ -78,7 +78,7 @@ export default function SettingTab() {
           <NameSetting setSelected={setSelected} Selected={Selected}/>
           <PasswordSetting setSelected={setSelected} Selected={Selected}/>
           {/* <NameSetting setSelected={setSelected} Selected={Selected}/> */}
-          {/*////////////////////////// Password Setting Part///////////////////////////////*/}
+     
           {/* <button
             onClick={togglePasswordSetting}
             style={{

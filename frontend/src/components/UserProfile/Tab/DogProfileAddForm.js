@@ -57,6 +57,7 @@ export default function DogProfileAddForm() {
     console.log(dogInfo);
     setDogInfo(startDogInfo);
     toggle();
+    
   };
 
   return (

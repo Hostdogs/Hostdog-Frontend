@@ -57,6 +57,16 @@ const ProfileContent = ({setpageCollapse}) => {
         </NavItem>
         <NavItem>
           <NavLink
+            className={classnames({ active: activeTab === "4" })}
+            onClick={() => {
+              toggle("4");
+            }}
+          >
+            จัดการการบริการ
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink
             className={classnames({ active: activeTab === "3" })}
             onClick={() => {
               toggle("3");

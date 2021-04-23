@@ -40,6 +40,7 @@ export default function NameSetting({ setSelected, Selected }) {
                 onClick={e => setSelected(1)}
                 style={{
                     padding: "0px",
+                    
                 }}
             >
                 <ListGroupItem

@@ -43,13 +43,9 @@ export default function PasswordSetting({ setSelected, Selected }) {
             <a
                 onClick={e => setSelected(2)}
                 style={{
-                    backgroundColor: "#f9e07f",
-                    borderColor: "#f9ad6a",
-                    borderLeft: "0px",
-                    borderRight: "0px",
-                    borderRadius: "0px",
+                   
                     padding: "0px",
-                    zIndex: "1001"
+
                 }}
             >
                 <ListGroupItem

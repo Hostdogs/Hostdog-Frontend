@@ -40,6 +40,7 @@ export default function MobileSetting({ setSelected, Selected }) {
                 onClick={e => setSelected(1)}
                 style={{
                     padding: "0px",
+                    
                 }}
             >
                 <ListGroupItem

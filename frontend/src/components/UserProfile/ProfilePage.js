@@ -17,6 +17,7 @@ export default function ProfilePage() {
       <header style={{ position: "fixed", width: "100%", zIndex: "1001" }}>
         <NavbarIsAuth toggleSideBar={toggleSideBar} />
       </header>
+      
       <SideBar isOpen={isOpen} />
       <div style={{ paddingTop: "50px" }}>
         <Container fluid="md">

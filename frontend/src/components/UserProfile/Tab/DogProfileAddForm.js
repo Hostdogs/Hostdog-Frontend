@@ -15,27 +15,48 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
+const startDogInfo = {
+  customer: "",
+  picture: null,
+  dog_name: "",
+  gender: "",
+  dog_dob: "",
+  dog_breed: "",
+  dog_weight: "",
+  dog_status: "",
+  dog_bio: "",
+};
 export default function DogProfileAddForm() {
-  const [name, setName] = useState("");
-  const [age, setAge] = useState(0);
-  const [weight, setWeight] = useState(0);
-  const [dogInfo, setDogInfo] = useState({
-    customer: null,
-    picture: null,
-    dog_name: "",
-    gender: "",
-    dog_dob: null,
-    dog_breed: "",
-    dog_weight: null,
-    dog_status: null,
-    dog_bio: null,
-  });
   const [modal, setModal] = useState(false);
 
   const toggle = () => setModal(!modal);
   // console.log({name,age,weight});
+  const [dogInfo, setDogInfo] = useState({
+    customer: "",
+    picture: null,
+    dog_name: "",
+    gender: "",
+    dog_dob: "",
+    dog_breed: "",
+    dog_weight: "",
+    dog_status: "",
+    dog_bio: "",
+  });
+
+  function onDogInfoChange(event) {
+    const { name, value } = event.target;
+    setDogInfo((prevDogInfo) => {
+      return {
+        ...prevDogInfo,
+        [name]: value,
+      };
+    });
+  }
+
   const handleSubmit = () => {
     console.log(dogInfo);
+    setDogInfo(startDogInfo);
+    toggle();
   };
 
   return (
@@ -56,21 +77,27 @@ export default function DogProfileAddForm() {
               <Label for="exampleEmail">Name</Label>
               <Input
                 placeholder="ชื่อสุนัขของคุณ"
-                onChange={(e) => setName(e.target.value)}
+                name="dog_name"
+                value={dogInfo.dog_name}
+                onChange={onDogInfoChange}
               />
             </FormGroup>
             <FormGroup>
               <Label for="examplePassword">Age</Label>
               <Input
                 placeholder="อายุ"
-                onChange={(e) => setAge(e.target.value)}
+                name="dog_dob"
+                value={dogInfo.dog_dob}
+                onChange={onDogInfoChange}
               />
             </FormGroup>
             <FormGroup>
               <Label for="examplePassword">Weight</Label>
               <Input
                 placeholder="น้ำหนักของสุนัข"
-                onChange={(e) => setWeight(e.target.value)}
+                name="dog_weight"
+                value={dogInfo.dog_weight}
+                onChange={onDogInfoChange}
               />
             </FormGroup>
           </Form>

@@ -7,7 +7,7 @@
   margin-left: -250px;
   transition: all 0.5s;
   position: fixed;
-  z-index: 1001;
+  z-index: 5;
 }
 
 .sidebar.is-open {
@@ -76,7 +76,6 @@ li a.dropdown-toggle::after {
     max-width: 100%;
     margin-left: 0;
     transition: all 0.5s, height 0s;
-    
   }
 
   .sidebar.is-open > .sidebar-header span {

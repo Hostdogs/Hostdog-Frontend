@@ -8,7 +8,7 @@ import {
   FormGroup,
   Label,
   Input,
-  FormText,
+  CustomInput,
 } from "reactstrap";
 
 import "./SignUp.css";
@@ -21,24 +21,24 @@ export default function SignUpForm() {
   const Name = ["ผู้ฝากสุนัข", "ผู้รับฝากสุนัข"];
   const [token, setToken] = useCookies(['mytoken'])
   const [submitResponse, setsubmitResponse] = useState("")
-  
+
   const selectRole = (e) => {
     setselectState(e.target.value);
     setsubmitResponse("");
-    console.log(e.target.value);
+    
   };
 
   const handleAskForm = () => {
     if (selectState !== "") {
       setisSelect(true);
       console.log("PushSubmit");
-    }else{
+    } else {
       setsubmitResponse("กรุณาเลือกก่อนดำเนินการต่อ")
       console.log("submit")
     }
 
   };
-  
+
 
 
   if (token['mytoken']) {
@@ -47,49 +47,35 @@ export default function SignUpForm() {
   } else {
     return (
       <div>
+        <br /><br />
         <Container className="themed-container" fluid="sm">
-          <br/>
-          <Form >
-            <FormGroup tag="fieldset">
+          <br />
+          <Form onSubmit={e=>e.preventDefault()}>
+
+            <FormGroup>
               <legend>คุณต้องการสมัครเป็นอะไร</legend>
-              <Row>
-                <Col>
-                  <FormGroup check style={{textAlign:"right"}}>
-                    <Label check>
-                      <Input
-                        type="radio"
-                        name="radio1"
-                        value="Customer"
-                        onChange={selectRole}
-                      />{" "}
-                      ผู้ฝากสุนัข
-                    </Label>
-                  </FormGroup>
-                </Col>
-                <Col style={{maxWidth:"10%"}}></Col>
-                <Col>
-                  <FormGroup check style={{textAlign:"left"}}>
-                    <Label check>
-                      <Input
-                        type="radio"
-                        name="radio1"
-                        value="Host"
-                        onChange={selectRole}
-                      />{" "}
-                      ผู้รับฝากสุนัข
-                    </Label>
-                  </FormGroup>
+              <div >
+                <Row >
 
-                </Col>
+                  <Col style={{ textAlign: "right" }}>
+                    <CustomInput type="radio" id="roleRadio" name="roleRadio" label="ผู้ฝากสุนัข" value="Customer" onChange={selectRole} />
+                  </Col>
+                  <Col style={{ maxWidth: "10%" }}></Col>
+                  <Col style={{ textAlign: "left" }}>
+                    <CustomInput type="radio" id="roleRadio2" name="roleRadio" label="ผู้รับฝากสุนัข" value="Host" onChange={selectRole} />
+                  </Col>
 
-              </Row>
+                </Row>
+
+              </div>
+
               {isSelect ? (
-                <InformationForm />
+                <InformationForm selectState={selectState}/>
               ) : (
                 <div>
-                  <small style={{color:"red"}}>{submitResponse}</small><br/><br/>
+                  <small style={{ color: "red" }}>{submitResponse}</small><br />
                   <Button color="secondary" onClick={handleAskForm}>
-                  ถัดไป
+                    ถัดไป
             </Button></div>)}
             </FormGroup>
 
@@ -99,7 +85,7 @@ export default function SignUpForm() {
         
       </div>
 
-
+      
 
     );
   }

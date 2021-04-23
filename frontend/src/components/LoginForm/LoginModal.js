@@ -6,28 +6,18 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
-  ModalFooter,
   Input,
-  Label,
   Form,
-  FormGroup,
   InputGroup,
   InputGroupAddon,
   InputGroupText,
-  TabContent,
-  TabPane,
-  Nav,
-  NavItem,
-  NavLink,
-  Card,
-  CardTitle,
-  CardText,
-  Row,
-  Col,
+  
 } from "reactstrap";
 import {useCookies} from 'react-cookie'
 import { useHistory } from "react-router-dom";
 import './LoginModal.css'
+import axios from "axios";
+import LoginAPI from "./LoginAPI"
 
 const LoginModal = ({buttonLabel,className,MouseOver,MouseLeave}) => {
   const [token,setToken] = useCookies(['mytoken'])
@@ -35,7 +25,7 @@ const LoginModal = ({buttonLabel,className,MouseOver,MouseLeave}) => {
   const [password, setpassword] = useState('')
   const [loginRes, setloginRes] = useState(" ")
   let history = useHistory()
-
+  // const URL = "http://127.0.0.1:8000/"
   const loginBtn = () =>{
     if(username==='' || password === ''){
       setloginRes("กรุณากรอกชื่อผู้ใช้หรือรหัสผ่านให้ถูกต้อง")
@@ -52,6 +42,8 @@ const LoginModal = ({buttonLabel,className,MouseOver,MouseLeave}) => {
       //fake Login///
       setToken('mytoken',"hellothisisfaketoken")
       history.push('/')
+      
+      
 
     }
     
@@ -64,7 +56,7 @@ const LoginModal = ({buttonLabel,className,MouseOver,MouseLeave}) => {
   
 
   const [modal, setModal] = useState(false);
-  const [unmountOnClose, setUnmountOnClose] = useState(false);
+  const [unmountOnClose, setUnmountOnClose] = useState(true);
   const [backdrop, setBackdrop] = useState(true);
 
   const toggle = () => setModal(!modal);
@@ -113,7 +105,7 @@ const LoginModal = ({buttonLabel,className,MouseOver,MouseLeave}) => {
           </InputGroup>
           
           <br />
-          <InputGroup>
+          <InputGroup >
             <InputGroupAddon addonType="prepend">
               <InputGroupText style={{width:"100px"}}>รหัสผ่าน</InputGroupText>
             </InputGroupAddon>
@@ -124,7 +116,7 @@ const LoginModal = ({buttonLabel,className,MouseOver,MouseLeave}) => {
           <br/><br />
           <Button color="warning" type="submit" onClick={loginBtn}>ยืนยัน</Button>
           <a style={{ marginLeft: "3%" }}>
-            <a href="#" onClick={e=>console.log({userName},{passWord})}>ลืมรหัสผ่าน</a>
+            <a href="#" onClick={e=>console.log("{username},{password}")}>ลืมรหัสผ่าน</a>
           </a>
           <br />
           <br />

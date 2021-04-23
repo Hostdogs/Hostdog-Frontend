@@ -1,0 +1,135 @@
+.header-service {
+  margin-left: 5px;
+}
+
+.list-service {
+  margin-left: 15px;
+}
+
+.host-image {
+  max-width: 300px;
+}
+
+.hostImage-post {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  z-index: 20;
+}
+
+.hostImage-bg {
+  background-color: rgba(0, 0, 0, 0.817);
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+}
+.hostImage-content-small {
+  background-color: black;
+  max-width: 1200px;
+  position: relative;
+}
+
+.hostImage-content {
+  background-color: black;
+  max-width: 1200px;
+  position: relative;
+}
+
+.hostImage-content-small img {
+  display: block;
+  max-width: 100%;
+  max-height: 35vh;
+  margin-left: auto;
+  margin-right: auto;
+}
+.hostImage-content img {
+  display: block;
+  max-width: 100%;
+  max-height: calc(100vh - 150px);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.resize-img {
+  width: 1280px;
+  height: 720px;
+  object-fit: contain;
+}
+
+.content {
+  width: 90vw;
+  margin: 0 auto 0 auto;
+}
+
+@media screen and (max-width: 700px) {
+  .hostImage-content-small img {
+    display: block;
+    max-width: 100%;
+    max-height: 40vh;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hostImage-content img {
+    display: block;
+    max-width: 100%;
+    max-height: calc(70vh - 150px);
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .hostImage-content-small img {
+    display: block;
+    max-width: 100%;
+    max-height: 35vh;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hostImage-content img {
+    display: block;
+    max-width: 100%;
+    max-height: calc(80vh - 150px);
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+@media screen and (max-width: 1200px) {
+  .hostImage-content-small img {
+    display: block;
+    max-width: 100%;
+    max-height: 30vh;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hostImage-content img {
+    display: block;
+    max-width: 100%;
+    max-height: calc(80vh - 150px);
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+@media screen and (max-width: 1400px) {
+  .hostImage-content-small img {
+    display: block;
+    max-width: 100%;
+    max-height: 30vh;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hostImage-content img {
+    display: block;
+    max-width: 100%;
+    max-height: calc(90vh - 150px);
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

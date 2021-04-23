@@ -43,8 +43,8 @@ export default function Host({ host }) {
     <div className="borderCard">
       <Card style={{ backgroundColor: "#ffbb3cd5" }}>
         <CardHeader>
-          <Row>
-            <Col>
+          <Row style={{ textAlign: "center" }}>
+            <Col xs="12" sm="12" md="2" lg="2">
               <FreeDay />
               <img
                 src="holder.js/125x125"
@@ -57,7 +57,7 @@ export default function Host({ host }) {
               />
             </Col>
 
-            <Col>
+            <Col xs="12" sm="12" md="5" lg="4">
               <h3>
                 <FontAwesomeIcon
                   icon={faBone}
@@ -68,39 +68,31 @@ export default function Host({ host }) {
               </h3>
               <h5>มือใหม่หัดเลี้ยง</h5>
             </Col>
-            <Col>
-              <Container>
-                <div>รับฝากมาแล้ว x ตัว</div>
-                <div style={{ wordWrap: "break-word" }}>รวม x ชั่วโมง</div>
-                <Row>
-                  <Col style={{ fontSize: "20px" }}>
-                    ขนาดบริเวณเลี้ยง
-                    <br />
-                    xxx
-                    <br />
-                    ตารางเมตร
-                  </Col>
+            <Col xs="12" sm="12" md="5" lg="6">
+              <Row>
+                <Col md="12" lg="8" style={{ fontSize: "20px" }}>
+                  <div>รับฝากมาแล้ว x ตัว</div>
+                  <div style={{ wordWrap: "break-word" }}>รวม x ชั่วโมง</div>
+                  <div>ขนาดบริเวณเลี้ยง xxx ตารางเมตร</div>
+                </Col>
+                <Col md="12" lg="4" style={{ fontSize: "20px" }}>
+                  คะแนนรีวิว
                   <br />
+                  xxx/5.0
                   <br />
-                  <Col style={{ fontSize: "20px" }}>
-                    คะแนนรีวิว
-                    <br />
-                    xxx/5.0
-                    <br />
-                    <FontAwesomeIcon icon={faBone} size="xs" />
-                  </Col>
-                </Row>
-              </Container>
+                  <FontAwesomeIcon icon={faBone} size="xs" />
+                </Col>
+              </Row>
             </Col>
           </Row>
         </CardHeader>
         <CardBody>
-        <Col style={{ padding: "0px" }}>
-        <Container fluid="sm">
-          <HostGallery />
-          <article></article>
-        </Container>
-      </Col>
+          <Col style={{ padding: "0px" }}>
+            <Container fluid="sm">
+              <HostGallery />
+              <article></article>
+            </Container>
+          </Col>
         </CardBody>
         <a href="#" style={{ color: "black" }}>
           <CardFooter

@@ -94,10 +94,9 @@ export default function HostList() {
           <br />
           {hostData.map((hd) => (
             <div>
-                <Host key={hd.id} host={hd} />
-                <br/>
+              <Host key={hd.id} host={hd} />
+              <br />
             </div>
-
           ))}
 
           <Button

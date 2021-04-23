@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import {
     Container,
     Input,
@@ -10,22 +10,29 @@ import {
     Button,
     Collapse,
     Form,
+    FormGroup,
+    Label,
+    FormText,
+
 } from "reactstrap";
 
 
-export default function MobileSetting({ setSelected, Selected }) {
+export default function ProfileimgPathSetting({ setSelected, Selected }) {
 
-    const [FakeData, setFakeData] = useState({ Mobile: "0810855513" })
-    const [Mobile, setMobile] = useState(FakeData.Mobile);
-    
+    const [FakeData, setFakeData] = useState({ imgPath: "/user_placeholder.png" })
+    const [imgPath, setimgPath] = useState(FakeData.imgPath);
+    const [Image, setImage] = useState("")
     const Reset = () => {
-        setMobile(FakeData.Mobile)
+        setimgPath(FakeData.imgPath)
+
         setSelected(0)
     }
-
+    useEffect(() => {
+        console.log(Image)
+    }, [Image])
     const infoSet = (e) => {
         e.preventDefault()
-        FakeData.Mobile = Mobile
+        FakeData.imgPath = imgPath
 
         //////////////will implement to refresh page////////////
         setSelected(0)
@@ -34,12 +41,12 @@ export default function MobileSetting({ setSelected, Selected }) {
     return (
         <div>
 
-            {/*////////////////////////// Mobile Setting Part///////////////////////////////*/}
+            {/*////////////////////////// imgPath Setting Part///////////////////////////////*/}
             <a
-                onClick={e => setSelected(3)}
+                onClick={e => setSelected(4)}
                 style={{
                     padding: "0px",
-                    
+
                 }}
             >
                 <ListGroupItem
@@ -51,7 +58,9 @@ export default function MobileSetting({ setSelected, Selected }) {
                     }}
                 >
                     <h6>
-                        <a>เบอร์โทรศัพท์</a> <a style={{ marginLeft: "5%" }}>{FakeData.Mobile}</a>{" "}
+                        <a>รูปประจำตัว</a> <a style={{ marginLeft: "5%" }}>
+                            {FakeData.imgPath}</a>{" "}
+
                         <a href="##" style={{ float: "right", color: "black" }}>แก้ไข</a>
 
                     </h6>
@@ -59,7 +68,7 @@ export default function MobileSetting({ setSelected, Selected }) {
             </a>
 
 
-            <Collapse isOpen={Selected === 3}>
+            <Collapse isOpen={Selected === 4}>
                 <Form onSubmit={infoSet} >
 
                     <ListGroupItem
@@ -69,7 +78,21 @@ export default function MobileSetting({ setSelected, Selected }) {
                         }}
                     >
                         <br />
-                        <InputGroup style={{ justifyContent: "center" }}>
+                        <Container style={{ maxWidth: "" }}>
+                            <FormGroup>
+                                
+                                <Label for="exampleFile">เปลี่ยนรูปโปรไฟล์ผู้ใช้ของคุณ</Label>
+                                <Input type="file" name="file" id="exampleFile" accept="image/*" value={Image} onChange={e=>setImage(e.target.value)}/>
+                                <FormText color="muted">
+                                    This is some placeholder block-level help text for the above input.
+                                    It's a bit lighter and easily wraps to a new line.
+                            </FormText>
+                            </FormGroup>
+                            <FormGroup tag="fieldset"></FormGroup>
+                        </Container>
+
+
+                        {/* <InputGroup style={{ justifyContent: "center" }}>
                             <InputGroupAddon addonType="prepend">
                                 <InputGroupText
                                     style={{
@@ -83,10 +106,10 @@ export default function MobileSetting({ setSelected, Selected }) {
                                     เบอร์โทรศัพท์
                   </InputGroupText>
                             </InputGroupAddon>
-                            <Input onChange={(e) => setMobile(e.target.value)} value={Mobile} style={{ minWidth: "150px", maxWidth: "30vw" }}></Input>
-                        </InputGroup>
+                            <Input onChange={(e) => setimgPath(e.target.value)} value={imgPath} style={{ minWidth: "150px", maxWidth: "30vw" }}></Input>
+                        </InputGroup> */}
 
-                       
+
 
                         <div style={{ marginTop: "1%", textAlign: "right" }}>
                             <Button

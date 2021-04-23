@@ -86,7 +86,7 @@ export default function PasswordSetting({ setSelected, Selected }) {
                                     }}
                                 >
 
-                                    พาสเวิร์ดเดิม
+                                    รหัสผ่านเดิม
                   </InputGroupText>
                             </InputGroupAddon>
                             <Input onChange={(e) => setoldPassword(e.target.value)} value={oldPassword} style={{ minWidth: "150px", maxWidth: "30vw" }} type="password"></Input>
@@ -107,7 +107,7 @@ export default function PasswordSetting({ setSelected, Selected }) {
                                         justifyContent: "center"
                                     }}
                                 >
-                                    พาสเวิร์ดใหม่
+                                    รหัสผ่านใหม่
                   </InputGroupText>
                             </InputGroupAddon>
                             <Input onChange={(e) => setnewPassword(e.target.value)} value={newPassword} style={{ minWidth: "150px", maxWidth: "30vw" }} type="password"></Input>
@@ -127,7 +127,7 @@ export default function PasswordSetting({ setSelected, Selected }) {
                                         justifyContent: "center"
                                     }}
                                 >
-                                    พาสเวิร์ดอีกครั้ง
+                                    รหัสผ่านอีกครั้ง
                   </InputGroupText>
                             </InputGroupAddon>
                             <Input onChange={(e) => setconfirmPassword(e.target.value)} value={confirmPassword} style={{ minWidth: "150px", maxWidth: "30vw" }} type="password"></Input>

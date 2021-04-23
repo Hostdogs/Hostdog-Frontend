@@ -1,24 +1,22 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { ListGroup, ListGroupItem, Row, Col, Button } from "reactstrap";
+import {
+  ListGroup,
+  ListGroupItem,
+  Row,
+  Col,
+  Button,
+  ButtonGroup,
+} from "reactstrap";
 import DogProfileAddForm from "./DogProfileAddForm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faPlus
-} from "@fortawesome/free-solid-svg-icons";
-
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 const DogProfileTab = (props) => {
-
-  const [newdogToggle, setnewdogToggle] = useState(false)
-  const addtoggle = () => setnewdogToggle(!newdogToggle)
+  const [newdogToggle, setnewdogToggle] = useState(false);
+  const addtoggle = () => setnewdogToggle(!newdogToggle);
   //Add ListItem
-  const AddedElement = () => (
-    <ListGroupItem>
-        
-    </ListGroupItem>
-  );
-
+  const AddedElement = () => <ListGroupItem></ListGroupItem>;
   const [count, setCount] = useState(0);
 
   //set per page
@@ -41,19 +39,10 @@ const DogProfileTab = (props) => {
   // console.log(count);
   return (
     <div>
-      <DogProfileAddForm toggleModal={newdogToggle} />
-      <Row>
-        <Col xs="12">
-          <Button 
-             color="warning"
-            onClick={addtoggle}
-          >
-            <FontAwesomeIcon icon={faPlus}/> เพิ่มสุนัข
-          </Button>
-          
-          <hr />
-        </Col>
-      </Row>
+      <ButtonGroup style={{ marginTop: "10px" }}>
+        <DogProfileAddForm />
+      </ButtonGroup>
+      <hr />
       <ListGroup>{currentPosts}</ListGroup>
       <br />
       <nav>

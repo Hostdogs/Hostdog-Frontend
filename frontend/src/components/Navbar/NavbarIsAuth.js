@@ -23,12 +23,12 @@ export default function NavbarIsAuth({toggleSideBar}) {
   return (
     <div>
       <Navbar
-        style={{ backgroundColor: "#f9e07f", position: "fixed", width:"100%", zIndex:"3" }}
+        style={{ backgroundColor: "#ffe080"}}
         light
       >
         <NavbarToggler onClick={toggleSideBar} className="mr-2" />
         <NavbarBrand href="/" className="mr-auto">
-        <h3 style={{color:"#264d59", margin:"5%"}}>HOSTDOG</h3>
+          HOSTDOG
         </NavbarBrand>
       </Navbar>
     </div>

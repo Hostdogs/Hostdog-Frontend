@@ -39,7 +39,7 @@ const DogProfileTab = (props) => {
   // console.log(count);
   return (
     <div>
-      <ButtonGroup style={{ marginTop: "10px" }}>
+      <ButtonGroup style={{ marginTop: "9px" }}>
         <DogProfileAddForm />
       </ButtonGroup>
       <hr />

@@ -44,18 +44,18 @@ export default function SideBar({isOpen}) {
             <br />
             <hr style={{ borderWidth: "1px", marginLeft: "5%" }} />
           </div>
-          <NavItem style={{ marginTop: "10%" }}>
+          {/* <NavItem style={{ marginTop: "10%" }}>
             <NavLink tag={Link} to={"/การรายงาน"} style={{ color: "black" }}>
               <FontAwesomeIcon icon={faFlag} className="mr-2" />
             การรายงาน
           </NavLink>
-          </NavItem>
-          <NavItem>
+          </NavItem> */}
+          {/* <NavItem>
             <NavLink tag={Link} to={"/การตั้งค่า"} style={{ color: "black" }}>
               <FontAwesomeIcon icon={faCog} className="mr-2" />
             การตั่งค่า
           </NavLink>
-          </NavItem>
+          </NavItem> */}
           <NavItem>
             <NavLink tag={Link} to={"/ออกจากระบบ"} style={{ color: "black" }}>
               <FontAwesomeIcon icon={faSignOutAlt} className="mr-2" />

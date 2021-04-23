@@ -16,6 +16,7 @@ import { faBone } from "@fortawesome/free-solid-svg-icons";
 import HostGallery from "./HostGallery";
 import "./Host.css";
 import FreeDay from "./FreeDay";
+import "holderjs";
 
 export default function Host({ host }) {
   return (
@@ -40,65 +41,77 @@ export default function Host({ host }) {
     //   <CardText> วันว่าง:{host.dateAvail}</CardText>
     // </Card>
     <div className="borderCard">
-      <Row>
-        {/* ///////////////////////////////collumn ซ้าย//////////////////////////////////// */}
-        <Col className="profilecolumn" style={{minwidth:"50vw"}}>
-          <Card style={{ backgroundColor: "#ffbb3cd5" }}>
-            <CardHeader>
+      <Card style={{ backgroundColor: "#ffbb3cd5" }}>
+        <CardHeader>
+          <Row>
+            <Col>
               <FreeDay />
-              <div style={{ textAlign: "center" }}>
-                <img
-                  src={process.env.PUBLIC_URL + "/doge.png"}
-                  width="62.5"
-                  height="84.5"
-                />
-                <br />
-                <br />
-                <h3>
-                  <FontAwesomeIcon
-                    icon={faBone}
-                    className="mr-2 fa-rotate-135"
-                    size="xs"
-                  />
-                  {host.hostName}
-                </h3>
-                <h5>มือใหม่หัดเลี้ยง</h5>
-                <br />
-              </div>
-            </CardHeader>
-            <CardBody
-              style={{ textAlign: "center", backgroundColor: "#d0d0d0" }}
-            >
-              <CardTitle tag="h5"><div>รับฝากมาแล้ว x ตัว</div><div style={{wordWrap:"break-word"}}>รวม x ชั่วโมง</div></CardTitle>
-              <br />
-              <br />
-              <CardText>
-                <Container>
-                  <Row>
-                    <Col style={{ fontSize: "20px" }}>ขนาดบริเวณเลี้ยง<br/>xxx<br/>ตารางเมตร</Col><br/><br/>
-                    <Col style={{ fontSize: "20px" }}>คะแนนรีวิว<br/>xxx/5.0<br/><FontAwesomeIcon icon={faBone} size="xs" /></Col>
-                  </Row>
-                </Container>
-              </CardText>
-            </CardBody>
-            <a href="#" style={{ color: "black" }}>
-              <CardFooter
-                style={{ textAlign: "center", backgroundColor: "#ffbb3cd5" }}
-              >
-                รายละเอียดเพิ่มเติม
-              </CardFooter>
-            </a>
-          </Card>
-        </Col>
+              <img
+                src="holder.js/125x125"
+                class="img-responsive center-block"
+                style={{
+                  borderRadius: "50%",
+                  width: "125px",
+                  height: "100%",
+                }}
+              />
+            </Col>
 
-        {/* ///////////////////////////////collumn ขวา//////////////////////////////////// */}
+            <Col>
+              <h3>
+                <FontAwesomeIcon
+                  icon={faBone}
+                  className="mr-2 fa-rotate-135"
+                  size="xs"
+                />
+                {host.hostName}
+              </h3>
+              <h5>มือใหม่หัดเลี้ยง</h5>
+            </Col>
+            <Col>
+              <Container>
+                <div>รับฝากมาแล้ว x ตัว</div>
+                <div style={{ wordWrap: "break-word" }}>รวม x ชั่วโมง</div>
+                <Row>
+                  <Col style={{ fontSize: "20px" }}>
+                    ขนาดบริเวณเลี้ยง
+                    <br />
+                    xxx
+                    <br />
+                    ตารางเมตร
+                  </Col>
+                  <br />
+                  <br />
+                  <Col style={{ fontSize: "20px" }}>
+                    คะแนนรีวิว
+                    <br />
+                    xxx/5.0
+                    <br />
+                    <FontAwesomeIcon icon={faBone} size="xs" />
+                  </Col>
+                </Row>
+              </Container>
+            </Col>
+          </Row>
+        </CardHeader>
+        <CardBody>
         <Col style={{ padding: "0px" }}>
-          <Container fluid="sm">
+        <Container fluid="sm">
           <HostGallery />
           <article></article>
-          </Container>
-        </Col>
-        </Row>
+        </Container>
+      </Col>
+        </CardBody>
+        <a href="#" style={{ color: "black" }}>
+          <CardFooter
+            style={{ textAlign: "center", backgroundColor: "#ffbb3cd5" }}
+          >
+            รายละเอียดเพิ่มเติม
+          </CardFooter>
+        </a>
+      </Card>
+
+      {/* ///////////////////////////////collumn ขวา//////////////////////////////////// */}
     </div>
   );
 }

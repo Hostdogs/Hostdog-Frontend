@@ -73,7 +73,7 @@ export default function HostGallery() {
                 style={{width:"100%"}}
             >
                 <img
-                    style={{ objectFit: "contain",width:"100%",height:"50vh",minWidth:"250px" }}
+                    style={{ objectFit: "contain",width:"100%",height:"50vh" }}
                     src={item.src}
                     alt={item.altText}
                     onClick={onImageOpenClick}

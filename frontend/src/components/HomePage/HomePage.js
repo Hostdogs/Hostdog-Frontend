@@ -18,24 +18,21 @@ export default function HomePage() {
 
 
     return (
-        <div >
-
-            {token['mytoken'] ? (<NavbarIsAuth toggleSideBar={toggleSideBar} />) : (<NavbarNoAuth />)}
+        <div>
+            <header style={{ position: "fixed",width:"100%" }}>
+                {token['mytoken'] ? (<NavbarIsAuth toggleSideBar={toggleSideBar} />) : (<NavbarNoAuth />)}
+            </header>
 
             {token['mytoken'] ? (
                 <div>
                     <aside>
-                        
-                        <SideBar isOpen={isOpen}/>
-                        <br/><br/>
+                        <SideBar isOpen={isOpen} />
                         <ContentIsAuth />
                     </aside>
-
-
                 </div>
             ) : (<ContentNoAuth />)}
-            <Footer />
-
+            <Footer/>
+            
         </div>
     )
 }

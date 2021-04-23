@@ -1,20 +1,14 @@
 import React, { useState, useEffect } from "react";
 import {
-  Container,
-  Row,
-  Col,
-  Button,
-  CustomInput,
-  FormGroup,
-  Form,
-  Label,
-  Input,
-  UncontrolledPopover,
-  PopoverBody,
-  InputGroupAddon,
-  InputGroupText,
-  InputGroup,
-  FormFeedback
+    Container,
+    Row,
+    Col,
+    Button,
+    CustomInput,
+    FormGroup,
+    Label,
+    Input,
+    FormText,
 } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {

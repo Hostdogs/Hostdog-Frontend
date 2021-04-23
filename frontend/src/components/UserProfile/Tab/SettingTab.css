@@ -1,0 +1,16 @@
+.btn-secondary{
+    border-color: black;
+}
+
+.input-group-text{
+    display: unset;
+}
+
+.collapsing {
+    position: relative;
+    height: 0;
+    overflow: hidden;
+    -webkit-transition: height .2s ease;
+         -o-transition: height .2s ease;
+            transition: height .2s ease;
+  }

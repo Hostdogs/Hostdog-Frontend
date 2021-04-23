@@ -1,11 +1,16 @@
-import React, { useState } from "react";
+
+
+
+import React from 'react'
 import "./App.css";
-import { BrowserRouter as Router, Route } from "react-router-dom";
-import SignUpPage from "./components/SignUp/SignUpPage";
-import HomePage from "./components/HomePage/HomePage";
-import ServicePage from "./components/ServicePage/ServicePage";
+import {BrowserRouter as Router,Route} from 'react-router-dom';
+import SignUpPage from './components/SignUp/SignUpPage';
+import HomePage from './components/HomePage/HomePage';
+import ProfilePage from './components/UserProfile/ProfilePage';
 
 function App() {
+
+
   return (
     <Router>
       <div className="App">
@@ -13,7 +18,7 @@ function App() {
 
         <Route exact path="/signup" component={SignUpPage} />
 
-        <Route exact path="/service" component={ServicePage} />
+        <Route exact path="/profile" component={ProfilePage} />
       </div>
     </Router>
   );

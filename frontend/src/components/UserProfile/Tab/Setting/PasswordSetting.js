@@ -13,21 +13,25 @@ import {
 } from "reactstrap";
 
 
-export default function MobileSetting({ setSelected, Selected }) {
+export default function PasswordSetting({ setSelected, Selected }) {
+    ////////implement fake password getter/////////////////
+    const [FakeData, setFakeData] = useState({ Password: "kuypholinwza" })
 
-    const [FakeData, setFakeData] = useState({ Name: "สวัสดี", Surname: "ท่านสมาชิก" })
-    const [Name, setName] = useState(FakeData.Name);
-    const [Surname, setSurname] = useState(FakeData.Surname);
+
+    const [oldPassword, setoldPassword] = useState("")
+    const [newPassword, setnewPassword] = useState("")
+    const [confirmPassword, setconfirmPassword] = useState("")
     const Reset = () => {
-        setName(FakeData.Name)
-        setSurname(FakeData.Surname)
+        setoldPassword("")
+        setnewPassword("")
+        setconfirmPassword("")
         setSelected(0)
     }
 
     const infoSet = (e) => {
         e.preventDefault()
-        FakeData.Name = Name
-        FakeData.Surname = Surname
+        FakeData.Password = newPassword
+
         //////////////will implement to refresh page////////////
         setSelected(0)
     }
@@ -37,10 +41,11 @@ export default function MobileSetting({ setSelected, Selected }) {
 
             {/*////////////////////////// Name Setting Part///////////////////////////////*/}
             <a
-                onClick={e => setSelected(1)}
+                onClick={e => setSelected(2)}
                 style={{
+                   
                     padding: "0px",
-                    
+
                 }}
             >
                 <ListGroupItem
@@ -52,7 +57,7 @@ export default function MobileSetting({ setSelected, Selected }) {
                     }}
                 >
                     <h6>
-                        <a>ชื่อ</a> <a style={{ marginLeft: "5%" }}>{FakeData.Name}</a>{" "}
+                        <a>รหัสผ่าน</a>
                         <a style={{ marginLeft: "5px" }}>{FakeData.Surname}</a>
                         <a href="##" style={{ float: "right", color: "black" }}>แก้ไข</a>
 
@@ -61,12 +66,11 @@ export default function MobileSetting({ setSelected, Selected }) {
             </a>
 
 
-            <Collapse isOpen={Selected === 1}>
+            <Collapse isOpen={Selected === 2}>
                 <Form onSubmit={infoSet} >
 
                     <ListGroupItem
                         style={{
-
                             justifyContent: "center"
                         }}
                     >
@@ -77,15 +81,15 @@ export default function MobileSetting({ setSelected, Selected }) {
                                     style={{
                                         backgroundColor: "#f9e07f",
                                         color: "black",
-                                        width: "80px",
+                                        width: "120px",
                                         justifyContent: "center"
                                     }}
                                 >
 
-                                    ชื่อ
+                                    พาสเวิร์ดเดิม
                   </InputGroupText>
                             </InputGroupAddon>
-                            <Input onChange={(e) => setName(e.target.value)} value={Name} style={{ minWidth: "150px", maxWidth: "30vw" }}></Input>
+                            <Input onChange={(e) => setoldPassword(e.target.value)} value={oldPassword} style={{ minWidth: "150px", maxWidth: "30vw" }} type="password"></Input>
                         </InputGroup>
 
                         <InputGroup
@@ -99,14 +103,34 @@ export default function MobileSetting({ setSelected, Selected }) {
                                     style={{
                                         backgroundColor: "#f9e07f",
                                         color: "black",
-                                        width: "80px",
+                                        width: "120px",
                                         justifyContent: "center"
                                     }}
                                 >
-                                    นามสกุล
+                                    พาสเวิร์ดใหม่
                   </InputGroupText>
                             </InputGroupAddon>
-                            <Input onChange={(e) => setSurname(e.target.value)} value={Surname} style={{ minWidth: "150px", maxWidth: "30vw" }}></Input>
+                            <Input onChange={(e) => setnewPassword(e.target.value)} value={newPassword} style={{ minWidth: "150px", maxWidth: "30vw" }} type="password"></Input>
+                        </InputGroup>
+                        <InputGroup
+                            style={{
+                                marginTop: "1%",
+                                justifyContent: "center"
+                            }}
+                        >
+                            <InputGroupAddon addonType="prepend">
+                                <InputGroupText
+                                    style={{
+                                        backgroundColor: "#f9e07f",
+                                        color: "black",
+                                        width: "120px",
+                                        justifyContent: "center"
+                                    }}
+                                >
+                                    พาสเวิร์ดอีกครั้ง
+                  </InputGroupText>
+                            </InputGroupAddon>
+                            <Input onChange={(e) => setconfirmPassword(e.target.value)} value={confirmPassword} style={{ minWidth: "150px", maxWidth: "30vw" }} type="password"></Input>
                         </InputGroup>
 
                         <div style={{ marginTop: "1%", textAlign: "right" }}>

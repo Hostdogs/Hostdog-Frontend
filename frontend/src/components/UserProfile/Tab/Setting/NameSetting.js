@@ -13,7 +13,7 @@ import {
 } from "reactstrap";
 
 
-export default function MobileSetting({ setSelected, Selected }) {
+export default function NameSetting({ setSelected, Selected }) {
 
     const [FakeData, setFakeData] = useState({ Name: "สวัสดี", Surname: "ท่านสมาชิก" })
     const [Name, setName] = useState(FakeData.Name);

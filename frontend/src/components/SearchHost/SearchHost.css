@@ -17,13 +17,12 @@
   max-width: 500px;
 }
 
-.host-container {
-  background: #ffe080;
-
-  /* max-width: 80vw; */
-  /* padding: 10px; */
+/* .host-container {
+  border-color: white;
+  background-color: black;
   border-radius: 5px;
-}
+
+} */
 
 @media only screen and (max-width: 499px) {
   .rdrDateDisplayWrapper {

@@ -1,10 +1,24 @@
 .profilecolumn{
     padding:0px;
     max-width:350px;
-    min-width:300px
+    min-width:250px
 }
+
+
+
+.borderCard{
+    border: 10px solid black;
+}
+
+
 @media only screen and (max-width: 650px) {
     .profilecolumn{
         max-width: 100%;
+    }
+}
+
+@media only screen and (max-width: 800px){
+    .col{
+        flex-basis: auto !important;
     }
 }

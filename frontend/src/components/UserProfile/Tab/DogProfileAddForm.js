@@ -26,6 +26,7 @@ const startDogInfo = {
   dog_status: "",
   dog_bio: "",
 };
+
 export default function DogProfileAddForm() {
   const [modal, setModal] = useState(false);
 
@@ -57,7 +58,6 @@ export default function DogProfileAddForm() {
     console.log(dogInfo);
     setDogInfo(startDogInfo);
     toggle();
-    
   };
 
   return (

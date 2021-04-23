@@ -75,29 +75,69 @@ export default function DogProfileAddForm() {
         <ModalBody>
           <Form>
             <FormGroup>
-              <Label for="exampleEmail">Name</Label>
+              <Label>รูป</Label>
               <Input
-                placeholder="ชื่อสุนัขของคุณ"
+                type="file"
+                name="picture"
+                accept="image/*"
+                value={dogInfo.picture}
+                onChange={onDogInfoChange}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label>ชื่อ</Label>
+              <Input
+                placeholder="ระบุชื่อสุนัข"
                 name="dog_name"
                 value={dogInfo.dog_name}
                 onChange={onDogInfoChange}
               />
             </FormGroup>
             <FormGroup>
-              <Label for="examplePassword">Age</Label>
+              <Label>สายพันธุ์</Label>
               <Input
-                placeholder="อายุ"
+                placeholder="ระบุสายพันธุ์สุนัข"
+                name="dog_breed"
+                value={dogInfo.dog_breed}
+                onChange={onDogInfoChange}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label>เพศ</Label>
+              <Input
+                placeholder="ระบุเพศสุนัข"
+                name="gender"
+                value={dogInfo.gender}
+                onChange={onDogInfoChange}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label>อายุ</Label>
+              <Input
+                placeholder="ระบุอายุสุนัข"
                 name="dog_dob"
                 value={dogInfo.dog_dob}
                 onChange={onDogInfoChange}
               />
             </FormGroup>
             <FormGroup>
-              <Label for="examplePassword">Weight</Label>
+              <Label>น้ำหนัก</Label>
               <Input
-                placeholder="น้ำหนักของสุนัข"
+                type="number"
+                step="0.01"
+                placeholder="ระบุน้ำหนักสุนัข"
                 name="dog_weight"
                 value={dogInfo.dog_weight}
+                onChange={onDogInfoChange}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label>รายละเอียดสุนัข</Label>
+              <Input
+                type="textarea"
+                placeholder="ระบุรายละเอียดสุนัข"
+                name="dog_bio"
+                value={dogInfo.dog_bio}
                 onChange={onDogInfoChange}
               />
             </FormGroup>

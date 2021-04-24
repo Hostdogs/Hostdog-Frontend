@@ -17,12 +17,13 @@ import {useCookies} from 'react-cookie'
 
 export default function SideBar({isOpen}) {
   let history = useHistory()
-  const [cookies,setcookies,removecookies] = useCookies(['mytoken','user_id'])
+  const [cookies,setCookie,removeCookie] = useCookies(['mytoken','user_id'])
 
   const logOut = (e) =>{
     console.log("logging out")
-    removecookies('mytoken')
-    removecookies('user_id')
+    removeCookie('mytoken', { path: '/' })
+    removeCookie('user_id', { path: '/' })
+
     history.push("/")
     history.go(0)
   }
@@ -30,9 +31,9 @@ export default function SideBar({isOpen}) {
     history.push(`/profile/${cookies["user_id"]}`)
     history.go(0)
   }
-  useEffect(() => {
-    console.log("hello",cookies)
-  }, [])
+  // useEffect(() => {
+  //   console.log("hello",cookies)
+  // }, [])
   return (
   
     <div className={classNames("sidebar", { "is-open": isOpen })}>

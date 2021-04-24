@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 import {
   Card,
   CardTitle,
@@ -12,6 +12,10 @@ import {
 } from "reactstrap";
 
 const ProfileCard = ({pageCollapse,Profile,isCustomer}) => {
+  const [img, setimg] = useState("/")
+  useEffect(() => {
+    setimg(Profile.picture)
+  }, [Profile])
   return (
       <Card>
       <CardBody
@@ -27,7 +31,7 @@ const ProfileCard = ({pageCollapse,Profile,isCustomer}) => {
           <div class="panel-body">
             <br/>
             <img
-              src={process.env.PUBLIC_URL + "/user_placeholder.png"}
+              src={img}
               class="img-responsive center-block"
               style={{ borderRadius: "50%", width: "120px", height: "100%" }}
             />

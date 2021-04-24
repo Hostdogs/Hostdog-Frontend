@@ -20,8 +20,7 @@ import axios from "axios";
 import LoginAPI from "./LoginAPI"
 
 const LoginModal = ({buttonLabel,className,MouseOver,MouseLeave}) => {
-  const [token,setToken] = useCookies(['mytoken'])
-  const [userId, setuserId] = useCookies(['user_id'])
+  const [cookies,setCookie,removeCookie] = useCookies(['mytoken','user_id'])
   const [username, setusername] = useState('')
   const [password, setpassword] = useState('')
   const [loginRes, setloginRes] = useState(" ")
@@ -41,8 +40,8 @@ const LoginModal = ({buttonLabel,className,MouseOver,MouseLeave}) => {
       // })
       
       //fake Login///
-      setToken('mytoken',"hellothisisfaketoken")
-      setuserId('user_id',1)
+      setCookie('mytoken',"hellothisisfaketoken")
+      setCookie('user_id',1)
       history.push('/')
       
       

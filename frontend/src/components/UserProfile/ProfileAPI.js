@@ -11,7 +11,8 @@ const testCustomer = {
         date_joined: "2021-04-21",
         last_login: "2021-04-22 21:35:28",
         dob:"2000-11-08",
-        gender:"male"
+        gender:"male",
+        picture:"https://randomuser.me/api/portraits/men/1.jpg"
     }, 2: {
         userid: 2,
         name: "พัทธพล",
@@ -20,7 +21,8 @@ const testCustomer = {
         date_joined: "2021-04-22",
         last_login: "2021-04-22 21:35:28",
         dob:"2000-11-08",
-        gender:""
+        gender:"",
+        picture:"https://randomuser.me/api/portraits/men/55.jpg"
     }
 }
 
@@ -33,7 +35,8 @@ const testHost = {
         date_joined: "2021-04-23",
         last_login: "2021-04-24 21:15:28",
         dob:"1999-02-12",
-        gender:"female"
+        gender:"female",
+        picture:"https://randomuser.me/api/portraits/women/1.jpg"
     }, 4: {
         userid: 4,
         name: "แพทย์ภูมิ",
@@ -42,7 +45,8 @@ const testHost = {
         date_joined: "2021-04-24",
         last_login: "2021-04-24 15:35:20",
         dob:"1996-02-29",
-        gender:"male"
+        gender:"male",
+        picture:"https://randomuser.me/api/portraits/men/5.jpg"
     }
 }
 export default class ProfileAPI {

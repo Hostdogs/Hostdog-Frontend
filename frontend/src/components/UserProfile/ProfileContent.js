@@ -17,12 +17,21 @@ import DogProfileTab from "./Tab/DogProfileTab";
 import MainTab from "./Tab/MainTab";
 import SettingTab from "./Tab/SettingTab";
 
-const ProfileContent = ({setpageCollapse}) => {
+const ProfileContent = ({setpageCollapse,Profile,isOwn}) => {
   const [activeTab, setActiveTab] = useState("1");
-
+  const [Editable, setEditable] = useState(false)
+  
   const toggle = (tab) => {
     if (activeTab !== tab) setActiveTab(tab);
   };
+
+  useEffect(() => {
+    setEditable(isOwn)
+  }, [])
+
+  useEffect(() => {
+    console.log("editable:",Editable)
+  }, [Editable])
 
   useEffect(() => {
     if(activeTab==="1"){

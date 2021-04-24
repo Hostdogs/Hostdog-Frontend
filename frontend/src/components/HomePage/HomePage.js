@@ -12,7 +12,7 @@ export default function HomePage() {
     const [token, setToken, removeToken] = useCookies(['mytoken'])
     const [isOpen, setIsOpen] = useState(false);
     const toggleSideBar = () => {
-        console.log("kb")
+
         setIsOpen(!isOpen)
     }
 

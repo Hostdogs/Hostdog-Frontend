@@ -26,7 +26,10 @@ export default function SideBar({isOpen}) {
     history.push("/")
     history.go(0)
   }
-
+  const yourProfile = (e) =>{
+    history.push(`/profile/${cookies["user_id"]}`)
+    history.go(0)
+  }
   useEffect(() => {
     console.log("hello",cookies)
   }, [])
@@ -42,7 +45,7 @@ export default function SideBar({isOpen}) {
           </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink tag={Link} to={`/profile/${cookies["user_id"]}`} style={{ color: "black" }}>
+            <NavLink tag={Link} onClick={yourProfile} style={{ color: "black" }}>
               <FontAwesomeIcon icon={faUser} className="mr-2" />
             โปรไฟล์
           </NavLink>

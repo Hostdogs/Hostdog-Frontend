@@ -9,14 +9,18 @@ const testCustomer = {
         surname: "สงวนสิริกุล",
         customer_bio: "สวัสดีท่านสมาชิกชมรม",
         date_joined: "2021-04-21",
-        last_login: "2021-04-22 21:35:28"
+        last_login: "2021-04-22 21:35:28",
+        dob:"2000-11-08",
+        gender:"male"
     }, 2: {
         userid: 2,
         name: "พัทธพล",
         surname: "จันทร์ชู",
         customer_bio: "คนชอบผี",
         date_joined: "2021-04-22",
-        last_login: "2021-04-22 21:35:28"
+        last_login: "2021-04-22 21:35:28",
+        dob:"2000-11-08",
+        gender:""
     }
 }
 
@@ -27,14 +31,18 @@ const testHost = {
         surname: "จงวัฒนศิริ",
         host_bio: "เสือก ไม่ร้องนะคับ",
         date_joined: "2021-04-23",
-        last_login: "2021-04-24 21:15:28"
+        last_login: "2021-04-24 21:15:28",
+        dob:"1999-02-12",
+        gender:"female"
     }, 4: {
         userid: 4,
         name: "แพทย์ภูมิ",
         surname: "หาแก้ว",
         host_bio: "เห้ย",
         date_joined: "2021-04-24",
-        last_login: "2021-04-24 15:35:20"
+        last_login: "2021-04-24 15:35:20",
+        dob:"1996-02-29",
+        gender:"male"
     }
 }
 export default class ProfileAPI {

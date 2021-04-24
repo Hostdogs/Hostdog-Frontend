@@ -40,12 +40,15 @@ export default function Host({ host }) {
 
     //   <CardText> วันว่าง:{host.dateAvail}</CardText>
     // </Card>
-    <div className="borderCard">
-      <Card style={{ backgroundColor: "#ffbb3cd5" }}>
-        <CardHeader>
-          <Row>
+    <div>
+      <Card> 
+        <CardHeader style={{backgroundColor:"#f9e07f", borderRadius:"0", color:"#264d59"}}>
+        <h4 style={{position:"absolute", top:"5px", right:"10px"}}>0 กม.</h4>
+        <div style={{position:"absolute", top:"7px", left:"15px"}}>
+        <FreeDay />
+        </div>
+          <Row style={{marginTop:"2%"}}>
             <Col xs="12" sm="12" md="2" lg="2" style={{ textAlign: "center" }}>
-              <FreeDay />
               <img
                 src="holder.js/125x125"
                 class="img-responsive center-block"
@@ -56,7 +59,13 @@ export default function Host({ host }) {
                 }}
               />
             </Col>
-            <Col xs="12" sm="12" md="10" lg="10">
+            <Col
+              xs="12"
+              sm="12"
+              md="10"
+              lg="10"
+              style={{ paddingTop: "2%", textAlign: "center" }}
+            >
               <Row>
                 <Col
                   xs="12"
@@ -65,49 +74,67 @@ export default function Host({ host }) {
                   lg="5"
                   style={{ textAlign: "center" }}
                 >
-                  <h3>
+                  <a className="mobile-br2">
+                          <div style={{paddingTop:"3%"}}> </div>
+                        </a>
+                  <h3 className="fontsizeName">
                     <FontAwesomeIcon
                       icon={faBone}
                       className="mr-2 fa-rotate-135"
                       size="xs"
+                      style={{ transform:"rotate(135deg)", color:"#43978d"}}
                     />
                     {host.hostName}
                   </h3>
-                  <h5>มือใหม่หัดเลี้ยง</h5>
+                  <h5 className="fontsizeLevel">มือใหม่หัดเลี้ยง</h5>
                 </Col>
                 <Col xs="12" sm="12" md="12" lg="7">
                   <Row style={{ justifyContent: "center" }}>
-                    <Col xs="12" md="6" lg="8" style={{ fontSize: "20px" }}>
-                      <div>รับฝากมาแล้ว x ตัว</div>
-                      <div style={{ wordWrap: "break-word" }}>
-                        รวม x ชั่วโมง
+                    <Col xs="12" md="6" lg="8" style={{ fontSize: "18px"}} className="fontsizeDetail">
+                    <a className="mobile-br2">
+                          <div style={{paddingTop:"3%"}}> </div>
+                        </a>
+                      <div>
+                        รับฝากมาแล้ว <b>x ตัว</b>{" "}
+                        <a className="mobile-br">
+                          <br />
+                        </a>
+                        รวม <b>x ชั่วโมง</b>
                       </div>
-                      <div>ขนาดบริเวณเลี้ยง xxx ตารางเมตร</div>
+                      <div>
+                        ขนาดบริเวณเลี้ยง{" "}
+                        <a className="mobile-br">
+                          <br />
+                        </a>
+                        <b>xxx ตารางเมตร</b>
+                      </div>
+                      <a className="mobile-br2">
+                          <br />
+                      </a>
                     </Col>
-                    <Col xs="12" md="3" lg="4" style={{ fontSize: "20px" }}>
-                      คะแนนรีวิว
+                    <Col xs="12" md="3" lg="4" style={{ fontSize: "18px"}} className="fontsizeDetail">
+                      <a style={{fontSize:"20px", color:"#264d59", fontWeight:"bold", backgroundColor:"white", borderRadius:"50%", paddingLeft:"10px",paddingRight:"10px"}}>คะแนนรีวิว</a>
+              
                       <br />
-                      xxx/5.0
-                      <br />
-                      <FontAwesomeIcon icon={faBone} size="xs" />
+                      <FontAwesomeIcon icon={faBone} size="xs"  style={{transform:"rotate(135deg)", color:"#43978d"}}/>
+                      <b> xxx/5.0</b>
                     </Col>
                   </Row>
                 </Col>
-              </Row>
+              </Row>   
             </Col>
           </Row>
         </CardHeader>
-        <CardBody>
+        <CardBody style={{backgroundColor:"#f3f4f5"}}>
           <Col style={{ padding: "0px" }}>
             <Container fluid="sm">
               <HostGallery />
-              <article></article>
             </Container>
           </Col>
         </CardBody>
         <a href="#" style={{ color: "black" }}>
           <CardFooter
-            style={{ textAlign: "center", backgroundColor: "#ffbb3cd5" }}
+            style={{ textAlign: "center", backgroundColor: "#f9e07f",color:"#264d59" }}
           >
             รายละเอียดเพิ่มเติม
           </CardFooter>

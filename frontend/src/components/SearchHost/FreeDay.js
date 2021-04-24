@@ -29,7 +29,7 @@ const ModalExample = (props) => {
           icon={faCalendarAlt}
           size="lg"
           onClick={toggle}
-          style={{ cursor: "pointer" }}
+          style={{ cursor: "pointer"}}
         />
       </Form>
       <Modal

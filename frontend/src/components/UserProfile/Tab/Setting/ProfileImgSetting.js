@@ -27,9 +27,7 @@ export default function ProfileimgPathSetting({ setSelected, Selected }) {
 
         setSelected(0)
     }
-    useEffect(() => {
-        console.log(Image)
-    }, [Image])
+
     const infoSet = (e) => {
         e.preventDefault()
         FakeData.imgPath = imgPath

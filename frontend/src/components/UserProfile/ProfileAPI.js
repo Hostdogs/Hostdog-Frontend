@@ -1,4 +1,5 @@
 import axios from 'axios'
+import moment from 'moment'
 const API_URL = "https://jsonplaceholder.typicode.com/"
 
 const testCustomer = {
@@ -6,22 +7,34 @@ const testCustomer = {
         userid: 1,
         name: "พลพัฒน์",
         surname: "สงวนสิริกุล",
+        customer_bio: "สวัสดีท่านสมาชิกชมรม",
+        date_joined: "2021-04-21",
+        last_login: "2021-04-22 21:35:28"
     }, 2: {
         userid: 2,
         name: "พัทธพล",
         surname: "จันทร์ชู",
+        customer_bio: "คนชอบผี",
+        date_joined: "2021-04-22",
+        last_login: "2021-04-22 21:35:28"
     }
 }
 
 const testHost = {
     3: {
-        userid: 1,
+        userid: 3,
         name: "พลแพท",
         surname: "จงวัฒนศิริ",
+        host_bio: "เสือก ไม่ร้องนะคับ",
+        date_joined: "2021-04-23",
+        last_login: "2021-04-24 21:15:28"
     }, 4: {
-        userid: 2,
+        userid: 4,
         name: "แพทย์ภูมิ",
         surname: "หาแก้ว",
+        host_bio: "เห้ย",
+        date_joined: "2021-04-24",
+        last_login: "2021-04-24 15:35:20"
     }
 }
 export default class ProfileAPI {

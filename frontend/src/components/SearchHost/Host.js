@@ -43,8 +43,8 @@ export default function Host({ host }) {
     <div className="borderCard">
       <Card style={{ backgroundColor: "#ffbb3cd5" }}>
         <CardHeader>
-          <Row style={{ textAlign: "center" }}>
-            <Col xs="12" sm="12" md="2" lg="2">
+          <Row>
+            <Col xs="12" sm="12" md="2" lg="2" style={{ textAlign: "center" }}>
               <FreeDay />
               <img
                 src="holder.js/125x125"
@@ -56,31 +56,42 @@ export default function Host({ host }) {
                 }}
               />
             </Col>
-
-            <Col xs="12" sm="12" md="5" lg="4">
-              <h3>
-                <FontAwesomeIcon
-                  icon={faBone}
-                  className="mr-2 fa-rotate-135"
-                  size="xs"
-                />
-                {host.hostName}
-              </h3>
-              <h5>มือใหม่หัดเลี้ยง</h5>
-            </Col>
-            <Col xs="12" sm="12" md="5" lg="6">
+            <Col xs="12" sm="12" md="10" lg="10">
               <Row>
-                <Col md="12" lg="8" style={{ fontSize: "20px" }}>
-                  <div>รับฝากมาแล้ว x ตัว</div>
-                  <div style={{ wordWrap: "break-word" }}>รวม x ชั่วโมง</div>
-                  <div>ขนาดบริเวณเลี้ยง xxx ตารางเมตร</div>
+                <Col
+                  xs="12"
+                  sm="12"
+                  md="12"
+                  lg="5"
+                  style={{ textAlign: "center" }}
+                >
+                  <h3>
+                    <FontAwesomeIcon
+                      icon={faBone}
+                      className="mr-2 fa-rotate-135"
+                      size="xs"
+                    />
+                    {host.hostName}
+                  </h3>
+                  <h5>มือใหม่หัดเลี้ยง</h5>
                 </Col>
-                <Col md="12" lg="4" style={{ fontSize: "20px" }}>
-                  คะแนนรีวิว
-                  <br />
-                  xxx/5.0
-                  <br />
-                  <FontAwesomeIcon icon={faBone} size="xs" />
+                <Col xs="12" sm="12" md="12" lg="7">
+                  <Row style={{ justifyContent: "center" }}>
+                    <Col xs="12" md="6" lg="8" style={{ fontSize: "20px" }}>
+                      <div>รับฝากมาแล้ว x ตัว</div>
+                      <div style={{ wordWrap: "break-word" }}>
+                        รวม x ชั่วโมง
+                      </div>
+                      <div>ขนาดบริเวณเลี้ยง xxx ตารางเมตร</div>
+                    </Col>
+                    <Col xs="12" md="3" lg="4" style={{ fontSize: "20px" }}>
+                      คะแนนรีวิว
+                      <br />
+                      xxx/5.0
+                      <br />
+                      <FontAwesomeIcon icon={faBone} size="xs" />
+                    </Col>
+                  </Row>
                 </Col>
               </Row>
             </Col>

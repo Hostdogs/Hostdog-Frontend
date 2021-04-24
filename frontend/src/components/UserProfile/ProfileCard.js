@@ -11,7 +11,7 @@ import {
   Collapse
 } from "reactstrap";
 
-const ProfileCard = ({pageCollapse}) => {
+const ProfileCard = ({pageCollapse,Profile}) => {
   return (
       <Card>
       <CardBody
@@ -36,7 +36,7 @@ const ProfileCard = ({pageCollapse}) => {
         </Collapse>
         
         <br />
-        <CardTitle tag="h3">พลอากาศเอกพลพล</CardTitle>
+        <CardTitle tag="h3">{Profile.name}</CardTitle>
         <CardSubtitle tag="h6" className="mb-2 text-muted">
           ผู้ใช้งานทั่วไป
         </CardSubtitle>

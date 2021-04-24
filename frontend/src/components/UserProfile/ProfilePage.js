@@ -6,17 +6,19 @@ import NavbarIsAuth from "../Navbar/NavbarIsAuth";
 import SideBar from "../sidebar/SideBar";
 import ProfileAPI from "./ProfileAPI";
 
-export default function ProfilePage() {
+export default function ProfilePage({match}) {
   const [isOpen, setIsOpen] = useState(false);
+  const [Profile, setProfile] = useState({name:""})
   const toggleSideBar = () => {
     console.log("kb");
     setIsOpen(!isOpen);
   };
 
   useEffect(() => {
-    let path =  window.location.pathname
-    console.log(path)
-    ProfileAPI.fakeProfile(1).then(res=>{
+    const getpath = match.params["profile_id"]
+    
+    ProfileAPI.fakeProfile(getpath).then(res=>{
+      setProfile(res.data)
       console.log(res.data)
     })
   }, [])
@@ -31,8 +33,8 @@ export default function ProfilePage() {
       <SideBar isOpen={isOpen} />
       <div style={{ paddingTop: "50px" }}>
         <Container fluid="md">
-          <ProfileCard pageCollapse={pageCollapse}/>
-          <ProfileContent setpageCollapse={setpageCollapse}/>
+          <ProfileCard pageCollapse={pageCollapse} Profile={Profile}/>
+          <ProfileContent setpageCollapse={setpageCollapse} Profile={Profile}/>
         </Container>
       </div>
     </div>

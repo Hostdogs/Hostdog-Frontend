@@ -16,7 +16,7 @@ function App() {
 
         <Route exact path="/service" component={ServicePage} />
 
-        <Route exact path="/profile" component={ProfilePage} />
+        <Route exact path="/profile/:profile_id" component={ProfilePage} />
       </div>
     </Router>
   );

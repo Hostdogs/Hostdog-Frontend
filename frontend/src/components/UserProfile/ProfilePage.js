@@ -6,11 +6,15 @@ import NavbarIsAuth from "../Navbar/NavbarIsAuth";
 import SideBar from "../sidebar/SideBar";
 import ProfileAPI from "./ProfileAPI";
 import { useCookies } from "react-cookie";
+import NotFound from "../Handle/NotFound";
+import { useHistory } from "react-router";
+
 export default function ProfilePage({ match }) {
+  let history = useHistory();
   const [cookies, setcookies] = useCookies(['mytoken', 'user_id'])
   const [isOpen, setIsOpen] = useState(false);
   const [Profile, setProfile] = useState({ name: "" })
-  const [isOwn, setisOwn] = useState(false)
+  const [isOwned, setisOwned] = useState(false)
   const [isCustomer, setisCustomer] = useState(false)
   let path = match.params["profile_id"]
 
@@ -23,9 +27,9 @@ export default function ProfilePage({ match }) {
   useEffect(() => {
     ProfileAPI.fakeisOwned(path, cookies["user_id"]).then(res => {
       if (res.status === "200") {
-        setisOwn(true)
+        setisOwned(true)
       } else if (res.status === "401") {
-        setisOwn(false)
+        setisOwned(false)
       }
       ProfileAPI.fakeCustomerProfile(path).then(res => {
         setProfile(res)
@@ -38,12 +42,13 @@ export default function ProfilePage({ match }) {
           setisCustomer(false)
         }).catch(error => {
           console.error(error)
+          history.push("/404")
         })
       })
 
     })
 
-
+    
   }, [])
 
   const [pageCollapse, setpageCollapse] = useState(true)
@@ -56,8 +61,8 @@ export default function ProfilePage({ match }) {
       <SideBar isOpen={isOpen} />
       <div style={{ paddingTop: "50px" }}>
         <Container fluid="md">
-          <ProfileCard pageCollapse={pageCollapse} Profile={Profile} />
-          <ProfileContent setpageCollapse={setpageCollapse} Profile={Profile} isOwn={isOwn} />
+          <ProfileCard pageCollapse={pageCollapse} Profile={Profile} isCustomer={isCustomer}/>
+          <ProfileContent setpageCollapse={setpageCollapse} Profile={Profile} isOwned={isOwned} isCustomer={isCustomer}/>
         </Container>
       </div>
     </div>

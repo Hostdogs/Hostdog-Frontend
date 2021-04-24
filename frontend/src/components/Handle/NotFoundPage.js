@@ -6,7 +6,8 @@ import Footer from '../HomePage/Footer';
 import NavbarIsAuth from '../Navbar/NavbarIsAuth';
 import NavbarNoAuth from '../Navbar/NavbarNoAuth';
 import SideBar from '../sidebar/SideBar';
-export default function NotFound() {
+import NotFound from './NotFound'
+export default function NotFoundPage() {
     const [token, setToken, removeToken] = useCookies(['mytoken'])
     const [isOpen, setIsOpen] = useState(false);
     const toggleSideBar = () => {
@@ -25,10 +26,7 @@ export default function NotFound() {
             ) : (null)}
             <br /><br /><br /><br />
             <Container style={{ height: "75vh" }}>
-                <h1>404 - ไม่พบหน้านี้!</h1>
-                <Link to="/">
-                    กลับสู่หน้าแรก
-                </Link>
+                <NotFound/>
             </Container>
 
             <Footer />

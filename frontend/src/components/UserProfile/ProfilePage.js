@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import ProfileContent from "./ProfileContent";
 import ProfileCard from "./ProfileCard";
 import { Row, Col, Container } from "reactstrap";
 import NavbarIsAuth from "../Navbar/NavbarIsAuth";
 import SideBar from "../sidebar/SideBar";
+import ProfileAPI from "./ProfileAPI";
 
 export default function ProfilePage() {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,6 +12,15 @@ export default function ProfilePage() {
     console.log("kb");
     setIsOpen(!isOpen);
   };
+
+  useEffect(() => {
+    let path =  window.location.pathname
+    console.log(path)
+    ProfileAPI.fakeProfile(1).then(res=>{
+      console.log(res.data)
+    })
+  }, [])
+
   const [pageCollapse, setpageCollapse] = useState(true)
   return (
     <div>

@@ -12,11 +12,15 @@ import { NavItem, NavLink, Nav } from "reactstrap";
 import classNames from "classnames";
 import { Link } from "react-router-dom";
 import "./SideBar.css"
-
-
+import {useCookies} from 'react-cookie'
+import {Redirect} from "react-router-dom"
 
 export default function SideBar({isOpen}) {
-
+  const [cookies, setCookie, removeCookie] = useCookies(["mytoken"]);
+  const Logout = () =>{
+    removeCookie("mytoken")
+    window.location.reload()
+  }
   return (
   
     <div className={classNames("sidebar", { "is-open": isOpen })}>
@@ -57,7 +61,7 @@ export default function SideBar({isOpen}) {
           </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink tag={Link} to={"/ออกจากระบบ"} style={{ color: "black" }}>
+            <NavLink tag={Link} onClick={Logout} style={{ color: "black" }}>
               <FontAwesomeIcon icon={faSignOutAlt} className="mr-2" />
             ออกจากระบบ
           </NavLink>

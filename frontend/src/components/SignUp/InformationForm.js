@@ -167,6 +167,13 @@ export default function InformationForm({ selectState }) {
   const [geocode, setGeoCode] = useState({ lat: 13.729025, lng: 100.775613 });
 
   const [userAddress, setUserAddress] = useState("");
+ 
+
+  const loadScript= {
+    googleAPIKey: "AIzaSyBWV06MM0QFyVnkuA1nHJhQ4altZjovYNs",
+    language: "th",
+    libraries: ["places"],
+  };
 
   const getCurrentLocation = () => {
     if (navigator.geolocation) {

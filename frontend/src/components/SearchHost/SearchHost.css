@@ -1,57 +1,49 @@
+.search-container {
+  display: flex;
 
+  flex-direction: column;
+  align-items: center;
+  object-fit: contain;
+  justify-content: center;
 
-.search-container{
-max-width: 100vw;
-
-display: flex; 
-
- flex-direction: column;
-align-items: center;
-object-fit: contain;
-justify-content: center;
-
-padding-top: 20px;
+  width: 80vw;
 }
 
-.textlocation{
-
-min-width:45vw;
-
+.textlocation {
+  min-width: 45vw;
 }
-.map-container{
+.map-container {
+  margin: 10px auto;
+  max-width: 500px;
+}
+
+/* .host-container {
+  border-color: white;
+  background-color: black;
+  border-radius: 5px;
+
+} */
+
+@media only screen and (max-width: 499px) {
+  .rdrDateDisplayWrapper {
+    width: 100% !important;
+  }
+  .rdrMonthAndYearWrapper {
+    width: 100% !important;
+  }
+  .rdrCalendarWrapper,
+  .rdrDateRangeWrapper,
+  .rdrMonth,
+  .rdr.NextButton {
+    width: 100% !important;
+  }
+  .FontSize{
+      font-size: calc(1.5rem + 3vw);
+  }
+
+
+  .rdrNextPrevButton {
+    display: none !important;
+  }
   
-    margin:10px auto;
-    max-width: 100vw;
-
-    display: flex; 
-    flex-direction: column;
-   align-items: center;
-   object-fit: contain;
-   justify-content: center;
-
-
-}
-.daterangepick{
-    width:100%;
-}
-.datecollapse{
-
-   width:100%;
-
-}
-.host-container{
-  
-background:#ffe080;
-
-max-width:80vw;
-padding: 5px;
-border-radius: 5px;
-
-
-
-}
-
-.host{
-
- margin:10px;
 }

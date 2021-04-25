@@ -13,7 +13,6 @@ export default function GoogleMapLocation({handleDragEnd ,currentGeoCode}) {
 
     return (
         <div>
-   
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={currentGeoCode}

@@ -36,7 +36,7 @@ const NavbarNoAuth = (props) => {
 
   return (
     <div>
-      <Navbar style={{ backgroundColor: "#f9e07f", position: "fixed", width: "100%", zIndex: "3" }} light expand="md">
+      <Navbar style={{ backgroundColor: "#f9e07f", position: "fixed", width: "100%", zIndex: "20" ,height:"70px"}} light expand="md">
         <Link to="/">
           <NavbarBrand>
             <h3 style={{ color: "#264d59", margin: "5%" }}>HOSTDOG</h3>

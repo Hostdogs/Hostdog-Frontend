@@ -11,10 +11,10 @@ import {
   Input,
   Row,
   Col,
+  CustomInput,
 } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-
 const startDogInfo = {
   customer: "",
   picture: null,
@@ -26,39 +26,51 @@ const startDogInfo = {
   dog_status: "",
   dog_bio: "",
 };
+
 export default function DogProfileAddForm() {
   const [modal, setModal] = useState(false);
+  const [nestedModal, setNestedModal] = useState(false);
+  const [closeAll, setCloseAll] = useState(false);
+  const [dogInfo, setDogInfo] = useState(startDogInfo);
 
   const toggle = () => setModal(!modal);
-  // console.log({name,age,weight});
-  const [dogInfo, setDogInfo] = useState({
-    customer: "",
-    picture: null,
-    dog_name: "",
-    gender: "",
-    dog_dob: "",
-    dog_breed: "",
-    dog_weight: "",
-    dog_status: "",
-    dog_bio: "",
-  });
+  const toggleNested = () => {
+    setNestedModal(!nestedModal);
+    setCloseAll(false);
+  };
+  const toggleAll = () => {
+    setNestedModal(!nestedModal);
+    setCloseAll(true);
+    setDogInfo(startDogInfo);
+  };
 
   function onDogInfoChange(event) {
     const { name, value } = event.target;
     setDogInfo((prevDogInfo) => {
       return {
         ...prevDogInfo,
-        [name]: value,
+        [name]: changeValue(name, value),
       };
     });
   }
 
-  const handleSubmit = () => {
-    console.log(dogInfo);
+  const onDogSubmit = (event) => {
+    event.preventDefault();
     setDogInfo(startDogInfo);
     toggle();
-    
   };
+
+  function changeValue(name, value) {
+    if (value === "true" || value === true) {
+      return true;
+    } else if (value === "false" || value === false) {
+      return false;
+    } else if (!isNaN(value)) {
+      return Number(value);
+    } else {
+      return value;
+    }
+  }
 
   return (
     <div>
@@ -70,45 +82,129 @@ export default function DogProfileAddForm() {
         </Col>
       </Row>
 
-      <Modal isOpen={modal} toggle={toggle}>
-        <ModalHeader toggle={toggle}>กรอกโปรไฟล์สุนัข</ModalHeader>
+      <Modal isOpen={modal} toggle={toggleNested}>
+        <ModalHeader toggle={toggleNested}>กรอกโปรไฟล์สุนัข</ModalHeader>
         <ModalBody>
           <Form>
             <FormGroup>
-              <Label for="exampleEmail">Name</Label>
+              <Label>รูป</Label>
               <Input
-                placeholder="ชื่อสุนัขของคุณ"
+                type="file"
+                name="picture"
+                accept="image/*"
+                value={dogInfo.picture}
+                onChange={onDogInfoChange}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label>ชื่อ</Label>
+              <Input
+                placeholder="ระบุชื่อสุนัข"
                 name="dog_name"
                 value={dogInfo.dog_name}
                 onChange={onDogInfoChange}
               />
             </FormGroup>
             <FormGroup>
-              <Label for="examplePassword">Age</Label>
+              <Label>สายพันธุ์</Label>
               <Input
-                placeholder="อายุ"
-                name="dog_dob"
-                value={dogInfo.dog_dob}
+                placeholder="ระบุสายพันธุ์สุนัข"
+                name="dog_breed"
+                value={dogInfo.dog_breed}
                 onChange={onDogInfoChange}
               />
             </FormGroup>
             <FormGroup>
-              <Label for="examplePassword">Weight</Label>
+              <Label>เพศ</Label>
+              <Row>
+                <Col xs="5" md="4">
+                  <CustomInput
+                    type="radio"
+                    id="exampleCustomRadio"
+                    name="gender"
+                    label="เพศผู้"
+                    onChange={onDogInfoChange}
+                    value="Male"
+                  />
+                </Col>
+                <Col xs="5" md="4">
+                  <CustomInput
+                    type="radio"
+                    id="exampleCustomRadio2"
+                    name="gender"
+                    label="เพศเมีย"
+                    onChange={onDogInfoChange}
+                    value="Female"
+                  />
+                </Col>
+              </Row>
+            </FormGroup>
+            <FormGroup>
+              <FormGroup>
+                <Label>วันเกิด</Label>
+                <Input
+                  type="date"
+                  name="dog_dob"
+                  value={dogInfo.dog_dob}
+                  onChange={onDogInfoChange}
+                />
+              </FormGroup>
+              {/* <Label>อายุ</Label>
               <Input
-                placeholder="น้ำหนักของสุนัข"
+                type="number"
+                step="0.1"
+                placeholder="ระบุอายุสุนัข"
+                name="dog_dob"
+                value={dogInfo.dog_dob}
+                onChange={onDogInfoChange}
+              /> */}
+            </FormGroup>
+
+            <FormGroup>
+              <Label>น้ำหนัก</Label>
+              <Input
+                type="number"
+                step="0.1"
+                placeholder="ระบุน้ำหนักสุนัข"
                 name="dog_weight"
                 value={dogInfo.dog_weight}
                 onChange={onDogInfoChange}
               />
             </FormGroup>
+            <FormGroup>
+              <Label>รายละเอียดสุนัข</Label>
+              <Input
+                type="textarea"
+                placeholder="ระบุรายละเอียดสุนัข"
+                name="dog_bio"
+                value={dogInfo.dog_bio}
+                onChange={onDogInfoChange}
+              />
+            </FormGroup>
           </Form>
+          <Modal
+            isOpen={nestedModal}
+            toggle={toggleNested}
+            onClosed={closeAll ? toggle : undefined}
+          >
+            <ModalHeader>คุณต้องการออกหรือไม่</ModalHeader>
+            <ModalBody>คุณต้องการออกหรือไม่</ModalBody>
+            <ModalFooter>
+              <Button color="primary" onClick={toggleAll}>
+                ยืนยัน
+              </Button>{" "}
+              <Button color="secondary" onClick={toggleNested}>
+                ยกเลิก
+              </Button>
+            </ModalFooter>
+          </Modal>
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={handleSubmit}>
-            Submit
+          <Button color="primary" onClick={onDogSubmit}>
+            ยืนยัน
           </Button>{" "}
-          <Button color="secondary" onClick={toggle}>
-            Cancel
+          <Button color="secondary" onClick={toggleNested}>
+            ยกเลิก
           </Button>
         </ModalFooter>
       </Modal>

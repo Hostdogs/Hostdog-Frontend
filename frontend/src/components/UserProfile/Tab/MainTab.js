@@ -1,22 +1,45 @@
-import React,{useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import { CardFooter, CardText, CardTitle, Alert, Container, Label, Input, Button } from 'reactstrap'
+import moment from 'moment-timezone'
+import 'moment/locale/th';
+const MainTab = ({ isOwned, isCustomer,Profile }) => {
+ 
+  const [Description, setDescription] = useState("")
+  const [dateJoin, setdateJoin] = useState("")
+  const [lastLogin, setlastLogin] = useState("")
+  const [age, setage] = useState("")
+  const [gender, setgender] = useState("")
 
-const MainTab = () => {
-  const [Description, setDescription] = useState("aliquam purus sit amet luctus venenatis lectus magna fringilla urna porttitor rhoncus dolor purus non enim praesent elementum facilisis leo vel fringilla est ullamcorper eget nulla facilisi etiam dignissim diam quis enim lobortis scelerisque fermentum dui faucibus in ornare quam viverra orci sagittis eu volutpat odio facilisis mauris sit amet massa vitae tortor condimentum lacinia quis vel eros donec ac odio tempor orci dapibus ultrices in iaculis nunc sed augue lacus viverra vitae congue eu consequat ac felis donec et odio pellentesque diam volutpat commodo sed egestas egestas fringilla phasellus faucibus scelerisque eleifend donec pretium vulputate sapien nec sagittis aliquam malesuada bibendum arcu vitae elementum curabitur vitae nunc sed velit dignissim sodales ut eu sem integer vitae justo eget magna fermentum iaculis eu non diam phasellus vestibulum lorem sed risus ultricies tristique nulla aliquet enim tortor at auctor urna nunc id cursus metus aliquam eleifend mi in nulla posuere sollicitudin aliquam ultrices sagittis orci a scelerisque purus semper eget duis at tellus at urna condimentum mattis pellentesque id nibh tortor id aliquet lectus proin nibh nisl condimentum id venenatis a condimentum vitae sapien pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas sed tempus urna et pharetra pharetra massa massa ultricies mi quis hendrerit dolor magna eget est lorem ipsum dolor sit amet consectetur adipiscing elit pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas integer eget aliquet nibh praesent tristique magna sit amet purus gravida quis blandit turpis cursus in hac habitasse platea dictumst quisque sagittis")
-  const [editable, seteditable] = useState(true)
-  const [dogOwn, setdogOwn] = useState(0)
-  const editDescription = (e) =>{
-    if(editable){
+  const editDescription = (e) => {
+    if (isOwned) {
       setDescription(e.target.value)
     }
   }
-  // const handleFocusDescription = () =>{
-  //   setbtnShow(true)
-  // }
-  // const handleBlurDescription = () =>{
-  //   setbtnShow(false)
-  // }
-  const onSetDescription = () =>{
+  
+  useEffect(() => {
+    moment.updateLocale("th")
+
+    console.log("ingerit profile",Profile,moment.locale())
+    if(isCustomer){
+      setDescription(Profile.customer_bio)
+    }else{
+      setDescription(Profile.host_bio)
+    }
+    if(Profile.gender==="male"){
+      setgender("ชาย")
+    }else if(Profile.gender==="female"){
+      setgender("หญิง")
+    }else{
+      setgender("ไม่ระบุ")
+    }
+    setage(moment().diff(moment(Profile.dob),"years"))
+    setdateJoin(moment(Profile.date_joined).format("L"))
+    setlastLogin(moment(Profile.last_login).fromNow())
+    // console.log(moment(new Date("2021-04-20 22:57:36")).format("YYYY-MM-DD HH:mm:ss"))
+    // console.log(moment().fromNow())
+  }, [isOwned, isCustomer,Profile])
+
+  const onSetDescription = () => {
     console.log(Description)
     ////////////function => post to backend////////
   }
@@ -28,24 +51,37 @@ const MainTab = () => {
         <br />
         <CardText style={{ textAlign: "left" }}>
           <CardTitle tag="h5">รายละเอียด</CardTitle>
-          <ul>
-            <li>เริ่มใช้งานตั้งแต่ 31/02/64</li>
-            <li>ออนไลน์ล่าสุด x ช.ม.</li>
-            <li>มีสุนัขทั้งหมด {dogOwn} ตัว</li>
-          </ul>
+          {isCustomer ? (
+            <ul>
+              <li>เพศ {gender} อายุ {age} ปี</li>
+              <li>มีสุนัขในโปรไฟล์ 0 ตัว</li>
+              <li>เริ่มใช้งานเมื่อวันที่ {dateJoin}</li>
+              <li>ออนไลน์ล่าสุด {lastLogin}</li>
+              
+            </ul>
+          ) : (
+            <ul>
+              <li>เพศ {gender} อายุ {age} ปี</li>
+              <li>รับเลี้ยงสุนัขมาแล้ว 0 ตัว</li>
+              <li>เริ่มใช้งานตั้งแต่ {dateJoin}</li>
+              <li>ออนไลน์ล่าสุด {lastLogin}</li>
+              
+            </ul>
+          )}
+
           <CardTitle tag="h5">คำอธิบาย</CardTitle>
-          <Container style={{paddingLeft:"20px",paddingRight:"20px"}} >
-            <Input type="textarea" style={{maxWidth:"100%",overflowWrap:"break-word",height:"50vh"}} value={Description} 
-            onChange={
-              editDescription
+          <Container style={{ paddingLeft: "20px", paddingRight: "20px" }} >
+            <Input type="textarea" style={{ maxWidth: "100%", overflowWrap: "break-word", height: "50vh" }} value={Description}
+              onChange={
+                editDescription
               } />
-            {editable? (
+            {isOwned ? (
               <Button onClick={onSetDescription} >แก้ไข</Button>
-            ):(null)}
+            ) : (null)}
             {/* style={{position:"relative",top:"-40px",float:"right",marginRight:"15px",marginTop:"-5px",backgroundColor:"rgba(212,108,78,0.75)",borderWidth:"0px",color:"#264d59"}} */}
-              
-           
-              
+
+
+
           </Container>
         </CardText>
       </CardFooter>

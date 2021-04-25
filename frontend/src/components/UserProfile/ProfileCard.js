@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 import {
   Card,
   CardTitle,
@@ -11,7 +11,11 @@ import {
   Collapse
 } from "reactstrap";
 
-const ProfileCard = ({pageCollapse}) => {
+const ProfileCard = ({pageCollapse,Profile,isCustomer}) => {
+  const [img, setimg] = useState("/")
+  useEffect(() => {
+    setimg(Profile.picture)
+  }, [Profile])
   return (
       <Card>
       <CardBody
@@ -27,7 +31,7 @@ const ProfileCard = ({pageCollapse}) => {
           <div class="panel-body">
             <br/>
             <img
-              src={process.env.PUBLIC_URL + "/user_placeholder.png"}
+              src={img}
               class="img-responsive center-block"
               style={{ borderRadius: "50%", width: "120px", height: "100%" }}
             />
@@ -36,9 +40,9 @@ const ProfileCard = ({pageCollapse}) => {
         </Collapse>
         
         <br />
-        <CardTitle tag="h3">พลอากาศเอกพลพล</CardTitle>
+        <CardTitle tag="h3">{Profile.name} {Profile.surname}</CardTitle>
         <CardSubtitle tag="h6" className="mb-2 text-muted">
-          ผู้ใช้งานทั่วไป
+          {isCustomer ? (<>ผู้ฝากสุนัข</>):(<>ผู้รับเลี้ยงสุนัข</>)} 
         </CardSubtitle>
         <Collapse isOpen={pageCollapse}>
           <br/>

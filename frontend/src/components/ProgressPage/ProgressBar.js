@@ -19,13 +19,15 @@ const gif = [
   "/bye.gif",
   "/sad.gif",
 ];
-export default function ProgressBar({progressValue,colorIndex,labelIndex,gifIndex,handleProgress}) {
-
-
-
+export default function ProgressBar({
+  progressValue,
+  colorIndex,
+  labelIndex,
+  gifIndex,
+  handleProgress,
+}) {
   return (
     <div>
-      <br />
       <br />
       <br />
       <br />
@@ -36,10 +38,13 @@ export default function ProgressBar({progressValue,colorIndex,labelIndex,gifInde
           width="40%"
           height="40%"
         />
+        <br/>
+        <h2>{progressValue / 20}/5</h2>
 
-        <Progress color={color[colorIndex]} value={progressValue} />
+        <Progress animated color={color[colorIndex]} value={progressValue}>
+        {progressValue}%
+        </Progress>
       </Container>
-
 
       <Button
         onClick={handleProgress}
@@ -47,6 +52,7 @@ export default function ProgressBar({progressValue,colorIndex,labelIndex,gifInde
       >
         Progress
       </Button>
+
     </div>
   );
 }

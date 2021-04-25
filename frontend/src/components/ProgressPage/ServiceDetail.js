@@ -21,7 +21,6 @@ export default function ServiceDetail({ onCancel }) {
         <Button onClick={onCancel} color="danger">
           ยกเลิกบริการ
         </Button>
-
       </Container>
     </div>
   );

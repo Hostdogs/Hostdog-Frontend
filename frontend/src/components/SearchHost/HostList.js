@@ -8,9 +8,11 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
+  Spinner
 } from "reactstrap";
 import { useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
+
 export default function HostList() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -74,14 +76,15 @@ export default function HostList() {
         dataLength={hostData.length}
         next={fetchMoreData}
         hasMore={hasMore}
-        loader={<h4 style={{ textAlign: "center" }}>Loading...</h4>}
+        loader={<h4 style={{ textAlign: "center" }}> Loading..</h4>}
         endMessage={
           <p style={{ textAlign: "center" }}>
             <b>หมดแล้วครับ</b>
           </p>
         }
+        style={{overflowX:"hidden"}}
       >
-        <Container className="host-container" fluid="xl">
+        <Container className="host-container" fluid="xl" >
           <Dropdown isOpen={dropdownOpen} toggle={toggle}>
             <DropdownToggle caret>เรียงตามลำดับ</DropdownToggle>
             <DropdownMenu>

@@ -10,7 +10,7 @@ export default function ServiceDetail({ onCancel }) {
   });
   return (
     <div>
-      <br />
+      {/* <br />
       <br />
       <Container className="detail-container">
         <h3> รายละเอียดการบริการ</h3>
@@ -21,7 +21,19 @@ export default function ServiceDetail({ onCancel }) {
         <Button onClick={onCancel} color="danger">
           ยกเลิกบริการ
         </Button>
-      </Container>
+      </Container> */}
+
+      <div class="wrap">
+        <label>รายละเอียดการบริการ</label>
+        <legend>
+          <p style={{marginTop:"3%"}}>ผู้รับฝาก: {detail.host}</p>
+          <p>สุนัข:{detail.dog}</p>
+          <p>ระยะเวลาที่ฝาก: {detail.duration} </p>
+          <Button onClick={onCancel} color="danger" style={{textAlign:"right"}}>
+            ยกเลิกบริการ
+          </Button>
+        </legend>
+      </div>
     </div>
   );
 }

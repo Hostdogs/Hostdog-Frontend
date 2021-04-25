@@ -32,11 +32,12 @@ export default function ProgressBar({
       <br />
       <br />
       <Container className="progressbar-container">
-        <h2>{progressLabel[labelIndex]}</h2>
+        <h2 style={{color:"#264d59"}}>{progressLabel[labelIndex]}</h2>
         <img
           src={process.env.PUBLIC_URL + gif[gifIndex]}
-          width="40%"
-          height="40%"
+          width="300px"
+          height="300px"
+          style={{borderRadius:"50%", border:"10px solid white", backgroundColor:"white"}}
         />
         <br/>
         <h2>{progressValue / 20}/5</h2>

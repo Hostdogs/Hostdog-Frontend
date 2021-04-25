@@ -6,8 +6,14 @@ export default class APIDog {
     const url = `${API_URL}${dog_id}/`;
     return axios.put(url, body);
   }
+
   static AddDog(body) {
     const url = API_URL;
     return axios.post(url, body);
+  }
+
+  static DeleteDog(dog_id) {
+    const url = `${API_URL}${dog_id}/`;
+    return axios.delete(url);
   }
 }

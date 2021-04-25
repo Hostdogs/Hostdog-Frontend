@@ -13,6 +13,7 @@ import {
   ButtonGroup,
 } from "reactstrap";
 import DogProfileEditForm from "./DogProfileEditForm";
+import APIDog from "./APIDog";
 
 export default function DogProfileList(props) {
   const { dogInfos } = props;
@@ -20,6 +21,10 @@ export default function DogProfileList(props) {
   const updateDogInfo = (dogInfo) => {
     console.log(dogInfo);
     props.updateDogInfo(dogInfo);
+  };
+
+  const deleteDogInfo = (dogInfo) => {
+    APIDog.DeleteDog(dogInfo.id).then(() => props.deleteDogInfo(dogInfo));
   };
 
   const dogElements = dogInfos.map((dogInfo) => {
@@ -46,7 +51,7 @@ export default function DogProfileList(props) {
                     updateDogInfo={updateDogInfo}
                   />
                 </ButtonGroup>
-                <Button>ลบ</Button>
+                <Button onClick={() => deleteDogInfo(dogInfo)}>ลบ</Button>
               </CardBody>
             </Col>
           </Row>

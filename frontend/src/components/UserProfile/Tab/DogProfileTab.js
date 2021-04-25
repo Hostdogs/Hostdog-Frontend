@@ -40,13 +40,25 @@ export default function DogProfileTab() {
     setDogInfos(new_dogInfos);
   };
 
+  const deleteDogInfo = (dogInfo) => {
+    const new_dogInfos = dogInfos.filter((myDogInfo) => {
+      return myDogInfo.id !== dogInfo.id;
+    });
+
+    setDogInfos(new_dogInfos);
+  };
+
   return (
     <div>
       <ButtonGroup style={{ marginTop: "9px" }}>
         <DogProfileAddForm labelBtn="เพิ่มสุนัข" addDogInfo={addDogInfo} />
       </ButtonGroup>
       <hr />
-      <DogProfileList dogInfos={dogInfos} updateDogInfo={updateDogInfo} />
+      <DogProfileList
+        dogInfos={dogInfos}
+        updateDogInfo={updateDogInfo}
+        deleteDogInfo={deleteDogInfo}
+      />
     </div>
   );
 }

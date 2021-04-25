@@ -15,6 +15,8 @@ import {
 } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import APIDog from "./APIDog";
+
 const startDogInfo = {
   customer: "",
   picture: null,
@@ -57,6 +59,8 @@ export default function DogProfileAddForm(props) {
 
   const onDogSubmit = (event) => {
     event.preventDefault();
+    dogInfo.customer = 1; //test
+    APIDog.AddDog(dogInfo).then((resp) => props.addDogInfo(resp.data));
     setDogInfo(startDogInfo);
     toggle();
   };
@@ -66,7 +70,7 @@ export default function DogProfileAddForm(props) {
       return true;
     } else if (value === "false" || value === false) {
       return false;
-    } else if (!isNaN(value)) {
+    } else if (!isNaN(value) && name !== "dog_bio") {
       return Number(value);
     } else {
       return value;

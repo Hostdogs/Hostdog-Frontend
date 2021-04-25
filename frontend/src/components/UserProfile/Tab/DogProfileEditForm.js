@@ -70,7 +70,7 @@ export default function DogProfileEditForm(props) {
       return true;
     } else if (value === "false" || value === false) {
       return false;
-    } else if (!isNaN(value)) {
+    } else if (!isNaN(value) && name !== "dog_bio") {
       return Number(value);
     } else {
       return value;

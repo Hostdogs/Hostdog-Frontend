@@ -10,15 +10,14 @@ import {
 } from "reactstrap";
 import DogProfileAddForm from "./DogProfileAddForm";
 import DogProfileList from "./DogProfileList";
+import axios from "axios";
 
 export default function DogProfileTab() {
   const [dogInfos, setDogInfos] = useState([]);
 
   async function getDogs() {
-    const resp = await fetch("http://127.0.0.1:8000/api/dogs/");
-    const json = await resp.json();
-    console.log(json);
-    setDogInfos(json);
+    const resp = await axios.get("http://127.0.0.1:8000/api/dogs/");
+    setDogInfos(resp.data);
   }
   useEffect(() => {
     getDogs();
@@ -35,10 +34,16 @@ export default function DogProfileTab() {
     setDogInfos(new_dogInfo);
   };
 
+  const addDogInfo = (dogInfo) => {
+    console.log(dogInfo);
+    const new_dogInfos = [...dogInfos, dogInfo];
+    setDogInfos(new_dogInfos);
+  };
+
   return (
     <div>
       <ButtonGroup style={{ marginTop: "9px" }}>
-        <DogProfileAddForm labelBtn="เพิ่มสุนัข" />
+        <DogProfileAddForm labelBtn="เพิ่มสุนัข" addDogInfo={addDogInfo} />
       </ButtonGroup>
       <hr />
       <DogProfileList dogInfos={dogInfos} updateDogInfo={updateDogInfo} />

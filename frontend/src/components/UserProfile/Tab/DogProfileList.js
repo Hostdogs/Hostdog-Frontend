@@ -28,11 +28,7 @@ export default function DogProfileList(props) {
         <Card>
           <Row>
             <Col xs="12" sm="4" md="4">
-              <CardImg
-                width="100%"
-                src={dogInfo.picture}
-                alt="Card image cap"
-              />
+              <CardImg width="100%" src={dogInfo.picture} />
             </Col>
             <Col xs="12" sm="8" md="8">
               <CardBody>

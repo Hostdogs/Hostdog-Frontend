@@ -27,7 +27,8 @@ const startDogInfo = {
   dog_bio: "",
 };
 
-export default function DogProfileAddForm() {
+export default function DogProfileAddForm(props) {
+  const { labelBtn } = props;
   const [modal, setModal] = useState(false);
   const [nestedModal, setNestedModal] = useState(false);
   const [closeAll, setCloseAll] = useState(false);
@@ -77,7 +78,7 @@ export default function DogProfileAddForm() {
       <Row>
         <Col xs="12">
           <Button color="warning" onClick={toggle}>
-            <FontAwesomeIcon icon={faPlus} /> เพิ่มสุนัข
+            <FontAwesomeIcon icon={faPlus} /> {labelBtn}
           </Button>
         </Col>
       </Row>
@@ -124,7 +125,7 @@ export default function DogProfileAddForm() {
                     name="gender"
                     label="เพศผู้"
                     onChange={onDogInfoChange}
-                    value="Male"
+                    value="male"
                   />
                 </Col>
                 <Col xs="5" md="4">
@@ -134,7 +135,7 @@ export default function DogProfileAddForm() {
                     name="gender"
                     label="เพศเมีย"
                     onChange={onDogInfoChange}
-                    value="Female"
+                    value="female"
                   />
                 </Col>
               </Row>

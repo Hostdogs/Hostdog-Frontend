@@ -140,8 +140,6 @@ export default function Host({ host }) {
           </CardFooter>
         </a>
       </Card>
-
-      {/* ///////////////////////////////collumn ขวา//////////////////////////////////// */}
     </div>
   );
 }

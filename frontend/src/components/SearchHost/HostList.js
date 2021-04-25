@@ -76,7 +76,7 @@ export default function HostList() {
         dataLength={hostData.length}
         next={fetchMoreData}
         hasMore={hasMore}
-        loader={<h4 style={{ textAlign: "center" }}> Loading..</h4>}
+        loader={<h4 style={{ textAlign: "center" }}> <Spinner size="lg" color="black" /></h4>}
         endMessage={
           <p style={{ textAlign: "center" }}>
             <b>หมดแล้วครับ</b>

@@ -72,7 +72,7 @@ export default function FilterOptionPane({ isOpenPane }) {
       <Container style={{}}>
         <Card style={{borderColor:"#ffe080", borderWidth:"10px"}}>
           <CardBody>
-            <h1 className="FontSize">ค้นหาผู้รับฝาก</h1>
+            <h1 className="FontSize" style={{marginLeft:"5%"}}>ค้นหาผู้รับฝาก</h1>
             <hr style={{ borderWidth: "3px", borderColor:"#ffe080", width:"90%",textAlign:"left" }} />
             <br/>
             <Container style={{ paddingLeft: "10%", paddingRight: "10%" }}>

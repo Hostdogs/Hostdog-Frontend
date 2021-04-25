@@ -17,45 +17,36 @@ import HostGallery from "./HostGallery";
 import "./Host.css";
 import FreeDay from "./FreeDay";
 import "holderjs";
+import { useEffect, useState } from "react";
 
 export default function Host({ host }) {
+  const [displace, setdisplace] = useState("")
+  useEffect(() => {
+    if(host.displace>=1000){
+      setdisplace(host.displace/1000+" km")
+    }else{
+      setdisplace(host.displace+" m")
+    }
+  }, [host])
   return (
-    // <Card
-    //   body
-    //   outline
-    //   color="warning"
-    //   className="host"
-    //   style={{
-    //     background: "#fff3d0",
-    //     height: "60vh",
-    //     margin:"5px 0px",
-    //   }}
-    // >
-    //   <CardTitle tag="h5">
-    //     {" "}
-    //     {host.hostName}
-    //     {"     "}
-    //     {host.distancefromCus}
-    //   </CardTitle>
-
-    //   <CardText> วันว่าง:{host.dateAvail}</CardText>
-    // </Card>
+    
     <div>
       <Card> 
         <CardHeader style={{backgroundColor:"#f9e07f", borderRadius:"0", color:"#264d59"}}>
-        <h4 style={{position:"absolute", top:"5px", right:"10px"}}>0 กม.</h4>
+        <h4 style={{position:"absolute", top:"5px", right:"10px"}}>{displace}</h4>
         <div style={{position:"absolute", top:"7px", left:"15px"}}>
         <FreeDay />
         </div>
           <Row style={{marginTop:"2%"}}>
             <Col xs="12" sm="12" md="2" lg="2" style={{ textAlign: "center" }}>
               <img
-                src="holder.js/125x125"
+                src={host.picture}
                 class="img-responsive center-block"
                 style={{
                   borderRadius: "50%",
                   width: "125px",
-                  height: "100%",
+                  height: "125px",
+                  objectFit:"cover"
                 }}
               />
             </Col>
@@ -84,7 +75,7 @@ export default function Host({ host }) {
                       size="xs"
                       style={{ transform:"rotate(135deg)", color:"#43978d"}}
                     />
-                    {host.hostName}
+                    {host.name} {host.surname}
                   </h3>
                   <h5 className="fontsizeLevel">มือใหม่หัดเลี้ยง</h5>
                 </Col>
@@ -95,7 +86,7 @@ export default function Host({ host }) {
                           <div style={{paddingTop:"3%"}}> </div>
                         </a>
                       <div>
-                        รับฝากมาแล้ว <b>x ตัว</b>{" "}
+                        รับฝากมาแล้ว <b>{host.host_hosted_count} ตัว</b>{" "}
                         <a className="mobile-br">
                           <br />
                         </a>
@@ -106,7 +97,7 @@ export default function Host({ host }) {
                         <a className="mobile-br">
                           <br />
                         </a>
-                        <b>xxx ตารางเมตร</b>
+                        <b>{host.host_area} ตารางเมตร</b>
                       </div>
                       <a className="mobile-br2">
                           <br />
@@ -117,7 +108,7 @@ export default function Host({ host }) {
               
                       <br />
                       <FontAwesomeIcon icon={faBone} size="xs"  style={{transform:"rotate(135deg)", color:"#43978d"}}/>
-                      <b> xxx/5.0</b>
+                      <b> {host.host_rating}/5.0</b>
                     </Col>
                   </Row>
                 </Col>

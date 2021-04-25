@@ -10,57 +10,43 @@ import {
   DropdownItem,
   Spinner
 } from "reactstrap";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
+import SearchAPI from "./SearchAPI";
 
 export default function HostList() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const toggle = () => setDropdownOpen((prevState) => !prevState);
 
-  const hostdata = [
-    {
-      id: 1,
-      hostName: "Pholargardake Pholphol",
-      dateAvail: "ทุกวัน",
-      distancefromCus: "25 กม.",
-    },
-    {
-      id: 2,
-      hostName: "Kumnuy Ruaypeun",
-      dateAvail: "เสาร์,อาทิตย์",
-      distancefromCus: "30 กม.",
-    },
-    {
-      id: 3,
-      hostName: "Patpum Findingglass",
-      dateAvail: "จันทร์-ศุกร์",
-      distancefromCus: "40 กม.",
-    },
-    {
-      id: 4,
-      hostName: "Pure9D P9deaw",
-      dateAvail: "จันทร์-ศุกร์",
-      distancefromCus: "50 กม.",
-    },
-  ];
-
-  const [hostData, setHostData] = useState(hostdata);
-
+  const [hostData, setHostData] = useState([]);
+  const [ShowedHost, setShowedHost] = useState([])
   const [hasMore, setHasMore] = useState(true);
 
-  const fetchMoreData = () => {
-    if (hostData.length >= 12) {
-      setHasMore(false);
+  window.onbeforeunload = function () {
+    window.scrollTo(0, 0);
+  }
 
-      return;
-    }
+  useEffect(() => {
+    console.log("Hostlist Invoked")
+    SearchAPI.fakeGetHostInformation(hostData.length).then(res => {
+      setHostData(hostData.concat(res))
+    })
+  }, [])
 
-    // a fake async api call like which sends
-    // 20 more records in 1.5 secs
+  const showMoreData = () => {
+    console.log("Showmore trigger")
     setTimeout(() => {
-      setHostData(hostData.concat(hostdata));
-    }, 1500);
+      if (hostData.length > 0) {
+        setShowedHost(ShowedHost.concat(hostData[0]))
+        hostData.shift()
+      } else {
+        setHasMore(false)
+      }
+    }, 1000);
+
+
+
   };
 
   const scrollToTop = () => {
@@ -73,16 +59,16 @@ export default function HostList() {
   return (
     <>
       <InfiniteScroll
-        dataLength={hostData.length}
-        next={fetchMoreData}
+        dataLength={ShowedHost.length}
+        next={showMoreData}
         hasMore={hasMore}
-        loader={<h4 style={{ textAlign: "center" }}> <Spinner size="lg" color="black" /></h4>}
+        loader={<h4 style={{ textAlign: "center" }}> <Spinner size="lg" color="warning" /></h4>}
         endMessage={
           <p style={{ textAlign: "center" }}>
-            <b>หมดแล้วครับ</b>
+            <b>-------</b>
           </p>
         }
-        style={{overflowX:"hidden"}}
+        style={{ overflowX: "hidden" }}
       >
         <Container className="host-container" fluid="xl" >
           <Dropdown isOpen={dropdownOpen} toggle={toggle}>
@@ -95,7 +81,7 @@ export default function HostList() {
             </DropdownMenu>
           </Dropdown>
           <br />
-          {hostData.map((hd) => (
+          {ShowedHost.map((hd) => (
             <div>
               <Host key={hd.id} host={hd} />
               <br />

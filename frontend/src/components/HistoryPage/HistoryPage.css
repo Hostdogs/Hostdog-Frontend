@@ -1,0 +1,11 @@
+@media only screen and (max-width: 400px) {
+    .detial-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        object-fit: contain;
+
+
+    }
+  }
+

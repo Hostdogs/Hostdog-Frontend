@@ -4,13 +4,13 @@ import { useState, useEffect } from "react";
 import History from "./History";
 import InfiniteScroll from "react-infinite-scroll-component";
 import FilterBox from "./FilterBox";
-import './HistoryPage.css';
+import "./HistoryPage.css";
 
 const historyList = [
   {
     id: 1,
     dateStart: "24 พ.ย. 65",
-    dateEnd:"25 พ.ย. 65",
+    dateEnd: "25 พ.ย. 65",
     dog: "น้องบาส บางขุนเทียน พันธุ์ทาง",
     dog2: "น้องบาส เล้งแซ่บ พันธุ์เห่าเก่ง",
     dog3: "น้องบาส ตกปลาอยู่ริมตลิ่ง พันธุ์หางตก",
@@ -20,7 +20,7 @@ const historyList = [
   {
     id: 2,
     dateStart: "24 พ.ย. 65",
-    dateEnd:"25 พ.ย. 65",
+    dateEnd: "25 พ.ย. 65",
     dog: "น้องบาส บางขุนเทียน พันธุ์ทาง",
     dog2: "น้องบาส เล้งแซ่บ พันธุ์เห่าเก่ง",
     dog3: "น้องบาส ตกปลาอยู่ริมตลิ่ง พันธุ์หางตก",
@@ -30,7 +30,7 @@ const historyList = [
   {
     id: 3,
     dateStart: "24 พ.ย. 65",
-    dateEnd:"25 พ.ย. 65",
+    dateEnd: "25 พ.ย. 65",
     dog: "น้องบาส บางขุนเทียน พันธุ์ทาง",
     dog2: "น้องบาส เล้งแซ่บ พันธุ์เห่าเก่ง",
     dog3: "น้องบาส ตกปลาอยู่ริมตลิ่ง พันธุ์หางตก",
@@ -40,7 +40,7 @@ const historyList = [
   {
     id: 4,
     dateStart: "24 พ.ย. 65",
-    dateEnd:"25 พ.ย. 65",
+    dateEnd: "25 พ.ย. 65",
     dog: "น้องบาส บางขุนเทียน พันธุ์ทาง",
     dog2: "น้องบาส เล้งแซ่บ พันธุ์เห่าเก่ง",
     dog3: "น้องบาส ตกปลาอยู่ริมตลิ่ง พันธุ์หางตก",
@@ -48,7 +48,6 @@ const historyList = [
     status: "กำลังใช้บริการ",
   },
 ];
-
 
 const filterItems = [
   "ทั้งหมด",
@@ -58,11 +57,11 @@ const filterItems = [
   "ยกเลิกบริการ",
 ];
 
-const testDataList=[
+const testDataList = [
   {
     id: 5,
     dateStart: "24 พ.ย. 65",
-    dateEnd:"25 พ.ย. 65",
+    dateEnd: "25 พ.ย. 65",
     dog: "น้องบาส บางขุนเทียน พันธุ์ทาง",
     dog2: "น้องบาส เล้งแซ่บ พันธุ์เห่าเก่ง",
     dog3: "น้องบาส ตกปลาอยู่ริมตลิ่ง พันธุ์หางตก",
@@ -72,7 +71,7 @@ const testDataList=[
   {
     id: 6,
     dateStart: "24 พ.ย. 65",
-    dateEnd:"25 พ.ย. 65",
+    dateEnd: "25 พ.ย. 65",
     dog: "น้องบาส บางขุนเทียน พันธุ์ทาง",
     dog2: "น้องบาส เล้งแซ่บ พันธุ์เห่าเก่ง",
     dog3: "น้องบาส ตกปลาอยู่ริมตลิ่ง พันธุ์หางตก",
@@ -82,7 +81,7 @@ const testDataList=[
   {
     id: 7,
     dateStart: "24 พ.ย. 65",
-    dateEnd:"25 พ.ย. 65",
+    dateEnd: "25 พ.ย. 65",
     dog: "น้องบาส บางขุนเทียน พันธุ์ทาง",
     dog2: "น้องบาส เล้งแซ่บ พันธุ์เห่าเก่ง",
     dog3: "น้องบาส ตกปลาอยู่ริมตลิ่ง พันธุ์หางตก",
@@ -92,34 +91,33 @@ const testDataList=[
   {
     id: 8,
     dateStart: "24 พ.ย. 65",
-    dateEnd:"25 พ.ย. 65",
+    dateEnd: "25 พ.ย. 65",
     dog: "น้องบาส บางขุนเทียน พันธุ์ทาง",
     dog2: "น้องบาส เล้งแซ่บ พันธุ์เห่าเก่ง",
     dog3: "น้องบาส ตกปลาอยู่ริมตลิ่ง พันธุ์หางตก",
     host: "คำนับ",
     status: "กำลังใช้บริการ",
   },
-]
+];
 export default function HistoryList() {
-
   const [historyData, setHistoryData] = useState(historyList);
 
   const [hasMore, setHasMore] = useState(true);
 
-  const [testData,setTestData]=useState(testDataList);
+  const [testData, setTestData] = useState(testDataList);
 
-  const genTestData=()=>{
-  
-  const newTestData=testData.map((data,index)=>{
-    const newId=data.id+4;
-    const updatedItem={
-    ...data,id:newId,
+  const genTestData = () => {
+    const newTestData = testData.map((data, index) => {
+      const newId = data.id + 4;
+      const updatedItem = {
+        ...data,
+        id: newId,
+      };
+      return updatedItem;
+    });
+
+    setTestData(newTestData);
   };
-  return updatedItem;
-  })
-  
-  setTestData(newTestData);
-  }
 
   const fetchMoreData = () => {
     console.log("fetchMoreData working");
@@ -149,39 +147,41 @@ export default function HistoryList() {
 
   const handleFilter = (fi) => {
     setFilterIndex(fi);
-
   };
- 
+
   return (
     <>
-      <br/>
+      <br />
       <InfiniteScroll
         dataLength={historyData.length}
         next={fetchMoreData}
         hasMore={hasMore}
-        loader={<h4 style={{ textAlign: "center" }}><br/><Spinner size="lg" color="warning" /></h4>}
+        loader={
+          <h4 style={{ textAlign: "center" }}>
+            <br />
+            <Spinner size="lg" color="warning" />
+          </h4>
+        }
         endMessage={
           <p style={{ textAlign: "center" }}>
             <b>หมดแล้วครับ</b>
           </p>
-  
         }
-      > 
-      <Container className="container_hostList">
-        <br />
-        <br />
-        <br />
-         <h1>บริการของคุณ</h1>
-         </Container>
-        <Container style={{paddingTop:"10px" ,paddingBottom:"10px"}}>
-     
-         
-          <FilterBox onFilter={handleFilter} fetchMore={fetchMoreData}/>
+      >
+        <Container>
+          <br />
+          <br />
+          <br />
+          <h1 style={{color:"#264d59"}}>บริการของคุณ</h1>
+          <hr style={{ borderWidth: "3px", backgroundColor:"#264d59" }} />
+        </Container>
+        <Container style={{ paddingTop: "10px", paddingBottom: "10px" }}>
+          <FilterBox onFilter={handleFilter} fetchMore={fetchMoreData} />
           {historyData
-            .filter((history)=>{
-              if(filterIndex>0){
-                return history.status===filterItems[filterIndex];
-              }else{
+            .filter((history) => {
+              if (filterIndex > 0) {
+                return history.status === filterItems[filterIndex];
+              } else {
                 return history;
               }
             })
@@ -192,7 +192,6 @@ export default function HistoryList() {
       </InfiniteScroll>
       <Button
         onClick={scrollToTop}
-     
         style={{ position: "fixed", bottom: 0, right: 0 }}
       >
         ขึ้นข้างบน

@@ -25,10 +25,9 @@ export default function History({ history }) {
       <Card
         body
         outline
-        color="warning"
         className="history"
         style={{
-          border: "none",
+          border: "5px solid #f9e07f",
           background: "#fff3d0",
           margin: "5px 0px",
         }}

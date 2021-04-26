@@ -83,6 +83,41 @@
   }
 }
 
-.container_hostList {
-  width: 80vw;
+.navItem0{
+    background-color: white;
+}
+.navItem0:hover{
+    background-color: grey;
+}
+
+.navItem1{
+    background-color: white;
+}
+
+.navItem1:hover{
+    background-color: #28a745;
+}
+
+.navItem2{
+    background-color: white;
+}
+
+.navItem2:hover{
+    background-color: #ffc107;
+}
+
+.navItem3{
+    background-color: white;
+}
+
+.navItem3:hover{
+    background-color: #17a2b8;
+}
+
+.navItem4{
+    background-color: white;
+}
+
+.navItem4:hover{
+    background-color: #c82333;
 }

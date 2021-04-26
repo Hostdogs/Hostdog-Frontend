@@ -10,21 +10,16 @@ import {
   Row,
 } from "reactstrap";
 
-import './HistoryPage.css';
+import "./HistoryPage.css";
 const filterItems = [
   "บริการสำเร็จ",
   "กำลังรอการตอบรับ",
   "กำลังใช้บริการ",
   "ยกเลิกบริการ",
 ];
-const filterColor = [
-  "#28a745",
-  "#ffc107",
-  "#17a2b8",
-  "#c82333",
-];
+const filterColor = ["#28a745", "#ffc107", "#17a2b8", "#c82333"];
 
-export default function History({ history, }) {
+export default function History({ history }) {
   return (
     <div>
       <Card
@@ -33,37 +28,71 @@ export default function History({ history, }) {
         color="warning"
         className="history"
         style={{
-          border:"none",
+          border: "none",
           background: "#fff3d0",
-          height: "42vh",
           margin: "5px 0px",
         }}
       >
-        <CardTitle tag="h5"></CardTitle>
+        <a className="mobile-br"></a>
+        <h6
+          className="fontSizeRepo2"
+          style={{ position: "absolute", top: "5px", right: "10px" }}
+        >
+          {history.dateStart} - {history.dateEnd}
+        </h6>
         <Row>
           <Col>
-            <h3 >{history.host}</h3>
-          </Col>
-          <Col>
-            <p style={{ textAlign: "right" }}>{history.date}</p>
+            <h3 className="fontSizeRepo3">{history.host}</h3>
           </Col>
         </Row>
         <CardText>
-          <p >{history.dog}</p>
+          <ul className="fontSizeRepo">
+            <div>{history.dog}</div>
+            <div>{history.dog2}</div>
+            <div>{history.dog3}</div>
+          </ul>
           <Row>
-            <Col>
-              <h4 style={{color:filterColor[filterItems.indexOf(history.status)]}}>{history.status}</h4>
+            <Col xs="12" sm="5" md="4" lg="4">
+              <h4 className="fontSizeRepo3"
+                style={{
+                  color: filterColor[filterItems.indexOf(history.status)],
+                }}
+              >
+                {history.status}
+              </h4>
             </Col>
-          </Row>
-
-            <Container className="detial-container" >
+            <Col xs="12" sm="7" md="8" lg="8">
               <Button
-                style={{ border:"none",width: "15vw", minWidth: "100px",float:"right" ,backgroundColor:filterColor[filterItems.indexOf(history.status)]}}
+                className="Button1"
+                style={{
+                  border: "none",
+                  backgroundColor:
+                    filterColor[filterItems.indexOf(history.status)],
+                }}
               >
                 รายละเอียดเพิ่มเติม
+              </Button>{" "}
+              <a className="mobile-br2">
+                <br />
+              </a>
+              <Button
+                className="Button2"
+                style={{
+                  border: "none",
+                  backgroundColor:
+                    filterColor[filterItems.indexOf(history.status)],
+                }}
+              >
+                เฉาก๊วยอร่อย
               </Button>
-            </Container>
-
+              <a className="mobile-br">
+                <br />
+              </a>
+              <a className="mobile-br2">
+                <br />
+              </a>
+            </Col>
+          </Row>
         </CardText>
       </Card>
     </div>

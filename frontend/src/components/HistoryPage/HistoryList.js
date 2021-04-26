@@ -1,36 +1,49 @@
 import React from "react";
-import { Container, Button } from "reactstrap";
+import { Container, Button, Spinner } from "reactstrap";
 import { useState, useEffect } from "react";
 import History from "./History";
 import InfiniteScroll from "react-infinite-scroll-component";
 import FilterBox from "./FilterBox";
+import './HistoryPage.css';
 
 const historyList = [
   {
     id: 1,
-    date: "24 พ.ย. 65",
+    dateStart: "24 พ.ย. 65",
+    dateEnd:"25 พ.ย. 65",
     dog: "น้องบาส บางขุนเทียน พันธุ์ทาง",
+    dog2: "น้องบาส เล้งแซ่บ พันธุ์เห่าเก่ง",
+    dog3: "น้องบาส ตกปลาอยู่ริมตลิ่ง พันธุ์หางตก",
     host: "เพียว",
     status: "บริการสำเร็จ",
   },
   {
     id: 2,
-    date: "24 พ.ย. 65",
+    dateStart: "24 พ.ย. 65",
+    dateEnd:"25 พ.ย. 65",
     dog: "น้องบาส บางขุนเทียน พันธุ์ทาง",
+    dog2: "น้องบาส เล้งแซ่บ พันธุ์เห่าเก่ง",
+    dog3: "น้องบาส ตกปลาอยู่ริมตลิ่ง พันธุ์หางตก",
     host: "พล",
     status: "ยกเลิกบริการ",
   },
   {
     id: 3,
-    date: "24 พ.ย. 65",
+    dateStart: "24 พ.ย. 65",
+    dateEnd:"25 พ.ย. 65",
     dog: "น้องบาส บางขุนเทียน พันธุ์ทาง",
+    dog2: "น้องบาส เล้งแซ่บ พันธุ์เห่าเก่ง",
+    dog3: "น้องบาส ตกปลาอยู่ริมตลิ่ง พันธุ์หางตก",
     host: "แพท",
     status: "กำลังรอการตอบรับ",
   },
   {
     id: 4,
-    date: "24 พ.ย. 65",
+    dateStart: "24 พ.ย. 65",
+    dateEnd:"25 พ.ย. 65",
     dog: "น้องบาส บางขุนเทียน พันธุ์ทาง",
+    dog2: "น้องบาส เล้งแซ่บ พันธุ์เห่าเก่ง",
+    dog3: "น้องบาส ตกปลาอยู่ริมตลิ่ง พันธุ์หางตก",
     host: "คำนับ",
     status: "กำลังใช้บริการ",
   },
@@ -48,29 +61,41 @@ const filterItems = [
 const testDataList=[
   {
     id: 5,
-    date: "24 พ.ย. 65",
+    dateStart: "24 พ.ย. 65",
+    dateEnd:"25 พ.ย. 65",
     dog: "น้องบาส บางขุนเทียน พันธุ์ทาง",
+    dog2: "น้องบาส เล้งแซ่บ พันธุ์เห่าเก่ง",
+    dog3: "น้องบาส ตกปลาอยู่ริมตลิ่ง พันธุ์หางตก",
     host: "เพียว",
     status: "บริการสำเร็จ",
   },
   {
     id: 6,
-    date: "24 พ.ย. 65",
+    dateStart: "24 พ.ย. 65",
+    dateEnd:"25 พ.ย. 65",
     dog: "น้องบาส บางขุนเทียน พันธุ์ทาง",
+    dog2: "น้องบาส เล้งแซ่บ พันธุ์เห่าเก่ง",
+    dog3: "น้องบาส ตกปลาอยู่ริมตลิ่ง พันธุ์หางตก",
     host: "พล",
     status: "ยกเลิกบริการ",
   },
   {
     id: 7,
-    date: "24 พ.ย. 65",
+    dateStart: "24 พ.ย. 65",
+    dateEnd:"25 พ.ย. 65",
     dog: "น้องบาส บางขุนเทียน พันธุ์ทาง",
+    dog2: "น้องบาส เล้งแซ่บ พันธุ์เห่าเก่ง",
+    dog3: "น้องบาส ตกปลาอยู่ริมตลิ่ง พันธุ์หางตก",
     host: "แพท",
     status: "กำลังรอการตอบรับ",
   },
   {
     id: 8,
-    date: "24 พ.ย. 65",
+    dateStart: "24 พ.ย. 65",
+    dateEnd:"25 พ.ย. 65",
     dog: "น้องบาส บางขุนเทียน พันธุ์ทาง",
+    dog2: "น้องบาส เล้งแซ่บ พันธุ์เห่าเก่ง",
+    dog3: "น้องบาส ตกปลาอยู่ริมตลิ่ง พันธุ์หางตก",
     host: "คำนับ",
     status: "กำลังใช้บริการ",
   },
@@ -129,11 +154,12 @@ export default function HistoryList() {
  
   return (
     <>
+      <br/>
       <InfiniteScroll
         dataLength={historyData.length}
         next={fetchMoreData}
         hasMore={hasMore}
-        loader={<h4 style={{ textAlign: "center" }}>Loading...</h4>}
+        loader={<h4 style={{ textAlign: "center" }}><br/><Spinner size="lg" color="warning" /></h4>}
         endMessage={
           <p style={{ textAlign: "center" }}>
             <b>หมดแล้วครับ</b>
@@ -141,13 +167,13 @@ export default function HistoryList() {
   
         }
       > 
-      <Container style={{ maxWidth: "80vw"}}>
+      <Container className="container_hostList">
         <br />
         <br />
         <br />
          <h1>บริการของคุณ</h1>
          </Container>
-        <Container style={{ maxWidth: "80vw",background:"#ffe080",paddingTop:"10px" ,paddingBottom:"10px"  ,borderRadius:"5px"}}>
+        <Container style={{paddingTop:"10px" ,paddingBottom:"10px"}}>
      
          
           <FilterBox onFilter={handleFilter} fetchMore={fetchMoreData}/>

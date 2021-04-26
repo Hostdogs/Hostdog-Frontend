@@ -1,11 +1,88 @@
-@media only screen and (max-width: 400px) {
-    .detial-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        object-fit: contain;
-
-
-    }
+/* @media only screen and (max-width: 400px) {
+  .detail-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    object-fit: contain;
   }
+} */
 
+.Button1 {
+  width: 150px;
+  position: absolute;
+  right: 155px;
+}
+
+.Button2 {
+  width: 150px;
+  position: absolute;
+  right: 0px;
+}
+
+@media only screen and (max-width: 576px) {
+  .Button1 {
+    right: 155px;
+  }
+  .Button2 {
+    right: 0px;
+  }
+  .fontSizeRepo {
+    font-size: 20px;
+  }
+  .fontSizeRepo2 {
+    font-size: 15px;
+  }
+  .fontSizeRepo3 {
+    font-size: 23px;
+  }
+}
+
+@media all and (max-width: 575px) {
+  .mobile-br {
+    display: inline;
+    margin-top: 10px;
+  }
+}
+@media all and (min-width: 576px) {
+  .mobile-br {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 399px) {
+  .Button1 {
+    right: 30px;
+    margin-top: 10px;
+  }
+  .Button2 {
+    right: 30px;
+    margin-top: 20px;
+  }
+  .fontSizeRepo {
+    font-size: 18px;
+  }
+  .fontSizeRepo2 {
+    font-size: 12px;
+  }
+}
+
+@media all and (max-width: 401px) {
+  .mobile-br2 {
+    display: inline;
+  }
+}
+@media all and (min-width: 400px) {
+  .mobile-br2 {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 499px) {
+  element.style {
+    max-width: 100vw;
+  }
+}
+
+.container_hostList {
+  width: 80vw;
+}

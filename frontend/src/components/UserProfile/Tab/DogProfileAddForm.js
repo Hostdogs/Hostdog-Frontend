@@ -19,7 +19,6 @@ import APIDog from "./APIDog";
 
 const startDogInfo = {
   customer: "",
-  picture: null,
   dog_name: "",
   gender: "",
   dog_dob: "",
@@ -35,7 +34,7 @@ export default function DogProfileAddForm(props) {
   const [nestedModal, setNestedModal] = useState(false);
   const [closeAll, setCloseAll] = useState(false);
   const [dogInfo, setDogInfo] = useState(startDogInfo);
-
+  const [picture, setPicture] = useState("");
   const toggle = () => setModal(!modal);
   const toggleNested = () => {
     setNestedModal(!nestedModal);
@@ -45,6 +44,7 @@ export default function DogProfileAddForm(props) {
     setNestedModal(!nestedModal);
     setCloseAll(true);
     setDogInfo(startDogInfo);
+    setPicture("");
   };
 
   function onDogInfoChange(event) {
@@ -56,14 +56,28 @@ export default function DogProfileAddForm(props) {
       };
     });
   }
+  function onDogImgChange(event) {
+    const file = event.target.files[0];
+    setPicture(file);
+    //console.log(picture.name);
+  }
 
-  const onDogSubmit = (event) => {
+  async function onDogSubmit(event) {
     event.preventDefault();
     dogInfo.customer = 1; //test
-    APIDog.AddDog(dogInfo).then((resp) => props.addDogInfo(resp.data));
+    const resp1 = await APIDog.AddDog(dogInfo);
     setDogInfo(startDogInfo);
+    if (picture !== "") {
+      let form_data = new FormData();
+      form_data.append("picture", picture, picture.name);
+      const resp2 = await APIDog.UploadImgDog(resp1.data.id, form_data);
+      props.addDogInfo(resp2.data);
+      setPicture("");
+    } else {
+      props.addDogInfo(resp1.data);
+    }
     toggle();
-  };
+  }
 
   function changeValue(name, value) {
     if (value === "true" || value === true) {
@@ -72,6 +86,8 @@ export default function DogProfileAddForm(props) {
       return false;
     } else if (!isNaN(value) && name !== "dog_bio") {
       return Number(value);
+    } else if (value === "" && name === "picture") {
+      return null;
     } else {
       return value;
     }
@@ -97,8 +113,7 @@ export default function DogProfileAddForm(props) {
                 type="file"
                 name="picture"
                 accept="image/*"
-                value={dogInfo.picture}
-                onChange={onDogInfoChange}
+                onChange={onDogImgChange}
               />
             </FormGroup>
             <FormGroup>

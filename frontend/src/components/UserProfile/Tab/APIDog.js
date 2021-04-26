@@ -2,14 +2,23 @@ import axios from "axios";
 import React, { Component } from "react";
 const API_URL = "http://127.0.0.1:8000/api/dogs/";
 export default class APIDog {
-  static UpdateDog(dog_id, body) {
+  static UpdateDog(dog_id, data) {
     const url = `${API_URL}${dog_id}/`;
-    return axios.put(url, body);
+    return axios.patch(url, data);
   }
 
-  static AddDog(body) {
+  static AddDog(data) {
     const url = API_URL;
-    return axios.post(url, body);
+    return axios.post(url, data);
+  }
+
+  static UploadImgDog(dog_id, data) {
+    const url = `${API_URL}${dog_id}/`;
+    return axios.patch(url, data, {
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    });
   }
 
   static DeleteDog(dog_id) {

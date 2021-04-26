@@ -32,6 +32,8 @@ export default function DogProfileEditForm(props) {
   const [nestedModal, setNestedModal] = useState(false);
   const [closeAll, setCloseAll] = useState(false);
   const [dogInfo, setDogInfo] = useState(startDogInfo);
+  const [picture, setPicture] = useState("");
+
   const toggle = () => setModal(!modal);
 
   const toggleNested = () => {
@@ -43,6 +45,7 @@ export default function DogProfileEditForm(props) {
     setNestedModal(!nestedModal);
     setCloseAll(true);
     setDogInfo(startDogInfo);
+    setPicture("");
   };
 
   function onDogInfoChange(event) {
@@ -55,14 +58,27 @@ export default function DogProfileEditForm(props) {
     });
   }
 
-  const onDogUpdate = (event) => {
+  function onDogImgChange(event) {
+    const file = event.target.files[0];
+    setPicture(file);
+    //console.log(picture.name);
+  }
+
+  async function onDogUpdate(event) {
     event.preventDefault();
-    APIDog.UpdateDog(editDogInfo.id, dogInfo).then((resp) =>
-      props.updateDogInfo(resp.data)
-    );
+    const resp1 = await APIDog.UpdateDog(editDogInfo.id, dogInfo);
+    props.updateDogInfo(resp1.data);
+
+    if (picture !== "") {
+      let form_data = new FormData();
+      form_data.append("picture", picture, picture.name);
+      const resp2 = await APIDog.UploadImgDog(resp1.data.id, form_data);
+      props.updateDogInfo(resp2.data);
+      setPicture("");
+    }
 
     toggle();
-  }; //update dog info
+  } //update dog info
 
   function changeValue(name, value) {
     if (value === "true" || value === true) {
@@ -96,8 +112,7 @@ export default function DogProfileEditForm(props) {
                   type="file"
                   name="picture"
                   accept="image/*"
-                  value={dogInfo.picture}
-                  onChange={onDogInfoChange}
+                  onChange={onDogImgChange}
                 />
               </FormGroup>
               <FormGroup>

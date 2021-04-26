@@ -4,7 +4,7 @@
 }
 .detail-container {
   max-width: 50vw;
-  min-height: 40vh;
+  min-height: 30vh;
   background: white;
   border-radius: 10px;
   padding-top: 10px;
@@ -39,7 +39,7 @@
   transform: translate(-50%, -50%);
   vertical-align: middle;
 } */
-
+/* 
 label {
   position: absolute;
   top: 0;
@@ -50,8 +50,8 @@ label {
   top: -30px;
   color: #264d59;
   background-color: #fdf2ca;
-}
-legend {
+} */
+/* legend {
   background-color: #fdf2ca;
   padding-top: 3%;
   padding: 20px 50px;
@@ -62,11 +62,20 @@ p {
 }
 body{
     background-color: #fdf2ca;
-}
+} */
 
 img.animated-gif{
   width: 100%;
   height: 30vh;
   border-radius: 25%;
   object-fit: contain;
+}
+
+.collapsing {
+  position: relative;
+  height: 0;
+  overflow: hidden;
+  -webkit-transition: height .1s ease;
+       -o-transition: height .1s ease;
+          transition: height .1s ease;
 }

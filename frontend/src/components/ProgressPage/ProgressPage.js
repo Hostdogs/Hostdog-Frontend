@@ -6,7 +6,7 @@ import ServiceDetail from "./ServiceDetail";
 import { Collapse, Container } from "reactstrap";
 import ProgressAPI from "./ProgressAPI";
 
-export default function ProgressPage({match}) {
+export default function ProgressPage({ match }) {
   const [progressValue, setProgressValue] = useState(0);
 
   const [colorIndex, setColorIndex] = useState(3);
@@ -44,33 +44,34 @@ export default function ProgressPage({match}) {
   const [ServiceInfo, setServiceInfo] = useState(null)
   let servicePath = match.params["service_id"]
   useEffect(() => {
-    ProgressAPI.fakeServiceProgress(servicePath).then(res=>{
+    ProgressAPI.fakeServiceProgress(servicePath).then(res => {
       setServiceInfo(res)
-      
+
     })
   }, [])
 
   useEffect(() => {
     window.onscroll = () => {
-      
-      if(window.pageYOffset>offset){
+
+      if (window.pageYOffset > offset) {
         setisExpand(true)
-        
-      }else if(window.pageYOffset===0){
+
+      } else if (window.pageYOffset === 0) {
         setisExpand(false)
-  
+
       }
       setOffset(window.pageYOffset)
       // console.log(window.pageYOffset,"::",offset)
     }
   }, [offset]);
   
+  
 
   return (
-    <div style={{backgroundColor: "#fdf2ca"}} >
+    <div style={{ backgroundColor: "#fdf2ca" }} >
       <NavbarIsAuth />
-      <div style={{  height: "100vh" ,paddingTop:"70px"}}>
-  
+      <div style={{ minHeight: "100vh", paddingTop: "70px" }}>
+
 
         <ProgressBar
           progressValue={progressValue}
@@ -81,12 +82,15 @@ export default function ProgressPage({match}) {
         />
 
         <br />
-        <Container fluid="lg">
-          <ServiceDetail onCancel={handleCancel} isExpand={isExpand} ServiceInfo={ServiceInfo}/>
-        </Container>
+
+          <Container fluid="lg" >
+            <ServiceDetail onCancel={handleCancel} isExpand={isExpand} ServiceInfo={ServiceInfo}  />
+          </Container>
+      {/* {!isExpand?(<div style={{height:"100px"}}></div>):(null)} */}
+
 
       </div>
-      <div style={{ height: "40vh"}}></div>
+      <div style={{ height:"5px" }}></div>
 
     </div>
   );

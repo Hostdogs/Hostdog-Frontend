@@ -15,7 +15,7 @@ const gif = [
   "/congrat.gif",
   "/waiting.gif",
   "/onhost.gif",
-  "./wavecall.gif",
+  "/wavecall.gif",
   "/bye.gif",
   "/sad.gif",
 ];

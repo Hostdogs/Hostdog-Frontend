@@ -6,9 +6,7 @@ import ProgressAPI from "./ProgressAPI";
 import moment from "moment";
 import 'moment/locale/th';
 export default function ServiceDetail({ onCancel, isExpand, ServiceInfo }) {
-  const [detail, setDetail] = useState({
 
-  });
   // const [customer, setcustomer] = useState({})
   const [host, sethost] = useState("")
   const [dog, setdog] = useState("")
@@ -17,16 +15,16 @@ export default function ServiceDetail({ onCancel, isExpand, ServiceInfo }) {
 
   useEffect(() => {
     moment.updateLocale("th")
-    if(ServiceInfo){
+    if (ServiceInfo) {
       // ProgressAPI.fakeCustomerProfile(ServiceInfo.customer_id).then(res=>{
       //   setcustomer(res)
       // })
 
-      ProgressAPI.fakeHostProfile(ServiceInfo.host_id).then(res=>{
+      ProgressAPI.fakeHostProfile(ServiceInfo.host_id).then(res => {
         sethost(res)
       })
 
-      ProgressAPI.fakeDog(ServiceInfo.dog_id).then(res=>{
+      ProgressAPI.fakeDog(ServiceInfo.dog_id).then(res => {
         setdog(res)
       })
 
@@ -35,29 +33,46 @@ export default function ServiceDetail({ onCancel, isExpand, ServiceInfo }) {
     }
   }, [ServiceInfo])
   
+
   return (
     <div>
 
       <Container className="detail-container" >
+        <div style={{ float: "right" }}><h4>อยู่ในการบริการ</h4></div>
         <h3> รายละเอียดการบริการ</h3>
-        <p>ผู้รับฝาก: {host.name}</p>
+        <p>ผู้รับฝาก: {host.first_name} {host.last_name}</p>
         <p>สุนัข: {dog.dog_name}</p>
-        <p>ระยะเวลาที่ฝาก: {timeRegister}</p><p> ถึงวันที่ {timeEnd} </p>
+        <p >ฝากวันที่: {timeRegister} ถึงวันที่: {timeEnd} </p>
+        <p>การฝากจะสิ้นสุดในเวลา x</p>
+        <p>ค่าบริการทั้งหมด x บาท</p>
+        
         <Collapse isOpen={isExpand}>
-            <div style={{ height: "40vh" }}>
-              <h3> รายละเอียดเพิ่มเติม</h3>
-              <p></p>
-            </div>
+          <div >
+            <p>ประเภทอาหาร: x ปริมาณ x กรัมต่อมื้อ</p>
+            <p>เวลาในการให้อาหาร:</p>
+            <ul >
+              <li>10.00</li>
+            </ul>
+            <h3>บริการเพิ่มเติม</h3>
+              <ul>
+                พาไปเดินเล่น
+              </ul>
+            <h3>รายละเอียดเพิ่มเติม</h3>
+            <p>วันที่สร้างบริการ: </p>
+            <p>วันที่สร้างบริการ: </p>
+          </div>
         </Collapse>
-        <div style={{bottom:"10px",display:"flex",flexDirection:"row"}}>
-        <Button onClick={onCancel} color="danger">
-          ยกเลิกบริการ
+        <div style={{ bottom: "10px", display: "flex", flexDirection: "row" }}>
+          <Button onClick={onCancel} color="danger">
+            ยกเลิกบริการ
         </Button>
-        <Button onClick={onCancel} color="danger">
-          ยกเลิกบริการ
+          <Button onClick={onCancel} color="danger">
+            ยกเลิกบริการ
         </Button>
         </div>
-        
+
+
+
       </Container>
 
 

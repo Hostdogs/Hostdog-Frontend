@@ -5,8 +5,8 @@ const API_URL = "https://jsonplaceholder.typicode.com/"
 const testCustomer = {
     1: {
         userid: 1,
-        name: "พลพัฒน์",
-        surname: "สงวนสิริกุล",
+        first_name: "พลพัฒน์",
+        last_name: "สงวนสิริกุล",
         customer_bio: "สวัสดีท่านสมาชิกชมรม",
         date_joined: "2021-04-21",
         last_login: "2021-04-22 21:35:28",
@@ -15,8 +15,8 @@ const testCustomer = {
         picture: "https://randomuser.me/api/portraits/men/1.jpg"
     }, 2: {
         userid: 2,
-        name: "พัทธพล",
-        surname: "จันทร์ชู",
+        first_name: "พัทธพล",
+        last_name: "จันทร์ชู",
         customer_bio: "คนชอบผี",
         date_joined: "2021-04-22",
         last_login: "2021-04-22 21:35:28",
@@ -29,8 +29,8 @@ const testCustomer = {
 const testHost = {
     3: {
         userid: 3,
-        name: "พลแพท",
-        surname: "จงวัฒนศิริ",
+        first_name: "พลแพท",
+        last_name: "จงวัฒนศิริ",
         host_bio: "เสือก ไม่ร้องนะคับ",
         date_joined: "2021-04-23",
         last_login: "2021-04-24 21:15:28",
@@ -39,8 +39,8 @@ const testHost = {
         picture: "https://randomuser.me/api/portraits/women/1.jpg"
     }, 4: {
         userid: 4,
-        name: "แพทย์ภูมิ",
-        surname: "หาแก้ว",
+        first_name: "แพทย์ภูมิ",
+        last_name: "หาแก้ว",
         host_bio: "เห้ย",
         date_joined: "2021-04-24",
         last_login: "2021-04-24 15:35:20",

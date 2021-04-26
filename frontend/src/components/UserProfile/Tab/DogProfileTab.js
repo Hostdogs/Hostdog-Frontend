@@ -14,10 +14,13 @@ import axios from "axios";
 
 export default function DogProfileTab() {
   const [dogInfos, setDogInfos] = useState([]);
+  const customer_id = 1;
 
   async function getDogs() {
-    const resp = await axios.get("http://127.0.0.1:8000/api/dogs/");
-    setDogInfos(resp.data);
+    const resp = await axios.get(
+      `http://127.0.0.1:8000/api/profilecustomer/${customer_id}/`
+    );
+    setDogInfos(resp.data.dogs);
   }
   useEffect(() => {
     getDogs();

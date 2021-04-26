@@ -1,10 +1,12 @@
 import NavbarIsAuth from "../Navbar/NavbarIsAuth";
 import SideBar from "../sidebar/SideBar";
 import ProgressBar from "./ProgressBar";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import ServiceDetail from "./ServiceDetail";
+import { Collapse, Container } from "reactstrap";
+import ProgressAPI from "./ProgressAPI";
 
-export default function ProgressPage() {
+export default function ProgressPage({match}) {
   const [progressValue, setProgressValue] = useState(0);
 
   const [colorIndex, setColorIndex] = useState(3);
@@ -35,10 +37,41 @@ export default function ProgressPage() {
     setProgressValue(progressValue + 20);
   }, []);
 
+  /////////////expand info//////////////////
+  const [isExpand, setisExpand] = useState(false)
+  const [offset, setOffset] = useState(0);
+  ///////////// get service info //////////////
+  const [ServiceInfo, setServiceInfo] = useState(null)
+  let servicePath = match.params["service_id"]
+  useEffect(() => {
+    ProgressAPI.fakeServiceProgress(servicePath).then(res=>{
+      setServiceInfo(res)
+      
+    })
+  }, [])
+
+  useEffect(() => {
+    window.onscroll = () => {
+      
+      if(window.pageYOffset>offset){
+        setisExpand(true)
+        
+      }else if(window.pageYOffset===0){
+        setisExpand(false)
+  
+      }
+      setOffset(window.pageYOffset)
+      // console.log(window.pageYOffset,"::",offset)
+    }
+  }, [offset]);
+  
+
   return (
-    <div style={{ backgroundColor: "#fdf2ca" }}>
+    <div style={{backgroundColor: "#fdf2ca"}} >
       <NavbarIsAuth />
-      <div>
+      <div style={{  height: "100vh" ,paddingTop:"70px"}}>
+  
+
         <ProgressBar
           progressValue={progressValue}
           colorIndex={colorIndex}
@@ -47,9 +80,13 @@ export default function ProgressPage() {
           handleProgress={handleProgress}
         />
 
-        <ServiceDetail onCancel={handleCancel} />
-      </div>
+        <br />
+        <Container fluid="lg">
+          <ServiceDetail onCancel={handleCancel} isExpand={isExpand} ServiceInfo={ServiceInfo}/>
+        </Container>
 
+      </div>
+      <div style={{ height: "40vh"}}></div>
 
     </div>
   );

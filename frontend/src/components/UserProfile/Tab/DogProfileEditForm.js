@@ -14,14 +14,13 @@ import {
   CustomInput,
 } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faEdit } from "@fortawesome/free-solid-svg-icons";
 import APIDog from "./APIDog";
 
 export default function DogProfileEditForm(props) {
   const { labelBtn, editDogInfo } = props;
   const startDogInfo = {
     customer: editDogInfo.customer,
-    picture: null,
     dog_name: editDogInfo.dog_name,
     gender: editDogInfo.gender,
     dog_dob: editDogInfo.dog_dob,
@@ -81,8 +80,8 @@ export default function DogProfileEditForm(props) {
     <div>
       <Row>
         <Col xs="12">
-          <Button color="warning" onClick={toggle}>
-            <FontAwesomeIcon icon={faPlus} /> {labelBtn}
+          <Button size="sm" color="info" onClick={toggle}>
+            <FontAwesomeIcon icon={faEdit} /> {labelBtn}
           </Button>
         </Col>
       </Row>

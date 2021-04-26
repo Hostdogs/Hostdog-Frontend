@@ -28,21 +28,28 @@ export default function DogProfileList(props) {
   };
 
   const dogElements = dogInfos.map((dogInfo) => {
+    let gender = "";
+    if (dogInfo.gender === "male") {
+      gender = "เพศ : ผู้";
+    } else if (dogInfo.gender === "female") {
+      gender = "เพศ : เมีย";
+    }
     return (
       <div key={dogInfo.id}>
         <Card>
           <Row>
-            <Col xs="12" sm="4" md="4">
-              <CardImg width="100%" src={dogInfo.picture} />
+            <Col xs="12" sm="6" md="6" lg="4">
+              <CardImg Width="100%" src={dogInfo.picture} />
             </Col>
-            <Col xs="12" sm="8" md="8">
+            <Col xs="12" sm="6" md="6" lg="8">
               <CardBody>
                 <CardTitle tag="h5">{dogInfo.dog_name}</CardTitle>
                 <CardText>
-                  {dogInfo.gender} {dogInfo.dog_breed}
+                  สายพันธุ์ : {dogInfo.dog_breed} , {gender} , วันเกิด :{" "}
+                  {dogInfo.dog_dob} , น้ำหนัก : {dogInfo.dog_weight} กิโลกรัม
                 </CardText>
                 <CardText>
-                  <p className="text-muted">{dogInfo.dog_bio}</p>
+                  <p className="text-muted">รายละเอียด : {dogInfo.dog_bio}</p>
                 </CardText>
                 <ButtonGroup>
                   <DogProfileEditForm
@@ -51,11 +58,19 @@ export default function DogProfileList(props) {
                     updateDogInfo={updateDogInfo}
                   />
                 </ButtonGroup>
-                <Button onClick={() => deleteDogInfo(dogInfo)}>ลบ</Button>
+                <Button
+                  color="danger"
+                  size="sm"
+                  style={{ marginLeft: "15px" }}
+                  onClick={() => deleteDogInfo(dogInfo)}
+                >
+                  ลบ
+                </Button>
               </CardBody>
             </Col>
           </Row>
         </Card>
+        <br />
       </div>
     );
   });

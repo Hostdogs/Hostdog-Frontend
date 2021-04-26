@@ -23,7 +23,7 @@ export default function ServiceDetail({ onCancel }) {
         </Button>
       </Container> */}
 
-      <div class="wrap">
+        
         <label>รายละเอียดการบริการ</label>
         <legend>
           <p style={{marginTop:"3%"}}>ผู้รับฝาก: {detail.host}</p>
@@ -33,7 +33,7 @@ export default function ServiceDetail({ onCancel }) {
             ยกเลิกบริการ
           </Button>
         </legend>
-      </div>
+
     </div>
   );
 }

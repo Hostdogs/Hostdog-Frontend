@@ -36,19 +36,21 @@ export default function ProgressPage() {
   }, []);
 
   return (
-    <div style={{backgroundColor:"#fdf2ca"}}>
+    <div style={{ backgroundColor: "#fdf2ca" }}>
       <NavbarIsAuth />
+      <div>
+        <ProgressBar
+          progressValue={progressValue}
+          colorIndex={colorIndex}
+          labelIndex={labelIndex}
+          gifIndex={gifIndex}
+          handleProgress={handleProgress}
+        />
 
-      <ProgressBar
-        progressValue={progressValue}
-        colorIndex={colorIndex}
-        labelIndex={labelIndex}
-        gifIndex={gifIndex}
-        handleProgress={handleProgress}
-      />
+        <ServiceDetail onCancel={handleCancel} />
+      </div>
 
-      <ServiceDetail onCancel={handleCancel} />
-      <br />
+
     </div>
   );
 }

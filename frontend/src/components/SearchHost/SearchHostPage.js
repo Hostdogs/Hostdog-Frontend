@@ -8,12 +8,12 @@ import FilterOptionPane from './FilterOptionPane';
 
 
 export default function SearchHostPage() {
-  const [isSearch, setisSearch] = useState(true)
+  const [isSearch, setisSearch] = useState(false)
   
   return (
     <div style={{overflowX:"hidden"}}>
       <br/>
-      <FilterOptionPane/>
+      <FilterOptionPane setisSearch={setisSearch}/>
       <br/>
       {isSearch ? (<HostList />):(null)}
     </div>

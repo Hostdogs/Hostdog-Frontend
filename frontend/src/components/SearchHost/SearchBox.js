@@ -25,9 +25,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FilterOptionPane from "./FilterOptionPane";
 export default function SearchBox() {
-  const [geocode, setGeoCode] = useState({});
-
-  const [showMap, setShowMap] = useState(false);
+  const [geocode, setGeoCode] = useState({lat:13.729025,lng:100.775613});
 
   const [userAddress, setUserAddress] = useState("");
 
@@ -100,23 +98,20 @@ export default function SearchBox() {
     console.log(data);
     console.log("onPlaceChanged testAutoComplete");
     console.log(testAutoComplete);
-    
+
     if (typeof testAutoComplete !== "undefined") {
       if (typeof data.formatted_address !== "undefined") {
         setUserAddress(data.formatted_address);
         geoCoding(data.formatted_address);
-        
       } else {
         setUserAddress(
           testAutoComplete.gm_accessors_.place.Ve.predictions[0].Lk
         );
         geoCoding(testAutoComplete.gm_accessors_.place.Ve.predictions[0].Lk);
       }
-      setShowMap(true);
     } else {
       alert("ขออภัย ไม่พบที่อยู่ที่ระบุ");
     }
-
   };
 
   return (
@@ -129,13 +124,13 @@ export default function SearchBox() {
         onSubmit={(e) => {
           e.preventDefault();
         }}
+        
       >
         <FormGroup>
           <Label>ที่อยู่ของคุณ</Label>
           <Button
             onClick={() => {
               getCurrentLocation();
-              // setShowMap(true);
             }}
             style={{
               backgroundColor: "#ffe080",
@@ -143,7 +138,7 @@ export default function SearchBox() {
               marginLeft: "1%",
             }}
           >
-            <FontAwesomeIcon icon={faMapMarkerAlt} style={{color:"black"}} />
+            <FontAwesomeIcon icon={faMapMarkerAlt} style={{ color: "black" }} />
           </Button>
           <Button
             onClick={() => alert("สวัสดีครับบาสคุง")}
@@ -153,10 +148,10 @@ export default function SearchBox() {
               marginLeft: "0.5%",
             }}
           >
-            <FontAwesomeIcon icon={faSearch} style={{color:"black"}}/>
+            <FontAwesomeIcon icon={faSearch} style={{ color: "black" }} />
           </Button>
-          <InputGroup style={{marginTop:"1%"}}>
-            <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
+          <InputGroup style={{ marginTop: "1%" }} >
+            <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged} >
               <Input
                 className="textlocation"
                 type="text"
@@ -166,21 +161,19 @@ export default function SearchBox() {
                 value={userAddress}
                 onChange={(e) => setUserAddress(e.target.value)}
                 onSubmit={() => alert("สวัสดีค่ะบาสคุง")}
-                style={{width:"100%"}}
+        
+                style={{ width: "100%" }}
               />
             </Autocomplete>
           </InputGroup>
+          
         </FormGroup>
+        <GoogleMapLocation
+          handleDragEnd={(e) => onMarkerDragEnd(e)}
+          currentGeoCode={geocode}
+        />
       </Form>
-
-      {/* <Container className="map-container">
-            {showMap ? (
-              <GoogleMapLocation
-                handleDragEnd={(e) => onMarkerDragEnd(e)}
-                currentGeoCode={geocode}
-              />
-            ) : null}
-          </Container> */}
+      <br/>
     </LoadScript>
   );
 }

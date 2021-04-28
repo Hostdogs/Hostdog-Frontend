@@ -166,14 +166,14 @@ export default function SearchBox() {
               />
             </Autocomplete>
           </InputGroup>
+          
         </FormGroup>
-      </Form>
-      <Container className="map-container">
         <GoogleMapLocation
           handleDragEnd={(e) => onMarkerDragEnd(e)}
           currentGeoCode={geocode}
         />
-      </Container>
+      </Form>
+      <br/>
     </LoadScript>
   );
 }

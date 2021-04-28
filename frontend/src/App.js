@@ -24,7 +24,7 @@ function App() {
 
           <Route exact path="/history" component={HistoryPage}/>
 
-          <Route exact path="/progress" component={ProgressPage}/>
+          <Route exact path="/progress/:service_id" component={ProgressPage}/>
 
           <Route component={NotFoundPage} />
         </Switch>

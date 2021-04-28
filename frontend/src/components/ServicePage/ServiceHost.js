@@ -157,6 +157,8 @@ export default function ServiceHost() {
       <br />
       <Row className="host-row">
         <h4>ที่อยู่</h4>
+        <p>  Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis, assumenda quae incidunt commodi eius fugit corrupti reprehenderit modi perspiciatis facilis magni culpa quisquam consectetur pariatur minus doloribus dicta deserunt neque.
+</p>
       </Row>
       <Row>{imageHost}</Row>
     </div>

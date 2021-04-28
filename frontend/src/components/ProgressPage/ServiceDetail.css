@@ -1,0 +1,80 @@
+
+.UpsideText_1{
+    font-size: 20px;
+}
+
+.UpsideText_2{
+    font-size: 30px
+}
+
+@media only screen and (max-width: 550px) {
+    .UpsideText_1{
+        font-size: 18px;
+    }
+    
+    .UpsideText_2{
+        font-size: 27px
+    }
+    .UpsideText_p{
+        font-size: 14.6px
+    }
+    .Cancel_Button{
+        font-size: 0.7rem ;
+    }
+    .DownsideText_1{
+        font-size: 14.6px;
+    }
+    .DownsideText_2{
+        font-size: 27px;
+    }
+    .DownsideText_3{
+        font-size: 14.6px;
+    }
+}
+
+@media only screen and (max-width: 499px) {
+    .UpsideText_1{
+        font-size: 14px;
+    }
+    .UpsideText_2{
+        font-size: 23px
+    }
+    .UpsideText_p{
+        font-size: 10px
+    }
+    .DownsideText_1{
+        font-size: 10px
+    }
+    .DownsideText_2{
+        font-size: 23px;
+    }
+    .DownsideText_3{
+        font-size: 14.6px;
+    }
+}
+
+@media only screen and (max-width: 320px) {
+    .UpsideText_2{
+        font-size: 20px
+    }
+    .DownsideText_2{
+        font-size: 20px;
+    }
+    .DownsideText_3{
+        font-size: 10px;
+    }
+}
+
+
+
+@media all and (max-width: 409px){
+    .mobile_br{
+        display:inline;
+    }
+}
+
+@media all and (min-width: 410px){
+    .mobile_br{
+        display:none;
+    }
+}

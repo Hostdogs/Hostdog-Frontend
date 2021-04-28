@@ -70,7 +70,7 @@ export default function HostServiceBox() {
         </FormGroup>
         <div className="list-service">
           <FormGroup>
-            <Row>
+            <Row style={{ alignItems: "center" }}>
               <Col xs="12" sm="5" lg="3">
                 ราคาในการรับฝากสุนัขต่อวัน
               </Col>
@@ -81,7 +81,7 @@ export default function HostServiceBox() {
             </Row>
           </FormGroup>
           <FormGroup>
-            <Row>
+            <Row style={{ alignItems: "center" }}>
               <Col xs="12" sm="5" lg="3">
                 ค่ามัดจำในการฝากสุนัข
               </Col>
@@ -101,7 +101,7 @@ export default function HostServiceBox() {
         </FormGroup>
         <div className="list-service">
           <FormGroup>
-            <Row>
+            <Row style={{ alignItems: "center" }}>
               <Col xs="12" sm="5" lg="3">
                 ราคาพาสุนัขไปเดินเล่น
               </Col>
@@ -122,8 +122,8 @@ export default function HostServiceBox() {
               </Col>
             </Row>
           </FormGroup>
-          <FormGroup style={{ marginTop: "30px" }}>
-            <Row>
+          <FormGroup style={{ marginTop: "20px" }}>
+            <Row style={{ alignItems: "center" }}>
               <Col xs="12" sm="5" lg="3">
                 ราคาไปรับสุนัขต่อกิโลเมตร
               </Col>
@@ -144,8 +144,8 @@ export default function HostServiceBox() {
               </Col>
             </Row>
           </FormGroup>
-          <FormGroup style={{ marginTop: "30px" }}>
-            <Row>
+          <FormGroup style={{ marginTop: "20px" }}>
+            <Row style={{ alignItems: "center" }}>
               <Col xs="12" sm="5" lg="3">
                 ราคาไปส่งสุนัขต่อกิโลเมตร
               </Col>
@@ -166,8 +166,8 @@ export default function HostServiceBox() {
               </Col>
             </Row>
           </FormGroup>
-          <FormGroup style={{ marginTop: "30px" }}>
-            <Row>
+          <FormGroup style={{ marginTop: "20px" }}>
+            <Row style={{ alignItems: "center" }}>
               <Col xs="12" sm="5" lg="3">
                 ราคาอาบน้ำสุนัข
               </Col>

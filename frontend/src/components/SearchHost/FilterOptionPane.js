@@ -23,7 +23,7 @@ import "react-date-range/dist/theme/default.css";
 import "./SearchHost.css";
 import SearchBox from "./SearchBox";
 
-export default function FilterOptionPane({ isOpenPane }) {
+export default function FilterOptionPane({ setisSearch }) {
   const [isDateOpen, setIsDateOpen] = useState(false);
   const toggleDate = () => setIsDateOpen(!isDateOpen);
 
@@ -52,12 +52,12 @@ export default function FilterOptionPane({ isOpenPane }) {
       key: "selection",
     },
   ]);
-
+  
   const [width, setWidth] = useState(window.innerWidth);
   useEffect(() => {
     function handleResize() {
       setWidth(window.innerWidth);
-      console.log(width);
+      // console.log(width);
     }
 
     window.addEventListener("resize", handleResize);
@@ -67,12 +67,14 @@ export default function FilterOptionPane({ isOpenPane }) {
     };
   });
 
+  
+
   return (
     <div>
       <Container style={{}}>
         <Card style={{borderColor:"#ffe080", borderWidth:"10px"}}>
           <CardBody>
-            <h1 className="FontSize">ค้นหาผู้รับฝาก</h1>
+            <h1 className="FontSize" style={{marginLeft:"5%"}}>ค้นหาผู้รับฝาก</h1>
             <hr style={{ borderWidth: "3px", borderColor:"#ffe080", width:"90%",textAlign:"left" }} />
             <br/>
             <Container style={{ paddingLeft: "10%", paddingRight: "10%" }}>
@@ -153,7 +155,17 @@ export default function FilterOptionPane({ isOpenPane }) {
                   </div>
                 </FormGroup>
                 <FormGroup style={{ textAlign: "right" }}>
-                  <Button style={{ backgroundColor: "#ffe080", border: "0px", color:"black" }}>
+                  <Button type="submit" onClick={e=>{
+                    e.preventDefault();
+                    setisSearch(true);
+                    setTimeout(() => {
+                      window.scrollTo({
+                        top: 3000,
+                        behavior: 'smooth',
+                      })
+                    }, 100);
+                    
+                  }} style={{ backgroundColor: "#ffe080", border: "0px", color:"black" }}>
                     ค้นหา
                   </Button>
                 </FormGroup>

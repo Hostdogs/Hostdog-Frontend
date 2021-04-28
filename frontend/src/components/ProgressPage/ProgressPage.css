@@ -36,7 +36,7 @@ div.wrap {
   transform: translate(-50%, -50%);
   vertical-align: middle;
 }
-
+/* 
 label {
   position: absolute;
   top: 0;
@@ -59,7 +59,7 @@ p {
 }
 body{
     background-color: #fdf2ca;
-}
+} */
 
 img.animated-gif{
   width: 30vh;

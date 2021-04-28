@@ -11,15 +11,27 @@ import {
 } from "reactstrap";
 import { useState } from "react";
 import classnames from "classnames";
-const filterText = [
+const filterStatus = [
   "ทั้งหมด",
-  "บริการสำเร็จ",
   "กำลังรอการตอบรับ",
-  "กำลังใช้บริการ",
+  "กำลังรอการจ่ายเงิน",
+  "สิ้นสุดบริการ",
+  "กำลังจะมาถึง",
+  "อยู่ในการบริการ",
+  "เลยเวลาให้บริการ",
   "ยกเลิกบริการ",
-];
-const color = ["secondary", "success", "warning", "info", "danger"];
-export default function FilterBox({ onFilter, fetchMore }) {
+]
+const color = [
+  "#000000"
+  ,"#5bc0de",
+  ,"#0275d8",
+  ,"#5cb85c",
+  ,"#43978D",
+  ,"#ffc107",
+  ,"#f0ad4e",
+  ,"#c82333"
+]
+export default function FilterBox({ onFilter, }) {
   const [filterIndex, setFilterIndex] = useState(0);
   const [colorIndex, setColorIndex] = useState(0);
 
@@ -33,7 +45,7 @@ export default function FilterBox({ onFilter, fetchMore }) {
     //     <div>
     //  <UncontrolledButtonDropdown>
     //   <DropdownToggle caret color={color[colorIndex]}>
-    //     {filterText[filterIndex]}
+    //     {filterStatus[filterIndex]}
     //   </DropdownToggle>
     //   <DropdownMenu>
     //   <DropdownItem onClick={()=>{
@@ -41,31 +53,31 @@ export default function FilterBox({ onFilter, fetchMore }) {
     //     setColorIndex(0);
     //     onFilter(0);
     //     fetchMore();
-    //     }}>{filterText[0]}</DropdownItem>
+    //     }}>{filterStatus[0]}</DropdownItem>
     //     <DropdownItem onClick={()=>{
     //     setFilterIndex(1);
     //     setColorIndex(1);
     //     onFilter(1);
     //     fetchMore();
-    //     }}>{filterText[1]}</DropdownItem>
+    //     }}>{filterStatus[1]}</DropdownItem>
     //     <DropdownItem onClick={()=>{
     //     setFilterIndex(2);
     //     setColorIndex(2);
     //     onFilter(2);
     //     fetchMore();
-    //     }}>{filterText[2]}</DropdownItem>
+    //     }}>{filterStatus[2]}</DropdownItem>
     //     <DropdownItem onClick={()=>{
     //     setFilterIndex(3);
     //     setColorIndex(3);
     //     onFilter(3);
     //     fetchMore();
-    //     }}>{filterText[3]}</DropdownItem>
+    //     }}>{filterStatus[3]}</DropdownItem>
     //     <DropdownItem onClick={()=>{
     //     setFilterIndex(4);
     //     setColorIndex(4);
     //     onFilter(4);
     //     fetchMore();
-    //     }}>{filterText[4]}</DropdownItem>
+    //     }}>{filterStatus[4]}</DropdownItem>
     //   </DropdownMenu>
     // </UncontrolledButtonDropdown>
     //     </div>
@@ -79,11 +91,11 @@ export default function FilterBox({ onFilter, fetchMore }) {
               setFilterIndex(0);
               setColorIndex(0);
               onFilter(0);
-              fetchMore();
+              // fetchMore();
             }}
 
           >
-            <a style={{color:"black"}}>{filterText[0]}</a>
+            <a style={{color:"black"}}>{filterStatus[0]}</a>
           </NavLink>
         </NavItem>
         <NavItem  className="navItem1">
@@ -94,10 +106,10 @@ export default function FilterBox({ onFilter, fetchMore }) {
               setFilterIndex(1);
               setColorIndex(1);
               onFilter(1);
-              fetchMore();
+              // fetchMore();
             }}
           >
-           <a style={{color:"black"}}>{filterText[1]}</a> 
+           <a style={{color:"black"}}>{filterStatus[1]}</a> 
           </NavLink>
         </NavItem>
         <NavItem  className="navItem2">
@@ -108,10 +120,10 @@ export default function FilterBox({ onFilter, fetchMore }) {
               setFilterIndex(2);
               setColorIndex(2);
               onFilter(2);
-              fetchMore();
+              // fetchMore();
             }}
           >
-            <a style={{color:"black"}}>{filterText[2]}</a>
+            <a style={{color:"black"}}>{filterStatus[2]}</a>
           </NavLink>
         </NavItem>
         <NavItem  className="navItem3">
@@ -122,10 +134,10 @@ export default function FilterBox({ onFilter, fetchMore }) {
               setFilterIndex(3);
               setColorIndex(3);
               onFilter(3);
-              fetchMore();
+              // fetchMore();
             }}
           >
-            <a style={{color:"black"}}>{filterText[3]}</a>
+            <a style={{color:"black"}}>{filterStatus[3]}</a>
           </NavLink>
         </NavItem>
         <NavItem  className="navItem4">
@@ -136,12 +148,55 @@ export default function FilterBox({ onFilter, fetchMore }) {
               setFilterIndex(4);
               setColorIndex(4);
               onFilter(4);
-              fetchMore();
+              // fetchMore();
             }}
           >
-            <a style={{color:"black"}}>{filterText[4]}</a>
+            <a style={{color:"black"}}>{filterStatus[4]}</a>
           </NavLink>
         </NavItem>
+        <NavItem  className="navItem4">
+          <NavLink
+            className={classnames({ active: activeTab === "5" })}
+            onClick={() => {
+              toggle("5");
+              setFilterIndex(5);
+              setColorIndex(5);
+              onFilter(5);
+              // fetchMore();
+            }}
+          >
+            <a style={{color:"black"}}>{filterStatus[5]}</a>
+          </NavLink>
+        </NavItem>
+        <NavItem  className="navItem4">
+          <NavLink
+            className={classnames({ active: activeTab === "6" })}
+            onClick={() => {
+              toggle("6");
+              setFilterIndex(6);
+              setColorIndex(6);
+              onFilter(6);
+              // fetchMore();
+            }}
+          >
+            <a style={{color:"black"}}>{filterStatus[6]}</a>
+          </NavLink>
+        </NavItem>
+        <NavItem  className="navItem4">
+          <NavLink
+            className={classnames({ active: activeTab === "7" })}
+            onClick={() => {
+              toggle("7");
+              setFilterIndex(7);
+              setColorIndex(7);
+              onFilter(7);
+              // fetchMore();
+            }}
+          >
+            <a style={{color:"black"}}>{filterStatus[7]}</a>
+          </NavLink>
+        </NavItem>
+        
       </Nav>
       <br/>
     </div>

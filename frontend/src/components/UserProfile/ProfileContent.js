@@ -17,9 +17,14 @@ import DogProfileTab from "./Tab/DogProfileTab";
 import MainTab from "./Tab/MainTab";
 import SettingTab from "./Tab/SettingTab";
 
-const ProfileContent = ({ setpageCollapse, Profile, isOwned, isCustomer }) => {
+const ProfileContent = ({
+  setpageCollapse,
+  Profile,
+  isOwned,
+  isCustomer,
+  profileId,
+}) => {
   const [activeTab, setActiveTab] = useState("1");
-
 
   const toggle = (tab) => {
     if (activeTab !== tab) setActiveTab(tab);
@@ -27,11 +32,11 @@ const ProfileContent = ({ setpageCollapse, Profile, isOwned, isCustomer }) => {
 
   useEffect(() => {
     if (activeTab === "1") {
-      setpageCollapse(true)
+      setpageCollapse(true);
     } else {
-      setpageCollapse(false)
+      setpageCollapse(false);
     }
-  }, [activeTab])
+  }, [activeTab]);
 
   return (
     <div>
@@ -89,19 +94,19 @@ const ProfileContent = ({ setpageCollapse, Profile, isOwned, isCustomer }) => {
       </Nav>
       <TabContent activeTab={activeTab}>
         <TabPane tabId="1">
-          <MainTab isOwned={isOwned} isCustomer={isCustomer} Profile={Profile}/>
+          <MainTab
+            isOwned={isOwned}
+            isCustomer={isCustomer}
+            Profile={Profile}
+          />
         </TabPane>
 
         <TabPane tabId="2">
-          <DogProfileTab />
+          <DogProfileTab profileId={profileId} />
         </TabPane>
 
-        <TabPane tabId="3">
-          {/* implement manage service later */}
-        </TabPane>
-        <TabPane tabId="4">
-          {/* implement show service later */}
-        </TabPane>
+        <TabPane tabId="3">{/* implement manage service later */}</TabPane>
+        <TabPane tabId="4">{/* implement show service later */}</TabPane>
         <TabPane tabId="5">
           <SettingTab />
         </TabPane>

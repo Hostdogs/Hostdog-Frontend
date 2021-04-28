@@ -15,9 +15,11 @@ import {
 } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import APIDog from "./APIDog";
+import DogFeedingTime from "./DogFeedingTime";
+
 const startDogInfo = {
   customer: "",
-  picture: null,
   dog_name: "",
   gender: "",
   dog_dob: "",
@@ -27,11 +29,14 @@ const startDogInfo = {
   dog_bio: "",
 };
 
-export default function DogProfileAddForm() {
+export default function DogProfileAddForm(props) {
+  const { labelBtn } = props;
   const [modal, setModal] = useState(false);
   const [nestedModal, setNestedModal] = useState(false);
   const [closeAll, setCloseAll] = useState(false);
   const [dogInfo, setDogInfo] = useState(startDogInfo);
+  const [picture, setPicture] = useState("");
+  const [allTimes, setAllTimes] = useState([]);
 
   const toggle = () => setModal(!modal);
   const toggleNested = () => {
@@ -42,6 +47,8 @@ export default function DogProfileAddForm() {
     setNestedModal(!nestedModal);
     setCloseAll(true);
     setDogInfo(startDogInfo);
+    setPicture("");
+    setAllTimes([]);
   };
 
   function onDogInfoChange(event) {
@@ -53,20 +60,39 @@ export default function DogProfileAddForm() {
       };
     });
   }
+  function onDogImgChange(event) {
+    const file = event.target.files[0];
+    setPicture(file);
+  }
 
-  const onDogSubmit = (event) => {
+  async function onDogSubmit(event) {
     event.preventDefault();
+    console.log(dogInfo);
+    console.log(allTimes);
+    dogInfo.customer = 1; //test
+    const resp1 = await APIDog.AddDog(dogInfo);
     setDogInfo(startDogInfo);
+    if (picture !== "") {
+      let form_data = new FormData();
+      form_data.append("picture", picture, picture.name);
+      const resp2 = await APIDog.UploadImgDog(resp1.data.id, form_data);
+      props.addDogInfo(resp2.data);
+      setPicture("");
+    } else {
+      props.addDogInfo(resp1.data);
+    }
     toggle();
-  };
+  }
 
   function changeValue(name, value) {
     if (value === "true" || value === true) {
       return true;
     } else if (value === "false" || value === false) {
       return false;
-    } else if (!isNaN(value)) {
+    } else if (!isNaN(value) && name !== "dog_bio") {
       return Number(value);
+    } else if (value === "" && name === "picture") {
+      return null;
     } else {
       return value;
     }
@@ -77,7 +103,7 @@ export default function DogProfileAddForm() {
       <Row>
         <Col xs="12">
           <Button color="warning" onClick={toggle}>
-            <FontAwesomeIcon icon={faPlus} /> เพิ่มสุนัข
+            <FontAwesomeIcon icon={faPlus} /> {labelBtn}
           </Button>
         </Col>
       </Row>
@@ -92,8 +118,7 @@ export default function DogProfileAddForm() {
                 type="file"
                 name="picture"
                 accept="image/*"
-                value={dogInfo.picture}
-                onChange={onDogInfoChange}
+                onChange={onDogImgChange}
               />
             </FormGroup>
             <FormGroup>
@@ -124,7 +149,7 @@ export default function DogProfileAddForm() {
                     name="gender"
                     label="เพศผู้"
                     onChange={onDogInfoChange}
-                    value="Male"
+                    value="male"
                   />
                 </Col>
                 <Col xs="5" md="4">
@@ -134,7 +159,7 @@ export default function DogProfileAddForm() {
                     name="gender"
                     label="เพศเมีย"
                     onChange={onDogInfoChange}
-                    value="Female"
+                    value="female"
                   />
                 </Col>
               </Row>
@@ -171,6 +196,10 @@ export default function DogProfileAddForm() {
                 onChange={onDogInfoChange}
               />
             </FormGroup>
+            <FormGroup>
+              <DogFeedingTime allTimes={allTimes} setAllTimes={setAllTimes} />
+            </FormGroup>
+
             <FormGroup>
               <Label>รายละเอียดสุนัข</Label>
               <Input

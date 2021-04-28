@@ -1,10 +1,12 @@
 import NavbarIsAuth from "../Navbar/NavbarIsAuth";
 import SideBar from "../sidebar/SideBar";
 import ProgressBar from "./ProgressBar";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import ServiceDetail from "./ServiceDetail";
+import { Collapse, Container } from "reactstrap";
+import ProgressAPI from "./ProgressAPI";
 
-export default function ProgressPage() {
+export default function ProgressPage({ match }) {
   const [progressValue, setProgressValue] = useState(0);
 
   const [colorIndex, setColorIndex] = useState(3);
@@ -14,31 +16,61 @@ export default function ProgressPage() {
   const [gifIndex, setGifIndex] = useState(0);
 
   const handleProgress = () => {
-    if (progressValue >= 100 || gifIndex >= 5) {
+    if (progressValue >= 100 || gifIndex >= 6) {
       setLabelIndex(0);
-      setProgressValue(20);
+      setProgressValue(16.67);
       setColorIndex(3);
       setGifIndex(0);
     } else {
       setLabelIndex(labelIndex + 1);
       setColorIndex(3);
-      setProgressValue(progressValue + 20);
+      setProgressValue(progressValue + 16.67);
       setGifIndex(gifIndex + 1);
     }
   };
   const handleCancel = () => {
     setColorIndex(4);
-    setLabelIndex(5);
-    setGifIndex(5);
+    setLabelIndex(6);
+    setGifIndex(6);
   };
   useEffect(() => {
-    setProgressValue(progressValue + 20);
+    setProgressValue(progressValue + 16.67);
   }, []);
 
+  /////////////expand info//////////////////
+  const [isExpand, setisExpand] = useState(false)
+  const [offset, setOffset] = useState(0);
+  ///////////// get service info //////////////
+  const [ServiceInfo, setServiceInfo] = useState(null)
+  let servicePath = match.params["service_id"]
+  useEffect(() => {
+    ProgressAPI.fakeServiceProgress(servicePath).then(res => {
+      setServiceInfo(res)
+
+    })
+  }, [])
+
+  useEffect(() => {
+    window.onscroll = () => {
+
+      if (window.pageYOffset > offset) {
+        setisExpand(true)
+
+      } else if (window.pageYOffset === 0) {
+        setisExpand(false)
+
+      }
+      setOffset(window.pageYOffset)
+      // console.log(window.pageYOffset,"::",offset)
+    }
+  }, [offset]);
+
   return (
-    <div style={{ backgroundColor: "#fdf2ca" }}>
+    <div style={{ backgroundColor: "#fdf2ca" }} >
       <NavbarIsAuth />
-      <div>
+      <div style={{ minHeight: "100vh", paddingTop: "70px" }}>
+
+
         <ProgressBar
           progressValue={progressValue}
           colorIndex={colorIndex}
@@ -47,9 +79,16 @@ export default function ProgressPage() {
           handleProgress={handleProgress}
         />
 
-        <ServiceDetail onCancel={handleCancel} />
-      </div>
+        <br />
 
+          <Container fluid="lg" >
+            <ServiceDetail onCancel={handleCancel} isExpand={isExpand} ServiceInfo={ServiceInfo}  />
+          </Container>
+      {/* {!isExpand?(<div style={{height:"100px"}}></div>):(null)} */}
+
+
+      </div>
+      <div style={{ height:"5px" }}></div>
 
     </div>
   );

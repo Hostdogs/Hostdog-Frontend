@@ -16,25 +16,25 @@ export default function ProgressPage({ match }) {
   const [gifIndex, setGifIndex] = useState(0);
 
   const handleProgress = () => {
-    if (progressValue >= 100 || gifIndex >= 5) {
+    if (progressValue >= 100 || gifIndex >= 6) {
       setLabelIndex(0);
-      setProgressValue(20);
+      setProgressValue(16.67);
       setColorIndex(3);
       setGifIndex(0);
     } else {
       setLabelIndex(labelIndex + 1);
       setColorIndex(3);
-      setProgressValue(progressValue + 20);
+      setProgressValue(progressValue + 16.67);
       setGifIndex(gifIndex + 1);
     }
   };
   const handleCancel = () => {
     setColorIndex(4);
-    setLabelIndex(5);
-    setGifIndex(5);
+    setLabelIndex(6);
+    setGifIndex(6);
   };
   useEffect(() => {
-    setProgressValue(progressValue + 20);
+    setProgressValue(progressValue + 16.67);
   }, []);
 
   /////////////expand info//////////////////
@@ -64,8 +64,6 @@ export default function ProgressPage({ match }) {
       // console.log(window.pageYOffset,"::",offset)
     }
   }, [offset]);
-  
-  
 
   return (
     <div style={{ backgroundColor: "#fdf2ca" }} >

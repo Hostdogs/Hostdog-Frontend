@@ -16,6 +16,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import APIDog from "./APIDog";
+import DogFeedingTime from "./DogFeedingTime";
 
 const startDogInfo = {
   customer: "",
@@ -35,6 +36,8 @@ export default function DogProfileAddForm(props) {
   const [closeAll, setCloseAll] = useState(false);
   const [dogInfo, setDogInfo] = useState(startDogInfo);
   const [picture, setPicture] = useState("");
+  const [allTimes, setAllTimes] = useState([]);
+
   const toggle = () => setModal(!modal);
   const toggleNested = () => {
     setNestedModal(!nestedModal);
@@ -45,6 +48,7 @@ export default function DogProfileAddForm(props) {
     setCloseAll(true);
     setDogInfo(startDogInfo);
     setPicture("");
+    setAllTimes([]);
   };
 
   function onDogInfoChange(event) {
@@ -59,11 +63,12 @@ export default function DogProfileAddForm(props) {
   function onDogImgChange(event) {
     const file = event.target.files[0];
     setPicture(file);
-    //console.log(picture.name);
   }
 
   async function onDogSubmit(event) {
     event.preventDefault();
+    console.log(dogInfo);
+    console.log(allTimes);
     dogInfo.customer = 1; //test
     const resp1 = await APIDog.AddDog(dogInfo);
     setDogInfo(startDogInfo);
@@ -191,6 +196,10 @@ export default function DogProfileAddForm(props) {
                 onChange={onDogInfoChange}
               />
             </FormGroup>
+            <FormGroup>
+              <DogFeedingTime allTimes={allTimes} setAllTimes={setAllTimes} />
+            </FormGroup>
+
             <FormGroup>
               <Label>รายละเอียดสุนัข</Label>
               <Input

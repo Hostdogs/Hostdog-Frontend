@@ -1,3 +1,18 @@
 .list-service {
   margin-left: 25px;
 }
+
+.col-left{
+  backgroundColor: #71bfb6;
+  padding: 10px 10px;
+  color:white;
+  borderRadius:3%;
+}
+
+.col-left:hover {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.col-right:hover {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}

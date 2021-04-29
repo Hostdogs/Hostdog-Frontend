@@ -16,18 +16,18 @@
   /* position: fixed; */
 }
 
-.sidebar-header {
+/* .sidebar-header {
   background: #4b4944;
 }
 
 .sidebar-header h1 {
-  /* font-family: "Times New Roman", Times, serif;
+  font-family: "Times New Roman", Times, serif;
   font-style: italic;
-  font-weight: bold; */
+  font-weight: bold;
   color: black; 
-}
+} */
 
-.nav-item:hover {
+.navItemSidebar:hover {
   color: #ffe080;
   background: #ffbb3cd5;
 }
@@ -87,4 +87,12 @@ li a.dropdown-toggle::after {
     position: relative;
     left: 68%;
   }
+}
+
+.navbar-light .navbar-toggler-icon{
+  background-image:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(38,77,89,1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='4' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important
+}
+
+.navbar-light .navbar-toggler{
+  border: none !important;
 }

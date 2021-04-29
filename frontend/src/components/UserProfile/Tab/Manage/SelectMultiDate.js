@@ -25,8 +25,14 @@ export default function SelectMultiDate() {
       });
     });
   }
+
+  const weekdayStyle = `.DayPicker-Weekday {
+    color: black;
+  }`;
+
   return (
-    <div>
+    <div style={{color:"black", backgroundColor:"white", borderRadius:"20px"}}>
+      <style>{weekdayStyle}</style>
       <DayPicker
         disabledDays={{
           after: twoMonthsLater,

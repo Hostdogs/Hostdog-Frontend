@@ -18,16 +18,21 @@ import "./Host.css";
 import FreeDay from "./FreeDay";
 import "holderjs";
 import { useEffect, useState } from "react";
+import { useHistory } from "react-router";
 
 export default function Host({ host }) {
   const [displace, setdisplace] = useState("")
+  const [urllink, seturllink] = useState("/")
   useEffect(() => {
     if(host.displace>=1000){
       setdisplace(host.displace/1000+" km")
     }else{
       setdisplace(host.displace+" m")
     }
+    seturllink(`/profile/${host.userid}`)
   }, [host])
+  let history = useHistory()
+
   return (
     
     <div>
@@ -41,7 +46,7 @@ export default function Host({ host }) {
             <Col xs="12" sm="12" md="2" lg="2" style={{ textAlign: "center" }}>
               <img
                 src={host.picture}
-                class="img-responsive center-block"
+                className="img-responsive center-block"
                 style={{
                   borderRadius: "50%",
                   width: "125px",
@@ -108,7 +113,7 @@ export default function Host({ host }) {
               
                       <br />
                       <FontAwesomeIcon icon={faBone} size="xs"  style={{transform:"rotate(135deg)", color:"#43978d"}}/>
-                      <b> {host.host_rating}/5.0</b>
+                      <b> {host.host_rating.toFixed(1)}/5.0</b>
                     </Col>
                   </Row>
                 </Col>
@@ -123,13 +128,20 @@ export default function Host({ host }) {
             </Container>
           </Col>
         </CardBody>
-        <a href="#" style={{ color: "black" }}>
+        
           <CardFooter
             style={{ textAlign: "center", backgroundColor: "#f9e07f",color:"#264d59" }}
           >
+            <a href="#" style={{ color: "black" }} onClick={e=>{
+              history.push(urllink)
+              history.go(0)
+              e.preventDefault()}}
+      
+              >
             รายละเอียดเพิ่มเติม
+            </a>
           </CardFooter>
-        </a>
+        
       </Card>
     </div>
   );

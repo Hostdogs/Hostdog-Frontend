@@ -45,7 +45,7 @@ const testHost = [
         picture: "https://randomuser.me/api/portraits/women/35.jpg",
         displace: 1000,
         host_hosted_count: 55,
-        host_rating:"4.8",
+        host_rating:4.8,
         host_area:40
     }, {
         userid: 4,
@@ -59,7 +59,7 @@ const testHost = [
         picture: "https://randomuser.me/api/portraits/men/5.jpg",
         displace: 1500,
         host_hosted_count: 34,
-        host_rating:"2.7",
+        host_rating:2.7,
         host_area:25
     }, {
         userid: 5,
@@ -73,7 +73,7 @@ const testHost = [
         picture: "https://randomuser.me/api/portraits/men/35.jpg",
         displace: 7000,
         host_hosted_count: 44,
-        host_rating:"3.2",
+        host_rating:3.2,
         host_area:18
     }, {
         userid: 6,
@@ -87,7 +87,7 @@ const testHost = [
         picture: "https://randomuser.me/api/portraits/men/42.jpg",
         displace: 15000,
         host_hosted_count: 2,
-        host_rating:"3.0",
+        host_rating:3.0,
         host_area:18,
     }
 ]

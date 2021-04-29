@@ -17,6 +17,7 @@ import DogProfileTab from "./Tab/DogProfileTab";
 import MainTab from "./Tab/MainTab";
 import SettingTab from "./Tab/SettingTab";
 import HostServiceTab from "./Tab/Manage/HostServiceTab";
+import ServiceDetailTab from "./Tab/ServiceDetail/ServiceDetailTab";
 
 const ProfileContent = ({
   setpageCollapse,
@@ -109,7 +110,9 @@ const ProfileContent = ({
         <TabPane tabId="3">
           <HostServiceTab />
         </TabPane>
-        <TabPane tabId="4">{/* implement show service later */}</TabPane>
+        <TabPane tabId="4">
+          <ServiceDetailTab />
+        </TabPane>
         <TabPane tabId="5">
           <SettingTab />
         </TabPane>

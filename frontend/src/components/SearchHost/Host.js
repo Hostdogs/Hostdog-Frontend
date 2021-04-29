@@ -23,26 +23,39 @@ import { useHistory } from "react-router";
 export default function Host({ host }) {
   const [displace, setdisplace] = useState("")
   const [urllink, seturllink] = useState("/")
+  const [title, settitle] = useState("ผู้ฝากสุนัข")
   useEffect(() => {
-    if(host.displace>=1000){
-      setdisplace(host.displace/1000+" km")
-    }else{
-      setdisplace(host.displace+" m")
+    if (host.displace >= 1000) {
+      setdisplace(host.displace / 1000 + " km")
+    } else {
+      setdisplace(host.displace + " m")
     }
     seturllink(`/profile/${host.userid}`)
+    setHostTitle(host.host_hosted_count)
   }, [host])
   let history = useHistory()
-
+  const titleList = ["มือใหม่หัดเลี้ยง", "พี่เลี้ยงทั่วไป", "พี่เลี้ยงอาวุโส", "พี่เลี้ยงขั้นเซียน"]
+  const setHostTitle = (value) => {
+    if (value < 5) {
+      settitle(titleList[0])
+    } else if (value < 20) {
+      settitle(titleList[1])
+    } else if (value < 50) {
+      settitle(titleList[2])
+    } else {
+      settitle(titleList[3])
+    }
+  }
   return (
-    
+
     <div>
-      <Card> 
-        <CardHeader style={{backgroundColor:"#f9e07f", borderRadius:"0", color:"#264d59"}}>
-        <h4 style={{position:"absolute", top:"5px", right:"10px"}}>{displace}</h4>
-        <div style={{position:"absolute", top:"7px", left:"15px"}}>
-        <FreeDay />
-        </div>
-          <Row style={{marginTop:"2%"}}>
+      <Card>
+        <CardHeader style={{ backgroundColor: "#f9e07f", borderRadius: "0", color: "#264d59" }}>
+          <h4 style={{ position: "absolute", top: "5px", right: "10px" }}>{displace}</h4>
+          <div style={{ position: "absolute", top: "7px", left: "15px" }}>
+            <FreeDay />
+          </div>
+          <Row style={{ marginTop: "2%" }}>
             <Col xs="12" sm="12" md="2" lg="2" style={{ textAlign: "center" }}>
               <img
                 src={host.picture}
@@ -51,7 +64,7 @@ export default function Host({ host }) {
                   borderRadius: "50%",
                   width: "125px",
                   height: "125px",
-                  objectFit:"cover"
+                  objectFit: "cover"
                 }}
               />
             </Col>
@@ -71,25 +84,25 @@ export default function Host({ host }) {
                   style={{ textAlign: "center" }}
                 >
                   <a className="mobile-br2">
-                          <div style={{paddingTop:"3%"}}> </div>
-                        </a>
+                    <div style={{ paddingTop: "3%" }}> </div>
+                  </a>
                   <h3 className="fontsizeName">
                     <FontAwesomeIcon
                       icon={faBone}
                       className="mr-2 fa-rotate-135"
                       size="xs"
-                      style={{ transform:"rotate(135deg)", color:"#43978d"}}
+                      style={{ transform: "rotate(135deg)", color: "#43978d" }}
                     />
                     {host.name} {host.surname}
                   </h3>
-                  <h5 className="fontsizeLevel">มือใหม่หัดเลี้ยง</h5>
+                  <h5 className="fontsizeLevel">{title}</h5>
                 </Col>
                 <Col xs="12" sm="12" md="12" lg="7">
                   <Row style={{ justifyContent: "center" }}>
-                    <Col xs="12" md="6" lg="8" style={{ fontSize: "18px"}} className="fontsizeDetail">
-                    <a className="mobile-br2">
-                          <div style={{paddingTop:"3%"}}> </div>
-                        </a>
+                    <Col xs="12" md="6" lg="8" style={{ fontSize: "18px" }} className="fontsizeDetail">
+                      <a className="mobile-br2">
+                        <div style={{ paddingTop: "3%" }}> </div>
+                      </a>
                       <div>
                         รับฝากมาแล้ว <b>{host.host_hosted_count} ตัว</b>{" "}
                         <a className="mobile-br">
@@ -105,43 +118,44 @@ export default function Host({ host }) {
                         <b>{host.host_area} ตารางเมตร</b>
                       </div>
                       <a className="mobile-br2">
-                          <br />
+                        <br />
                       </a>
                     </Col>
-                    <Col xs="12" md="3" lg="4" style={{ fontSize: "18px"}} className="fontsizeDetail">
-                      <a style={{fontSize:"20px", color:"#264d59", fontWeight:"bold", backgroundColor:"white", borderRadius:"50%", paddingLeft:"10px",paddingRight:"10px"}}>คะแนนรีวิว</a>
-              
+                    <Col xs="12" md="3" lg="4" style={{ fontSize: "18px" }} className="fontsizeDetail">
+                      <a style={{ fontSize: "20px", color: "#264d59", fontWeight: "bold", backgroundColor: "white", borderRadius: "50%", paddingLeft: "10px", paddingRight: "10px" }}>คะแนนรีวิว</a>
+
                       <br />
-                      <FontAwesomeIcon icon={faBone} size="xs"  style={{transform:"rotate(135deg)", color:"#43978d"}}/>
+                      <FontAwesomeIcon icon={faBone} size="xs" style={{ transform: "rotate(135deg)", color: "#43978d" }} />
                       <b> {host.host_rating.toFixed(1)}/5.0</b>
                     </Col>
                   </Row>
                 </Col>
-              </Row>   
+              </Row>
             </Col>
           </Row>
         </CardHeader>
-        <CardBody style={{backgroundColor:"#f3f4f5"}}>
+        <CardBody style={{ backgroundColor: "#f3f4f5" }}>
           <Col style={{ padding: "0px" }}>
             <Container fluid="sm">
               <HostGallery />
             </Container>
           </Col>
         </CardBody>
-        
-          <CardFooter
-            style={{ textAlign: "center", backgroundColor: "#f9e07f",color:"#264d59" }}
+
+        <CardFooter
+          style={{ textAlign: "center", backgroundColor: "#f9e07f", color: "#264d59" }}
+        >
+          <a href="#" style={{ color: "black" }} onClick={e => {
+            history.push(urllink)
+            history.go(0)
+            e.preventDefault()
+          }}
+
           >
-            <a href="#" style={{ color: "black" }} onClick={e=>{
-              history.push(urllink)
-              history.go(0)
-              e.preventDefault()}}
-      
-              >
             รายละเอียดเพิ่มเติม
             </a>
-          </CardFooter>
-        
+        </CardFooter>
+
       </Card>
     </div>
   );

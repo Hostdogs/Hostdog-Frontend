@@ -32,7 +32,7 @@ export default function HostList() {
   useEffect(() => {
     console.log("Hostlist Invoked")
     SearchAPI.fakeGetHostInformation(hostData.length).then(res => {
-      setHostData(hostData.concat(res))
+      setHostData(res)
     })
   }, [])
 

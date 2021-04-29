@@ -62,142 +62,150 @@ export default function HostServiceBox() {
   return (
     <div>
       <Form style={{ marginTop: "15px" }}>
-        <FormGroup>
-          <Row>
-            <Col>
-              <h4>บริการทั่วไป</h4>
-            </Col>
-          </Row>
-        </FormGroup>
-        <div className="list-service">
-          <FormGroup>
-            <Row style={{ alignItems: "center" }}>
-              <Col xs="12" sm="5" lg="3">
-                ราคาในการรับฝากสุนัขต่อวัน
-              </Col>
-              <Col xs="5" sm="3" lg="2">
-                <Input type="number" />
-              </Col>
-              <Col xs="auto">บาท</Col>
-            </Row>
-          </FormGroup>
-          <FormGroup>
-            <Row style={{ alignItems: "center" }}>
-              <Col xs="12" sm="5" lg="3">
-                ค่ามัดจำในการฝากสุนัข
-              </Col>
-              <Col xs="5" sm="3" lg="2">
-                <Input type="number" />
-              </Col>
-              <Col xs="auto">บาท</Col>
-            </Row>
-          </FormGroup>
-          <FormGroup>
-            <Row style={{ alignItems: "center" }}>
-              <Col xs="12" sm="5" lg="3">
-                <SelectMultiDate />
+        <Row>
+          <Col xs="12" sm="12" md="12" lg="6">
+            <Row>
+              <Col>
+                <h4>บริการทั่วไป</h4>
               </Col>
             </Row>
-          </FormGroup>
-        </div>
+            <div className="list-service">
+              <FormGroup>
+                <Row>
+                  <Col xs="12" sm="5" lg="6">
+                    ราคาในการรับฝากสุนัขต่อวัน
+                  </Col>
+                  <Col xs="5" sm="3" lg="3">
+                    <Input type="number" />
+                  </Col>
+                  <Col xs="auto">บาท</Col>
+                </Row>
+              </FormGroup>
+              <FormGroup>
+                <Row>
+                  <Col xs="12" sm="5" lg="6">
+                    ค่ามัดจำในการฝากสุนัข
+                  </Col>
+                  <Col xs="5" sm="3" lg="3">
+                    <Input type="number" />
+                  </Col>
+                  <Col xs="auto">บาท</Col>
+                </Row>
+              </FormGroup>
+              <FormGroup>
+                <Row>
+                  <Col xs="12" sm="5" lg="12">
+                    วันที่ว่างในการดูแลสุนัข
+                  </Col>
+                  <Col xs="12" sm="5" lg="12" style={{ textAlign: "center" }}>
+                    <SelectMultiDate />
+                  </Col>
+                </Row>
+              </FormGroup>
+            </div>
+          </Col>
+          <Col xs="12" sm="12" md="12" lg="6">
+            <FormGroup style={{ marginTop: "20px" }}>
+              <Row>
+                <Col>
+                  <h4>บริการเพิ่มเติม</h4>
+                </Col>
+              </Row>
+            </FormGroup>
+            <div className="list-service">
+              <FormGroup>
+                <Row>
+                  <Col xs="12" sm="5" lg="6">
+                    ราคาพาสุนัขไปเดินเล่น
+                  </Col>
+                  <Col xs="5" sm="3" lg="3">
+                    <Input type="number" />
+                  </Col>
+                  <Col xs="auto">บาท</Col>
+                </Row>
+                <Row>
+                  <Col xs="12">
+                    <CustomInput
+                      type="switch"
+                      id="walk_dog"
+                      name="dog_walk_enable"
+                      label="เปิด/ปิด พาสุนัขไปเดินเล่น"
+                      onChange={onEnableChange}
+                    />
+                  </Col>
+                </Row>
+              </FormGroup>
+              <FormGroup style={{ marginTop: "20px" }}>
+                <Row>
+                  <Col xs="12" sm="5" lg="6">
+                    ราคาไปรับสุนัขต่อกิโลเมตร
+                  </Col>
+                  <Col xs="5" sm="3" lg="3">
+                    <Input type="number" />
+                  </Col>
+                  <Col xs="auto">บาท</Col>
+                </Row>
+                <Row>
+                  <Col xs="12">
+                    <CustomInput
+                      type="switch"
+                      id="get_dog"
+                      name="get_dog_enable"
+                      label="เปิด/ปิด ไปรับสุนัข"
+                      onChange={onEnableChange}
+                    />
+                  </Col>
+                </Row>
+              </FormGroup>
+              <FormGroup style={{ marginTop: "20px" }}>
+                <Row>
+                  <Col xs="12" sm="5" lg="6">
+                    ราคาไปส่งสุนัขต่อกิโลเมตร
+                  </Col>
+                  <Col xs="5" sm="3" lg="3">
+                    <Input type="number" />
+                  </Col>
+                  <Col xs="auto">บาท</Col>
+                </Row>
+                <Row>
+                  <Col xs="12">
+                    <CustomInput
+                      type="switch"
+                      id="send_dog"
+                      name="delivery_dog_enable"
+                      label="เปิด/ปิด ไปส่งสุนัข"
+                      onChange={onEnableChange}
+                    />
+                  </Col>
+                </Row>
+              </FormGroup>
+              <FormGroup style={{ marginTop: "20px" }}>
+                <Row>
+                  <Col xs="12" sm="5" lg="6">
+                    ราคาอาบน้ำสุนัข
+                  </Col>
+                  <Col xs="5" sm="3" lg="3">
+                    <Input type="number" />
+                  </Col>
+                  <Col xs="auto">บาท</Col>
+                </Row>
+                <Row>
+                  <Col xs="12">
+                    <CustomInput
+                      type="switch"
+                      id="bath_dog"
+                      name="bath_dog_enable"
+                      label="เปิด/ปิด อาบน้ำสุนัข"
+                      onChange={onEnableChange}
+                    />
+                  </Col>
+                </Row>
+              </FormGroup>
+            </div>
+          </Col>
+        </Row>
 
-        <FormGroup style={{ marginTop: "20px" }}>
-          <Row>
-            <Col>
-              <h4>บริการเพิ่มเติม</h4>
-            </Col>
-          </Row>
-        </FormGroup>
-        <div className="list-service">
-          <FormGroup>
-            <Row style={{ alignItems: "center" }}>
-              <Col xs="12" sm="5" lg="3">
-                ราคาพาสุนัขไปเดินเล่น
-              </Col>
-              <Col xs="5" sm="3" lg="2">
-                <Input type="number" />
-              </Col>
-              <Col xs="auto">บาท</Col>
-            </Row>
-            <Row>
-              <Col xs="12">
-                <CustomInput
-                  type="switch"
-                  id="walk_dog"
-                  name="dog_walk_enable"
-                  label="เปิด/ปิด พาสุนัขไปเดินเล่น"
-                  onChange={onEnableChange}
-                />
-              </Col>
-            </Row>
-          </FormGroup>
-          <FormGroup style={{ marginTop: "20px" }}>
-            <Row style={{ alignItems: "center" }}>
-              <Col xs="12" sm="5" lg="3">
-                ราคาไปรับสุนัขต่อกิโลเมตร
-              </Col>
-              <Col xs="5" sm="3" lg="2">
-                <Input type="number" />
-              </Col>
-              <Col xs="auto">บาท</Col>
-            </Row>
-            <Row>
-              <Col xs="12">
-                <CustomInput
-                  type="switch"
-                  id="get_dog"
-                  name="get_dog_enable"
-                  label="เปิด/ปิด ไปรับสุนัข"
-                  onChange={onEnableChange}
-                />
-              </Col>
-            </Row>
-          </FormGroup>
-          <FormGroup style={{ marginTop: "20px" }}>
-            <Row style={{ alignItems: "center" }}>
-              <Col xs="12" sm="5" lg="3">
-                ราคาไปส่งสุนัขต่อกิโลเมตร
-              </Col>
-              <Col xs="5" sm="3" lg="2">
-                <Input type="number" />
-              </Col>
-              <Col xs="auto">บาท</Col>
-            </Row>
-            <Row>
-              <Col xs="12">
-                <CustomInput
-                  type="switch"
-                  id="send_dog"
-                  name="delivery_dog_enable"
-                  label="เปิด/ปิด ไปส่งสุนัข"
-                  onChange={onEnableChange}
-                />
-              </Col>
-            </Row>
-          </FormGroup>
-          <FormGroup style={{ marginTop: "20px" }}>
-            <Row style={{ alignItems: "center" }}>
-              <Col xs="12" sm="5" lg="3">
-                ราคาอาบน้ำสุนัข
-              </Col>
-              <Col xs="5" sm="3" lg="2">
-                <Input type="number" />
-              </Col>
-              <Col xs="auto">บาท</Col>
-            </Row>
-            <Row>
-              <Col xs="12">
-                <CustomInput
-                  type="switch"
-                  id="bath_dog"
-                  name="bath_dog_enable"
-                  label="เปิด/ปิด อาบน้ำสุนัข"
-                  onChange={onEnableChange}
-                />
-              </Col>
-            </Row>
-          </FormGroup>
-        </div>
+        <hr />
       </Form>
     </div>
   );

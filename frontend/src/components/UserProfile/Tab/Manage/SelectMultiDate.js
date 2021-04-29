@@ -5,7 +5,8 @@ import moment from "moment-timezone";
 
 export default function SelectMultiDate() {
   const [selectedDays, setSelectedDays] = useState([]);
-
+  let twoMonthsLater = new Date();
+  twoMonthsLater.setMonth(twoMonthsLater.getMonth() + 2);
   function handleDayClick(day, { selected }) {
     if (selected) {
       onDayDelete(day);
@@ -26,7 +27,14 @@ export default function SelectMultiDate() {
   }
   return (
     <div>
-      <DayPicker selectedDays={selectedDays} onDayClick={handleDayClick} />
+      <DayPicker
+        disabledDays={{
+          after: twoMonthsLater,
+          before: new Date(),
+        }}
+        selectedDays={selectedDays}
+        onDayClick={handleDayClick}
+      />
     </div>
   );
 }

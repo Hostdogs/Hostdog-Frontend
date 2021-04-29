@@ -13,6 +13,7 @@ import {
   Label,
 } from "reactstrap";
 import "./ManageTab.css";
+import SelectMultiDate from "./SelectMultiDate";
 
 const startHostService = {
   price_dog_walk: "",
@@ -45,9 +46,9 @@ export default function HostServiceBox() {
       return true;
     } else if (value === "false" || value === false) {
       return false;
-    } else if (!isNaN(value) && name !== "dog_bio") {
+    } else if (!isNaN(value)) {
       return Number(value);
-    } else if (value === "" && name === "picture") {
+    } else if (value === "") {
       return null;
     } else {
       return value;
@@ -91,7 +92,15 @@ export default function HostServiceBox() {
               <Col xs="auto">บาท</Col>
             </Row>
           </FormGroup>
+          <FormGroup>
+            <Row style={{ alignItems: "center" }}>
+              <Col xs="12" sm="5" lg="3">
+                <SelectMultiDate />
+              </Col>
+            </Row>
+          </FormGroup>
         </div>
+
         <FormGroup style={{ marginTop: "20px" }}>
           <Row>
             <Col>

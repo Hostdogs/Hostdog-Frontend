@@ -62,10 +62,18 @@ export default function HostServiceBox() {
   return (
     <div>
       <Form>
-        <div style={{ paddingTop: "15px" }}>
+        <div>
           <Row>
-            <Col xs="12" sm="12" md="12" lg="6">
-              <div className="col-left" style={{ backgroundColor: "#43978d", padding: "10px 10px", color:"white", borderRadius:"3%"  }}>
+            <Col xs="12" sm="12" md="12" lg="6" style={{ marginTop: "15px" }}>
+              <div
+                className="col-left-manage"
+                style={{
+                  backgroundColor: "#43978d",
+                  padding: "10px 10px",
+                  color: "white",
+                  borderRadius: "3%",
+                }}
+              >
                 <FormGroup>
                   <Row>
                     <Col>
@@ -103,28 +111,36 @@ export default function HostServiceBox() {
                       <Col xs="auto">บาท</Col>
                     </Row>
                   </FormGroup>
-                  <FormGroup>
-                    <Row>
-                      <Col xs="12" sm="12" lg="12">
-                        วันที่ว่างในการดูแลสุนัข
-                      </Col>
-                      
-                      <Col
-                        xs="12"
-                        sm="12"
-                        lg="12"
-                        style={{ textAlign: "center" }}
-                      >
-                        <br/>
-                        <SelectMultiDate />
-                      </Col>
-                    </Row>
-                  </FormGroup>
                 </div>
+                <FormGroup>
+                  <Row>
+                    <Col xs="12" sm="12" lg="12" className="list-service">
+                      วันที่ว่างในการดูแลสุนัข
+                    </Col>
+
+                    <Col
+                      xs="12"
+                      sm="12"
+                      lg="12"
+                      style={{ textAlign: "center" }}
+                    >
+                      <br />
+                      <SelectMultiDate />
+                    </Col>
+                  </Row>
+                </FormGroup>
               </div>
             </Col>
-            <Col xs="12" sm="12" md="12" lg="6">
-              <div className="col-right" style={{ backgroundColor: "#43978d", padding: "10px 10px", color:"white", borderRadius:"3%" }}>
+            <Col xs="12" sm="12" md="12" lg="6" style={{ marginTop: "15px" }}>
+              <div
+                className="col-right-manage"
+                style={{
+                  backgroundColor: "#43978d",
+                  padding: "10px 10px",
+                  color: "white",
+                  borderRadius: "3%",
+                }}
+              >
                 <FormGroup>
                   <Row>
                     <Col>
@@ -158,7 +174,6 @@ export default function HostServiceBox() {
                           name="dog_walk_enable"
                           label="พาสุนัขไปเดินเล่น"
                           onChange={onEnableChange}
-                          
                         />
                       </Col>
                     </Row>

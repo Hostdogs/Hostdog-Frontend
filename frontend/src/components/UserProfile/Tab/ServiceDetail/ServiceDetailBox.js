@@ -73,11 +73,10 @@ export default function ServiceDetailBox() {
   return (
     <div>
       <Form>
-        <div style={{ paddingTop: "15px" }}>
+        <div>
           <Row>
-            <Col xs="12" sm="12" md="12" lg="6">
+            <Col xs="12" sm="12" md="12" lg="6" style={{ marginTop: "15px" }}>
               <div
-                className="col-left"
                 style={{
                   backgroundColor: "#43978d",
                   padding: "10px 10px",
@@ -89,13 +88,13 @@ export default function ServiceDetailBox() {
                   <Col>
                     <h4>บริการทั่วไป</h4>
                     <hr
-                        style={{
-                          width: "50%",
-                          margin: "0",
-                          backgroundColor: "#264d59",
-                        }}
-                      />
-                      <br/>
+                      style={{
+                        width: "50%",
+                        margin: "0",
+                        backgroundColor: "#264d59",
+                      }}
+                    />
+                    <br />
                   </Col>
                 </Row>
                 <div className="list-service">
@@ -115,32 +114,37 @@ export default function ServiceDetailBox() {
                       <Col xs="auto">{serviceDetail.deposit_price} บาท</Col>
                     </Row>
                   </FormGroup>
-                  <FormGroup>
-                    <Row>
-                      <Col xs="12" sm="12" lg="12">
-                        วันที่ว่างในการดูแลสุนัข
-                      </Col>
-                      <Col xs="12" sm="12" lg="12" style={{ textAlign: "center" }}>
-                        <br/>
-                        <ShowAvailableDate />
-                      </Col>
-                    </Row>
-                  </FormGroup>
                 </div>
+                <FormGroup>
+                  <Row>
+                    <Col xs="12" sm="12" lg="12" className="list-service">
+                      วันที่ว่างในการดูแลสุนัข
+                    </Col>
+                    <Col
+                      xs="12"
+                      sm="12"
+                      lg="12"
+                      style={{
+                        textAlign: "center",
+                      }}
+                    >
+                      <br />
+                      <ShowAvailableDate />
+                    </Col>
+                  </Row>
+                </FormGroup>
               </div>
             </Col>
 
-        
-              <Col xs="12" sm="12" md="12" lg="6">
+            <Col xs="12" sm="12" md="12" lg="6" style={{ marginTop: "15px" }}>
               <div
-              className="col-left"
-              style={{
-                backgroundColor: "#43978d",
-                padding: "10px 10px",
-                color: "white",
-                borderRadius: "15px",
-              }}
-            >
+                style={{
+                  backgroundColor: "#43978d",
+                  padding: "10px 10px",
+                  color: "white",
+                  borderRadius: "15px",
+                }}
+              >
                 <FormGroup>
                   <Row>
                     <Col>
@@ -156,9 +160,8 @@ export default function ServiceDetailBox() {
                   </Row>
                 </FormGroup>
                 <div className="list-service">{etcServicesElement}</div>
-                </div>
-              </Col>
-
+              </div>
+            </Col>
           </Row>
         </div>
       </Form>

@@ -10,13 +10,18 @@ const startDate = [
     before: new Date(2021, 4, 25),
   },
 ];
+
+const weekdayStyle = `.DayPicker-Weekday {
+  color: black;
+}`;
 export default function ShowAvailableDate() {
   const [AvailableDate, setAvailableDate] = useState(startDate);
   let twoMonthsLater = new Date();
   twoMonthsLater.setMonth(twoMonthsLater.getMonth() + 2);
 
   return (
-    <div>
+    <div style={{color:"black", backgroundColor:"white", borderRadius:"20px"}}>
+      <style>{weekdayStyle}</style>
       <DayPicker
         disabledDays={{
           after: twoMonthsLater,

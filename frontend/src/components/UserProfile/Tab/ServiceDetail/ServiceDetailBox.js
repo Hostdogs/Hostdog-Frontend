@@ -72,56 +72,95 @@ export default function ServiceDetailBox() {
 
   return (
     <div>
-      <Form style={{ marginTop: "15px" }}>
-        <Row>
-          <Col xs="12" sm="12" md="12" lg="6">
-            <Row>
-              <Col>
-                <h4>บริการทั่วไป</h4>
-              </Col>
-            </Row>
-            <div className="list-service">
-              <FormGroup>
+      <Form>
+        <div style={{ paddingTop: "15px" }}>
+          <Row>
+            <Col xs="12" sm="12" md="12" lg="6">
+              <div
+                className="col-left"
+                style={{
+                  backgroundColor: "#43978d",
+                  padding: "10px 10px",
+                  color: "white",
+                  borderRadius: "3%",
+                }}
+              >
                 <Row>
-                  <Col xs="8" sm="5" lg="6">
-                    ราคาในการรับฝากสุนัขต่อวัน
-                  </Col>
-                  <Col xs="auto">{serviceDetail.deposit_price} บาท</Col>
-                </Row>
-              </FormGroup>
-              <FormGroup>
-                <Row>
-                  <Col xs="8" sm="5" lg="6">
-                    ค่ามัดจำในการฝากสุนัข
-                  </Col>
-                  <Col xs="auto">{serviceDetail.deposit_price} บาท</Col>
-                </Row>
-              </FormGroup>
-              <FormGroup>
-                <Row>
-                  <Col xs="12" sm="12" lg="12">
-                    วันที่ว่างในการดูแลสุนัข
-                  </Col>
-                  <Col xs="12" sm="12" lg="12">
-                    <ShowAvailableDate />
+                  <Col>
+                    <h4>บริการทั่วไป</h4>
+                    <hr
+                        style={{
+                          width: "50%",
+                          margin: "0",
+                          backgroundColor: "#264d59",
+                        }}
+                      />
+                      <br/>
                   </Col>
                 </Row>
-              </FormGroup>
-            </div>
-          </Col>
-          <Col xs="12" sm="12" md="12" lg="6">
-            <FormGroup>
-              <Row>
-                <Col>
-                  <h4>บริการเพิ่มเติม</h4>
-                </Col>
-              </Row>
-            </FormGroup>
-            <div className="list-service">{etcServicesElement}</div>
-          </Col>
-        </Row>
+                <div className="list-service">
+                  <FormGroup>
+                    <Row>
+                      <Col xs="8" sm="5" lg="6">
+                        ราคาในการรับฝากสุนัขต่อวัน
+                      </Col>
+                      <Col xs="auto">{serviceDetail.deposit_price} บาท</Col>
+                    </Row>
+                  </FormGroup>
+                  <FormGroup>
+                    <Row>
+                      <Col xs="8" sm="5" lg="6">
+                        ค่ามัดจำในการฝากสุนัข
+                      </Col>
+                      <Col xs="auto">{serviceDetail.deposit_price} บาท</Col>
+                    </Row>
+                  </FormGroup>
+                  <FormGroup>
+                    <Row>
+                      <Col xs="12" sm="12" lg="12">
+                        วันที่ว่างในการดูแลสุนัข
+                      </Col>
+                      <Col xs="12" sm="12" lg="12" style={{ textAlign: "center" }}>
+                        <br/>
+                        <ShowAvailableDate />
+                      </Col>
+                    </Row>
+                  </FormGroup>
+                </div>
+              </div>
+            </Col>
 
-        <hr />
+        
+              <Col xs="12" sm="12" md="12" lg="6">
+              <div
+              className="col-left"
+              style={{
+                backgroundColor: "#43978d",
+                padding: "10px 10px",
+                color: "white",
+                borderRadius: "15px",
+              }}
+            >
+                <FormGroup>
+                  <Row>
+                    <Col>
+                      <h4>บริการเพิ่มเติม</h4>
+                      <hr
+                        style={{
+                          width: "50%",
+                          margin: "0",
+                          backgroundColor: "#264d59",
+                        }}
+                      />
+                    </Col>
+                  </Row>
+                </FormGroup>
+                <div className="list-service">{etcServicesElement}</div>
+                </div>
+              </Col>
+
+          </Row>
+        </div>
       </Form>
     </div>
   );

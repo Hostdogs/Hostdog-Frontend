@@ -29,10 +29,12 @@ export default function FilterOptionPane({ setisSearch }) {
   const toggleDate = () => setIsDateOpen(!isDateOpen);
   const [userAddress, setUserAddress] = useState("");
   const [geocode, setGeoCode] = useState({lat:13.729025,lng:100.775613});
+  const [isSubmit,setIsSubmit] =useState(false)
 
   const handleSubmit = e =>{
       e.preventDefault();
       setisSearch(true);
+      setShowSubmitFailed(false)
       setTimeout(() => {
         window.scrollTo({
           top: 1250,
@@ -45,8 +47,13 @@ export default function FilterOptionPane({ setisSearch }) {
       console.log(userAddress,distance[choiceDistance],area[choiceArea],userAddress,stdate,endDate,geocode)
       
     }
-  
+   const handleSubmitFailed=(e)=>{
+    e.preventDefault();
 
+    setShowSubmitFailed(true)
+
+   }
+    const [showSubmitFailed, setShowSubmitFailed] = useState(false);
   const showDistance = [
     "ไม่เกิน 10 กิโลเมตร",
     "ไม่เกิน 20 กิโลเมตร",
@@ -106,7 +113,7 @@ export default function FilterOptionPane({ setisSearch }) {
             <br/>
             <Container style={{ paddingLeft: "10%", paddingRight: "10%" }}>
               <Form>
-                <SearchBox userAddress={userAddress} setUserAddress={setUserAddress} geocode={geocode} setGeoCode={setGeoCode}/>
+                <SearchBox userAddress={userAddress} setUserAddress={setUserAddress} geocode={geocode} setGeoCode={setGeoCode} setIsSubmit={setIsSubmit} />
 
                 <FormGroup>
                   <UncontrolledDropdown>
@@ -183,11 +190,17 @@ export default function FilterOptionPane({ setisSearch }) {
                       style={{ width: "" }}
                     />
                   </div>
+                  
                 </FormGroup>
                 <FormGroup style={{ textAlign: "right" }}>
-                  <Button type="submit" onClick={e=>handleSubmit(e)} style={{ backgroundColor: "#ffe080", border: "0px", color:"black" }}>
+                  <Button type="submit" onClick={e=>{isSubmit?handleSubmit(e):handleSubmitFailed(e)}} style={{ backgroundColor: "#ffe080", border: "0px", color:"black" }}>
                     ค้นหา
                   </Button>
+                  {showSubmitFailed? (
+          <div>
+            <small style={{ color: "red" }}>กรุณาใส่ที่อยู่ใหม่อีกครั้ง</small>
+          </div>
+        ) : null}
                 </FormGroup>
               </Form>
             </Container>

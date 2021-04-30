@@ -23,26 +23,30 @@ import "react-date-range/dist/theme/default.css";
 import "./SearchHost.css";
 import SearchBox from "./SearchBox";
 import moment from "moment";
+import { useCookies } from "react-cookie";
 
 export default function FilterOptionPane({ setisSearch }) {
   const [isDateOpen, setIsDateOpen] = useState(false);
   const toggleDate = () => setIsDateOpen(!isDateOpen);
   const [userAddress, setUserAddress] = useState("");
   const [geocode, setGeoCode] = useState({lat:13.729025,lng:100.775613});
-
+  const [cookies,setCookie] = useCookies(["mytoken","user_id"])
   const handleSubmit = e =>{
       e.preventDefault();
       setisSearch(true);
-      setTimeout(() => {
-        window.scrollTo({
-          top: 1250,
-          behavior: 'smooth',
-        })
-      }, 100);
+      // setTimeout(() => {
+      //   window.scrollTo({
+      //     top: 1250,
+      //     behavior: 'smooth',
+      //   })
+      // }, 100);
 
-      const stdate = moment(selectionRange[0].startDate).format("YYYY-MM-DD")
+      const stDate = moment(selectionRange[0].startDate).format("YYYY-MM-DD")
       const endDate = moment(selectionRange[0].endDate).format("YYYY-MM-DD")
-      console.log(userAddress,distance[choiceDistance],area[choiceArea],userAddress,stdate,endDate,geocode)
+      console.log(userAddress,distance[choiceDistance],area[choiceArea],userAddress,stDate,endDate,geocode)
+      SearchAPI.getHostInformation(mytoken,distance,area[choiceArea],stDate,endDate,latitude,geocode.lat,geocode.lng).then(res=>{
+        console.log(res)
+      })
       
     }
   
@@ -54,7 +58,7 @@ export default function FilterOptionPane({ setisSearch }) {
     "ทั้งหมด",
   ];
   const distance = [
-    [0,10],[0,20],[0,30],[0,100]
+    10,20,30,100
   ]
   
 

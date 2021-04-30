@@ -112,7 +112,7 @@ export default function FilterOptionPane({ setisSearch }) {
             <hr style={{ borderWidth: "3px", borderColor:"#ffe080", width:"90%",textAlign:"left" }} />
             <br/>
             <Container style={{ paddingLeft: "10%", paddingRight: "10%" }}>
-              <Form>
+    
                 <SearchBox userAddress={userAddress} setUserAddress={setUserAddress} geocode={geocode} setGeoCode={setGeoCode} setIsSubmit={setIsSubmit} />
 
                 <FormGroup>
@@ -202,7 +202,7 @@ export default function FilterOptionPane({ setisSearch }) {
           </div>
         ) : null}
                 </FormGroup>
-              </Form>
+
             </Container>
 
           

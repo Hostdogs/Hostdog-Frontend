@@ -63,7 +63,6 @@ const handleLocationSuccess=()=>{
       lng: position.coords.longitude,
     };
     setGeoCode(currentPosition);
-
     reverseGeocoding(position.coords.latitude, position.coords.longitude);
   };
 
@@ -129,11 +128,11 @@ const handleLocationSuccess=()=>{
       if (typeof data.formatted_address !== "undefined") {
         setUserAddress(data.formatted_address);
         geoCoding(data.formatted_address);
-        handleLocationSuccess();
+
       } else if (predictions.length>0) {
         setUserAddress(predictions[0]);
         geoCoding(predictions[0]);
-        handleLocationSuccess();
+
       } else {
         handleLocationFailed();
       }

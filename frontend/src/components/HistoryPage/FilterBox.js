@@ -154,7 +154,7 @@ export default function FilterBox({ onFilter, }) {
             <a style={{color:"black"}}>{filterStatus[4]}</a>
           </NavLink>
         </NavItem>
-        <NavItem  className="navItem4">
+        <NavItem  className="navItem5">
           <NavLink
             className={classnames({ active: activeTab === "5" })}
             onClick={() => {
@@ -168,7 +168,7 @@ export default function FilterBox({ onFilter, }) {
             <a style={{color:"black"}}>{filterStatus[5]}</a>
           </NavLink>
         </NavItem>
-        <NavItem  className="navItem4">
+        <NavItem  className="navItem6">
           <NavLink
             className={classnames({ active: activeTab === "6" })}
             onClick={() => {
@@ -182,7 +182,7 @@ export default function FilterBox({ onFilter, }) {
             <a style={{color:"black"}}>{filterStatus[6]}</a>
           </NavLink>
         </NavItem>
-        <NavItem  className="navItem4">
+        <NavItem  className="navItem7">
           <NavLink
             className={classnames({ active: activeTab === "7" })}
             onClick={() => {

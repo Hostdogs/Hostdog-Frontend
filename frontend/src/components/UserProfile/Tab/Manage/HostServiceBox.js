@@ -199,12 +199,21 @@ export default function HostServiceBox() {
                           value={hostService.price_dog_walk}
                           onChange={onPriceChange}
                           style={{ blockSize: "30px" }}
+                          disabled={!hostService.dog_walk_enable}
                         />
                       </Col>
                       <Col xs="auto">บาท</Col>
                     </Row>
                     <Row>
-                      <Col xs="12">
+                      <Col
+                        xs="12"
+                        style={{
+                          color:
+                            hostService.dog_walk_enable === true
+                              ? "white"
+                              : "#BBBBBB",
+                        }}
+                      >
                         <CustomInput
                           type="switch"
                           id="walk_dog"
@@ -228,12 +237,21 @@ export default function HostServiceBox() {
                           value={hostService.price_get_dog}
                           onChange={onPriceChange}
                           style={{ blockSize: "30px" }}
+                          disabled={!hostService.get_dog_enable}
                         />
                       </Col>
                       <Col xs="auto">บาท</Col>
                     </Row>
                     <Row>
-                      <Col xs="12">
+                      <Col
+                        xs="12"
+                        style={{
+                          color:
+                            hostService.get_dog_enable === true
+                              ? "white"
+                              : "#BBBBBB",
+                        }}
+                      >
                         <CustomInput
                           type="switch"
                           id="get_dog"
@@ -257,12 +275,21 @@ export default function HostServiceBox() {
                           value={hostService.price_delivery_dog}
                           onChange={onPriceChange}
                           style={{ blockSize: "30px" }}
+                          disabled={!hostService.delivery_dog_enable}
                         />
                       </Col>
                       <Col xs="auto">บาท</Col>
                     </Row>
                     <Row>
-                      <Col xs="12">
+                      <Col
+                        xs="12"
+                        style={{
+                          color:
+                            hostService.delivery_dog_enable === true
+                              ? "white"
+                              : "#BBBBBB",
+                        }}
+                      >
                         <CustomInput
                           type="switch"
                           id="send_dog"
@@ -286,12 +313,21 @@ export default function HostServiceBox() {
                           value={hostService.price_bath_dog}
                           onChange={onPriceChange}
                           style={{ blockSize: "30px" }}
+                          disabled={!hostService.bath_dog_enable}
                         />
                       </Col>
                       <Col xs="auto">บาท</Col>
                     </Row>
                     <Row>
-                      <Col xs="12">
+                      <Col
+                        xs="12"
+                        style={{
+                          color:
+                            hostService.bath_dog_enable === true
+                              ? "white"
+                              : "#BBBBBB",
+                        }}
+                      >
                         <CustomInput
                           type="switch"
                           id="bath_dog"

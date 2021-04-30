@@ -17,7 +17,7 @@ const ProfileCard = ({ pageCollapse, Profile, isCustomer }) => {
     setimg(Profile.picture);
   }, [Profile]);
   return (
-    <Card>
+    <Card style={{border:"none"}}>
       <CardBody
         style={{
           textAlign: "center",

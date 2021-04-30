@@ -16,6 +16,8 @@ import classnames from "classnames";
 import DogProfileTab from "./Tab/DogProfileTab";
 import MainTab from "./Tab/MainTab";
 import SettingTab from "./Tab/SettingTab";
+import HostServiceTab from "./Tab/Manage/HostServiceTab";
+import ServiceDetailTab from "./Tab/ServiceDetail/ServiceDetailTab";
 
 const ProfileContent = ({
   setpageCollapse,
@@ -40,53 +42,58 @@ const ProfileContent = ({
 
   return (
     <div>
-      <Nav tabs>
-        <NavItem>
+      <Nav tabs style={{cursor:"pointer"}}>
+        <NavItem style={{borderTopLeftRadius:"5px", borderTopRightRadius:"5px"}}>
           <NavLink
             className={classnames({ active: activeTab === "1" })}
             onClick={() => {
               toggle("1");
             }}
+            style={{color:"#264d59"}}
           >
             หน้าหลัก
           </NavLink>
         </NavItem>
-        <NavItem>
+        <NavItem style={{borderTopLeftRadius:"5px", borderTopRightRadius:"5px"}}>
           <NavLink
             className={classnames({ active: activeTab === "2" })}
             onClick={() => {
               toggle("2");
             }}
+            style={{color:"#264d59"}}
           >
             สุนัข
           </NavLink>
         </NavItem>
-        <NavItem>
+        <NavItem style={{borderTopLeftRadius:"5px", borderTopRightRadius:"5px"}}>
           <NavLink
             className={classnames({ active: activeTab === "3" })}
             onClick={() => {
               toggle("3");
             }}
+            style={{color:"#264d59"}}
           >
             จัดการการบริการ
           </NavLink>
         </NavItem>
-        <NavItem>
+        <NavItem style={{borderTopLeftRadius:"5px", borderTopRightRadius:"5px"}}>
           <NavLink
             className={classnames({ active: activeTab === "4" })}
             onClick={() => {
               toggle("4");
             }}
+            style={{color:"#264d59"}}
           >
             รายละเอียดบริการ
           </NavLink>
         </NavItem>
-        <NavItem>
+        <NavItem style={{borderTopLeftRadius:"5px", borderTopRightRadius:"5px"}}>
           <NavLink
             className={classnames({ active: activeTab === "5" })}
             onClick={() => {
               toggle("5");
             }}
+            style={{color:"#264d59"}}
           >
             ตั้งค่า
           </NavLink>
@@ -105,8 +112,12 @@ const ProfileContent = ({
           <DogProfileTab profileId={profileId} />
         </TabPane>
 
-        <TabPane tabId="3">{/* implement manage service later */}</TabPane>
-        <TabPane tabId="4">{/* implement show service later */}</TabPane>
+        <TabPane tabId="3">
+          <HostServiceTab />
+        </TabPane>
+        <TabPane tabId="4">
+          <ServiceDetailTab />
+        </TabPane>
         <TabPane tabId="5">
           <SettingTab />
         </TabPane>

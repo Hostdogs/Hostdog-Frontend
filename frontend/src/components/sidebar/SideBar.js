@@ -39,19 +39,19 @@ export default function SideBar({isOpen}) {
     <div className={classNames("sidebar", { "is-open": isOpen })}>
       <div className="side-menu">
         <Nav vertical className="list-unstyled pb-3">
-          <NavItem style={{ marginTop: "10%" }}>
+          <NavItem style={{ marginTop: "10%" }} className="navItemSidebar">
             <NavLink tag={Link} to={"/"} style={{ color: "black" }}>
               <FontAwesomeIcon icon={faSearch} className="mr-2" />
             ค้นหาผู้รับฝาก
           </NavLink>
           </NavItem>
-          <NavItem>
+          <NavItem className="navItemSidebar">
             <NavLink tag={Link} onClick={yourProfile} style={{ color: "black" }}>
               <FontAwesomeIcon icon={faUser} className="mr-2" />
             โปรไฟล์
           </NavLink>
           </NavItem>
-          <NavItem>
+          <NavItem className="navItemSidebar">
             <NavLink tag={Link} to={"/history"} style={{ color: "black" }}>
               <FontAwesomeIcon icon={faHistory} className="mr-2" />
             ประวัติการใช้บริการ
@@ -61,7 +61,7 @@ export default function SideBar({isOpen}) {
             <br />
             <hr style={{ borderWidth: "1px", marginLeft: "5%" }} />
           </div>
-          <NavItem style={{ marginTop: "10%" }}>
+          <NavItem style={{ marginTop: "10%" }} className="navItemSidebar">
             <NavLink tag={Link} to={"/การรายงาน"} style={{ color: "black" }}>
               <FontAwesomeIcon icon={faFlag} className="mr-2" />
             การรายงาน
@@ -73,7 +73,7 @@ export default function SideBar({isOpen}) {
             การตั่งค่า
           </NavLink>
           </NavItem> */}
-          <NavItem>
+          <NavItem className="navItemSidebar">
             <NavLink tag={Link} onClick={logOut} style={{ color: "black" }}>
               <FontAwesomeIcon icon={faSignOutAlt} className="mr-2" />
             ออกจากระบบ

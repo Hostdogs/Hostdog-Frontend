@@ -202,10 +202,7 @@ export default function FilterOptionPane({ setisSearch }) {
           </div>
         ) : null}
                 </FormGroup>
-
             </Container>
-
-          
           </CardBody>
         </Card>
       </Container>

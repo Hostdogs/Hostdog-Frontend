@@ -187,7 +187,14 @@ export default function HostServiceBox() {
                   </Row>
                 </FormGroup>
                 <div className="list-service">
-                  <FormGroup>
+                  <FormGroup
+                    style={{
+                      color:
+                        hostService.dog_walk_enable === true
+                          ? "white"
+                          : "#BBBBBB",
+                    }}
+                  >
                     <Row>
                       <Col xs="12" sm="5" lg="6">
                         ราคาพาสุนัขไปเดินเล่น
@@ -205,15 +212,7 @@ export default function HostServiceBox() {
                       <Col xs="auto">บาท</Col>
                     </Row>
                     <Row>
-                      <Col
-                        xs="12"
-                        style={{
-                          color:
-                            hostService.dog_walk_enable === true
-                              ? "white"
-                              : "#BBBBBB",
-                        }}
-                      >
+                      <Col xs="12">
                         <CustomInput
                           type="switch"
                           id="walk_dog"
@@ -225,7 +224,15 @@ export default function HostServiceBox() {
                       </Col>
                     </Row>
                   </FormGroup>
-                  <FormGroup style={{ marginTop: "20px" }}>
+                  <FormGroup
+                    style={{
+                      marginTop: "20px",
+                      color:
+                        hostService.get_dog_enable === true
+                          ? "white"
+                          : "#BBBBBB",
+                    }}
+                  >
                     <Row>
                       <Col xs="12" sm="5" lg="6">
                         ราคาไปรับสุนัขต่อกิโลเมตร
@@ -243,15 +250,7 @@ export default function HostServiceBox() {
                       <Col xs="auto">บาท</Col>
                     </Row>
                     <Row>
-                      <Col
-                        xs="12"
-                        style={{
-                          color:
-                            hostService.get_dog_enable === true
-                              ? "white"
-                              : "#BBBBBB",
-                        }}
-                      >
+                      <Col xs="12">
                         <CustomInput
                           type="switch"
                           id="get_dog"
@@ -263,7 +262,15 @@ export default function HostServiceBox() {
                       </Col>
                     </Row>
                   </FormGroup>
-                  <FormGroup style={{ marginTop: "20px" }}>
+                  <FormGroup
+                    style={{
+                      marginTop: "20px",
+                      color:
+                        hostService.delivery_dog_enable === true
+                          ? "white"
+                          : "#BBBBBB",
+                    }}
+                  >
                     <Row>
                       <Col xs="12" sm="5" lg="6">
                         ราคาไปส่งสุนัขต่อกิโลเมตร
@@ -281,15 +288,7 @@ export default function HostServiceBox() {
                       <Col xs="auto">บาท</Col>
                     </Row>
                     <Row>
-                      <Col
-                        xs="12"
-                        style={{
-                          color:
-                            hostService.delivery_dog_enable === true
-                              ? "white"
-                              : "#BBBBBB",
-                        }}
-                      >
+                      <Col xs="12">
                         <CustomInput
                           type="switch"
                           id="send_dog"
@@ -301,7 +300,15 @@ export default function HostServiceBox() {
                       </Col>
                     </Row>
                   </FormGroup>
-                  <FormGroup style={{ marginTop: "20px" }}>
+                  <FormGroup
+                    style={{
+                      marginTop: "20px",
+                      color:
+                        hostService.bath_dog_enable === true
+                          ? "white"
+                          : "#BBBBBB",
+                    }}
+                  >
                     <Row>
                       <Col xs="12" sm="5" lg="6">
                         ราคาอาบน้ำสุนัข
@@ -319,15 +326,7 @@ export default function HostServiceBox() {
                       <Col xs="auto">บาท</Col>
                     </Row>
                     <Row>
-                      <Col
-                        xs="12"
-                        style={{
-                          color:
-                            hostService.bath_dog_enable === true
-                              ? "white"
-                              : "#BBBBBB",
-                        }}
-                      >
+                      <Col xs="12">
                         <CustomInput
                           type="switch"
                           id="bath_dog"

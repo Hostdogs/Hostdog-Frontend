@@ -254,12 +254,13 @@ export default function InformationForm({ selectState }) {
     console.log("onPlaceChanged");
     console.log(testAutoComplete);
     console.log(data);
-    if (typeof testAutoComplete !== "undefined" && typeof data !== "undefined") {
+    if (typeof testAutoComplete !== "undefined" && typeof data !== "undefined"&&typeof predictions!=="undefined") {
       setShowLocationWarn(false);
       if (typeof data.formatted_address !== "undefined") {
         setUserAddress(data.formatted_address);
         geoCoding(data.formatted_address);
-      } else if (testAutoComplete.gm_accessors_.place.Ve.predictions.length > 0) {
+      }
+       else if (testAutoComplete.gm_accessors_.place.Ve.predictions.length > 0) {
         setUserAddress(
           testAutoComplete.gm_accessors_.place.Ve.predictions[0].Lk
         );

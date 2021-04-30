@@ -22,28 +22,56 @@ import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css";
 import "./SearchHost.css";
 import SearchBox from "./SearchBox";
+import moment from "moment";
 
 export default function FilterOptionPane({ setisSearch }) {
   const [isDateOpen, setIsDateOpen] = useState(false);
   const toggleDate = () => setIsDateOpen(!isDateOpen);
+  const [userAddress, setUserAddress] = useState("");
+  const [geocode, setGeoCode] = useState({lat:13.729025,lng:100.775613});
 
-  const distance = [
-    "ระยะทาง:0-10 กม.",
-    "ระยะทาง:11-20 กม.",
-    "ระยะทาง:21-30 กม.",
+  const handleSubmit = e =>{
+      e.preventDefault();
+      setisSearch(true);
+      setTimeout(() => {
+        window.scrollTo({
+          top: 1250,
+          behavior: 'smooth',
+        })
+      }, 100);
+
+      const stdate = moment(selectionRange[0].startDate).format("YYYY-MM-DD")
+      const endDate = moment(selectionRange[0].endDate).format("YYYY-MM-DD")
+      console.log(userAddress,distance[choiceDistance],area[choiceArea],userAddress,stdate,endDate,geocode)
+      
+    }
+  
+
+  const showDistance = [
+    "ไม่เกิน 10 กิโลเมตร",
+    "ไม่เกิน 20 กิโลเมตร",
+    "ไม่เกิน 30 กิโลเมตร",
+    "ทั้งหมด",
   ];
+  const distance = [
+    [0,10],[0,20],[0,30],[0,100]
+  ]
+  
 
-  const [choiceDistance, setChoiceDistance] = useState(0);
+  const [choiceDistance, setChoiceDistance] = useState(3);
 
-  const area = [
-    "พื่้นที่เลี้ยงเท่าไหร่ก็ได้",
-    "พื่้นที่เลี้ยง:0-10 ตร.ม.",
-    "พื่้นที่เลี้ยง:11-20 ตร.ม.",
-    "พื่้นที่เลี้ยง:21-30 ตร.ม.",
-    "พื่้นที่เลี้ยง:31-40 ตร.ม.",
+  const showArea = [
+    "เท่าไหร่ก็ได้",
+    "เล็ก(0-50 ตร.ม.)",
+    "กลาง(50-150 ตร.ม.)",
+    "ใหญ่(150-400 ตร.ม.)",
+    
   ];
 
   const [choiceArea, setChoiceArea] = useState(0);
+  const area = [
+    [0,400],[0,50],[50,150],[150,400]
+  ]
   const dayformat = "YYYY-MM-DD";
   const [selectionRange, setSelectionRange] = useState([
     {
@@ -68,7 +96,6 @@ export default function FilterOptionPane({ setisSearch }) {
   });
 
   
-
   return (
     <div>
       <Container style={{}}>
@@ -79,7 +106,7 @@ export default function FilterOptionPane({ setisSearch }) {
             <br/>
             <Container style={{ paddingLeft: "10%", paddingRight: "10%" }}>
               <Form>
-                <SearchBox />
+                <SearchBox userAddress={userAddress} setUserAddress={setUserAddress} geocode={geocode} setGeoCode={setGeoCode}/>
 
                 <FormGroup>
                   <UncontrolledDropdown>
@@ -93,17 +120,20 @@ export default function FilterOptionPane({ setisSearch }) {
                         color:"black"
                       }}
                     >
-                      {distance[choiceDistance]}
+                      {showDistance[choiceDistance]}
                     </DropdownToggle>
                     <DropdownMenu>
                       <DropdownItem onClick={() => setChoiceDistance(0)}>
-                        {distance[0]}
+                        {showDistance[0]}
                       </DropdownItem>
                       <DropdownItem onClick={() => setChoiceDistance(1)}>
-                        {distance[1]}
+                        {showDistance[1]}
                       </DropdownItem>
                       <DropdownItem onClick={() => setChoiceDistance(2)}>
-                        {distance[2]}
+                        {showDistance[2]}
+                      </DropdownItem>
+                      <DropdownItem onClick={() => setChoiceDistance(3)}>
+                        {showDistance[3]}
                       </DropdownItem>
                     </DropdownMenu>
                   </UncontrolledDropdown>
@@ -117,20 +147,20 @@ export default function FilterOptionPane({ setisSearch }) {
                       caret
                       style={{ backgroundColor: "#ffe080", color:"black", border: "0px" }}
                     >
-                      {area[choiceArea]}
+                      {showArea[choiceArea]}
                     </DropdownToggle>
                     <DropdownMenu>
                       <DropdownItem onClick={() => setChoiceArea(0)}>
-                        {area[0]}
+                        {showArea[0]}
                       </DropdownItem>
                       <DropdownItem onClick={() => setChoiceArea(1)}>
-                        {area[1]}
+                        {showArea[1]}
                       </DropdownItem>
                       <DropdownItem onClick={() => setChoiceArea(2)}>
-                        {area[2]}
+                        {showArea[2]}
                       </DropdownItem>
                       <DropdownItem onClick={() => setChoiceArea(3)}>
-                        {area[3]}
+                        {showArea[3]}
                       </DropdownItem>
                     </DropdownMenu>
                   </UncontrolledDropdown>
@@ -143,7 +173,7 @@ export default function FilterOptionPane({ setisSearch }) {
                     <DateRange
                       className="daterangepick"
                       editableDateInputs={true}
-                      onChange={(item) => setSelectionRange([item.selection])}
+                      onChange={(item) => {setSelectionRange([item.selection])}}
                       moveRangeOnFirstSelection={false}
                       ranges={selectionRange}
                       minDate={new Date()}
@@ -155,77 +185,14 @@ export default function FilterOptionPane({ setisSearch }) {
                   </div>
                 </FormGroup>
                 <FormGroup style={{ textAlign: "right" }}>
-                  <Button type="submit" onClick={e=>{
-                    e.preventDefault();
-                    setisSearch(true);
-                    setTimeout(() => {
-                      window.scrollTo({
-                        top: 3000,
-                        behavior: 'smooth',
-                      })
-                    }, 100);
-                    
-                  }} style={{ backgroundColor: "#ffe080", border: "0px", color:"black" }}>
+                  <Button type="submit" onClick={e=>handleSubmit(e)} style={{ backgroundColor: "#ffe080", border: "0px", color:"black" }}>
                     ค้นหา
                   </Button>
                 </FormGroup>
               </Form>
             </Container>
 
-            {/* <Row>
-              <UncontrolledDropdown>
-                <DropdownToggle caret>
-                  {distance[choiceDistance]}
-                </DropdownToggle>
-                <DropdownMenu>
-                  <DropdownItem onClick={() => setChoiceDistance(0)}>
-                    {distance[0]}
-                  </DropdownItem>
-                  <DropdownItem onClick={() => setChoiceDistance(1)}>
-                    {distance[1]}
-                  </DropdownItem>
-                  <DropdownItem onClick={() => setChoiceDistance(2)}>
-                    {distance[2]}
-                  </DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
-              <UncontrolledDropdown>
-                <DropdownToggle caret>{area[choiceArea]}</DropdownToggle>
-                <DropdownMenu>
-                  <DropdownItem onClick={() => setChoiceArea(0)}>
-                    {area[0]}
-                  </DropdownItem>
-                  <DropdownItem onClick={() => setChoiceArea(1)}>
-                    {area[1]}
-                  </DropdownItem>
-                  <DropdownItem onClick={() => setChoiceArea(2)}>
-                    {area[2]}
-                  </DropdownItem>
-                  <DropdownItem onClick={() => setChoiceArea(3)}>
-                    {area[3]}
-                  </DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
-
-              <DropdownToggle caret onClick={toggleDate}>
-                ช่วงเวลา
-              </DropdownToggle>
-              <Collapse isOpen={isDateOpen} className="datecollapse" >
-      
-                    <DateRange
-                      className="daterangepick"
-                      editableDateInputs={true}
-                      onChange={(item) => setSelectionRange([item.selection])}
-                      moveRangeOnFirstSelection={false}
-                      ranges={selectionRange}
-                      minDate={new Date()}
-                      maxDate={endOfMonth(addMonths(new Date(), 1))}
-                      months={2}
-                      direction={width>400?"horizontal":"vertical"}
-                    />
-
-              </Collapse>
-            </Row> */}
+          
           </CardBody>
         </Card>
       </Container>

@@ -24,10 +24,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FilterOptionPane from "./FilterOptionPane";
-export default function SearchBox() {
-  const [geocode, setGeoCode] = useState({lat:13.729025,lng:100.775613});
+export default function SearchBox({ userAddress, setUserAddress, geocode, setGeoCode }) {
 
-  const [userAddress, setUserAddress] = useState("");
+
+
 
   const [loadScript, setLoadScript] = useState({
     googleAPIKey: "AIzaSyBWV06MM0QFyVnkuA1nHJhQ4altZjovYNs",
@@ -124,14 +124,16 @@ export default function SearchBox() {
         onSubmit={(e) => {
           e.preventDefault();
         }}
-        
+
       >
         <FormGroup>
           <Label>ที่อยู่ของคุณ</Label>
           <Button
+
             onClick={() => {
               getCurrentLocation();
             }}
+            onSubmit={e => e.preventDefault()}
             style={{
               backgroundColor: "#ffe080",
               border: "0px",
@@ -140,8 +142,11 @@ export default function SearchBox() {
           >
             <FontAwesomeIcon icon={faMapMarkerAlt} style={{ color: "black" }} />
           </Button>
-          <Button
-            onClick={() => alert("สวัสดีครับบาสคุง")}
+          {/* <Button
+            onClick={(e) => {
+              e.preventDefault();
+              geoCoding(userAddress);
+            }}
             style={{
               backgroundColor: "#ffe080",
               border: "0px",
@@ -149,9 +154,9 @@ export default function SearchBox() {
             }}
           >
             <FontAwesomeIcon icon={faSearch} style={{ color: "black" }} />
-          </Button>
-          <InputGroup style={{ marginTop: "1%" }} >
-            <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged} >
+          </Button> */}
+          <InputGroup style={{ marginTop: "1%" }} onSubmit={e => e.preventDefault()}>
+            <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged} onSubmit={e => e.preventDefault()}>
               <Input
                 className="textlocation"
                 type="text"
@@ -159,21 +164,29 @@ export default function SearchBox() {
                 id="location"
                 placeholder="กรุณาใส่ที่อยู่เพื่อค้นหาผู้รับฝากใกล้ๆ"
                 value={userAddress}
-                onChange={(e) => setUserAddress(e.target.value)}
-                onSubmit={() => alert("สวัสดีค่ะบาสคุง")}
-        
+                onChange={(e) => {
+                  e.preventDefault()
+                  setUserAddress(e.target.value)}
+                }
+                onSubmit={e => {
+                  e.preventDefault();
+                  geoCoding(userAddress)
+                }
+                }
+                onkeypress={e=>e.preventDefault()}
+
                 style={{ width: "100%" }}
               />
             </Autocomplete>
           </InputGroup>
-          
+
         </FormGroup>
         <GoogleMapLocation
           handleDragEnd={(e) => onMarkerDragEnd(e)}
           currentGeoCode={geocode}
         />
       </Form>
-      <br/>
+      <br />
     </LoadScript>
   );
 }

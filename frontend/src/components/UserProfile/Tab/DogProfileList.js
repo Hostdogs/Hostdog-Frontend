@@ -14,9 +14,14 @@ import {
 } from "reactstrap";
 import DogProfileEditForm from "./DogProfileEditForm";
 import APIDog from "./APIDog";
+import { useCookies } from "react-cookie";
 
 export default function DogProfileList(props) {
   const { dogInfos } = props;
+  const [cookies] = useCookies(["mytoken", "user_id"]);
+
+  const myId = cookies["user_id"];
+  const myToken = cookies["mytoken"];
 
   const updateDogInfo = (dogInfo) => {
     console.log(dogInfo);
@@ -24,7 +29,9 @@ export default function DogProfileList(props) {
   };
 
   const deleteDogInfo = (dogInfo) => {
-    APIDog.DeleteDog(dogInfo.id).then(() => props.deleteDogInfo(dogInfo));
+    APIDog.DeleteDog(myToken, myId, dogInfo.id).then(() =>
+      props.deleteDogInfo(dogInfo)
+    );
   };
 
   const dogElements = dogInfos.map((dogInfo) => {

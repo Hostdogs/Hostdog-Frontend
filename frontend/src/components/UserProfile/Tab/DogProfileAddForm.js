@@ -17,6 +17,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import APIDog from "./APIDog";
 import DogFeedingTime from "./DogFeedingTime";
+import { useCookies } from "react-cookie";
 
 const startDogInfo = {
   customer: "",
@@ -37,6 +38,10 @@ export default function DogProfileAddForm(props) {
   const [dogInfo, setDogInfo] = useState(startDogInfo);
   const [picture, setPicture] = useState("");
   const [allTimes, setAllTimes] = useState([]);
+  const [cookies] = useCookies(["mytoken", "user_id"]);
+
+  const myId = cookies["user_id"];
+  const myToken = cookies["mytoken"];
 
   const toggle = () => setModal(!modal);
   const toggleNested = () => {
@@ -67,20 +72,24 @@ export default function DogProfileAddForm(props) {
 
   async function onDogSubmit(event) {
     event.preventDefault();
-    console.log(dogInfo);
-    console.log(allTimes);
-    dogInfo.customer = 1; //test
-    const resp1 = await APIDog.AddDog(dogInfo);
-    setDogInfo(startDogInfo);
+    console.log(myToken);
+    console.log(myId);
+    const resp1 = await APIDog.AddDog(myToken, myId, dogInfo);
     if (picture !== "") {
       let form_data = new FormData();
       form_data.append("picture", picture, picture.name);
-      const resp2 = await APIDog.UploadImgDog(resp1.data.id, form_data);
+      const resp2 = await APIDog.UploadImgDog(
+        myToken,
+        myId,
+        resp1.data.id,
+        form_data
+      );
       props.addDogInfo(resp2.data);
       setPicture("");
     } else {
       props.addDogInfo(resp1.data);
     }
+    setDogInfo(startDogInfo);
     toggle();
   }
 

@@ -11,36 +11,23 @@ import {
 import DogProfileAddForm from "./DogProfileAddForm";
 import DogProfileList from "./DogProfileList";
 import axios from "axios";
-const startDogInfo = [
-  {
-    customer: "1",
-    dog_name: "แพท",
-    gender: "male",
-    dog_dob: "2020-01-01",
-    dog_breed: "บางขุนเทียน",
-    dog_weight: "10",
-    dog_status: "",
-    dog_bio: "5555555555555555555555",
-  },
-  {
-    customer: "1",
-    dog_name: "แพท",
-    gender: "male",
-    dog_dob: "2020-01-01",
-    dog_breed: "บางขุนเทียน",
-    dog_weight: "10",
-    dog_status: "",
-    dog_bio: "5555555555555555555555",
-  },
-];
+import { useCookies } from "react-cookie";
 export default function DogProfileTab({ profileId }) {
-  const [dogInfos, setDogInfos] = useState(startDogInfo);
+  const [dogInfos, setDogInfos] = useState([]);
+  const [cookies, setCookie] = useCookies(["mytoken", "user_id"]);
 
   async function getDogs() {
     const resp = await axios.get(
-      `http://127.0.0.1:8000/api/profilecustomer/${profileId}/`
+      `http://127.0.0.1:8000/api/profilecustomer/${profileId}/dogs/`,
+      {
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Token ${cookies["mytoken"]}`,
+        },
+      }
     );
-    setDogInfos(resp.data.dogs);
+    console.log(resp.data);
+    setDogInfos(resp.data);
   }
   useEffect(() => {
     getDogs();

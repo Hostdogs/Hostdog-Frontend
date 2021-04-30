@@ -41,6 +41,16 @@ export default function HostServiceBox() {
     });
   }
 
+  function onPriceChange(event) {
+    const { name, value } = event.target;
+    setHostService((prevHostService) => {
+      return {
+        ...prevHostService,
+        [name]: changeValue(name, value),
+      };
+    });
+  }
+
   function changeValue(name, value) {
     if (value === "true" || value === true) {
       return true;
@@ -55,8 +65,17 @@ export default function HostServiceBox() {
     }
   }
 
-  useEffect(() => {
+  function onSubmit(event) {
+    event.preventDefault();
     console.log(hostService);
+  }
+  function onCancle(event) {
+    event.preventDefault();
+    setHostService(startHostService);
+  }
+
+  useEffect(() => {
+    //console.log(hostService);
   }, [hostService]);
 
   return (
@@ -95,7 +114,13 @@ export default function HostServiceBox() {
                         ราคาในการรับฝากสุนัขต่อวัน
                       </Col>
                       <Col xs="5" sm="3" lg="3">
-                        <Input type="number" style={{ blockSize: "30px" }} />
+                        <Input
+                          type="number"
+                          name="deposit_price"
+                          value={hostService.deposit_price}
+                          onChange={onPriceChange}
+                          style={{ blockSize: "30px" }}
+                        />
                       </Col>
                       <Col xs="auto">บาท</Col>
                     </Row>
@@ -106,7 +131,13 @@ export default function HostServiceBox() {
                         ค่ามัดจำในการฝากสุนัข
                       </Col>
                       <Col xs="5" sm="3" lg="3">
-                        <Input type="number" style={{ blockSize: "30px" }} />
+                        <Input
+                          type="number"
+                          name="late_price"
+                          value={hostService.late_price}
+                          onChange={onPriceChange}
+                          style={{ blockSize: "30px" }}
+                        />
                       </Col>
                       <Col xs="auto">บาท</Col>
                     </Row>
@@ -162,7 +193,13 @@ export default function HostServiceBox() {
                         ราคาพาสุนัขไปเดินเล่น
                       </Col>
                       <Col xs="5" sm="3" lg="3">
-                        <Input type="number" style={{ blockSize: "30px" }} />
+                        <Input
+                          type="number"
+                          name="price_dog_walk"
+                          value={hostService.price_dog_walk}
+                          onChange={onPriceChange}
+                          style={{ blockSize: "30px" }}
+                        />
                       </Col>
                       <Col xs="auto">บาท</Col>
                     </Row>
@@ -174,6 +211,7 @@ export default function HostServiceBox() {
                           name="dog_walk_enable"
                           label="พาสุนัขไปเดินเล่น"
                           onChange={onEnableChange}
+                          checked={hostService.dog_walk_enable}
                         />
                       </Col>
                     </Row>
@@ -184,7 +222,13 @@ export default function HostServiceBox() {
                         ราคาไปรับสุนัขต่อกิโลเมตร
                       </Col>
                       <Col xs="5" sm="3" lg="3">
-                        <Input type="number" style={{ blockSize: "30px" }} />
+                        <Input
+                          type="number"
+                          name="price_get_dog"
+                          value={hostService.price_get_dog}
+                          onChange={onPriceChange}
+                          style={{ blockSize: "30px" }}
+                        />
                       </Col>
                       <Col xs="auto">บาท</Col>
                     </Row>
@@ -196,6 +240,7 @@ export default function HostServiceBox() {
                           name="get_dog_enable"
                           label="ไปรับสุนัข"
                           onChange={onEnableChange}
+                          checked={hostService.get_dog_enable}
                         />
                       </Col>
                     </Row>
@@ -206,7 +251,13 @@ export default function HostServiceBox() {
                         ราคาไปส่งสุนัขต่อกิโลเมตร
                       </Col>
                       <Col xs="5" sm="3" lg="3">
-                        <Input type="number" style={{ blockSize: "30px" }} />
+                        <Input
+                          type="number"
+                          name="price_delivery_dog"
+                          value={hostService.price_delivery_dog}
+                          onChange={onPriceChange}
+                          style={{ blockSize: "30px" }}
+                        />
                       </Col>
                       <Col xs="auto">บาท</Col>
                     </Row>
@@ -218,6 +269,7 @@ export default function HostServiceBox() {
                           name="delivery_dog_enable"
                           label="ไปส่งสุนัข"
                           onChange={onEnableChange}
+                          checked={hostService.delivery_dog_enable}
                         />
                       </Col>
                     </Row>
@@ -228,7 +280,13 @@ export default function HostServiceBox() {
                         ราคาอาบน้ำสุนัข
                       </Col>
                       <Col xs="5" sm="3" lg="3">
-                        <Input type="number" style={{ blockSize: "30px" }} />
+                        <Input
+                          type="number"
+                          name="price_bath_dog"
+                          value={hostService.price_bath_dog}
+                          onChange={onPriceChange}
+                          style={{ blockSize: "30px" }}
+                        />
                       </Col>
                       <Col xs="auto">บาท</Col>
                     </Row>
@@ -240,6 +298,7 @@ export default function HostServiceBox() {
                           name="bath_dog_enable"
                           label="อาบน้ำสุนัข"
                           onChange={onEnableChange}
+                          checked={hostService.bath_dog_enable}
                         />
                       </Col>
                     </Row>
@@ -248,8 +307,19 @@ export default function HostServiceBox() {
               </div>
             </Col>
           </Row>
-
           <hr />
+          <Row>
+            <Col xs="6" style={{ textAlign: "end" }}>
+              <Button onClick={onSubmit} color="primary">
+                ยืนยัน
+              </Button>
+            </Col>
+            <Col xs="6" style={{ textAlign: "start" }}>
+              <Button onClick={onCancle} color="danger">
+                ยกเลิก
+              </Button>
+            </Col>
+          </Row>
         </div>
       </Form>
     </div>

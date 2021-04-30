@@ -119,12 +119,13 @@ const handleLocationSuccess=()=>{
     console.log(data);
     console.log("onPlaceChanged testAutoComplete");
     console.log(testAutoComplete);
-    const gm_accessors = Object.values(testAutoComplete);
-    const place = Object.values(gm_accessors[2].place);
-    const always_change = Object.values(place[0].predictions);
-    const predictions = Object.values(always_change.length>0?always_change[0]:[]);
+
 
     if (typeof testAutoComplete !== "undefined") {
+      const gm_accessors = Object.values(testAutoComplete);
+      const place = Object.values(gm_accessors[2].place);
+      const always_change = Object.values(place[0].predictions);
+      const predictions = Object.values(always_change.length>0?always_change[0]:[]);
       if (typeof data.formatted_address !== "undefined") {
         setUserAddress(data.formatted_address);
         geoCoding(data.formatted_address);

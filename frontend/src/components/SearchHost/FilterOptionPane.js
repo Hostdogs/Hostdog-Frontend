@@ -31,9 +31,12 @@ export default function FilterOptionPane({ setisSearch ,setHostData}) {
   const [userAddress, setUserAddress] = useState("");
   const [geocode, setGeoCode] = useState({lat:13.729025,lng:100.775613});
   const [cookies,setCookie] = useCookies(["mytoken","user_id"])
+  const [isSubmit,setIsSubmit] =useState(false)
+
   const handleSubmit = e =>{
       e.preventDefault();
       setisSearch(true);
+      setShowSubmitFailed(false)
       setTimeout(() => {
         window.scrollTo({
           top: 1250,
@@ -54,8 +57,13 @@ export default function FilterOptionPane({ setisSearch ,setHostData}) {
       })
       
     }
-  
+   const handleSubmitFailed=(e)=>{
+    e.preventDefault();
 
+    setShowSubmitFailed(true)
+
+   }
+    const [showSubmitFailed, setShowSubmitFailed] = useState(false);
   const showDistance = [
     "ไม่เกิน 10 กิโลเมตร",
     "ไม่เกิน 20 กิโลเมตร",
@@ -114,8 +122,8 @@ export default function FilterOptionPane({ setisSearch ,setHostData}) {
             <hr style={{ borderWidth: "3px", borderColor:"#ffe080", width:"90%",textAlign:"left" }} />
             <br/>
             <Container style={{ paddingLeft: "10%", paddingRight: "10%" }}>
-              <Form>
-                <SearchBox userAddress={userAddress} setUserAddress={setUserAddress} geocode={geocode} setGeoCode={setGeoCode}/>
+    
+                <SearchBox userAddress={userAddress} setUserAddress={setUserAddress} geocode={geocode} setGeoCode={setGeoCode} setIsSubmit={setIsSubmit} />
 
                 <FormGroup>
                   <UncontrolledDropdown>
@@ -192,16 +200,19 @@ export default function FilterOptionPane({ setisSearch ,setHostData}) {
                       style={{ width: "" }}
                     />
                   </div>
+                  
                 </FormGroup>
                 <FormGroup style={{ textAlign: "right" }}>
-                  <Button type="submit" onClick={e=>handleSubmit(e)} style={{ backgroundColor: "#ffe080", border: "0px", color:"black" }}>
+                  <Button type="submit" onClick={e=>{isSubmit?handleSubmit(e):handleSubmitFailed(e)}} style={{ backgroundColor: "#ffe080", border: "0px", color:"black" }}>
                     ค้นหา
                   </Button>
+                  {showSubmitFailed? (
+          <div>
+            <small style={{ color: "red" }}>กรุณาใส่ที่อยู่ใหม่อีกครั้ง</small>
+          </div>
+        ) : null}
                 </FormGroup>
-              </Form>
             </Container>
-
-          
           </CardBody>
         </Card>
       </Container>

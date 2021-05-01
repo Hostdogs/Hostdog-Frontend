@@ -7,8 +7,13 @@ const [modal, setModal] = useState(false);
   const [nestedModal, setNestedModal] = useState(false);
   const [closeAll, setCloseAll] = useState(false);
   const toggle = () => setModal(!modal);
+
+  const [customerName,setCustomerName]=useState("บาส บางขุนเทียน")
+  const [dogName,setDogName]=useState("น้องบาส หลังอาน")
   const [accountNumber,setAccountNumber]=useState("1234567890");
   const [totalPrice,setTotalPrice]=useState(30.33)
+
+
   const toggleNested = () => {
     setNestedModal(!nestedModal);
     setCloseAll(false);
@@ -21,10 +26,40 @@ const [modal, setModal] = useState(false);
         <div>
             <Button color="danger" onClick={toggle}>จ่ายเงินกันเถอะ ย้าฮูว</Button>
             <Modal isOpen={modal} toggle={toggle} fade={false} >
-        <ModalHeader toggle={toggle}>ชำระเงินค่าบริการ</ModalHeader>
+        <ModalHeader toggle={toggle}><h2>ชำระเงินค่าบริการ</h2></ModalHeader>
         <ModalBody>
-         <div>หมายเลขบัญชี: {accountNumber}</div>
-         <div>ยอดชำระเงินรวม: {totalPrice}</div>
+        <div>
+
+        {/* <h5>ชื่อ </h5>
+        <p style={{textIndent:"20px"}}>{customerName}</p>
+        <h5>สุนัข </h5>
+        <p style={{textIndent:"20px"}}>{dogName}</p>
+         <h5>หมายเลขบัญชี</h5>
+         <p style={{textIndent:"20px"}}>{accountNumber}</p>
+         <h5>ยอดชำระเงินรวม</h5>
+         <p style={{textIndent:"20px"}}> {totalPrice} บาท</p> */}
+         <div style={{justifyContent:"space-between",display:"flex"}}>
+                <h5>ชื่อ:</h5>
+                 <Label>{customerName}</Label>
+        
+        </div>
+        <div style={{justifyContent:"space-between",display:"flex"}}>
+        <h5>สุนัข:</h5>
+        <Label>{dogName}</Label>
+        </div>
+        <div style={{justifyContent:"space-between",display:"flex"}}>
+         <h5>หมายเลขบัญชี:</h5>
+         <Label >{accountNumber}</Label>
+         </div>
+         <div style={{justifyContent:"space-between",display:"flex"}}>
+         <h5>ยอดชำระเงินรวม:</h5>
+         <Label > {totalPrice} บาท</Label>
+         </div>
+
+
+         </div>
+
+         <small style={{ color: "red" }}>หมายเหตุ: กรุณาชำระค่าบริการภายใน 1 ชั่วโมง มิฉะนั้นบริการของคุณจะถูกยกเลิก</small>
           <br />
           <Modal isOpen={nestedModal} fade={false} toggle={toggleNested} onClosed={closeAll ? toggle : undefined}>
             <ModalBody>คุณต้องการยืนยันการชำระเงินใช่หรือไม่</ModalBody>
@@ -36,7 +71,7 @@ const [modal, setModal] = useState(false);
         </ModalBody>
         <ModalFooter>
           <Button color="success" onClick={toggleNested}>ชำระเงิน</Button>{' '}
-          <Button color="danger" onClick={toggle}>ยกเลิก</Button>
+
         </ModalFooter>
       </Modal>
         </div>

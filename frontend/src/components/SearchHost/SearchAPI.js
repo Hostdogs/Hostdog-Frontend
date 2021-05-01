@@ -1,6 +1,6 @@
 import axios from 'axios'
 import moment from 'moment'
-const API_URL = "https://jsonplaceholder.typicode.com/"
+const API_URL = "127.0.0.1:8000/"
 
 
 const testHost = [
@@ -45,8 +45,8 @@ const testHost = [
         picture: "https://randomuser.me/api/portraits/women/35.jpg",
         displace: 1000,
         host_hosted_count: 55,
-        host_rating:4.8,
-        host_area:40
+        host_rating: 4.8,
+        host_area: 40
     }, {
         userid: 4,
         name: "แพทย์ภูมิ",
@@ -59,8 +59,8 @@ const testHost = [
         picture: "https://randomuser.me/api/portraits/men/5.jpg",
         displace: 1500,
         host_hosted_count: 34,
-        host_rating:2.7,
-        host_area:25
+        host_rating: 2.7,
+        host_area: 25
     }, {
         userid: 5,
         name: "ลิขวิดพูม",
@@ -73,8 +73,8 @@ const testHost = [
         picture: "https://randomuser.me/api/portraits/men/35.jpg",
         displace: 7000,
         host_hosted_count: 44,
-        host_rating:3.2,
-        host_area:18
+        host_rating: 3.2,
+        host_area: 18
     }, {
         userid: 6,
         name: "คำนวย",
@@ -87,8 +87,8 @@ const testHost = [
         picture: "https://randomuser.me/api/portraits/men/42.jpg",
         displace: 15000,
         host_hosted_count: 2,
-        host_rating:3.0,
-        host_area:18,
+        host_rating: 3.0,
+        host_area: 18,
     }
 ]
 export default class SearchAPI {
@@ -96,12 +96,19 @@ export default class SearchAPI {
 
     static fakeGetHostInformation(order) {
         return new Promise((resolve, reject) => {
-            
+
             resolve(testHost)
-   
+
         })
     }
 
-
+    static getHostInformation(mytoken, distance, arearange, stDate,endDate,latitude,longitude) {
+        const url = `${API_URL}api/profilehost/?latitude=${latitude}&longitude=${longitude}&distance=${distance}&arearange=${arearange[0]}&arearange=${arearange[1]}&date_full_range=${stDate}&date_full_range=${endDate}`;
+        return axios.get(url, {
+            headers: {
+                'Authorization': `Token ${mytoken}`
+            }
+        });
+    }
 
 }

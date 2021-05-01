@@ -10,7 +10,7 @@ export default function InboxPage() {
     }, [])
     
     return (
-        <div style={{paddingTop:"70px"}}>
+        <div style={{paddingTop:"35px"}}>
             {pendingData.length>0? (<PendingList pendingData={pendingData}/>):(<BlankPending/>)}
         
         </div>

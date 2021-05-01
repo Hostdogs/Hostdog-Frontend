@@ -201,7 +201,7 @@ const handleLocationSuccess=()=>{
   };
 
   const reverseGeocoding = async (lat, lng) => {
-    setShowLocationWarn(false);
+  
     const urlapi = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${loadScript.googleAPIKey}&language=th`;
     const response = await fetch(urlapi);
     const data = await response.json();
@@ -218,7 +218,7 @@ const handleLocationSuccess=()=>{
 
   const geoCoding = async (address) => {
 
-    setShowLocationWarn(false);
+ 
     const urlapi = `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${loadScript.googleAPIKey}&language=th`;
     const response = await fetch(urlapi);
     const data = await response.json();
@@ -346,7 +346,6 @@ const handleLocationSuccess=()=>{
                 placeholder="อีเมล"
                 onChange={(e) => onChangeInformation(e, inputemail)}
                 value={Information.email}
-
                 onBlur={isemailValidate}
                 onFocus={e => {
                   emailValid.valid = false

@@ -41,12 +41,12 @@ export default function FilterOptionPane({ setisSearch }) {
       //   })
       // }, 100);
 
-      const stDate = moment(selectionRange[0].startDate).format("YYYY-MM-DD")
-      const endDate = moment(selectionRange[0].endDate).format("YYYY-MM-DD")
-      console.log(userAddress,distance[choiceDistance],area[choiceArea],userAddress,stDate,endDate,geocode)
-      SearchAPI.getHostInformation(mytoken,distance,area[choiceArea],stDate,endDate,latitude,geocode.lat,geocode.lng).then(res=>{
-        console.log(res)
-      })
+      // const stDate = moment(selectionRange[0].startDate).format("YYYY-MM-DD")
+      // const endDate = moment(selectionRange[0].endDate).format("YYYY-MM-DD")
+      // console.log(userAddress,distance[choiceDistance],area[choiceArea],userAddress,stDate,endDate,geocode)
+      // SearchAPI.getHostInformation(mytoken,distance,area[choiceArea],stDate,endDate,latitude,geocode.lat,geocode.lng).then(res=>{
+      //   console.log(res)
+      // })
       
     }
   

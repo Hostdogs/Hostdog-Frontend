@@ -15,9 +15,9 @@ import {
 } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import APIDog from "./APIDog";
 import DogFeedingTime from "./DogFeedingTime";
 import { useCookies } from "react-cookie";
+import DogAPI from "../../API/DogAPI";
 
 const startDogInfo = {
   customer: "",
@@ -74,11 +74,11 @@ export default function DogProfileAddForm(props) {
     event.preventDefault();
     console.log(myToken);
     console.log(myId);
-    const resp1 = await APIDog.AddDog(myToken, myId, dogInfo);
+    const resp1 = await DogAPI.AddDog(myToken, myId, dogInfo);
     if (picture !== "") {
       let form_data = new FormData();
       form_data.append("picture", picture, picture.name);
-      const resp2 = await APIDog.UploadImgDog(
+      const resp2 = await DogAPI.UploadImgDog(
         myToken,
         myId,
         resp1.data.id,

@@ -29,7 +29,9 @@ import {
 import { Autocomplete, LoadScript } from "@react-google-maps/api";
 import SignUpMap from "./SignUpMap";
 import moment from "moment-timezone";
-import SignUpAPI from "./SignUpAPI";
+import AuthenAPI from "../API/AuthenAPI";
+import CustomerAPI from "../API/CustomerAPI";
+import HostAPI from "../API/HostAPI";
 const loadScript = {
   googleAPIKey: "AIzaSyBWV06MM0QFyVnkuA1nHJhQ4altZjovYNs",
   language: "th",
@@ -142,10 +144,13 @@ export default function InformationForm({ selectState }) {
       password: Information.password,
       account_number: Information.account_number,
     };
+    const profileInfo = {
+      
+    }
 
     console.log(info);
     try {
-      const resp = await SignUpAPI.initSignUp(info);
+      const resp = await AuthenAPI.initSignUp(info);
       if (resp.data.is_host) {
         console.log("host");
       } else {

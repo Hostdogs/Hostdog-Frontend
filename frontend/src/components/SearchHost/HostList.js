@@ -12,7 +12,7 @@ import {
 } from "reactstrap";
 import { useState, useEffect } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import SearchAPI from "./SearchAPI";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
 
@@ -36,20 +36,7 @@ export default function HostList({hostData,setHostData}) {
     // })
   }, [])
 
-  // const showMoreData = () => {
-  //   console.log("Showmore trigger")
-  //   setTimeout(() => {
-  //     if (hostData.length > 0) {
-  //       setShowedHost(ShowedHost.concat(hostData[0]))
-  //       hostData.shift()
-  //     } else {
-  //       setHasMore(false)
-  //     }
-  //   }, 1000);
-
-
-
-  // };
+  
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -100,18 +87,7 @@ export default function HostList({hostData,setHostData}) {
   // }, [selectedSort])
   return (
     <>
-      {/* <InfiniteScroll
-        dataLength={ShowedHost.length}
-        next={showMoreData}
-        hasMore={hasMore}
-        loader={<h4 style={{ textAlign: "center" }}> <Spinner size="lg" color="warning" /></h4>}
-        endMessage={
-          <p style={{ textAlign: "center" }}>
-            <b>-------</b>
-          </p>
-        }
-        style={{ overflowX: "hidden" }}
-      > */}
+      
         <Container className="host-container" fluid="xl" >
           <Dropdown isOpen={dropdownOpen} toggle={toggle}>
             <DropdownToggle caret><FontAwesomeIcon icon={faFilter}/> {sortingList[selectedSort]}</DropdownToggle>
@@ -140,7 +116,7 @@ export default function HostList({hostData,setHostData}) {
             ขึ้นข้างบน
           </Button>
         </Container>
-      {/* </InfiniteScroll> */}
+    
     </>
   );
 }

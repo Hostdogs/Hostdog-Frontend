@@ -24,7 +24,9 @@ import "./SearchHost.css";
 import SearchBox from "./SearchBox";
 import moment from "moment";
 import { useCookies } from "react-cookie";
-import SearchAPI from "./SearchAPI";
+import HostAPI from "../API/HostAPI";
+
+
 export default function FilterOptionPane({ setisSearch ,setHostData}) {
   const [isDateOpen, setIsDateOpen] = useState(false);
   const toggleDate = () => setIsDateOpen(!isDateOpen);
@@ -47,7 +49,7 @@ export default function FilterOptionPane({ setisSearch ,setHostData}) {
       const stDate = moment(selectionRange[0].startDate).format("YYYY-MM-DD")
       const endDate = moment(selectionRange[0].endDate).format("YYYY-MM-DD")
       console.log(userAddress,distance[choiceDistance],area[choiceArea],userAddress,stDate,endDate,geocode)
-      SearchAPI.getHostInformation(cookies["mytoken"],distance,area[choiceArea],stDate,endDate,geocode.lat,geocode.lng).then(res=>{
+      HostAPI.getHostInformation(cookies["mytoken"],distance,area[choiceArea],stDate,endDate,geocode.lat,geocode.lng).then(res=>{
         console.log(res)
         let data = []
         for(const object in res.data){

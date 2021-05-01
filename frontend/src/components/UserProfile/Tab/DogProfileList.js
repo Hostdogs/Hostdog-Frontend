@@ -13,8 +13,9 @@ import {
   ButtonGroup,
 } from "reactstrap";
 import DogProfileEditForm from "./DogProfileEditForm";
-import APIDog from "./APIDog";
+
 import { useCookies } from "react-cookie";
+import DogAPI from "../../API/DogAPI";
 
 export default function DogProfileList(props) {
   const { dogInfos } = props;
@@ -29,7 +30,7 @@ export default function DogProfileList(props) {
   };
 
   const deleteDogInfo = (dogInfo) => {
-    APIDog.DeleteDog(myToken, myId, dogInfo.id).then(() =>
+    DogAPI.DeleteDog(myToken, myId, dogInfo.id).then(() =>
       props.deleteDogInfo(dogInfo)
     );
   };

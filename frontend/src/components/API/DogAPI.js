@@ -1,7 +1,6 @@
 import axios from "axios";
-import React, { Component } from "react";
 const API_URL = "http://127.0.0.1:8000/api/profilecustomer/";
-export default class APIDog {
+export default class DogAPI {
   static UpdateDog(mytoken, user_id, dog_id, data) {
     const url = `${API_URL}${user_id}/dogs/${dog_id}/`;
     return axios.patch(url, data, {
@@ -40,5 +39,18 @@ export default class APIDog {
         Authorization: `Token ${mytoken}`,
       },
     });
+  }
+
+  static GetDog(mytoken,user_id){
+    const url = `${API_URL}${user_id}/dogs/`;
+    return axios.get(
+      url,
+      {
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Token ${mytoken}`,
+        },
+      }
+    );
   }
 }

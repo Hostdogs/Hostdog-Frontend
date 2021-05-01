@@ -14,32 +14,11 @@ import {
 } from "reactstrap";
 import "./ManageTab.css";
 import SelectMultiDate from "./SelectMultiDate";
-import APIManage from "./APIManage";
+
 import { useCookies } from "react-cookie";
+import HostServiceAPI from "../../../API/HostServiceAPI";
 
-// const startHostService = {
-//   price_dog_walk: "",
-//   price_get_dog: "",
-//   price_deliver_dog: "",
-//   price_bath_dog: "",
-//   enable_dog_walk: false,
-//   enable_get_dog: false,
-//   enable_delivery_dog: false,
-//   enable_bath_dog: false,
-//   deposit_price: "",
-// };
 
-// const startHostService = {
-//   price_dog_walk: serviceDetail.price_dog_walk,
-//   price_get_dog: serviceDetail.price_get_dog,
-//   price_deliver_dog: serviceDetail.price_deliver_dog,
-//   price_bath_dog: serviceDetail.price_bath_dog,
-//   enable_dog_walk: serviceDetail.enable_dog_walk,
-//   enable_get_dog: serviceDetail.enable_get_dog,
-//   enable_delivery_dog: serviceDetail.enable_delivery_dog,
-//   enable_bath_dog: serviceDetail.enable_bath_dog,
-//   deposit_price: serviceDetail.deposit_price,
-// };
 
 export default function HostServiceBox(props) {
   const { serviceDetail } = props;
@@ -90,11 +69,11 @@ export default function HostServiceBox(props) {
 
   async function onSubmit(event) {
     event.preventDefault();
-    const resp = await APIManage.UpdateHostService(myToken, myId, hostService);
+    const resp = await HostServiceAPI.UpdateHostService(myToken, myId, hostService);
     console.log(resp.data);
   }
 
-  function onCancle(event) {
+  function onCancel(event) {
     event.preventDefault();
     setHostService(serviceDetail);
   }
@@ -354,7 +333,7 @@ export default function HostServiceBox(props) {
               </Button>
             </Col>
             <Col xs="6" style={{ textAlign: "start" }}>
-              <Button onClick={onCancle} color="danger">
+              <Button onClick={onCancel} color="danger">
                 ยกเลิก
               </Button>
             </Col>

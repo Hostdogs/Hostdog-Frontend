@@ -12,24 +12,18 @@ import DogProfileAddForm from "./DogProfileAddForm";
 import DogProfileList from "./DogProfileList";
 import axios from "axios";
 import { useCookies } from "react-cookie";
+import DogAPI from "../../API/DogAPI";
+
 export default function DogProfileTab({ profileId }) {
   const [dogInfos, setDogInfos] = useState([]);
   const [cookies, setCookie] = useCookies(["mytoken", "user_id"]);
 
-  async function getDogs() {
-    const resp = await axios.get(
-      `http://127.0.0.1:8000/api/profilecustomer/${profileId}/dogs/`,
-      {
-        headers: {
-          "content-type": "application/json",
-          Authorization: `Token ${cookies["mytoken"]}`,
-        },
-      }
-    );
-    setDogInfos(resp.data);
-  }
+  
   useEffect(() => {
-    getDogs();
+    DogAPI.GetDog(cookies["mytoken"],profileId).then(resp=>{
+      setDogInfos(resp.data);
+    })
+    
   }, []);
 
   const updateDogInfo = (dogInfo) => {

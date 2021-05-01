@@ -15,7 +15,7 @@ import { useCookies } from "react-cookie";
 import { useHistory } from "react-router-dom";
 import "./LoginModal.css";
 import axios from "axios";
-import LoginAPI from "./LoginAPI";
+import AuthenAPI from "../API/AuthenAPI";
 
 const LoginModal = ({ buttonLabel, className, MouseOver, MouseLeave }) => {
   const [cookies, setCookie, removeCookie] = useCookies(["mytoken", "user_id"]);
@@ -29,7 +29,8 @@ const LoginModal = ({ buttonLabel, className, MouseOver, MouseLeave }) => {
     if (username === "" || password === "") {
       setloginRes("กรุณากรอกชื่อผู้ใช้หรือรหัสผ่านให้ถูกต้อง");
     } else {
-      LoginAPI.Login(username, password)
+      setloginRes("");
+      AuthenAPI.Login(username, password)
         .then((res) => {
           console.log(res.data);
           setCookie("mytoken", res.data.token);

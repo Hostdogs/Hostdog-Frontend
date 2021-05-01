@@ -169,17 +169,21 @@ export default function InformationForm({ selectState }) {
   const [userAddress, setUserAddress] = useState("");
  
 
-  const loadScript= {
-    googleAPIKey: "AIzaSyBWV06MM0QFyVnkuA1nHJhQ4altZjovYNs",
-    language: "th",
-    libraries: ["places"],
-  };
+  const handleLocationFailed=()=>{
+
+ 
+    setShowLocationWarn(true);
+  }
+const handleLocationSuccess=()=>{
+
+  setShowLocationWarn(false);
+}
 
   const getCurrentLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(success);
     } else {
-      setShowLocationWarn(true);
+      handleLocationFailed();
     }
   };
 
@@ -204,9 +208,12 @@ export default function InformationForm({ selectState }) {
     console.log("reverseGeocoding");
     console.log(data);
 
-    data.status === "OK"
-      ? setUserAddress(data.results[0].formatted_address)
-      : setShowLocationWarn(true);
+    if(data.status === "OK"){
+      setUserAddress(data.results[0].formatted_address);
+      handleLocationSuccess();
+    }else{
+      handleLocationFailed();
+    }
   };
 
   const geoCoding = async (address) => {
@@ -216,9 +223,12 @@ export default function InformationForm({ selectState }) {
     const response = await fetch(urlapi);
     const data = await response.json();
 
-    data.status === "OK"
-      ? setGeoCode(data.results[0].geometry.location)
-      : setShowLocationWarn(true);
+    if (data.status === "OK"){
+      setGeoCode(data.results[0].geometry.location);
+      handleLocationSuccess();
+    }else{
+      handleLocationFailed();
+    }
 
     console.log("geoCoding");
     console.log(geocode);
@@ -232,7 +242,7 @@ export default function InformationForm({ selectState }) {
     const lng = parseFloat(e.latLng.lng());
 
     setGeoCode({ lat, lng });
-    setShowLocationWarn(false);
+    handleLocationSuccess();
     console.log("onMarkerDragEnd");
     console.log(geocode);
   };
@@ -241,7 +251,7 @@ export default function InformationForm({ selectState }) {
 
   const onLoad = (autocomplete) => {
     setTestAutoComplete(autocomplete);
-    setShowLocationWarn(false);
+
     console.log("onLoad ");
     console.log(testAutoComplete);
   };
@@ -251,26 +261,30 @@ export default function InformationForm({ selectState }) {
   const onPlaceChanged = () => {
 
     const data = testAutoComplete.getPlace();
-    console.log("onPlaceChanged");
-    console.log(testAutoComplete);
+    console.log("onPlaceChanged data");
     console.log(data);
-    if (typeof testAutoComplete !== "undefined" && typeof data !== "undefined"&&typeof predictions!=="undefined") {
-      setShowLocationWarn(false);
+    console.log("onPlaceChanged testAutoComplete");
+    console.log(testAutoComplete);
+
+
+    if (typeof testAutoComplete !== "undefined") {
+      const gm_accessors = Object.values(testAutoComplete);
+      const place = Object.values(gm_accessors[2].place);
+      const always_change = Object.values(place[0].predictions);
+      const predictions = Object.values(always_change.length>0?always_change[0]:[]);
       if (typeof data.formatted_address !== "undefined") {
         setUserAddress(data.formatted_address);
         geoCoding(data.formatted_address);
-      }
-       else if (testAutoComplete.gm_accessors_.place.Ve.predictions.length > 0) {
-        setUserAddress(
-          testAutoComplete.gm_accessors_.place.Ve.predictions[0].Lk
-        );
-        geoCoding(testAutoComplete.gm_accessors_.place.Ve.predictions[0].Lk);
-      }
-      else if (testAutoComplete.gm_accessors_.place.Ve.place.name === "") {
-        setShowLocationWarn(true);
+
+      } else if (predictions.length>0) {
+        setUserAddress(predictions[0]);
+        geoCoding(predictions[0]);
+
+      } else {
+        handleLocationFailed();
       }
     } else {
-      setShowLocationWarn(true);
+      handleLocationFailed();
     }
   };
 

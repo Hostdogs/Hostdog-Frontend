@@ -15,7 +15,8 @@ import {
 import DogProfileEditForm from "./DogProfileEditForm";
 
 import { useCookies } from "react-cookie";
-import DogAPI from "../../API/DogAPI";
+import DogAPI from "../../../API/DogAPI";
+import EditFeedingTime from "./EditFeedingTime";
 
 export default function DogProfileList(props) {
   const { dogInfos } = props;
@@ -32,6 +33,12 @@ export default function DogProfileList(props) {
   const deleteDogInfo = (dogInfo) => {
     DogAPI.DeleteDog(myToken, myId, dogInfo.id).then(() =>
       props.deleteDogInfo(dogInfo)
+    );
+  };
+
+  const editFeedingTime = (dogInfo) => {
+    DogAPI.GetFeedingTime(myToken, myId, dogInfo.id).then((resp) =>
+      console.log(resp.data)
     );
   };
 
@@ -60,6 +67,9 @@ export default function DogProfileList(props) {
                   <p className="text-muted">รายละเอียด : {dogInfo.dog_bio}</p>
                 </CardText>
                 <ButtonGroup>
+                  <EditFeedingTime labelBtn="เวลาให้อาหาร" dogId={dogInfo.id} />
+                </ButtonGroup>
+                <ButtonGroup style={{ marginLeft: "15px" }}>
                   <DogProfileEditForm
                     labelBtn="แก้ไข"
                     editDogInfo={dogInfo}

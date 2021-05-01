@@ -17,7 +17,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import DogFeedingTime from "./DogFeedingTime";
 import { useCookies } from "react-cookie";
-import DogAPI from "../../API/DogAPI";
+import DogAPI from "../../../API/DogAPI";
 
 const startDogInfo = {
   customer: "",
@@ -72,8 +72,6 @@ export default function DogProfileAddForm(props) {
 
   async function onDogSubmit(event) {
     event.preventDefault();
-    console.log(myToken);
-    console.log(myId);
     const resp1 = await DogAPI.AddDog(myToken, myId, dogInfo);
     if (picture !== "") {
       let form_data = new FormData();
@@ -89,6 +87,11 @@ export default function DogProfileAddForm(props) {
     } else {
       props.addDogInfo(resp1.data);
     }
+    allTimes.forEach((time) => {
+      DogAPI.AddFeedingTime(myToken, myId, resp1.data.id, time).then((resp) =>
+        console.log(resp)
+      );
+    });
     setDogInfo(startDogInfo);
     toggle();
   }

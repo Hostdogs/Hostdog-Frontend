@@ -12,7 +12,7 @@ import DogProfileAddForm from "./DogProfileAddForm";
 import DogProfileList from "./DogProfileList";
 import axios from "axios";
 import { useCookies } from "react-cookie";
-import DogAPI from "../../API/DogAPI";
+import DogAPI from "../../../API/DogAPI";
 
 export default function DogProfileTab({ profileId }) {
   const [dogInfos, setDogInfos] = useState([]);

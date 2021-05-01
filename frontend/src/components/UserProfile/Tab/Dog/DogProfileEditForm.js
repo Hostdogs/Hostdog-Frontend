@@ -16,7 +16,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faEdit } from "@fortawesome/free-solid-svg-icons";
 import { useCookies } from "react-cookie";
-import DogAPI from "../../API/DogAPI";
+import DogAPI from "../../../API/DogAPI";
 
 export default function DogProfileEditForm(props) {
   const { labelBtn, editDogInfo } = props;

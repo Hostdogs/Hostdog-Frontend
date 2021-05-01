@@ -13,7 +13,7 @@ import {
   Col,
 } from "reactstrap";
 import classnames from "classnames";
-import DogProfileTab from "./Tab/DogProfileTab";
+import DogProfileTab from "./Tab/Dog/DogProfileTab";
 import MainTab from "./Tab/MainTab";
 import SettingTab from "./Tab/SettingTab";
 import HostServiceTab from "./Tab/Manage/HostServiceTab";

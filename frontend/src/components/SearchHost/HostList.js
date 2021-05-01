@@ -16,12 +16,12 @@ import SearchAPI from "./SearchAPI";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
 
-export default function HostList() {
+export default function HostList({hostData,setHostData}) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const toggle = () => setDropdownOpen((prevState) => !prevState);
 
-  const [hostData, setHostData] = useState([]);
+  // const [hostData, setHostData] = useState([]);
   const [ShowedHost, setShowedHost] = useState([])
   const [hasMore, setHasMore] = useState(true);
 
@@ -30,10 +30,10 @@ export default function HostList() {
   }
 
   useEffect(() => {
-    console.log("Hostlist Invoked")
-    SearchAPI.fakeGetHostInformation(hostData.length).then(res => {
-      setHostData(res)
-    })
+    // console.log("Hostlist Invoked")
+    // SearchAPI.fakeGetHostInformation(hostData.length).then(res => {
+    //   setHostData(res)
+    // })
   }, [])
 
   // const showMoreData = () => {

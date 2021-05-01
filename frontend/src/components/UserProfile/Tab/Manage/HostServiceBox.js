@@ -14,21 +14,44 @@ import {
 } from "reactstrap";
 import "./ManageTab.css";
 import SelectMultiDate from "./SelectMultiDate";
+import APIManage from "./APIManage";
+import { useCookies } from "react-cookie";
 
-const startHostService = {
-  price_dog_walk: "",
-  price_get_dog: "",
-  price_delivery_dog: "",
-  price_bath_dog: "",
-  dog_walk_enable: false,
-  get_dog_enable: false,
-  delivery_dog_enable: false,
-  bath_dog_enable: false,
-  deposit_price: "",
-  late_price: "",
-};
-export default function HostServiceBox() {
-  const [hostService, setHostService] = useState(startHostService);
+// const startHostService = {
+//   price_dog_walk: "",
+//   price_get_dog: "",
+//   price_deliver_dog: "",
+//   price_bath_dog: "",
+//   enable_dog_walk: false,
+//   enable_get_dog: false,
+//   enable_delivery_dog: false,
+//   enable_bath_dog: false,
+//   deposit_price: "",
+// };
+
+// const startHostService = {
+//   price_dog_walk: serviceDetail.price_dog_walk,
+//   price_get_dog: serviceDetail.price_get_dog,
+//   price_deliver_dog: serviceDetail.price_deliver_dog,
+//   price_bath_dog: serviceDetail.price_bath_dog,
+//   enable_dog_walk: serviceDetail.enable_dog_walk,
+//   enable_get_dog: serviceDetail.enable_get_dog,
+//   enable_delivery_dog: serviceDetail.enable_delivery_dog,
+//   enable_bath_dog: serviceDetail.enable_bath_dog,
+//   deposit_price: serviceDetail.deposit_price,
+// };
+
+export default function HostServiceBox(props) {
+  const { serviceDetail } = props;
+
+  useEffect(() => {
+    setHostService(serviceDetail);
+  }, [serviceDetail]);
+
+  const [cookies, setCookie] = useCookies(["mytoken", "user_id"]);
+  const myId = cookies["user_id"];
+  const myToken = cookies["mytoken"];
+  const [hostService, setHostService] = useState(serviceDetail);
 
   function onEnableChange(event) {
     const name = event.target.name;
@@ -65,18 +88,16 @@ export default function HostServiceBox() {
     }
   }
 
-  function onSubmit(event) {
+  async function onSubmit(event) {
     event.preventDefault();
-    console.log(hostService);
-  }
-  function onCancle(event) {
-    event.preventDefault();
-    setHostService(startHostService);
+    const resp = await APIManage.UpdateHostService(myToken, myId, hostService);
+    console.log(resp.data);
   }
 
-  useEffect(() => {
-    //console.log(hostService);
-  }, [hostService]);
+  function onCancle(event) {
+    event.preventDefault();
+    setHostService(serviceDetail);
+  }
 
   return (
     <div>
@@ -118,23 +139,6 @@ export default function HostServiceBox() {
                           type="number"
                           name="deposit_price"
                           value={hostService.deposit_price}
-                          onChange={onPriceChange}
-                          style={{ blockSize: "30px" }}
-                        />
-                      </Col>
-                      <Col xs="auto">บาท</Col>
-                    </Row>
-                  </FormGroup>
-                  <FormGroup>
-                    <Row>
-                      <Col xs="12" sm="5" lg="6">
-                        ค่ามัดจำในการฝากสุนัข
-                      </Col>
-                      <Col xs="5" sm="3" lg="3">
-                        <Input
-                          type="number"
-                          name="late_price"
-                          value={hostService.late_price}
                           onChange={onPriceChange}
                           style={{ blockSize: "30px" }}
                         />
@@ -190,7 +194,7 @@ export default function HostServiceBox() {
                   <FormGroup
                     style={{
                       color:
-                        hostService.dog_walk_enable === true
+                        hostService.enable_dog_walk === true
                           ? "white"
                           : "#BBBBBB",
                     }}
@@ -206,7 +210,7 @@ export default function HostServiceBox() {
                           value={hostService.price_dog_walk}
                           onChange={onPriceChange}
                           style={{ blockSize: "30px" }}
-                          disabled={!hostService.dog_walk_enable}
+                          disabled={!hostService.enable_dog_walk}
                         />
                       </Col>
                       <Col xs="auto">บาท</Col>
@@ -216,10 +220,10 @@ export default function HostServiceBox() {
                         <CustomInput
                           type="switch"
                           id="walk_dog"
-                          name="dog_walk_enable"
+                          name="enable_dog_walk"
                           label="พาสุนัขไปเดินเล่น"
                           onChange={onEnableChange}
-                          checked={hostService.dog_walk_enable}
+                          checked={hostService.enable_dog_walk}
                         />
                       </Col>
                     </Row>
@@ -228,7 +232,7 @@ export default function HostServiceBox() {
                     style={{
                       marginTop: "20px",
                       color:
-                        hostService.get_dog_enable === true
+                        hostService.enable_get_dog === true
                           ? "white"
                           : "#BBBBBB",
                     }}
@@ -244,7 +248,7 @@ export default function HostServiceBox() {
                           value={hostService.price_get_dog}
                           onChange={onPriceChange}
                           style={{ blockSize: "30px" }}
-                          disabled={!hostService.get_dog_enable}
+                          disabled={!hostService.enable_get_dog}
                         />
                       </Col>
                       <Col xs="auto">บาท</Col>
@@ -254,10 +258,10 @@ export default function HostServiceBox() {
                         <CustomInput
                           type="switch"
                           id="get_dog"
-                          name="get_dog_enable"
+                          name="enable_get_dog"
                           label="ไปรับสุนัข"
                           onChange={onEnableChange}
-                          checked={hostService.get_dog_enable}
+                          checked={hostService.enable_get_dog}
                         />
                       </Col>
                     </Row>
@@ -266,7 +270,7 @@ export default function HostServiceBox() {
                     style={{
                       marginTop: "20px",
                       color:
-                        hostService.delivery_dog_enable === true
+                        hostService.enable_delivery_dog === true
                           ? "white"
                           : "#BBBBBB",
                     }}
@@ -278,11 +282,11 @@ export default function HostServiceBox() {
                       <Col xs="5" sm="3" lg="3">
                         <Input
                           type="number"
-                          name="price_delivery_dog"
-                          value={hostService.price_delivery_dog}
+                          name="price_deliver_dog"
+                          value={hostService.price_deliver_dog}
                           onChange={onPriceChange}
                           style={{ blockSize: "30px" }}
-                          disabled={!hostService.delivery_dog_enable}
+                          disabled={!hostService.enable_delivery_dog}
                         />
                       </Col>
                       <Col xs="auto">บาท</Col>
@@ -292,10 +296,10 @@ export default function HostServiceBox() {
                         <CustomInput
                           type="switch"
                           id="send_dog"
-                          name="delivery_dog_enable"
+                          name="enable_delivery_dog"
                           label="ไปส่งสุนัข"
                           onChange={onEnableChange}
-                          checked={hostService.delivery_dog_enable}
+                          checked={hostService.enable_delivery_dog}
                         />
                       </Col>
                     </Row>
@@ -304,7 +308,7 @@ export default function HostServiceBox() {
                     style={{
                       marginTop: "20px",
                       color:
-                        hostService.bath_dog_enable === true
+                        hostService.enable_bath_dog === true
                           ? "white"
                           : "#BBBBBB",
                     }}
@@ -320,7 +324,7 @@ export default function HostServiceBox() {
                           value={hostService.price_bath_dog}
                           onChange={onPriceChange}
                           style={{ blockSize: "30px" }}
-                          disabled={!hostService.bath_dog_enable}
+                          disabled={!hostService.enable_bath_dog}
                         />
                       </Col>
                       <Col xs="auto">บาท</Col>
@@ -330,10 +334,10 @@ export default function HostServiceBox() {
                         <CustomInput
                           type="switch"
                           id="bath_dog"
-                          name="bath_dog_enable"
+                          name="enable_bath_dog"
                           label="อาบน้ำสุนัข"
                           onChange={onEnableChange}
-                          checked={hostService.bath_dog_enable}
+                          checked={hostService.enable_bath_dog}
                         />
                       </Col>
                     </Row>

@@ -26,7 +26,6 @@ export default function DogProfileTab({ profileId }) {
         },
       }
     );
-    console.log(resp.data);
     setDogInfos(resp.data);
   }
   useEffect(() => {

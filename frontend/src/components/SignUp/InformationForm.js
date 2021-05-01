@@ -54,7 +54,7 @@ export default function InformationForm({ selectState }) {
     account_number: "111111111111",
   });
   const [cookies, setCookie, removeCookie] = useCookies(["mytoken", "user_id"]);
-
+  // console.log(Information.is_host)
   const inputnumberonly = /^[0-9\b]+$/;
   const inputusername = /^[A-Za-z0-9]+$/;
   const inputtfirstname = /^[ก-ฮะ-ไ่้๊๋็์ัํ]+$/;
@@ -144,20 +144,55 @@ export default function InformationForm({ selectState }) {
       password: Information.password,
       account_number: Information.account_number,
     };
-    const profileInfo = {
-      
-    }
+
 
     console.log(info);
     try {
       const resp = await AuthenAPI.initSignUp(info);
       if (resp.data.is_host) {
-        console.log("host");
+        
+        const profileInfo = {
+          first_name: Information.first_name,
+          last_name: Information.last_name,
+          gender: Information.gender,
+          mobile: Information.mobile,
+          dob: Information.dob,
+          address: Information.address,
+          latitude: geocode.lat,
+          longitude: geocode.lng
+        }
+        console.log("host",profileInfo,resp);
+        HostAPI.ProfileInitHost(resp.data.id, profileInfo, resp.data.token).then(res => {
+          console.log(res)
+        }).catch(error => {
+          if (error.response) {
+            console.log(error.response)
+          }
+        })
       } else {
-        console.log("customer");
+        
+        const profileInfo = {
+          first_name: Information.first_name,
+          last_name: Information.last_name,
+          gender: Information.gender,
+          mobile: Information.mobile,
+          dob: Information.dob,
+          address: Information.address,
+          latitude: geocode.lat,
+          longitude: geocode.lng
+        }
+        console.log("customer",profileInfo,resp);
+        CustomerAPI.ProfileInitCustomer(resp.data.id, profileInfo, resp.data.token).then(res => {
+          console.log(res)
+        }).catch(error => {
+          if (error.response) {
+            console.log(error.response)
+          }
+
+        })
       }
       setCookie("mytoken", resp.data.token);
-      setCookie("user_id", resp.data.user_id);
+      setCookie("user_id", resp.data.id);
     } catch (error) {
       let errorMessage = "";
       if (error.response.data.is_host !== undefined) {
@@ -170,6 +205,7 @@ export default function InformationForm({ selectState }) {
       console.log(error.response.data);
     }
   }
+
   const onChangeInformation = (e, regexp = null) => {
     e.preventDefault();
     const name = e.target.name;
@@ -206,9 +242,11 @@ export default function InformationForm({ selectState }) {
   //Google Map
   useEffect(() => {
     if (selectState === "Host") {
-      Information.is_host = true;
+      // Information.is_host = true;
+      setInformation({ ...Information,is_host:true});
     } else if (selectState === "Customer") {
-      Information.is_host = false;
+      // Information.is_host = false;
+      setInformation({ ...Information,is_host:false});
     }
     // console.log(Information.is_host+selectState)
   }, [selectState]);
@@ -217,15 +255,15 @@ export default function InformationForm({ selectState }) {
 
   const [userAddress, setUserAddress] = useState("");
 
-  const handleLocationFailed=()=>{
+  const handleLocationFailed = () => {
 
- 
+
     setShowLocationWarn(true);
   }
-const handleLocationSuccess=()=>{
+  const handleLocationSuccess = () => {
 
-  setShowLocationWarn(false);
-}
+    setShowLocationWarn(false);
+  }
 
   const getCurrentLocation = () => {
     if (navigator.geolocation) {
@@ -249,32 +287,32 @@ const handleLocationSuccess=()=>{
   };
 
   const reverseGeocoding = async (lat, lng) => {
-  
+
     const urlapi = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${loadScript.googleAPIKey}&language=th`;
     const response = await fetch(urlapi);
     const data = await response.json();
     console.log("reverseGeocoding");
     console.log(data);
 
-    if(data.status === "OK"){
+    if (data.status === "OK") {
       setUserAddress(data.results[0].formatted_address);
       handleLocationSuccess();
-    }else{
+    } else {
       handleLocationFailed();
     }
   };
 
   const geoCoding = async (address) => {
 
- 
+
     const urlapi = `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${loadScript.googleAPIKey}&language=th`;
     const response = await fetch(urlapi);
     const data = await response.json();
 
-    if (data.status === "OK"){
+    if (data.status === "OK") {
       setGeoCode(data.results[0].geometry.location);
       handleLocationSuccess();
-    }else{
+    } else {
       handleLocationFailed();
     }
 
@@ -316,12 +354,12 @@ const handleLocationSuccess=()=>{
       const gm_accessors = Object.values(testAutoComplete);
       const place = Object.values(gm_accessors[2].place);
       const always_change = Object.values(place[0].predictions);
-      const predictions = Object.values(always_change.length>0?always_change[0]:[]);
+      const predictions = Object.values(always_change.length > 0 ? always_change[0] : []);
       if (typeof data.formatted_address !== "undefined") {
         setUserAddress(data.formatted_address);
         geoCoding(data.formatted_address);
 
-      } else if (predictions.length>0) {
+      } else if (predictions.length > 0) {
         setUserAddress(predictions[0]);
         geoCoding(predictions[0]);
 
@@ -532,7 +570,7 @@ const handleLocationSuccess=()=>{
                     name="gender"
                     label="ชาย"
                     onChange={onChangeradio}
-                    value="Male"
+                    value="male"
                   />
                 </Col>
                 <Col>
@@ -542,7 +580,7 @@ const handleLocationSuccess=()=>{
                     name="gender"
                     label="หญิง"
                     onChange={onChangeradio}
-                    value="Female"
+                    value="female"
                   />
                 </Col>
                 <Col style={{ minWidth: "100px" }}>
@@ -552,7 +590,7 @@ const handleLocationSuccess=()=>{
                     name="gender"
                     label="ไม่ระบุ"
                     onChange={onChangeradio}
-                    value="Other"
+                    value="none"
                   />
                 </Col>
               </Row>

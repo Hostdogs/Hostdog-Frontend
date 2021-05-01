@@ -19,19 +19,25 @@ import FreeDay from "./FreeDay";
 import "holderjs";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
+import HostAPI from "../API/HostAPI";
 
 export default function Host({ host }) {
-  const [displace, setdisplace] = useState("")
+  const [distance, setdistance] = useState("")
   const [urllink, seturllink] = useState("/")
   const [title, settitle] = useState("ผู้ฝากสุนัข")
+  const [rating, setrating] = useState(0)
+  const [hostInfo, sethostInfo] = useState({})
   useEffect(() => {
-    if (host.displace >= 1000) {
-      setdisplace(host.displace / 1000 + " km")
+    if (host.distance < 1) {
+      setdistance(Math.round(host.distance*1000) + " m")
     } else {
-      setdisplace(host.displace + " m")
+      setdistance(host.distance + " km")
     }
-    seturllink(`/profile/${host.userid}`)
+    seturllink(`/profile/${host.account}`)
     setHostTitle(host.host_hosted_count)
+    setrating(host.host_rating.toFixed(1))
+    // console.log(host)
+    sethostInfo(host)
   }, [host])
   let history = useHistory()
   const titleList = ["มือใหม่หัดเลี้ยง", "พี่เลี้ยงทั่วไป", "พี่เลี้ยงอาวุโส", "พี่เลี้ยงขั้นเซียน"]
@@ -46,19 +52,22 @@ export default function Host({ host }) {
       settitle(titleList[3])
     }
   }
+  const placeholderPath = "user_placeholder.svg"
+  
+
   return (
 
     <div>
       <Card>
         <CardHeader style={{ backgroundColor: "#f9e07f", borderRadius: "0", color: "#264d59" }}>
-          <h4 style={{ position: "absolute", top: "5px", right: "10px" }}>{displace}</h4>
+          <h4 style={{ position: "absolute", top: "5px", right: "10px" }}>{distance}</h4>
           <div style={{ position: "absolute", top: "7px", left: "15px" }}>
             <FreeDay />
           </div>
           <Row style={{ marginTop: "2%" }}>
             <Col xs="12" sm="12" md="2" lg="2" style={{ textAlign: "center" }}>
               <img
-                src={host.picture}
+                src={hostInfo.picture||placeholderPath}
                 className="img-responsive center-block"
                 style={{
                   borderRadius: "50%",
@@ -93,7 +102,7 @@ export default function Host({ host }) {
                       size="xs"
                       style={{ transform: "rotate(135deg)", color: "#43978d" }}
                     />
-                    {host.name} {host.surname}
+                    {hostInfo.first_name} {hostInfo.last_name}
                   </h3>
                   <h5 className="fontsizeLevel">{title}</h5>
                 </Col>
@@ -104,7 +113,7 @@ export default function Host({ host }) {
                         <div style={{ paddingTop: "3%" }}> </div>
                       </a>
                       <div>
-                        รับฝากมาแล้ว <b>{host.host_hosted_count} ตัว</b>{" "}
+                        รับฝากมาแล้ว <b>{hostInfo.host_hosted_count} ตัว</b>{" "}
                         <a className="mobile-br">
                           <br />
                         </a>
@@ -115,7 +124,7 @@ export default function Host({ host }) {
                         <a className="mobile-br">
                           <br />
                         </a>
-                        <b>{host.host_area} ตารางเมตร</b>
+                        <b>{hostInfo.host_area} ตารางเมตร</b>
                       </div>
                       <a className="mobile-br2">
                         <br />
@@ -126,7 +135,7 @@ export default function Host({ host }) {
 
                       <br />
                       <FontAwesomeIcon icon={faBone} size="xs" style={{ transform: "rotate(135deg)", color: "#43978d" }} />
-                      <b> {host.host_rating.toFixed(1)}/5.0</b>
+                      <b> {rating}/5.0</b>
                     </Col>
                   </Row>
                 </Col>

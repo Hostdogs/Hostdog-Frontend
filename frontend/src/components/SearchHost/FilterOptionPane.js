@@ -49,13 +49,19 @@ export default function FilterOptionPane({ setisSearch ,setHostData}) {
       const stDate = moment(selectionRange[0].startDate).format("YYYY-MM-DD")
       const endDate = moment(selectionRange[0].endDate).format("YYYY-MM-DD")
       console.log(userAddress,distance[choiceDistance],area[choiceArea],userAddress,stDate,endDate,geocode)
-      HostAPI.getHostInformation(cookies["mytoken"],distance,area[choiceArea],stDate,endDate,geocode.lat,geocode.lng).then(res=>{
-        console.log(res)
-        let data = []
-        for(const object in res.data){
-          data.push(object)
+      HostAPI.getHostInformation(cookies["mytoken"],distance[choiceDistance],area[choiceArea],stDate,endDate,geocode.lat,geocode.lng).then(res=>{
+        console.log(res.data)
+        // let data = []
+        // for(const object in res.data){
+        //   console.log(object)
+        //   data.push(object)
+        // }
+        setHostData(res.data)
+      }).catch(error=>{
+        if(error.response){
+          console.log(error.response)
         }
-        setHostData(data)
+        
       })
       
     }

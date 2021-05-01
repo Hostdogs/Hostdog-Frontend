@@ -18,12 +18,10 @@ export default function DogProfileTab({ profileId }) {
   const [dogInfos, setDogInfos] = useState([]);
   const [cookies, setCookie] = useCookies(["mytoken", "user_id"]);
 
-  
   useEffect(() => {
-    DogAPI.GetDog(cookies["mytoken"],profileId).then(resp=>{
+    DogAPI.GetDog(cookies["mytoken"], profileId).then((resp) => {
       setDogInfos(resp.data);
-    })
-    
+    });
   }, []);
 
   const updateDogInfo = (dogInfo) => {

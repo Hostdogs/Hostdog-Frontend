@@ -20,14 +20,16 @@ export default function HostServiceTab({ profileId }) {
   //       },
   //     }
   //   );
-    
+  //   console.log(resp.data);
   // }
 
   useEffect(() => {
-    HostServiceAPI.getHostService(cookies["mytoken"],profileId).then(resp => {
-      setServiceDetail(resp.data);
-    })
-    // getServiceDetial();
+    HostServiceAPI.getHostService(cookies["mytoken"], profileId).then(
+      (resp) => {
+        setServiceDetail(resp.data);
+      }
+    );
+    //getServiceDetial();
   }, []);
 
   return (

@@ -15,7 +15,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBone } from "@fortawesome/free-solid-svg-icons";
 import HostGallery from "./HostGallery";
 import "./Host.css";
-import FreeDay from "./FreeDay";
+import FreeDay from "./AvailableHost";
 import "holderjs";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
@@ -62,7 +62,7 @@ export default function Host({ host }) {
         <CardHeader style={{ backgroundColor: "#f9e07f", borderRadius: "0", color: "#264d59" }}>
           <h4 style={{ position: "absolute", top: "5px", right: "10px" }}>{distance}</h4>
           <div style={{ position: "absolute", top: "7px", left: "15px" }}>
-            <FreeDay />
+            <FreeDay host={host}/>
           </div>
           <Row style={{ marginTop: "2%" }}>
             <Col xs="12" sm="12" md="2" lg="2" style={{ textAlign: "center" }}>

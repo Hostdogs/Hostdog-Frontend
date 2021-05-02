@@ -65,7 +65,7 @@ export default function ServiceForm() {
       return true;
     } else if (value === "false" || value === false) {
       return false;
-    } else if (!isNaN(value) && name !== "service_bio") {
+    } else if (!isNaN(value) && name !== "service_bio" && value !== "") {
       return Number(value);
     } else {
       return value;

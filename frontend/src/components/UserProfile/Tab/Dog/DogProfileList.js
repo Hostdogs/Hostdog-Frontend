@@ -13,10 +13,17 @@ import {
   ButtonGroup,
 } from "reactstrap";
 import DogProfileEditForm from "./DogProfileEditForm";
-import APIDog from "./APIDog";
+
+import { useCookies } from "react-cookie";
+import DogAPI from "../../../API/DogAPI";
+import EditFeedingTime from "./EditFeedingTime";
 
 export default function DogProfileList(props) {
   const { dogInfos } = props;
+  const [cookies] = useCookies(["mytoken", "user_id"]);
+
+  const myId = cookies["user_id"];
+  const myToken = cookies["mytoken"];
 
   const updateDogInfo = (dogInfo) => {
     console.log(dogInfo);
@@ -24,7 +31,15 @@ export default function DogProfileList(props) {
   };
 
   const deleteDogInfo = (dogInfo) => {
-    APIDog.DeleteDog(dogInfo.id).then(() => props.deleteDogInfo(dogInfo));
+    DogAPI.DeleteDog(myToken, myId, dogInfo.id).then(() =>
+      props.deleteDogInfo(dogInfo)
+    );
+  };
+
+  const editFeedingTime = (dogInfo) => {
+    DogAPI.GetFeedingTime(myToken, myId, dogInfo.id).then((resp) =>
+      console.log(resp.data)
+    );
   };
 
   const dogElements = dogInfos.map((dogInfo) => {
@@ -52,6 +67,9 @@ export default function DogProfileList(props) {
                   <p className="text-muted">รายละเอียด : {dogInfo.dog_bio}</p>
                 </CardText>
                 <ButtonGroup>
+                  <EditFeedingTime labelBtn="เวลาให้อาหาร" dogId={dogInfo.id} />
+                </ButtonGroup>
+                <ButtonGroup style={{ marginLeft: "15px" }}>
                   <DogProfileEditForm
                     labelBtn="แก้ไข"
                     editDogInfo={dogInfo}

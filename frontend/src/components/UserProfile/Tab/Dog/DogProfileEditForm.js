@@ -15,7 +15,8 @@ import {
 } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faEdit } from "@fortawesome/free-solid-svg-icons";
-import APIDog from "./APIDog";
+import { useCookies } from "react-cookie";
+import DogAPI from "../../../API/DogAPI";
 
 export default function DogProfileEditForm(props) {
   const { labelBtn, editDogInfo } = props;
@@ -33,6 +34,10 @@ export default function DogProfileEditForm(props) {
   const [closeAll, setCloseAll] = useState(false);
   const [dogInfo, setDogInfo] = useState(startDogInfo);
   const [picture, setPicture] = useState("");
+  const [cookies] = useCookies(["mytoken", "user_id"]);
+
+  const myId = cookies["user_id"];
+  const myToken = cookies["mytoken"];
 
   const toggle = () => setModal(!modal);
 
@@ -66,13 +71,23 @@ export default function DogProfileEditForm(props) {
 
   async function onDogUpdate(event) {
     event.preventDefault();
-    const resp1 = await APIDog.UpdateDog(editDogInfo.id, dogInfo);
+    const resp1 = await DogAPI.UpdateDog(
+      myToken,
+      myId,
+      editDogInfo.id,
+      dogInfo
+    );
     props.updateDogInfo(resp1.data);
 
     if (picture !== "") {
       let form_data = new FormData();
       form_data.append("picture", picture, picture.name);
-      const resp2 = await APIDog.UploadImgDog(resp1.data.id, form_data);
+      const resp2 = await DogAPI.UploadImgDog(
+        myToken,
+        myId,
+        resp1.data.id,
+        form_data
+      );
       props.updateDogInfo(resp2.data);
       setPicture("");
     }
@@ -85,7 +100,7 @@ export default function DogProfileEditForm(props) {
       return true;
     } else if (value === "false" || value === false) {
       return false;
-    } else if (!isNaN(value) && name !== "dog_bio") {
+    } else if (!isNaN(value) && name !== "dog_bio" && value !== "") {
       return Number(value);
     } else {
       return value;

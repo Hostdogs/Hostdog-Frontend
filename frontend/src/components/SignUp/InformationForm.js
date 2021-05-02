@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useCookies } from "react-cookie";
 import {
   Container,
   Row,
@@ -14,7 +15,7 @@ import {
   InputGroupAddon,
   InputGroupText,
   InputGroup,
-  FormFeedback
+  FormFeedback,
 } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -28,7 +29,9 @@ import {
 import { Autocomplete, LoadScript } from "@react-google-maps/api";
 import SignUpMap from "./SignUpMap";
 import moment from "moment-timezone";
-import SignUpAPI from "./SignUpAPI";
+import AuthenAPI from "../API/AuthenAPI";
+import CustomerAPI from "../API/CustomerAPI";
+import HostAPI from "../API/HostAPI";
 const loadScript = {
   googleAPIKey: "AIzaSyBWV06MM0QFyVnkuA1nHJhQ4altZjovYNs",
   language: "th",
@@ -48,74 +51,161 @@ export default function InformationForm({ selectState }) {
     mobile: "",
     address: "",
     gender: "",
+    account_number: "111111111111",
   });
-
-  const inputnumberonly = /^[0-9\b]+$/
-  const inputusername = /^[A-Za-z0-9]+$/
-  const inputtfirstname = /^[ก-ฮะ-ไ่้๊๋็์ัํ]+$/
-  const inputlastname = /^[ก-ฮะ-ไ่้๊๋็์ัํ ]+$/
-  const inputpassword = /^[A-Za-z0-9]/
-  const inputemail = /^[A-Za-z@0-9.!#$%&'*+-/=?^_`{|}~;]+$/
-
+  const [cookies, setCookie, removeCookie] = useCookies(["mytoken", "user_id"]);
+  // console.log(Information.is_host)
+  const inputnumberonly = /^[0-9\b]+$/;
+  const inputusername = /^[A-Za-z0-9]+$/;
+  const inputtfirstname = /^[ก-ฮะ-ไ่้๊๋็์ัํ]+$/;
+  const inputlastname = /^[ก-ฮะ-ไ่้๊๋็์ัํ ]+$/;
+  const inputpassword = /^[A-Za-z0-9]/;
+  const inputemail = /^[A-Za-z@0-9.!#$%&'*+-/=?^_`{|}~;]+$/;
 
   const dayformat = "YYYY-MM-DD";
 
   /////////validation//////////////
-  const validatepassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,20}$/
-  const validateemail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-  const validateusername = /^[A-Za-z0-9]{5,20}$/
+  const validatepassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,20}$/;
+  const validateemail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  const validateusername = /^[A-Za-z0-9]{5,20}$/;
 
-  const [emailValid, setemailValid] = useState({ valid: false, invalid: false })
-  const emailRes = ["กรุณาตรวจสอบอีเมลของคุณ", "ขออภัย อีเมลนี้ถูกใช้แล้ว"]
-  var emailResCode = -1
-  const [passwordValid, setpasswordValid] = useState({ valid: false, invalid: false })
-  const passwordRes = ["กรุณาตรวจสอบรหัสผ่านของคุณ", "ขออภัย อีเมลนี้ถูกใช้แล้ว"]
-  var passwordResCode = -1
-  const [usernameValid, setusernameValid] = useState({ valid: false, invalid: false })
-  const usernameRes = ["กรุณาตรวจสอบชื่อบัญชีของคุณ", "ขออภัย ชื่อบัญชีนี้ถูกใช้แล้ว"]
-  var usernameResCode = -1
+  const [emailValid, setemailValid] = useState({
+    valid: false,
+    invalid: false,
+  });
+  const emailRes = ["กรุณาตรวจสอบอีเมลของคุณ", "ขออภัย อีเมลนี้ถูกใช้แล้ว"];
+  var emailResCode = -1;
+  const [passwordValid, setpasswordValid] = useState({
+    valid: false,
+    invalid: false,
+  });
+  const passwordRes = [
+    "กรุณาตรวจสอบรหัสผ่านของคุณ",
+    "ขออภัย อีเมลนี้ถูกใช้แล้ว",
+  ];
+  var passwordResCode = -1;
+  const [usernameValid, setusernameValid] = useState({
+    valid: false,
+    invalid: false,
+  });
+  const usernameRes = [
+    "กรุณาตรวจสอบชื่อบัญชีของคุณ",
+    "ขออภัย ชื่อบัญชีนี้ถูกใช้แล้ว",
+  ];
+  var usernameResCode = -1;
 
-  const [repasswordValid, setrepasswordValid] = useState({ valid: false, invalid: false })
+  const [repasswordValid, setrepasswordValid] = useState({
+    valid: false,
+    invalid: false,
+  });
 
   const isemailValidate = () => {
     if (validateemail.test(Information.email)) {
-      setemailValid({ valid: true, invalid: false })
+      setemailValid({ valid: true, invalid: false });
     } else {
-      setemailValid({ valid: false, invalid: true })
+      setemailValid({ valid: false, invalid: true });
     }
-
-  }
+  };
   const ispasswordValidate = () => {
     if (validatepassword.test(Information.password)) {
-      setpasswordValid({ valid: true, invalid: false })
+      setpasswordValid({ valid: true, invalid: false });
     } else {
-      setpasswordValid({ valid: false, invalid: true })
+      setpasswordValid({ valid: false, invalid: true });
     }
-  }
+  };
 
   const isusernameValidate = () => {
     if (validateusername.test(Information.username)) {
-      setusernameValid({ valid: true, invalid: false })
+      setusernameValid({ valid: true, invalid: false });
     } else {
-      setusernameValid({ valid: false, invalid: true })
+      setusernameValid({ valid: false, invalid: true });
     }
-  }
+  };
 
   const isrepasswordValidate = () => {
-    if (Information.password === repassword && Information.password.length >= 1) {
-      setrepasswordValid({ valid: true, invalid: false })
+    if (
+      Information.password === repassword &&
+      Information.password.length >= 1
+    ) {
+      setrepasswordValid({ valid: true, invalid: false });
     } else {
-      setrepasswordValid({ valid: false, invalid: true })
+      setrepasswordValid({ valid: false, invalid: true });
     }
-
-  }
+  };
 
   //////////////////////////////
-  const onSubmit = (e) => {
-    e.preventDefault();
-    console.log(Information);
 
-  };
+  async function onSubmit(e) {
+    e.preventDefault();
+    const info = {
+      is_host: Information.is_host,
+      username: Information.username,
+      email: Information.email,
+      password: Information.password,
+      account_number: Information.account_number,
+    };
+
+
+    console.log(info);
+    try {
+      const resp = await AuthenAPI.initSignUp(info);
+      if (resp.data.is_host) {
+        
+        const profileInfo = {
+          first_name: Information.first_name,
+          last_name: Information.last_name,
+          gender: Information.gender,
+          mobile: Information.mobile,
+          dob: Information.dob,
+          address: Information.address,
+          latitude: geocode.lat,
+          longitude: geocode.lng
+        }
+        console.log("host",profileInfo,resp);
+        HostAPI.ProfileInitHost(resp.data.id, profileInfo, resp.data.token).then(res => {
+          console.log(res)
+        }).catch(error => {
+          if (error.response) {
+            console.log(error.response)
+          }
+        })
+      } else {
+        
+        const profileInfo = {
+          first_name: Information.first_name,
+          last_name: Information.last_name,
+          gender: Information.gender,
+          mobile: Information.mobile,
+          dob: Information.dob,
+          address: Information.address,
+          latitude: geocode.lat,
+          longitude: geocode.lng
+        }
+        console.log("customer",profileInfo,resp);
+        CustomerAPI.ProfileInitCustomer(resp.data.id, profileInfo, resp.data.token).then(res => {
+          console.log(res)
+        }).catch(error => {
+          if (error.response) {
+            console.log(error.response)
+          }
+
+        })
+      }
+      setCookie("mytoken", resp.data.token);
+      setCookie("user_id", resp.data.id);
+    } catch (error) {
+      let errorMessage = "";
+      if (error.response.data.is_host !== undefined) {
+        errorMessage += "email";
+      }
+      if (error.response.data.username !== undefined) {
+        errorMessage += "username";
+      }
+      alert(errorMessage);
+      console.log(error.response.data);
+    }
+  }
+
   const onChangeInformation = (e, regexp = null) => {
     e.preventDefault();
     const name = e.target.name;
@@ -134,17 +224,12 @@ export default function InformationForm({ selectState }) {
     // console.log(Information);
   };
 
-
   const onChangeradio = (e) => {
     const name = e.target.name;
     const value = e.target.value;
     Information[name] = value;
-    console.log(name, Information[name])
-  }
-
-
-
-
+    console.log(name, Information[name]);
+  };
 
   useEffect(() => {
     // setdob(moment(moment().year() - 18 + "-01-01", dayformat).format(dayformat))
@@ -157,9 +242,11 @@ export default function InformationForm({ selectState }) {
   //Google Map
   useEffect(() => {
     if (selectState === "Host") {
-      Information.is_host = true;
+      // Information.is_host = true;
+      setInformation({ ...Information,is_host:true});
     } else if (selectState === "Customer") {
-      Information.is_host = false;
+      // Information.is_host = false;
+      setInformation({ ...Information,is_host:false});
     }
     // console.log(Information.is_host+selectState)
   }, [selectState]);
@@ -167,19 +254,22 @@ export default function InformationForm({ selectState }) {
   const [geocode, setGeoCode] = useState({ lat: 13.729025, lng: 100.775613 });
 
   const [userAddress, setUserAddress] = useState("");
- 
 
-  const loadScript= {
-    googleAPIKey: "AIzaSyBWV06MM0QFyVnkuA1nHJhQ4altZjovYNs",
-    language: "th",
-    libraries: ["places"],
-  };
+  const handleLocationFailed = () => {
+
+
+    setShowLocationWarn(true);
+  }
+  const handleLocationSuccess = () => {
+
+    setShowLocationWarn(false);
+  }
 
   const getCurrentLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(success);
     } else {
-      setShowLocationWarn(true);
+      handleLocationFailed();
     }
   };
 
@@ -197,28 +287,34 @@ export default function InformationForm({ selectState }) {
   };
 
   const reverseGeocoding = async (lat, lng) => {
-    setShowLocationWarn(false);
+
     const urlapi = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${loadScript.googleAPIKey}&language=th`;
     const response = await fetch(urlapi);
     const data = await response.json();
     console.log("reverseGeocoding");
     console.log(data);
 
-    data.status === "OK"
-      ? setUserAddress(data.results[0].formatted_address)
-      : setShowLocationWarn(true);
+    if (data.status === "OK") {
+      setUserAddress(data.results[0].formatted_address);
+      handleLocationSuccess();
+    } else {
+      handleLocationFailed();
+    }
   };
 
   const geoCoding = async (address) => {
 
-    setShowLocationWarn(false);
+
     const urlapi = `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${loadScript.googleAPIKey}&language=th`;
     const response = await fetch(urlapi);
     const data = await response.json();
 
-    data.status === "OK"
-      ? setGeoCode(data.results[0].geometry.location)
-      : setShowLocationWarn(true);
+    if (data.status === "OK") {
+      setGeoCode(data.results[0].geometry.location);
+      handleLocationSuccess();
+    } else {
+      handleLocationFailed();
+    }
 
     console.log("geoCoding");
     console.log(geocode);
@@ -227,12 +323,11 @@ export default function InformationForm({ selectState }) {
   };
 
   const onMarkerDragEnd = (e) => {
-
     const lat = parseFloat(e.latLng.lat());
     const lng = parseFloat(e.latLng.lng());
 
     setGeoCode({ lat, lng });
-    setShowLocationWarn(false);
+    handleLocationSuccess();
     console.log("onMarkerDragEnd");
     console.log(geocode);
   };
@@ -241,36 +336,38 @@ export default function InformationForm({ selectState }) {
 
   const onLoad = (autocomplete) => {
     setTestAutoComplete(autocomplete);
-    setShowLocationWarn(false);
+
     console.log("onLoad ");
     console.log(testAutoComplete);
   };
   const [showlocationWarn, setShowLocationWarn] = useState(false);
 
-
   const onPlaceChanged = () => {
-
     const data = testAutoComplete.getPlace();
-    console.log("onPlaceChanged");
-    console.log(testAutoComplete);
+    console.log("onPlaceChanged data");
     console.log(data);
-    if (typeof testAutoComplete !== "undefined" && typeof data !== "undefined"&&typeof predictions!=="undefined") {
-      setShowLocationWarn(false);
+    console.log("onPlaceChanged testAutoComplete");
+    console.log(testAutoComplete);
+
+
+    if (typeof testAutoComplete !== "undefined") {
+      const gm_accessors = Object.values(testAutoComplete);
+      const place = Object.values(gm_accessors[2].place);
+      const always_change = Object.values(place[0].predictions);
+      const predictions = Object.values(always_change.length > 0 ? always_change[0] : []);
       if (typeof data.formatted_address !== "undefined") {
         setUserAddress(data.formatted_address);
         geoCoding(data.formatted_address);
-      }
-       else if (testAutoComplete.gm_accessors_.place.Ve.predictions.length > 0) {
-        setUserAddress(
-          testAutoComplete.gm_accessors_.place.Ve.predictions[0].Lk
-        );
-        geoCoding(testAutoComplete.gm_accessors_.place.Ve.predictions[0].Lk);
-      }
-      else if (testAutoComplete.gm_accessors_.place.Ve.place.name === "") {
-        setShowLocationWarn(true);
+
+      } else if (predictions.length > 0) {
+        setUserAddress(predictions[0]);
+        geoCoding(predictions[0]);
+
+      } else {
+        handleLocationFailed();
       }
     } else {
-      setShowLocationWarn(true);
+      handleLocationFailed();
     }
   };
 
@@ -326,22 +423,23 @@ export default function InformationForm({ selectState }) {
                   <FontAwesomeIcon icon={faAt} />
                 </InputGroupText>
               </InputGroupAddon>
-              <Input valid={emailValid.valid} invalid={emailValid.invalid}
+              <Input
+                valid={emailValid.valid}
+                invalid={emailValid.invalid}
                 type="email"
                 name="email"
                 placeholder="อีเมล"
                 onChange={(e) => onChangeInformation(e, inputemail)}
                 value={Information.email}
-
                 onBlur={isemailValidate}
-                onFocus={e => {
-                  emailValid.valid = false
-                  emailValid.invalid = false
-                }
-                }
-
+                onFocus={(e) => {
+                  emailValid.valid = false;
+                  emailValid.invalid = false;
+                }}
               />
-              <FormFeedback invalid={passwordValid.invalid}>กรุณาตรวจสอบอีเมลใหม่อีกครั้ง</FormFeedback>
+              <FormFeedback invalid={passwordValid.invalid}>
+                กรุณาตรวจสอบอีเมลใหม่อีกครั้ง
+              </FormFeedback>
             </InputGroup>
           </FormGroup>
           <FormGroup>
@@ -351,20 +449,21 @@ export default function InformationForm({ selectState }) {
                   <FontAwesomeIcon icon={faUserCircle} />
                 </InputGroupText>
               </InputGroupAddon>
-              <Input valid={usernameValid.valid} invalid={usernameValid.invalid}
+              <Input
+                valid={usernameValid.valid}
+                invalid={usernameValid.invalid}
                 type="text"
                 name="username"
                 placeholder="ชื่อผู้ใช้งาน"
                 id="username"
-                onChange={e => onChangeInformation(e, inputusername)}
+                onChange={(e) => onChangeInformation(e, inputusername)}
                 value={Information.username}
                 maxLength="20"
                 onBlur={isusernameValidate}
-                onFocus={e => {
-                  usernameValid.valid = false
-                  usernameValid.invalid = false
-                }
-                }
+                onFocus={(e) => {
+                  usernameValid.valid = false;
+                  usernameValid.invalid = false;
+                }}
               />
             </InputGroup>
           </FormGroup>
@@ -375,7 +474,9 @@ export default function InformationForm({ selectState }) {
                   <FontAwesomeIcon icon={faLock} />
                 </InputGroupText>
               </InputGroupAddon>
-              <Input valid={passwordValid.valid} invalid={passwordValid.invalid}
+              <Input
+                valid={passwordValid.valid}
+                invalid={passwordValid.invalid}
                 type="password"
                 name="password"
                 id="password"
@@ -384,14 +485,14 @@ export default function InformationForm({ selectState }) {
                 value={Information.password}
                 maxLength="20"
                 onBlur={ispasswordValidate}
-                onFocus={e => {
-                  passwordValid.valid = false
-                  passwordValid.invalid = false
-                }
-
-                }
+                onFocus={(e) => {
+                  passwordValid.valid = false;
+                  passwordValid.invalid = false;
+                }}
               />
-              <FormFeedback invalid={passwordValid.invalid}>กรุณาใส่รหัสผ่านให้ตรงตามเงื่อนไข</FormFeedback>
+              <FormFeedback invalid={passwordValid.invalid}>
+                กรุณาใส่รหัสผ่านให้ตรงตามเงื่อนไข
+              </FormFeedback>
             </InputGroup>
           </FormGroup>
 
@@ -402,7 +503,9 @@ export default function InformationForm({ selectState }) {
                   <FontAwesomeIcon icon={faLock} />
                 </InputGroupText>
               </InputGroupAddon>
-              <Input valid={repasswordValid.valid} invalid={repasswordValid.invalid}
+              <Input
+                valid={repasswordValid.valid}
+                invalid={repasswordValid.invalid}
                 type="password"
                 name="Repassword"
                 placeholder="รหัสผ่านอีกครั้ง "
@@ -410,13 +513,14 @@ export default function InformationForm({ selectState }) {
                 value={repassword}
                 maxLength="20"
                 onBlur={isrepasswordValidate}
-                onFocus={e => {
-                  repasswordValid.valid = false
-                  repasswordValid.invalid = false
-                }
-                }
+                onFocus={(e) => {
+                  repasswordValid.valid = false;
+                  repasswordValid.invalid = false;
+                }}
               />
-              <FormFeedback invalid={repasswordValid.invalid}>กรุณาใส่รหัสผ่านให้ตรงกับรหัสผ่านก่อนหน้า</FormFeedback>
+              <FormFeedback invalid={repasswordValid.invalid}>
+                กรุณาใส่รหัสผ่านให้ตรงกับรหัสผ่านก่อนหน้า
+              </FormFeedback>
             </InputGroup>
           </FormGroup>
 
@@ -466,7 +570,7 @@ export default function InformationForm({ selectState }) {
                     name="gender"
                     label="ชาย"
                     onChange={onChangeradio}
-                    value="Male"
+                    value="male"
                   />
                 </Col>
                 <Col>
@@ -476,7 +580,7 @@ export default function InformationForm({ selectState }) {
                     name="gender"
                     label="หญิง"
                     onChange={onChangeradio}
-                    value="Female"
+                    value="female"
                   />
                 </Col>
                 <Col style={{ minWidth: "100px" }}>
@@ -486,15 +590,14 @@ export default function InformationForm({ selectState }) {
                     name="gender"
                     label="ไม่ระบุ"
                     onChange={onChangeradio}
-                    value="Other"
+                    value="none"
                   />
                 </Col>
               </Row>
             </div>
           </FormGroup>
 
-          <FormGroup onSubmit={e => e.preventDefault()} >
-
+          <FormGroup onSubmit={(e) => e.preventDefault()}>
             <br />
             <LoadScript
               googleMapsApiKey={loadScript.googleAPIKey}
@@ -510,21 +613,20 @@ export default function InformationForm({ selectState }) {
               </Container>
 
               <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
-
-                <InputGroup >
+                <InputGroup>
                   <Input
                     type="text"
                     name="address"
                     id="exampleusername"
                     placeholder="ที่อยู่"
                     onChange={(e) => {
-                      e.preventDefault()
+                      e.preventDefault();
                       onChangeInformation(e);
                       setUserAddress(e.target.value);
                     }}
-
-                    onSubmit={e => { e.preventDefault() }}
-
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                    }}
                     value={userAddress}
                   />
 
@@ -546,7 +648,6 @@ export default function InformationForm({ selectState }) {
                     >
                       <FontAwesomeIcon icon={faSearch} />
                     </Button>
-
                   </InputGroupAddon>
                 </InputGroup>
               </Autocomplete>
@@ -554,10 +655,12 @@ export default function InformationForm({ selectState }) {
           </FormGroup>
 
           <FormGroup>
-
-            {showlocationWarn ? (<div><small style={{ color: "red" }}>ขออภัย กรุณาลองใหม่</small></div>) : null}
-            <Button onClick={(e) => onSubmit}>ถัดไป</Button>
-
+            {showlocationWarn ? (
+              <div>
+                <small style={{ color: "red" }}>ขออภัย กรุณาลองใหม่</small>
+              </div>
+            ) : null}
+            <Button onClick={onSubmit}>ถัดไป</Button>
           </FormGroup>
         </Form>
       </Container>

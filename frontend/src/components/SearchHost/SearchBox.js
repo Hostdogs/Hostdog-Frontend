@@ -176,6 +176,8 @@ const handleLocationSuccess=()=>{
         >
           <FontAwesomeIcon icon={faSearch} style={{ color: "black" }} />
         </Button>
+        
+        
         <InputGroup
           style={{ marginTop: "1%" }}
           onSubmit={(e) => e.preventDefault()}
@@ -204,11 +206,10 @@ const handleLocationSuccess=()=>{
             />
           </Autocomplete>
         </InputGroup>
-        {showlocationWarn ? (
-          <div>
-            <small style={{ color: "red" }}>ขออภัย กรุณาลองใหม่</small>
-          </div>
-        ) : null}
+        <div style={{width:"300px"}}>
+          <small style={{ color: "red",paddingLeft:"10px"}}>{showlocationWarn? ("ขออภัย กรุณาลองใหม่ภายหลัง"):(" ")}</small>
+        </div>
+
       </FormGroup>
       <GoogleMapLocation
         handleDragEnd={(e) => onMarkerDragEnd(e)}

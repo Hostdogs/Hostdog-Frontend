@@ -31,7 +31,7 @@ export default function Host({ host }) {
     if (host.distance < 1) {
       setdistance(Math.round(host.distance*1000) + " m")
     } else {
-      setdistance(host.distance + " km")
+      setdistance(Math.round(host.distance) + " km")
     }
     seturllink(`/profile/${host.account}`)
     setHostTitle(host.host_hosted_count)

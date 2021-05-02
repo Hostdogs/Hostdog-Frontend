@@ -211,14 +211,16 @@ export default function FilterOptionPane({ setisSearch ,setHostData}) {
                   
                 </FormGroup>
                 <FormGroup style={{ textAlign: "right" }}>
+                <small style={{ color: "red",paddingRight: "10px"}}>{showSubmitFailed? ("กรุณาใส่ที่อยู่ใหม่อีกครั้ง "):(" ")}</small>
                   <Button type="submit" onClick={e=>{isSubmit?handleSubmit(e):handleSubmitFailed(e)}} style={{ backgroundColor: "#ffe080", border: "0px", color:"black" }}>
                     ค้นหา
                   </Button>
-                  {showSubmitFailed? (
+
+                  {/* {showSubmitFailed? (
           <div>
             <small style={{ color: "red" }}>กรุณาใส่ที่อยู่ใหม่อีกครั้ง</small>
           </div>
-        ) : null}
+        ) : null} */}
                 </FormGroup>
             </Container>
           </CardBody>

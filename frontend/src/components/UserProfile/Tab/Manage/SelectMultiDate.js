@@ -3,11 +3,17 @@ import DayPicker, { DateUtils } from "react-day-picker";
 import "react-day-picker/lib/style.css";
 import moment from "moment-timezone";
 
-export default function SelectMultiDate() {
-  const [selectedDays, setSelectedDays] = useState([]);
+export default function SelectMultiDate(props) {
+  const { selectedDays, setSelectedDays } = props;
+
   let twoMonthsLater = new Date();
   twoMonthsLater.setMonth(twoMonthsLater.getMonth() + 2);
+
   function handleDayClick(day, { selected }) {
+    // const newDay = {};
+    // newDay.id = "day" + day.getTime().toString();
+    // newDay.day = day;
+    // console.log(newDay);
     if (selected) {
       onDayDelete(day);
     } else {
@@ -15,7 +21,6 @@ export default function SelectMultiDate() {
         return [...prevSelectedDays, day];
       });
     }
-    console.log(selectedDays);
   }
 
   function onDayDelete(day) {
@@ -31,7 +36,9 @@ export default function SelectMultiDate() {
   }`;
 
   return (
-    <div style={{color:"black", backgroundColor:"white", borderRadius:"20px"}}>
+    <div
+      style={{ color: "black", backgroundColor: "white", borderRadius: "20px" }}
+    >
       <style>{weekdayStyle}</style>
       <DayPicker
         disabledDays={{

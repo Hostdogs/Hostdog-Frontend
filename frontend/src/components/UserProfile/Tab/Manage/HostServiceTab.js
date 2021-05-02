@@ -5,23 +5,12 @@ import axios from "axios";
 import { useCookies } from "react-cookie";
 
 import HostServiceAPI from "../../../API/HostServiceAPI";
+import HostAvailableDateAPI from "../../../API/HostAvailableDateAPI";
 
 export default function HostServiceTab({ profileId }) {
   const [cookies, setCookie] = useCookies(["mytoken", "user_id"]);
   const [serviceDetail, setServiceDetail] = useState({});
-
-  // async function getServiceDetial() {
-  //   const resp = await axios.get(
-  //     `http://127.0.0.1:8000/api/profilehost/${profileId}/host-service/${profileId}/`,
-  //     {
-  //       headers: {
-  //         "content-type": "application/json",
-  //         Authorization: `Token ${cookies["mytoken"]}`,
-  //       },
-  //     }
-  //   );
-  //   console.log(resp.data);
-  // }
+  const [availableDates, setAvailableDates] = useState([]);
 
   useEffect(() => {
     HostServiceAPI.getHostService(cookies["mytoken"], profileId).then(
@@ -29,7 +18,12 @@ export default function HostServiceTab({ profileId }) {
         setServiceDetail(resp.data);
       }
     );
-    //getServiceDetial();
+    HostAvailableDateAPI.GetHostAvailableDate(
+      cookies["mytoken"],
+      profileId
+    ).then((resp) => {
+      setAvailableDates(resp.data);
+    });
   }, []);
 
   return (

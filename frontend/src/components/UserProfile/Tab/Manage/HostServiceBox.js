@@ -14,11 +14,10 @@ import {
 } from "reactstrap";
 import "./ManageTab.css";
 import SelectMultiDate from "./SelectMultiDate";
-
+import moment from "moment-timezone";
 import { useCookies } from "react-cookie";
 import HostServiceAPI from "../../../API/HostServiceAPI";
-
-
+import HostAvailableDateAPI from "../../../API/HostAvailableDateAPI";
 
 export default function HostServiceBox(props) {
   const { serviceDetail } = props;
@@ -31,6 +30,7 @@ export default function HostServiceBox(props) {
   const myId = cookies["user_id"];
   const myToken = cookies["mytoken"];
   const [hostService, setHostService] = useState(serviceDetail);
+  const [selectedDays, setSelectedDays] = useState([]);
 
   function onEnableChange(event) {
     const name = event.target.name;
@@ -58,7 +58,7 @@ export default function HostServiceBox(props) {
       return true;
     } else if (value === "false" || value === false) {
       return false;
-    } else if (!isNaN(value)) {
+    } else if (!isNaN(value) && value !== "") {
       return Number(value);
     } else if (value === "") {
       return null;
@@ -67,10 +67,40 @@ export default function HostServiceBox(props) {
     }
   }
 
+  function dayFormatYMD(days) {
+    const allDays = [];
+
+    days.forEach((day) => {
+      const newDay = {};
+      newDay.id = "day" + day.getTime().toString();
+      console.log(newDay);
+      newDay.date = moment(day).format("YYYY-MM-DD");
+      allDays.push(newDay);
+    });
+    allDays.sort(function (a, b) {
+      return a.date.localeCompare(b.date);
+    });
+    return allDays;
+  }
+
   async function onSubmit(event) {
     event.preventDefault();
-    const resp = await HostServiceAPI.UpdateHostService(myToken, myId, hostService);
-    console.log(resp.data);
+    const allDays = dayFormatYMD(selectedDays);
+    //console.log(allDays);
+    const resp = await HostServiceAPI.UpdateHostService(
+      myToken,
+      myId,
+      hostService
+    );
+    allDays.forEach((day) => {
+      HostAvailableDateAPI.AddHostAvailableDate(myToken, myId, day).then(
+        (resp) => {
+          console.log(resp.data);
+        }
+      );
+    });
+
+    // console.log(resp.data);
   }
 
   function onCancel(event) {
@@ -139,7 +169,10 @@ export default function HostServiceBox(props) {
                       style={{ textAlign: "center" }}
                     >
                       <br />
-                      <SelectMultiDate />
+                      <SelectMultiDate
+                        selectedDays={selectedDays}
+                        setSelectedDays={setSelectedDays}
+                      />
                     </Col>
                   </Row>
                 </FormGroup>

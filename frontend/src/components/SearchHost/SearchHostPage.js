@@ -9,13 +9,14 @@ import FilterOptionPane from './FilterOptionPane';
 
 export default function SearchHostPage() {
   const [isSearch, setisSearch] = useState(false)
-  
+  const [hostData, setHostData] = useState([]);
+
   return (
     <div style={{overflowX:"hidden"}}>
       <br/>
-      <FilterOptionPane setisSearch={setisSearch}/>
+      <FilterOptionPane setisSearch={setisSearch} setHostData={setHostData}/>
       <br/>
-      {isSearch ? (<HostList />):(null)}
+      {isSearch ? (<HostList hostData={hostData} setHostData={setHostData}/>):(null)}
     </div>
   );
 }

@@ -15,41 +15,29 @@ import {
 
 import ShowAvailableDate from "./ShowAvailableDate";
 
-const startHostService = {
-  price_dog_walk: 50,
-  price_get_dog: 20,
-  price_delivery_dog: 20,
-  price_bath_dog: 100,
-  dog_walk_enable: true,
-  get_dog_enable: true,
-  delivery_dog_enable: true,
-  bath_dog_enable: true,
-  deposit_price: 300,
-  late_price: 300,
-};
+export default function ServiceDetailBox(props) {
+  const { serviceDetail, newAvailableDates } = props;
 
-export default function ServiceDetailBox() {
-  const [serviceDetail, setServiceDetail] = useState(startHostService);
   const etcServicesDetail = [
     {
       name: "ราคาพาสุนัขไปเดินเล่น",
       price: serviceDetail.price_dog_walk,
-      enable: serviceDetail.dog_walk_enable,
+      enable: serviceDetail.enable_dog_walk,
     },
     {
       name: "ราคาไปรับสุนัขต่อกิโลเมตร",
       price: serviceDetail.price_get_dog,
-      enable: serviceDetail.get_dog_enable,
+      enable: serviceDetail.enable_get_dog,
     },
     {
       name: "ราคาไปส่งสุนัขต่อกิโลเมตร",
-      price: serviceDetail.price_delivery_dog,
-      enable: serviceDetail.delivery_dog_enable,
+      price: serviceDetail.price_deliver_dog,
+      enable: serviceDetail.enable_delivery_dog,
     },
     {
       name: "ราคาอาบน้ำสุนัข",
       price: serviceDetail.price_bath_dog,
-      enable: serviceDetail.bath_dog_enable,
+      enable: serviceDetail.enable_bath_dog,
     },
   ];
 
@@ -106,14 +94,6 @@ export default function ServiceDetailBox() {
                       <Col xs="auto">{serviceDetail.deposit_price} บาท</Col>
                     </Row>
                   </FormGroup>
-                  <FormGroup>
-                    <Row>
-                      <Col xs="8" sm="5" lg="6">
-                        ค่ามัดจำในการฝากสุนัข
-                      </Col>
-                      <Col xs="auto">{serviceDetail.deposit_price} บาท</Col>
-                    </Row>
-                  </FormGroup>
                 </div>
                 <FormGroup>
                   <Row>
@@ -129,7 +109,9 @@ export default function ServiceDetailBox() {
                       }}
                     >
                       <br />
-                      <ShowAvailableDate />
+                      <ShowAvailableDate
+                        newAvailableDates={newAvailableDates}
+                      />
                     </Col>
                   </Row>
                 </FormGroup>

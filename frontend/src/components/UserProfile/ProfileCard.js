@@ -10,14 +10,33 @@ import {
   List,
   Collapse,
 } from "reactstrap";
-
-const ProfileCard = ({ pageCollapse, Profile, isCustomer }) => {
-  const [img, setimg] = useState("/");
+import Skeleton from "react-loading-skeleton"
+const ProfileCard = ({ pageCollapse, Account }) => {
+  const [img, setimg] = useState(null)
+  const [role, setrole] = useState(null);
+  const [Name, setName] = useState(null)
+  const [isLoad, setisLoad] = useState(false)
+  const placeholderPath = "/user_placeholder.svg"
   useEffect(() => {
-    setimg(Profile.picture);
-  }, [Profile]);
+    if (Account) {
+      let roledata = ""
+      if (Account.customer) {
+        roledata = "customer"
+        setrole("ผู้ฝากสุนัข")
+      } else if (Account.host) {
+        roledata = "host"
+        setrole("ผู้รับเลี้ยงสุนัข")
+      }
+      setimg(Account[roledata].picture)
+      setName(Account[roledata].first_name + " " + Account[roledata].last_name)
+
+      setisLoad(true)
+    }
+
+  }, [Account]);
+  // console.log(isHost)
   return (
-    <Card style={{border:"none"}}>
+    <Card style={{ border: "none" }}>
       <CardBody
         style={{
           textAlign: "center",
@@ -31,7 +50,7 @@ const ProfileCard = ({ pageCollapse, Profile, isCustomer }) => {
             <div class="panel-body">
               <br />
               <img
-                src={img}
+                src={img || placeholderPath}
                 class="img-responsive center-block"
                 style={{
                   borderRadius: "50%",
@@ -40,16 +59,17 @@ const ProfileCard = ({ pageCollapse, Profile, isCustomer }) => {
                   objectFit: "cover",
                 }}
               />
+
             </div>
           </div>
         </Collapse>
 
         <br />
         <CardTitle tag="h3">
-          {Profile.name} {Profile.surname}
+          {Name || <Skeleton style={{ width: "250px" }} />}
         </CardTitle>
         <CardSubtitle tag="h6" className="mb-2 text-muted">
-          {isCustomer ? <>ผู้ฝากสุนัข</> : <>ผู้รับเลี้ยงสุนัข</>}
+          {role || <Skeleton style={{ width: "100px" }} />}
         </CardSubtitle>
         <Collapse isOpen={pageCollapse}>
           <br />

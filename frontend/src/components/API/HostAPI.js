@@ -29,4 +29,13 @@ export default class HostAPI {
             }
         });
     }
+
+    static setHostInfo(mytoken,host_id,data){
+        const url = `${API_URL}profilehost/${host_id}/?all=1`
+        return axios.patch(url,data, {
+            headers: {
+                'Authorization': `Token ${mytoken}`
+            }
+        });
+    }
 }

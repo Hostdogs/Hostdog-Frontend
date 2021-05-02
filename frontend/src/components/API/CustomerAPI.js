@@ -10,4 +10,22 @@ export default class CustomerAPI {
             }
         });
     }
+
+    static getCustomerDetails(mytoken,customer_id){
+        const url = `${API_URL}profilecustomer/${customer_id}/`
+        return axios.get(url, {
+            headers: {
+                'Authorization': `Token ${mytoken}`
+            }
+        });
+    }
+
+    static setCustomerInfo(mytoken,customer_id,data){
+        const url = `${API_URL}profilecustomer/${customer_id}/`
+        return axios.patch(url,data, {
+            headers: {
+                'Authorization': `Token ${mytoken}`
+            }
+        });
+    }
 }

@@ -3,7 +3,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter,Label } from 'reacts
 import { useState,useEffect } from "react";
 import { faClosedCaptioning } from '@fortawesome/free-solid-svg-icons';
 import axios from "axios";
-import PaymentAPI from './PaymentAPI'
+import PaymentAPI from '../API/PaymentAPI'
 export default function PaymentModal({service_id}) {
 
 const [modal, setModal] = useState(false);

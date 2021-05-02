@@ -26,14 +26,16 @@ export default function Pending(pendingTask) {
             <br />
             <Button
               style={{
-                color: "white",
-                backgroundColor: "#264d59",
+                color: "black",
                 border: "none",
+                position:"absolute",bottom:"10px",right:"85px",
               }}
+              color="warning"
             >
               ยืนยัน
             </Button>
-            <Button style={{ marginLeft: "10px", border: "none" }}>
+            <Button style={{ marginLeft: "10px", border: "none", position:"absolute",bottom:"10px",right:"10px",
+                backgroundColor: "#ff0000" }}>
               ปฏิเสธ
             </Button>
           </div>

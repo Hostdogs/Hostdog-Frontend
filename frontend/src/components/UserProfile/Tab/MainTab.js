@@ -14,12 +14,27 @@ const MainTab = ({ isOwned, isCustomer, Account }) => {
   const [age, setage] = useState("")
   const [gender, setgender] = useState("")
   const [isLoad, setisLoad] = useState(false)
-  const editDescription = (e) => {
-    if (isOwned) {
-      setDescription(e.target.value)
-    }
-  }
   const [isEdit, setisEdit] = useState(false)
+
+  const editDescription = (e) => {
+    if(Account){
+      if (isOwned) {
+        setDescription(e.target.value)
+        setisEdit(true)
+      }
+    }
+    
+  }
+  const onResetDescription= (e) => {
+    if(Account.is_host){
+      setDescription(Account.host.host_bio)
+    }else{
+      setDescription(Account.customer.customer_bio)
+    }
+    setisEdit(false)
+  }
+
+  console.log(isEdit)
   useEffect(() => {
     moment.updateLocale("th")
     if (Account) {
@@ -51,16 +66,16 @@ const MainTab = ({ isOwned, isCustomer, Account }) => {
 
   const onSetDescription = () => {
     console.log(Description)
-    
+
     ////////////function => post to backend////////
-    if(Account.is_host){
-      const data = {host_bio:Description}
-      HostAPI.setHostInfo(cookies["mytoken"], Account.id,data).then(res=>{
+    if (Account.is_host) {
+      const data = { host_bio: Description }
+      HostAPI.setHostInfo(cookies["mytoken"], Account.id, data).then(res => {
         console.log(res)
       })
-    }else{
-      const data = {customer_bio:Description}
-      CustomerAPI.setCustomerInfo(cookies["mytoken"],Account.id,data).then(res=>{
+    } else {
+      const data = { customer_bio: Description }
+      CustomerAPI.setCustomerInfo(cookies["mytoken"], Account.id, data).then(res => {
         console.log(res)
       })
     }
@@ -73,8 +88,8 @@ const MainTab = ({ isOwned, isCustomer, Account }) => {
         <br />
         <CardText style={{ textAlign: "left" }}>
           <CardTitle tag="h5">รายละเอียด</CardTitle>
-          {isLoad ? (null):(<Skeleton count={4}/>)}
-          {isCustomer&&isLoad ? (
+          {isLoad ? (null) : (<Skeleton count={4} />)}
+          {isCustomer && isLoad ? (
             <ul>
               <li>เพศ {gender} อายุ {age} ปี</li>
               <li>มีสุนัขในโปรไฟล์ 0 ตัว</li>
@@ -84,14 +99,14 @@ const MainTab = ({ isOwned, isCustomer, Account }) => {
             </ul>
           ) : (null)}
 
-          {!isCustomer&&isLoad ?(
+          {!isCustomer && isLoad ? (
             <ul>
               <li>เพศ {gender} อายุ {age} ปี</li>
               <li>รับเลี้ยงสุนัขมาแล้ว 0 ตัว</li>
               <li>เริ่มใช้งานตั้งแต่ {dateJoin}</li>
               <li>ล็อกอินครั้งล่าสุด {lastLogin}</li>
             </ul>
-          ):(null)}
+          ) : (null)}
 
 
           <CardTitle tag="h5">คำอธิบาย</CardTitle>
@@ -100,10 +115,10 @@ const MainTab = ({ isOwned, isCustomer, Account }) => {
               onChange={
                 editDescription
               } />
-            {isOwned&&isEdit ? (<div>
-              <Button onClick={onSetDescription} >แก้ไข</Button><Button>ยกเลิก</Button>
+            {isOwned && isEdit ? (<div>
+              <Button onClick={onSetDescription} >บันทึก</Button><Button type="reset" onClick={onResetDescription}>ยกเลิก</Button>
             </div>
-              
+
             ) : (" ")}
             {/* style={{position:"relative",top:"-40px",float:"right",marginRight:"15px",marginTop:"-5px",backgroundColor:"rgba(212,108,78,0.75)",borderWidth:"0px",color:"#264d59"}} */}
 

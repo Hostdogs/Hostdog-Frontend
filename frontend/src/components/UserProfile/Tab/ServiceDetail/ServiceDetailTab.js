@@ -4,6 +4,7 @@ import axios from "axios";
 import { useCookies } from "react-cookie";
 import HostServiceAPI from "../../../API/HostServiceAPI";
 import HostAvailableDateAPI from "../../../API/HostAvailableDateAPI";
+import moment from "moment-timezone"
 export default function ServiceDetailTab({ profileId }) {
   const [cookies, setCookie] = useCookies(["mytoken", "user_id"]);
   const [serviceDetail, setServiceDetail] = useState({});
@@ -28,10 +29,9 @@ export default function ServiceDetailTab({ profileId }) {
   function formatDate(dates) {
     const newDates = [];
     dates.forEach((date) => {
-      const y = date.date.slice(0, 4);
-      const m = date.date.slice(5, 7);
-      const d = date.date.slice(8, 10);
-      newDates.push(new Date(y, m, d));
+ 
+      newDates.push(new Date(date.date));
+
     });
     return newDates;
   }

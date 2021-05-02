@@ -93,6 +93,7 @@ export default function DogProfileAddForm(props) {
       );
     });
     setDogInfo(startDogInfo);
+    setAllTimes([]);
     toggle();
   }
 

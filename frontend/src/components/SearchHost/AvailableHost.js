@@ -70,7 +70,6 @@ export default function AvailableHost({ host, className }) {
           </div>
 
 
-
         </ModalBody>
       </Modal>
     </div>

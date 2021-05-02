@@ -23,7 +23,7 @@ const ProfileContent = ({
   setpageCollapse,
   Account,
   isOwned,
-
+  setAccount,
   profileId,
 }) => {
   const [activeTab, setActiveTab] = useState("1");
@@ -153,7 +153,7 @@ const ProfileContent = ({
 
         {isOwned ? (
           <TabPane tabId="5">
-            <SettingTab />
+            <SettingTab Account={Account} setAccount={setAccount}/>
           </TabPane>
         ) : (null)}
 

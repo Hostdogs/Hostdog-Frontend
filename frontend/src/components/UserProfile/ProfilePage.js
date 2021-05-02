@@ -76,6 +76,7 @@ export default function ProfilePage({ match }) {
             // isHost={isHost}
             profileId={path}
             Account={Account}
+            setAccount={setAccount}
           />
         </Container>
       </div>

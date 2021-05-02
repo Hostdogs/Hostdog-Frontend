@@ -39,7 +39,7 @@ const MainTab = ({ isOwned, isHost, Account }) => {
   useEffect(() => {
     moment.updateLocale("th")
     if (Account) {
-      console.log("inherited profile", Account, moment.locale())
+      // console.log("inherited profile", Account, moment.locale())
       let roledata = ""
       if (Account.is_host) {
         roledata = "host"
@@ -58,7 +58,7 @@ const MainTab = ({ isOwned, isHost, Account }) => {
       setage(moment().diff(moment(Account[roledata].dob), "years"))
       setdateJoin(moment(Account.date_joined).format("L"))
       setlastLogin(moment(Account.last_login).fromNow())
-      console.log(moment(Account.last_login))
+      // console.log(moment(Account.last_login))
       // console.log(moment(new Date("2021-04-20 22:57:36")).format("YYYY-MM-DD HH:mm:ss"))
       // console.log(moment().fromNow())
       setisLoad(true)
@@ -67,19 +67,19 @@ const MainTab = ({ isOwned, isHost, Account }) => {
   }, [Account])
 
   const onSetDescription = () => {
-    console.log(Description)
+    // console.log(Description)
 
     ////////////function => post to backend////////
     if (Account.is_host) {
       const data = { host_bio: Description }
       HostAPI.setHostInfo(cookies["mytoken"], Account.id, data).then(res => {
-        console.log(res)
+        // console.log(res)
         Account.host.host_bio = res.data.host_bio
       })
     } else {
       const data = { customer_bio: Description }
       CustomerAPI.setCustomerInfo(cookies["mytoken"], Account.id, data).then(res => {
-        console.log(res)
+        // console.log(res)
         Account.customer.customer_bio = res.data.customer_bio
       })
     }
@@ -90,7 +90,7 @@ const MainTab = ({ isOwned, isHost, Account }) => {
     <div>
       <CardFooter style={{ height: "70%" }}>
         <br />
-        <CardText style={{ textAlign: "left" }}>
+        <div style={{ textAlign: "left" }}>
           <CardTitle tag="h5">รายละเอียด</CardTitle>
           {isLoad ? (null) : (<Skeleton count={4} />)}
           {!isHost && isLoad ? (
@@ -129,7 +129,7 @@ const MainTab = ({ isOwned, isHost, Account }) => {
 
 
           </Container>
-        </CardText>
+        </div>
       </CardFooter>
     </div>
 

@@ -19,7 +19,7 @@ const MainTab = ({ isOwned, isCustomer, Account }) => {
       setDescription(e.target.value)
     }
   }
-
+  const [isEdit, setisEdit] = useState(false)
   useEffect(() => {
     moment.updateLocale("th")
     if (Account) {
@@ -100,9 +100,11 @@ const MainTab = ({ isOwned, isCustomer, Account }) => {
               onChange={
                 editDescription
               } />
-            {isOwned ? (
-              <Button onClick={onSetDescription} >แก้ไข</Button>
-            ) : (null)}
+            {isOwned&&isEdit ? (<div>
+              <Button onClick={onSetDescription} >แก้ไข</Button><Button>ยกเลิก</Button>
+            </div>
+              
+            ) : (" ")}
             {/* style={{position:"relative",top:"-40px",float:"right",marginRight:"15px",marginTop:"-5px",backgroundColor:"rgba(212,108,78,0.75)",borderWidth:"0px",color:"#264d59"}} */}
 
 

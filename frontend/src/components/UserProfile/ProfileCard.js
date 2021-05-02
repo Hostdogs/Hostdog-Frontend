@@ -18,6 +18,7 @@ const ProfileCard = ({ pageCollapse, Account }) => {
   const [isLoad, setisLoad] = useState(false)
   const placeholderPath = "/user_placeholder.svg"
   useEffect(() => {
+    console.log("Acc",Account)
     if (Account) {
       let roledata = ""
       if (Account.customer) {

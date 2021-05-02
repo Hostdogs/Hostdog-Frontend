@@ -83,7 +83,7 @@ const LoginModal = ({buttonLabel,className,MouseOver,MouseLeave}) => {
   return (
     <div>
       <Form inline onSubmit={(e) => e.preventDefault()} >
-        <Button onClick={onClose} onMouseLeave={MouseLeave} onMouseOver={MouseOver} style={{ paddingRight: "10px", borderWidth: "3px", borderColor: "#264d59", backgroundColor: "#264d59", color: "#f9e07f", borderRadius: "7px", fontSize: "20px" }}>
+        <Button className="LogInSize" onClick={onClose} onMouseLeave={MouseLeave} onMouseOver={MouseOver} style={{ paddingRight: "10px", borderWidth: "3px", borderColor: "#264d59", backgroundColor: "#264d59", color: "#f9e07f", borderRadius: "7px", fontSize: "20px" }}>
           {buttonLabel}
         </Button>
       </Form>

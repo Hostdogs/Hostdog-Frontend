@@ -16,7 +16,7 @@ import {
   InputGroupText,
   InputGroup,
   FormFeedback,
-  FormText
+  FormText,
 } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -33,7 +33,7 @@ import moment from "moment-timezone";
 import AuthenAPI from "../API/AuthenAPI";
 import CustomerAPI from "../API/CustomerAPI";
 import HostAPI from "../API/HostAPI";
-import './SignUp.css'
+import "./SignUp.css";
 const loadScript = {
   googleAPIKey: "AIzaSyBWV06MM0QFyVnkuA1nHJhQ4altZjovYNs",
   language: "th",
@@ -66,12 +66,10 @@ export default function InformationForm({ selectState }) {
 
   const dayformat = "YYYY-MM-DD";
 
-  
   /////////validation//////////////
   const validatepassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,20}$/;
   const validateemail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   const validateusername = /^[A-Za-z0-9]{5,20}$/;
-
   const [emailValid, setemailValid] = useState({
     valid: false,
     invalid: false,
@@ -466,11 +464,13 @@ export default function InformationForm({ selectState }) {
                 }}
               />
             </InputGroup>
-            
-            <FormText style={{textAlign:"left"}}>
-              ตัวอักษร (a-z, A-Z) หรือ ตัวเลข (0-9) ตั้งแต่ 5 ถึง 20 ตัว
+
+            <FormText style={{ textAlign: "left" }}>
+              <li style={{ marginLeft: "5px" }}>
+                {" "}
+                ตัวอักษรภาษาอังกฤษ หรือ ตัวเลขตั้งแต่ 5 ถึง 20 ตัว
+              </li>
             </FormText>
-            
           </FormGroup>
           <FormGroup>
             <InputGroup>
@@ -499,6 +499,14 @@ export default function InformationForm({ selectState }) {
                 กรุณาใส่รหัสผ่านให้ตรงตามเงื่อนไข
               </FormFeedback>
             </InputGroup>
+            <FormText style={{ textAlign: "left" }}>
+              <li>
+                ตัวอักษรภาษาอังกฤษพิมพ์ใหญ่อย่างน้อย 1 ตัว
+              </li>
+              <li>ตัวอักษรภาษาอังกฤษพิมพ์เล็กอย่างน้อย 1 ตัว</li>
+              <li>ตัวเลขอย่างน้อย 1 ตัว</li>
+              <li>รหัสผ่านตั้งแต่ 8 ถึง 20 ตัว</li>
+            </FormText>
           </FormGroup>
 
           <FormGroup>

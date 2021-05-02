@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { Container } from "reactstrap";
-import { faHandPointLeft } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import './Pending.css'
 
 export default function BlankPending() {
@@ -14,7 +14,7 @@ export default function BlankPending() {
           <a className="mobile_br"><br/></a>
           <a href="profile/">ที่นี่</a>{" "}
           <w className="iconHand">
-          <FontAwesomeIcon icon={faHandPointLeft} className="mr-2 " />
+          <FontAwesomeIcon icon={faArrowLeft} className="mr-2 " style={{color:"#264d59"}}/>
           </w>
           
         </h2>{" "}

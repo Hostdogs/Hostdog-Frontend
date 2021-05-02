@@ -18,9 +18,14 @@ import moment from "moment-timezone";
 import { useCookies } from "react-cookie";
 import HostServiceAPI from "../../../API/HostServiceAPI";
 import HostAvailableDateAPI from "../../../API/HostAvailableDateAPI";
-
+import DayPicker, { DateUtils } from "react-day-picker";
 export default function HostServiceBox(props) {
-  const { serviceDetail, newAvailableDates } = props;
+  const {
+    serviceDetail,
+    setNewAvailableDates,
+    newAvailableDates,
+    availableDates,
+  } = props;
 
   const [cookies, setCookie] = useCookies(["mytoken", "user_id"]);
   const myId = cookies["user_id"];
@@ -37,7 +42,8 @@ export default function HostServiceBox(props) {
   }, [newAvailableDates]);
 
   useEffect(() => {
-    console.log(selectedDays);
+    // console.log(selectedDays);
+    // console.log(newAvailableDates);
   }, [selectedDays]);
 
   function onEnableChange(event) {
@@ -79,41 +85,47 @@ export default function HostServiceBox(props) {
     const allDays = [];
 
     days.forEach((day) => {
-      const newDay = {};
-      newDay.id = "day" + day.getTime().toString();
-      console.log(newDay);
-      newDay.date = moment(day).format("YYYY-MM-DD");
-      allDays.push(newDay);
+      allDays.push(moment(day).format("YYYY-MM-DD"));
     });
     allDays.sort(function (a, b) {
-      return a.date.localeCompare(b.date);
+      return a.localeCompare(b);
     });
     return allDays;
+  }
+
+  function checkDeleteDate(allDays) {
+    const deleteDate = availableDates.filter((date) => {
+      return !allDays.includes(date.date);
+    });
+    return deleteDate;
   }
 
   async function onSubmit(event) {
     event.preventDefault();
     const allDays = dayFormatYMD(selectedDays);
-    //console.log(allDays);
+    const dateDelete = checkDeleteDate(allDays);
+    // console.log(allDays);
+
     const resp = await HostServiceAPI.UpdateHostService(
       myToken,
       myId,
       hostService
     );
+
     allDays.forEach((day) => {
-      HostAvailableDateAPI.AddHostAvailableDate(myToken, myId, day).then(
-        (resp) => {
-          console.log(resp.data);
-        }
-      );
+      HostAvailableDateAPI.AddHostAvailableDate(myToken, myId, { date: day });
     });
 
-    // console.log(resp.data);
+    dateDelete.forEach((date) => {
+      HostAvailableDateAPI.DeleteHostAvailableDate(myToken, myId, date.id);
+    });
+    //setNewAvailableDates(selectedDays);
   }
 
   function onCancel(event) {
     event.preventDefault();
     setHostService(serviceDetail);
+    setSelectedDays(newAvailableDates);
   }
 
   return (

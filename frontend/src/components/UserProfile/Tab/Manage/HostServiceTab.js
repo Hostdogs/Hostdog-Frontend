@@ -41,6 +41,8 @@ export default function HostServiceTab({ profileId }) {
       <HostServiceBox
         serviceDetail={serviceDetail}
         newAvailableDates={newAvailableDates}
+        availableDates={availableDates}
+        setNewAvailableDates={setNewAvailableDates}
       />
     </div>
   );

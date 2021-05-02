@@ -10,10 +10,6 @@ export default function SelectMultiDate(props) {
   twoMonthsLater.setMonth(twoMonthsLater.getMonth() + 2);
 
   function handleDayClick(day, { selected }) {
-    // const newDay = {};
-    // newDay.id = "day" + day.getTime().toString();
-    // newDay.day = day;
-    // console.log(newDay);
     if (selected) {
       onDayDelete(day);
     } else {

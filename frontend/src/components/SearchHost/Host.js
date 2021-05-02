@@ -113,14 +113,13 @@ export default function Host({ host }) {
                         <div style={{ paddingTop: "3%" }}> </div>
                       </a>
                       <div>
-                        รับฝากมาแล้ว <b>{hostInfo.host_hosted_count} ตัว</b>{" "}
+                        รับเลี้ยงสุนัขมาแล้ว <b>{hostInfo.host_hosted_count} ตัว</b>{" "}
                         <a className="mobile-br">
                           <br />
                         </a>
-                        รวม <b>x ชั่วโมง</b>
                       </div>
                       <div>
-                        ขนาดบริเวณเลี้ยง{" "}
+                        ขนาดบริเวณพื้นที่เลี้ยง{" "}
                         <a className="mobile-br">
                           <br />
                         </a>

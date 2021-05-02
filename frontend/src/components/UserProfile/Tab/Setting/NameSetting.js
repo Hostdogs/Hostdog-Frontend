@@ -1,4 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useCookies } from 'react-cookie';
+import { useHistory } from 'react-router';
 import {
     Container,
     Input,
@@ -11,26 +13,59 @@ import {
     Collapse,
     Form,
 } from "reactstrap";
-
-
-export default function NameSetting({ setSelected, Selected }) {
-
-    const [FakeData, setFakeData] = useState({ Name: "สวัสดี", Surname: "ท่านสมาชิก" })
-    const [Name, setName] = useState(FakeData.Name);
-    const [Surname, setSurname] = useState(FakeData.Surname);
+import CustomerAPI from '../../../API/CustomerAPI';
+import HostAPI from '../../../API/HostAPI';
+export default function NameSetting({ setSelected, Selected, Account ,setAccount}) {
+    let history = useHistory()
+    const [cookies, setcookies] = useCookies(["mytoken", "user_id"]);
+    // const [FakeData, setFakeData] = useState({ Name: "สวัสดี", lastName: "ท่านสมาชิก" })
+    const [showName, setshowName] = useState()
+    const [firstName, setfirstName] = useState();
+    const [lastName, setlastName] = useState();
+    
+    useEffect(() => {
+        if (Account) {
+            if (Account.is_host) {
+                setfirstName(Account.host.first_name)
+                setlastName(Account.host.last_name)
+                setshowName(Account.host.first_name+" "+Account.host.last_name)
+            }else{
+                setfirstName(Account.customer.first_name)
+                setlastName(Account.customer.last_name)
+                setshowName(Account.customer.first_name+" "+Account.customer.last_name)
+            }
+        }
+    }, [Account])
     const Reset = () => {
-        setName(FakeData.Name)
-        setSurname(FakeData.Surname)
-        setSelected(0)
+        if (Account.is_host) {
+            setfirstName(Account.host.first_name)
+            setlastName(Account.host.last_name)
+        }else{
+            setfirstName(Account.customer.first_name)
+            setlastName(Account.customer.last_name)
+        }
     }
 
     const infoSet = (e) => {
         e.preventDefault()
-        FakeData.Name = Name
-        FakeData.Surname = Surname
+        const data = {first_name: firstName, last_name: lastName}
+        if(Account.is_host){
+            HostAPI.setHostInfo(cookies["mytoken"], Account.id,data).then(res=>{
+                setAccount({...Account,host:{first_name:res.data.first_name,last_name:res.data.last_name}})
+
+            })
+        }else{
+            CustomerAPI.setCustomerInfo(cookies["mytoken"], Account.id,data).then(res=>{
+                setAccount({...Account,customer:{first_name:res.data.first_name,last_name:res.data.last_name}})
+
+
+            })
+        }
+        // history.go(0)
         //////////////will implement to refresh page////////////
         setSelected(0)
     }
+
 
     return (
         <div>
@@ -40,7 +75,7 @@ export default function NameSetting({ setSelected, Selected }) {
                 onClick={e => setSelected(1)}
                 style={{
                     padding: "0px",
-                    
+
                 }}
             >
                 <ListGroupItem
@@ -52,8 +87,8 @@ export default function NameSetting({ setSelected, Selected }) {
                     }}
                 >
                     <h6>
-                        <a>ชื่อ</a> <a style={{ marginLeft: "5%" }}>{FakeData.Name}</a>{" "}
-                        <a style={{ marginLeft: "5px" }}>{FakeData.Surname}</a>
+                        <a>ชื่อ</a> <a style={{ marginLeft: "5%" }}>{showName}</a>{" "}
+                        <a style={{ marginLeft: "5px" }}>{}</a>
                         <a href="##" style={{ float: "right", color: "black" }}>แก้ไข</a>
 
                     </h6>
@@ -85,7 +120,7 @@ export default function NameSetting({ setSelected, Selected }) {
                                     ชื่อ
                   </InputGroupText>
                             </InputGroupAddon>
-                            <Input onChange={(e) => setName(e.target.value)} value={Name} style={{ minWidth: "150px", maxWidth: "30vw" }}></Input>
+                            <Input onChange={(e) => setfirstName(e.target.value)} value={firstName} style={{ minWidth: "150px", maxWidth: "30vw" }}></Input>
                         </InputGroup>
 
                         <InputGroup
@@ -106,7 +141,7 @@ export default function NameSetting({ setSelected, Selected }) {
                                     นามสกุล
                   </InputGroupText>
                             </InputGroupAddon>
-                            <Input onChange={(e) => setSurname(e.target.value)} value={Surname} style={{ minWidth: "150px", maxWidth: "30vw" }}></Input>
+                            <Input onChange={(e) => setlastName(e.target.value)} value={lastName} style={{ minWidth: "150px", maxWidth: "30vw" }}></Input>
                         </InputGroup>
 
                         <div style={{ marginTop: "1%", textAlign: "right" }}>

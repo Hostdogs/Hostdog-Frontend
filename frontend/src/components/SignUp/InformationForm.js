@@ -194,15 +194,15 @@ export default function InformationForm({ selectState }) {
       setCookie("mytoken", resp.data.token);
       setCookie("user_id", resp.data.id);
     } catch (error) {
-      let errorMessage = "";
-      if (error.response.data.is_host !== undefined) {
-        errorMessage += "email";
-      }
-      if (error.response.data.username !== undefined) {
-        errorMessage += "username";
-      }
-      alert(errorMessage);
-      console.log(error.response.data);
+      // let errorMessage = "";
+      // if (error.response.data.is_host !== undefined) {
+      //   errorMessage += "email";
+      // }
+      // if (error.response.data.username !== undefined) {
+      //   errorMessage += "username";
+      // }
+      // alert(errorMessage);
+      // console.log(error.response.data);
     }
   }
 

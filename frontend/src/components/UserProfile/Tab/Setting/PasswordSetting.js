@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useCookies } from 'react-cookie';
 import {
     Container,
     Input,
@@ -11,13 +12,13 @@ import {
     Collapse,
     Form,
 } from "reactstrap";
+import AuthenAPI from '../../../API/AuthenAPI';
 
 
-export default function PasswordSetting({ setSelected, Selected }) {
+export default function PasswordSetting({ setSelected, Selected,Account }) {
     ////////implement fake password getter/////////////////
-    const [FakeData, setFakeData] = useState({ Password: "kuypholinwza" })
 
-
+    const [cookies, setcookies] = useCookies(["mytoken", "user_id"]);
     const [oldPassword, setoldPassword] = useState("")
     const [newPassword, setnewPassword] = useState("")
     const [confirmPassword, setconfirmPassword] = useState("")
@@ -30,10 +31,16 @@ export default function PasswordSetting({ setSelected, Selected }) {
 
     const infoSet = (e) => {
         e.preventDefault()
-        FakeData.Password = newPassword
+        if(newPassword===confirmPassword){
+            AuthenAPI.changePassword(cookies["mytoken"], Account.id,oldPassword,newPassword).then(res=>{
+                console.log("password Changed")
+                Reset()
+            }).catch(err=>{
+                console.log(err.response)
+            })
+        }
 
         //////////////will implement to refresh page////////////
-        setSelected(0)
     }
 
     return (
@@ -58,7 +65,7 @@ export default function PasswordSetting({ setSelected, Selected }) {
                 >
                     <h6>
                         <a>รหัสผ่าน</a>
-                        <a style={{ marginLeft: "5px" }}>{FakeData.Surname}</a>
+                        <a style={{ marginLeft: "5px" }}></a>
                         <a href="##" style={{ float: "right", color: "black" }}>แก้ไข</a>
 
                     </h6>

@@ -56,8 +56,7 @@ export default function ProfileimgPathSetting({ setSelected, Selected }) {
                     }}
                 >
                     <h6>
-                        <a>รูปประจำตัว</a> <a style={{ marginLeft: "5%" }}>
-                            {FakeData.imgPath}</a>{" "}
+                        <a>รูปประจำตัว</a>
 
                         <a href="##" style={{ float: "right", color: "black" }}>แก้ไข</a>
 

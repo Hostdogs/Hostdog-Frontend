@@ -1,0 +1,12 @@
+.SignUpSize{
+    font-size: 20px;
+}
+
+@media only screen and (max-width: 350px){
+    .SignUpSize{
+        font-size: 15px;
+    }
+    .navbar_brand_hostdog{
+        font-size: 22px
+    }
+}

@@ -97,10 +97,8 @@ export default function DogProfileAddForm(props) {
       setAllTimes([]);
       toggle();
     } catch (error) {
-      console.log(error.response)
+      console.log(error.response);
     }
-
-
   }
 
   function changeValue(name, value) {

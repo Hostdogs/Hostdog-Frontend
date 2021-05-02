@@ -19,6 +19,8 @@ import { useCookies } from "react-cookie";
 import HostServiceAPI from "../../../API/HostServiceAPI";
 import HostAvailableDateAPI from "../../../API/HostAvailableDateAPI";
 import DayPicker, { DateUtils } from "react-day-picker";
+import ImageBox from "./ImageBox";
+
 export default function HostServiceBox(props) {
   const {
     serviceDetail,
@@ -385,6 +387,9 @@ export default function HostServiceBox(props) {
                   </FormGroup>
                 </div>
               </div>
+            </Col>
+            <Col xs="12" sm="12" md="12" lg="6" style={{ marginTop: "15px" }}>
+              <ImageBox />
             </Col>
           </Row>
           <hr />

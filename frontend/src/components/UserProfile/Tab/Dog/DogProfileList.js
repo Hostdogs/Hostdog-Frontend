@@ -17,6 +17,7 @@ import DogProfileEditForm from "./DogProfileEditForm";
 import { useCookies } from "react-cookie";
 import DogAPI from "../../../API/DogAPI";
 import EditFeedingTime from "./EditFeedingTime";
+import "./DogTab.css";
 
 export default function DogProfileList(props) {
   const { dogInfos } = props;
@@ -54,7 +55,11 @@ export default function DogProfileList(props) {
         <Card>
           <Row>
             <Col xs="12" sm="6" md="6" lg="4">
-              <CardImg Width="100%" src={dogInfo.picture} />
+              <CardImg
+                className="resize-imgDog"
+                Width="100%"
+                src={dogInfo.picture}
+              />
             </Col>
             <Col xs="12" sm="6" md="6" lg="8">
               <CardBody>

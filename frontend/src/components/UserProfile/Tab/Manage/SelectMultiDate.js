@@ -4,12 +4,13 @@ import "react-day-picker/lib/style.css";
 import moment from "moment-timezone";
 
 export default function SelectMultiDate(props) {
-  const { selectedDays, setSelectedDays } = props;
+  const { selectedDays, setSelectedDays, setIsChange } = props;
 
   let twoMonthsLater = new Date();
   twoMonthsLater.setMonth(twoMonthsLater.getMonth() + 2);
 
   function handleDayClick(day, { selected }) {
+    setIsChange(true);
     if (selected) {
       onDayDelete(day);
     } else {

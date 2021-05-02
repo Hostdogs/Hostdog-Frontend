@@ -32,6 +32,7 @@ export default function HostServiceBox(props) {
   const myToken = cookies["mytoken"];
   const [hostService, setHostService] = useState(serviceDetail);
   const [selectedDays, setSelectedDays] = useState(newAvailableDates);
+  const [isChange, setIsChange] = useState(false);
 
   useEffect(() => {
     setHostService(serviceDetail);
@@ -40,11 +41,6 @@ export default function HostServiceBox(props) {
   useEffect(() => {
     setSelectedDays(newAvailableDates);
   }, [newAvailableDates]);
-
-  useEffect(() => {
-    // console.log(selectedDays);
-    // console.log(newAvailableDates);
-  }, [selectedDays]);
 
   function onEnableChange(event) {
     const name = event.target.name;
@@ -68,6 +64,7 @@ export default function HostServiceBox(props) {
   }
 
   function changeValue(name, value) {
+    setIsChange(true);
     if (value === "true" || value === true) {
       return true;
     } else if (value === "false" || value === false) {
@@ -104,7 +101,6 @@ export default function HostServiceBox(props) {
     event.preventDefault();
     const allDays = dayFormatYMD(selectedDays);
     const dateDelete = checkDeleteDate(allDays);
-    // console.log(allDays);
 
     const resp = await HostServiceAPI.UpdateHostService(
       myToken,
@@ -113,19 +109,31 @@ export default function HostServiceBox(props) {
     );
 
     allDays.forEach((day) => {
-      HostAvailableDateAPI.AddHostAvailableDate(myToken, myId, { date: day });
+      HostAvailableDateAPI.AddHostAvailableDate(myToken, myId, {
+        date: day,
+      }).catch((err) => {
+        const mute = err;
+      });
     });
 
     dateDelete.forEach((date) => {
-      HostAvailableDateAPI.DeleteHostAvailableDate(myToken, myId, date.id);
+      HostAvailableDateAPI.DeleteHostAvailableDate(
+        myToken,
+        myId,
+        date.id
+      ).catch((err) => {
+        const mute = err;
+      });
     });
-    //setNewAvailableDates(selectedDays);
+    setNewAvailableDates(selectedDays);
+    setIsChange(false);
   }
 
   function onCancel(event) {
     event.preventDefault();
     setHostService(serviceDetail);
     setSelectedDays(newAvailableDates);
+    setIsChange(false);
   }
 
   return (
@@ -192,6 +200,7 @@ export default function HostServiceBox(props) {
                       <SelectMultiDate
                         selectedDays={selectedDays}
                         setSelectedDays={setSelectedDays}
+                        setIsChange={setIsChange}
                       />
                     </Col>
                   </Row>
@@ -379,18 +388,20 @@ export default function HostServiceBox(props) {
             </Col>
           </Row>
           <hr />
-          <Row>
-            <Col xs="6" style={{ textAlign: "end" }}>
-              <Button onClick={onSubmit} color="primary">
-                ยืนยัน
-              </Button>
-            </Col>
-            <Col xs="6" style={{ textAlign: "start" }}>
-              <Button onClick={onCancel} color="danger">
-                ยกเลิก
-              </Button>
-            </Col>
-          </Row>
+          {isChange ? (
+            <Row>
+              <Col xs="6" style={{ textAlign: "end" }}>
+                <Button onClick={onSubmit} color="primary">
+                  ยืนยัน
+                </Button>
+              </Col>
+              <Col xs="6" style={{ textAlign: "start" }}>
+                <Button onClick={onCancel} color="danger">
+                  ยกเลิก
+                </Button>
+              </Col>
+            </Row>
+          ) : null}
         </div>
       </Form>
     </div>

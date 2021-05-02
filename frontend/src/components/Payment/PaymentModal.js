@@ -4,7 +4,7 @@ import { useState,useEffect } from "react";
 import { faClosedCaptioning } from '@fortawesome/free-solid-svg-icons';
 import axios from "axios";
 import PaymentAPI from './PaymentAPI'
-export default function PaymentModal({service_id,payment_id}) {
+export default function PaymentModal({service_id}) {
 
 const [modal, setModal] = useState(false);
   const [nestedModal, setNestedModal] = useState(false);
@@ -15,7 +15,7 @@ const [modal, setModal] = useState(false);
   const [dogName,setDogName]=useState("น้องบาส หลังอาน")
   const [accountNumber,setAccountNumber]=useState("1234567890");
   const [totalPrice,setTotalPrice]=useState(null)
-
+  const [paymentID,setPaymentID]=useState(null);
 
   const toggleNested = () => {
     setNestedModal(!nestedModal);
@@ -29,31 +29,42 @@ const [modal, setModal] = useState(false);
   const handlePay=()=>{
     toggleAll();
     const data={accept_payment:true}
-    PaymentAPI.pay(service_id,payment_id,data)
+    PaymentAPI.pay(service_id,paymentID,data)
   }
-  const getPayment=async()=>{
+  const setPaymentTotal=async(payment_id)=>{
       const response= await PaymentAPI.getPayment(service_id,payment_id)
       const payment =response.data
+      setTotalPrice(payment.pay_total)
       console.log("payment")
       console.log(payment)
-      setTotalPrice(payment.pay_total)
+
   }
-  const listPayment=async()=>{
+  const getPaymentIDFromService_setTotalPayment=async()=>{
       const response=await PaymentAPI.listPayment(service_id)
       const listPayment=response.data
+
+      for (var i=0;i<listPayment.length;i++){
+        if (listPayment[i].service===service_id){
+          setPaymentID(listPayment[i].id);
+          setPaymentTotal(listPayment[i].id);
+          break;
+        }
+      }
+
       console.log("listPayment")
       console.log(listPayment)
   }
 
-  useEffect(()=>{
-    listPayment();
-
-  },[]);
-  
+  const handlePayment=async()=>{
+    getPaymentIDFromService_setTotalPayment();
+    
+    toggle();
+  }
 
     return (
         <div>
-            <Button color="danger" onClick={toggle}>จ่ายเงินกันเถอะ ย้าฮูว</Button>
+          <div>{paymentID}</div>
+            <Button color="danger" onClick={handlePayment}>จ่ายเงินกันเถอะ ย้าฮูว</Button>
             <Modal isOpen={modal} toggle={toggle} fade={false} >
         <ModalHeader toggle={toggle}><h2>ชำระเงินค่าบริการ</h2></ModalHeader>
         <ModalBody>

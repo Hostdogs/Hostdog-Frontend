@@ -10,3 +10,17 @@
         font-size: 22px
     }
 }
+
+
+@media all and (max-width: 499px){
+    .display_desktop{
+        display: none;
+    }
+}
+
+@media all and (min-width: 500px){
+    .display_desktop{
+        display: inline;
+    }
+}
+

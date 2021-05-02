@@ -13,52 +13,67 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
 } from "reactstrap";
 import "./Service.css";
 import ServiceDetail from "./ServiceDetail";
-
-export default function ServiceForm() {
+import HostAPI from "../API/HostAPI";
+import CustomerAPI from "../API/CustomerAPI";
+import DogAPI from "../API/DogAPI";
+import HostServiceAPI from "../API/HostServiceAPI";
+import ServiceAPI from "../API/ServiceAPI";
+export default function ServiceForm({ mytoken, host_id, customer_id }) {
+  const [modal, setModal] = useState(false);
+  const toggle = () => setModal(!modal);
   const [dropdownTypeOpen, setTypeOpen] = useState(false);
   const toggleType = () => setTypeOpen(!dropdownTypeOpen);
 
   const [dropdownFreqOpen, setFreqOpen] = useState(false);
   const toggleFreq = () => setFreqOpen(!dropdownFreqOpen);
+  const [hostName, setHostName] = useState("");
 
-  const mealPerDays = [
-    { label: "1 ครั้ง/วัน", value: 1 },
-    { label: "2 ครั้ง/วัน", value: 2 },
-    { label: "3 ครั้ง/วัน", value: 3 },
-    { label: "4 ครั้ง/วัน", value: 4 },
-    { label: "5 ครั้ง/วัน", value: 5 },
-  ];
+  const [mealTypes, setMealTypes] = useState([]);
+  const [customerMealLabel,setCustomerMealLabel]=useState("เลือกประเภทอาหาร");
+  const [customerDogs, setCustomerDogs] = useState([]);
 
-  const mealTypes = [
-    { label: "อาหารเปียก", value: 1, key: 1 },
-    { label: "อาหารแห้ง", value: 2, key: 2 },
-    { label: "เนื้อสด", value: 3, key: 3 },
-  ];
+  const getHostDetails = async () => {
+    const response = await HostAPI.getHostDetails(mytoken, host_id);
+    const hostDetail = response.data;
+
+    setHostName(hostDetail.first_name + " " + hostDetail.last_name);
+  };
+  const getHostMealAvailable = async () => {
+    const response = await HostServiceAPI.getHostService(mytoken, host_id);
+    const hostServiceMeal = response.data;
+
+    setMealTypes(hostServiceMeal.available_meals);
+    console.log(hostServiceMeal.available_meals)
+  };
+  const listCustomerDog = async () => {
+    const response = await DogAPI.GetDog(mytoken, customer_id);
+    const listDog = response.data;
+    setCustomerDogs(listDog);
+ 
+  };
 
   const [serviceInfo, setServiceInfo] = useState({
-    host: null,
-    customer: null,
+    host: host_id,
+    customer: customer_id,
     dog: null,
-    service_status: "",
-    service_is_over_night: null,
     service_start_time: null,
     service_end_time: null,
-    service_send_time: null,
-    service_get_time: null,
     service_meal_type: null,
-    service_meal_per_day: null,
     service_meal_weight: 100,
-    service_is_walk: null,
-    service_is_get_dog: null,
-    service_is_deliver_dog: null,
-    service_is_dog_bath: null,
+    is_dog_walk: null,
+    is_get_dog: null,
+    is_delivery_dog: null,
+    is_bath_dog: null,
     service_bio: "",
-    service_is_rating: false,
-    service_rating: null,
   });
+
 
   function changeValue(name, value) {
     if (value === "true" || value === true) {
@@ -72,41 +87,59 @@ export default function ServiceForm() {
     }
   }
   function onServiceInfoChange(event) {
-    const { name, value } = event.target;
+    const { name, value,} = event.target;
     setServiceInfo((prevServiceInfo) => {
       return {
         ...prevServiceInfo,
         [name]: changeValue(name, value),
       };
     });
+    
+    if (name==="service_meal_type"){
+        for (var i=0;i<mealTypes.length;i++){
+          if (parseInt(value)===mealTypes[i].id){
+            setCustomerMealLabel(mealTypes[i].meal_type)
+          }
+        }
+    }
+
   }
 
   useEffect(() => {
+    getHostDetails();
+    getHostMealAvailable();
+    listCustomerDog();
+    console.log("serviceInfo");
     console.log(serviceInfo);
   }, [serviceInfo]);
 
-  const mealPerDayElements = mealPerDays.map((mealPerDay, index) => {
+  const customerDogElements = customerDogs.map((customerDog) => {
     return (
-      <DropdownItem
-        key={index}
-        name="service_meal_per_day"
-        value={mealPerDay.value}
-        onClick={onServiceInfoChange}
+      <Button
+        key={customerDog.id}
+        name="dog"
+        value={customerDog.id}
+        onClick={(customerDog) => {
+          onServiceInfoChange(customerDog);
+          console.log(customerDog);
+          toggle();
+        }}
       >
-        {mealPerDay.label}
-      </DropdownItem>
+        {customerDog.dog_name}
+      </Button>
     );
   });
 
   const mealTypeElements = mealTypes.map((mealType, index) => {
     return (
       <DropdownItem
-        key={mealType.key}
+        key={mealType.id}
         name="service_meal_type"
-        value={mealType.value}
+        value={mealType.id}
+        className={mealType.meal_type}
         onClick={onServiceInfoChange}
       >
-        {mealType.label}
+        {mealType.meal_type}
       </DropdownItem>
     );
   });
@@ -122,16 +155,18 @@ export default function ServiceForm() {
     if (serviceInfo.dog === null) {
       console.log("dog");
     }
-    if (serviceInfo.service_is_over_night === null) {
-      console.log("service_is_over_night");
-    }
     if (serviceInfo.service_meal_type === null) {
       console.log("service_meal_type");
     }
-    if (serviceInfo.service_meal_per_day === null) {
-      console.log("service_meal_per_day");
-    }
-    //console.log(serviceInfo);
+
+    ServiceAPI.createService(mytoken, serviceInfo)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error.response);
+      });
+
   }
 
   return (
@@ -149,9 +184,15 @@ export default function ServiceForm() {
                     เลือกสุนัขของคุณ
                   </Col>
                   <Col xs="5" sm="4">
-                    <Button color="primary" size="sm">
+                    <Button color="primary" size="sm" onClick={toggle}>
                       เลือก
                     </Button>
+                    <Modal isOpen={modal} fade={false} toggle={toggle}>
+                      <ModalHeader toggle={toggle}>
+                        เลือกสุนัขของคุณ
+                      </ModalHeader>
+                      <ModalBody>{customerDogElements}</ModalBody>
+                    </Modal>
                   </Col>
                 </Row>
               </FormGroup>
@@ -161,34 +202,7 @@ export default function ServiceForm() {
                     ผู้รับฝาก
                   </Col>
                   <Col xs="12" sm="6">
-                    นายคำนวย บางขุนเทียน
-                  </Col>
-                </Row>
-              </FormGroup>
-              <FormGroup>
-                <Row>
-                  <Col xs="12" sm="4">
-                    ประเภทการฝาก
-                  </Col>
-                  <Col xs="6" sm="4">
-                    <CustomInput
-                      type="radio"
-                      id="DeTypeRadio"
-                      name="service_is_over_night"
-                      label="ฝากระหว่างวัน"
-                      value="false"
-                      onChange={onServiceInfoChange}
-                    />
-                  </Col>
-                  <Col xs="6" sm="4">
-                    <CustomInput
-                      type="radio"
-                      id="DeTypeRadio2"
-                      name="service_is_over_night"
-                      label="ฝากข้ามคืน"
-                      value="true"
-                      onChange={onServiceInfoChange}
-                    />
+                    {hostName}
                   </Col>
                 </Row>
               </FormGroup>
@@ -197,19 +211,26 @@ export default function ServiceForm() {
                   <Col xs="12" sm="4">
                     วันที่ใช้บริการฝาก
                   </Col>
-                  <Col xs="12" sm="4">
-                    <Input
-                      type="date"
-                      name="service_start_time"
-                      onChange={onServiceInfoChange}
-                    />
-                  </Col>
-                  <Col xs="12" sm="4">
-                    <Input
-                      type="date"
-                      name="service_end_time"
-                      onChange={onServiceInfoChange}
-                    />
+                  <Col sm="6" xs="12">
+                    <Row>
+                      <Col xs="12" sm="12" md="12">
+                        เริ่ม:
+                        <Input
+                          type="datetime-local"
+                          name="service_start_time"
+                          onChange={onServiceInfoChange}
+                        />
+                      </Col>
+
+                      <Col xs="12" sm="12" md="12">
+                        ถึง:
+                        <Input
+                          type="datetime-local"
+                          name="service_end_time"
+                          onChange={onServiceInfoChange}
+                        />
+                      </Col>
+                    </Row>
                   </Col>
                 </Row>
               </FormGroup>
@@ -224,39 +245,18 @@ export default function ServiceForm() {
                       toggle={toggleType}
                     >
                       <DropdownToggle caret size="sm">
-                        {serviceInfo.service_meal_type === null
-                          ? "เลือกประเภทอาหาร"
-                          : serviceInfo.service_meal_type}
+              {customerMealLabel}
                       </DropdownToggle>
                       <DropdownMenu>{mealTypeElements}</DropdownMenu>
                     </ButtonDropdown>
                   </Col>
                 </Row>
               </FormGroup>
+
               <FormGroup>
                 <Row>
                   <Col xs="12" sm="4">
-                    ความถี่ในการให้อาหาร
-                  </Col>
-                  <Col xs="12" sm="4">
-                    <ButtonDropdown
-                      isOpen={dropdownFreqOpen}
-                      toggle={toggleFreq}
-                    >
-                      <DropdownToggle caret size="sm">
-                        {serviceInfo.service_meal_per_day === null
-                          ? "เลือกความถี่ในการให้อาหาร"
-                          : serviceInfo.service_meal_per_day + " ครั้ง/วัน"}
-                      </DropdownToggle>
-                      <DropdownMenu>{mealPerDayElements}</DropdownMenu>
-                    </ButtonDropdown>
-                  </Col>
-                </Row>
-              </FormGroup>
-              <FormGroup>
-                <Row>
-                  <Col xs="12" sm="4">
-                    ปริมาณอาหารต่อวัน
+                    ปริมาณอาหารต่อมื้อ
                   </Col>
                   <Col xs="7" sm="4">
                     <Input
@@ -270,7 +270,7 @@ export default function ServiceForm() {
                     />
                   </Col>
                   <Col xs="5" sm="4">
-                    {serviceInfo.service_meal_weight} กรัม/วัน
+                    {serviceInfo.service_meal_weight} กรัม/มื้อ
                   </Col>
                 </Row>
               </FormGroup>
@@ -288,7 +288,7 @@ export default function ServiceForm() {
                     <CustomInput
                       type="radio"
                       id="walkRadio"
-                      name="service_is_walk"
+                      name="is_dog_walk"
                       value="true"
                       label="ต้องการ"
                       onChange={onServiceInfoChange}
@@ -298,7 +298,7 @@ export default function ServiceForm() {
                     <CustomInput
                       type="radio"
                       id="walkRadio2"
-                      name="service_is_walk"
+                      name="is_dog_walk"
                       value="false"
                       label="ไม่ต้องการ"
                       onChange={onServiceInfoChange}
@@ -315,7 +315,7 @@ export default function ServiceForm() {
                     <CustomInput
                       type="radio"
                       id="getDogRadio"
-                      name="service_is_get_dog"
+                      name="is_get_dog"
                       value="true"
                       label="ต้องการ"
                       onChange={onServiceInfoChange}
@@ -325,7 +325,7 @@ export default function ServiceForm() {
                     <CustomInput
                       type="radio"
                       id="getDogRadio2"
-                      name="service_is_get_dog"
+                      name="is_get_dog"
                       value="false"
                       label="ไม่ต้องการ"
                       onChange={onServiceInfoChange}
@@ -342,7 +342,7 @@ export default function ServiceForm() {
                     <CustomInput
                       type="radio"
                       id="sendDogRadio"
-                      name="service_is_deliver_dog"
+                      name="is_delivery_dog"
                       value="true"
                       label="ต้องการ"
                       onChange={onServiceInfoChange}
@@ -352,7 +352,7 @@ export default function ServiceForm() {
                     <CustomInput
                       type="radio"
                       id="sendDogRadio2"
-                      name="service_is_deliver_dog"
+                      name="is_delivery_dog"
                       value="false"
                       label="ไม่ต้องการ"
                       onChange={onServiceInfoChange}
@@ -369,7 +369,7 @@ export default function ServiceForm() {
                     <CustomInput
                       type="radio"
                       id="bathDogRadio"
-                      name="service_is_dog_bath"
+                      name="is_bath_dog"
                       value="true"
                       label="ต้องการ"
                       onChange={onServiceInfoChange}
@@ -379,7 +379,7 @@ export default function ServiceForm() {
                     <CustomInput
                       type="radio"
                       id="bathDogRadio2"
-                      name="service_is_dog_bath"
+                      name="is_bath_dog"
                       value="false"
                       label="ไม่ต้องการ"
                       onChange={onServiceInfoChange}
@@ -405,7 +405,7 @@ export default function ServiceForm() {
           </Form>
         </Col>
         <Col xs="12" sm="12" md="12" lg="4">
-          <ServiceDetail serviceInfo={serviceInfo} />
+          <ServiceDetail serviceInfo={serviceInfo} customerMealLabel={customerMealLabel}/>
 
           <Row>
             <Col align="right">

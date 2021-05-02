@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useCookies } from 'react-cookie';
 import {
     Container,
     Input,
@@ -11,24 +12,47 @@ import {
     Collapse,
     Form,
 } from "reactstrap";
+import CustomerAPI from '../../../API/CustomerAPI';
+import HostAPI from '../../../API/HostAPI';
 
 
-export default function MobileSetting({ setSelected, Selected }) {
+export default function MobileSetting({ setSelected, Selected ,Account}) {
+    const [cookies, setcookies] = useCookies(["mytoken", "user_id"]);
+    // const [FakeData, setFakeData] = useState({ Mobile: "0810855513" })
+    const [Mobile, setMobile] = useState();
+    const [showMobile, setshowMobile] = useState()
 
-    const [FakeData, setFakeData] = useState({ Mobile: "0810855513" })
-    const [Mobile, setMobile] = useState(FakeData.Mobile);
-    
-    const Reset = () => {
-        setMobile(FakeData.Mobile)
-        setSelected(0)
-    }
+
+    useEffect(() => {
+        if (Account) {
+            if (Account.is_host) {
+                setMobile(Account.host.mobile)                
+                setshowMobile(Account.host.mobile)
+            } else {
+                setMobile(Account.customer.mobile)                
+                setshowMobile(Account.customer.mobile)
+            }
+        }
+    }, [Account])
 
     const infoSet = (e) => {
         e.preventDefault()
-        FakeData.Mobile = Mobile
-
+        const data = {mobile:Mobile}
+        if(Account.is_host){
+            HostAPI.setHostInfo(cookies["mytoken"], Account.id, data).then(res=>{
+                setshowMobile(res.data.mobile)
+            })
+        }else{
+            CustomerAPI.setCustomerInfo(cookies["mytoken"], Account.id, data).then(res=>{
+                setshowMobile(res.data.mobile)
+            })
+        }
         //////////////will implement to refresh page////////////
         setSelected(0)
+    }
+    
+    const Reset = () => {
+        setMobile(showMobile)
     }
 
     return (
@@ -39,7 +63,7 @@ export default function MobileSetting({ setSelected, Selected }) {
                 onClick={e => setSelected(3)}
                 style={{
                     padding: "0px",
-                    
+
                 }}
             >
                 <ListGroupItem
@@ -51,7 +75,7 @@ export default function MobileSetting({ setSelected, Selected }) {
                     }}
                 >
                     <h6>
-                        <a>เบอร์โทรศัพท์</a> <a style={{ marginLeft: "5%" }}>{FakeData.Mobile}</a>{" "}
+                        <a>เบอร์โทรศัพท์</a> <a style={{ marginLeft: "5%" }}>{showMobile}</a>{" "}
                         <a href="##" style={{ float: "right", color: "black" }}>แก้ไข</a>
 
                     </h6>
@@ -86,7 +110,7 @@ export default function MobileSetting({ setSelected, Selected }) {
                             <Input onChange={(e) => setMobile(e.target.value)} value={Mobile} style={{ minWidth: "150px", maxWidth: "30vw" }}></Input>
                         </InputGroup>
 
-                       
+
 
                         <div style={{ marginTop: "1%", textAlign: "right" }}>
                             <Button

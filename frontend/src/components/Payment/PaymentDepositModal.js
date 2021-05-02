@@ -4,7 +4,8 @@ import { useState,useEffect } from "react";
 import { faClosedCaptioning } from '@fortawesome/free-solid-svg-icons';
 import axios from "axios";
 import PaymentAPI from '../API/PaymentAPI'
-export default function PaymentModal({service_id}) {
+import ServiceAPI from ' ../API/ServiceAPI'
+export default function PaymentDepositModal({service_id}) {
 
 const [modal, setModal] = useState(false);
   const [nestedModal, setNestedModal] = useState(false);
@@ -53,6 +54,9 @@ const [modal, setModal] = useState(false);
 
       console.log("listPayment")
       console.log(listPayment)
+  }
+  const getCustomerInfo=()=>{
+    
   }
 
   const handlePayment=async()=>{

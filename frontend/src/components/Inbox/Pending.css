@@ -12,6 +12,8 @@
   position: relative;
 }
 
+
+
 @keyframes PendingBox2 {
   from {
     top: -100px;
@@ -71,20 +73,20 @@
 }
 
 .forUnskew {
-  transform: skew(-15deg);
+  /* transform: skew(-15deg); */
   padding-left: 3vw;
 }
 
 .container_pending {
   --borderWidth: 5px;
-  background: #b7bbbe;
+  background: #fcf1c5;
   position: relative;
   padding: 25px 40vw;
-  transform: skew(15deg);
-  border-radius: calc(4 * var(--borderWidth));
+  /* transform: skew(15deg); */
+  /* border-radius: calc(4 * var(--borderWidth)); */
 }
 
-.container_pending:hover:after {
+/* .container_pending:hover:after {
   content: "";
   position: absolute;
   top: calc(-1 * var(--borderWidth));
@@ -96,9 +98,9 @@
   z-index: -1;
   animation: animatedgradient 20s ease alternate infinite;
   background-size: 300% 300%;
-}
+} */
 
-@keyframes animatedgradient {
+/* @keyframes animatedgradient {
   0% {
     background-position: 0% 50%;
   }
@@ -108,15 +110,9 @@
   100% {
     background-position: 0% 50%;
   }
-}
+} */
 
 @media only screen and (max-width: 500px) {
-  .container_pending {
-    transform: skew(0deg);
-  }
-  .forUnskew {
-    transform: skew(0deg);
-  }
   .heading1{
     font-size: 35px;
 }

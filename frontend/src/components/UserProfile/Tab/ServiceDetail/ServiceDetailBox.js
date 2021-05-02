@@ -16,7 +16,8 @@ import {
 import ShowAvailableDate from "./ShowAvailableDate";
 
 export default function ServiceDetailBox(props) {
-  const { serviceDetail } = props;
+  const { serviceDetail, newAvailableDates } = props;
+
   const etcServicesDetail = [
     {
       name: "ราคาพาสุนัขไปเดินเล่น",
@@ -108,7 +109,9 @@ export default function ServiceDetailBox(props) {
                       }}
                     >
                       <br />
-                      <ShowAvailableDate />
+                      <ShowAvailableDate
+                        newAvailableDates={newAvailableDates}
+                      />
                     </Col>
                   </Row>
                 </FormGroup>

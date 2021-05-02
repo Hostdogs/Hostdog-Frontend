@@ -12,6 +12,7 @@ export default function HostServiceTab({ profileId }) {
   const [serviceDetail, setServiceDetail] = useState({});
   const [availableDates, setAvailableDates] = useState([]);
   const [newAvailableDates, setNewAvailableDates] = useState([]);
+  const [isChange, setIsChange] = useState(false);
 
   useEffect(() => {
     HostServiceAPI.getHostService(cookies["mytoken"], profileId).then(
@@ -27,6 +28,15 @@ export default function HostServiceTab({ profileId }) {
       setNewAvailableDates(formatDate(resp.data));
     });
   }, []);
+
+  useEffect(() => {
+    HostAvailableDateAPI.GetHostAvailableDate(
+      cookies["mytoken"],
+      profileId
+    ).then((resp) => {
+      setAvailableDates(resp.data);
+    });
+  }, [newAvailableDates]);
 
   function formatDate(dates) {
     const newDates = [];

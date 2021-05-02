@@ -20,17 +20,25 @@ import HostServiceAPI from "../../../API/HostServiceAPI";
 import HostAvailableDateAPI from "../../../API/HostAvailableDateAPI";
 
 export default function HostServiceBox(props) {
-  const { serviceDetail } = props;
-
-  useEffect(() => {
-    setHostService(serviceDetail);
-  }, [serviceDetail]);
+  const { serviceDetail, newAvailableDates } = props;
 
   const [cookies, setCookie] = useCookies(["mytoken", "user_id"]);
   const myId = cookies["user_id"];
   const myToken = cookies["mytoken"];
   const [hostService, setHostService] = useState(serviceDetail);
-  const [selectedDays, setSelectedDays] = useState([]);
+  const [selectedDays, setSelectedDays] = useState(newAvailableDates);
+
+  useEffect(() => {
+    setHostService(serviceDetail);
+  }, [serviceDetail]);
+
+  useEffect(() => {
+    setSelectedDays(newAvailableDates);
+  }, [newAvailableDates]);
+
+  useEffect(() => {
+    console.log(selectedDays);
+  }, [selectedDays]);
 
   function onEnableChange(event) {
     const name = event.target.name;

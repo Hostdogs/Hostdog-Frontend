@@ -11,6 +11,7 @@ export default function HostServiceTab({ profileId }) {
   const [cookies, setCookie] = useCookies(["mytoken", "user_id"]);
   const [serviceDetail, setServiceDetail] = useState({});
   const [availableDates, setAvailableDates] = useState([]);
+  const [newAvailableDates, setNewAvailableDates] = useState([]);
 
   useEffect(() => {
     HostServiceAPI.getHostService(cookies["mytoken"], profileId).then(
@@ -23,12 +24,24 @@ export default function HostServiceTab({ profileId }) {
       profileId
     ).then((resp) => {
       setAvailableDates(resp.data);
+      setNewAvailableDates(formatDate(resp.data));
     });
   }, []);
 
+  function formatDate(dates) {
+    const newDates = [];
+    dates.forEach((date) => {
+      newDates.push(new Date(date.date));
+    });
+    return newDates;
+  }
+
   return (
     <div>
-      <HostServiceBox serviceDetail={serviceDetail} />
+      <HostServiceBox
+        serviceDetail={serviceDetail}
+        newAvailableDates={newAvailableDates}
+      />
     </div>
   );
 }

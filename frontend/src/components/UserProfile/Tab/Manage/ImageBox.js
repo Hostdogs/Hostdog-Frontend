@@ -40,7 +40,7 @@ export default function ImageBox() {
   }, []);
 
   useEffect(() => {
-    if (picture !== "") {
+    if (picture !== "" && picture !== null && picture !== undefined) {
       setIsChange(true);
     }
   }, [picture]);

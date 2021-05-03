@@ -9,11 +9,10 @@ const ContentIsAuth = (props) => {
   const [cookies, setCookie, removeCookie] = useCookies(['mytoken', 'user_id'])
   useEffect(() => {
     if(cookies["user_id"]){
-      AuthenAPI.getUserAllInfo(cookies["mytoken"],cookies["user_id"]).them(res=>{
+      AuthenAPI.getUserAllInfo(cookies["mytoken"],cookies["user_id"]).then(res=>{
         setisHost(res.data.is_host)
       })
     }
-    
     
   }, [cookies])
   return (

@@ -123,6 +123,9 @@ export default function DogProfileAddForm(props) {
     } else if (value === "false" || value === false) {
       return false;
     } else if (!isNaN(value) && name !== "dog_bio" && value !== "") {
+      if (name === "dog_weight" && value > 100) {
+        return Number(100);
+      }
       return Number(value);
     } else if (value === "" && name === "picture") {
       return null;
@@ -214,15 +217,6 @@ export default function DogProfileAddForm(props) {
                   onChange={onDogInfoChange}
                 />
               </FormGroup>
-              {/* <Label>อายุ</Label>
-              <Input
-                type="number"
-                step="0.1"
-                placeholder="ระบุอายุสุนัข"
-                name="dog_dob"
-                value={dogInfo.dog_dob}
-                onChange={onDogInfoChange}
-              /> */}
             </FormGroup>
 
             <FormGroup>
@@ -234,6 +228,7 @@ export default function DogProfileAddForm(props) {
                 name="dog_weight"
                 value={dogInfo.dog_weight}
                 onChange={onDogInfoChange}
+                max="100"
               />
             </FormGroup>
             <FormGroup>

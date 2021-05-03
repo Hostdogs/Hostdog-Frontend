@@ -30,6 +30,7 @@ export default function DogProfileEditForm(props) {
     dog_weight: editDogInfo.dog_weight,
     dog_bio: editDogInfo.dog_bio,
   };
+
   const [modal, setModal] = useState(false);
   const [nestedModal, setNestedModal] = useState(false);
   const [closeAll, setCloseAll] = useState(false);
@@ -40,6 +41,15 @@ export default function DogProfileEditForm(props) {
   const maxDate = moment(new Date()).format("YYYY-MM-DD");
   const myId = cookies["user_id"];
   const myToken = cookies["mytoken"];
+  const [genderIsMale, setGenderIsMale] = useState(false);
+
+  useEffect(() => {
+    if (dogInfo.gender === "male") {
+      setGenderIsMale(true);
+    } else {
+      setGenderIsMale(false);
+    }
+  }, [dogInfo]);
 
   const toggle = () => setModal(!modal);
 
@@ -108,6 +118,9 @@ export default function DogProfileEditForm(props) {
     } else if (value === "false" || value === false) {
       return false;
     } else if (!isNaN(value) && name !== "dog_bio" && value !== "") {
+      if (name === "dog_weight" && value > 100) {
+        return Number(100);
+      }
       return Number(value);
     } else {
       return value;
@@ -171,6 +184,7 @@ export default function DogProfileEditForm(props) {
                       label="เพศผู้"
                       onChange={onDogInfoChange}
                       value="male"
+                      checked={genderIsMale}
                     />
                   </Col>
                   <Col xs="5" md="4">
@@ -181,6 +195,7 @@ export default function DogProfileEditForm(props) {
                       label="เพศเมีย"
                       onChange={onDogInfoChange}
                       value="female"
+                      checked={!genderIsMale}
                     />
                   </Col>
                 </Row>
@@ -207,6 +222,7 @@ export default function DogProfileEditForm(props) {
                   name="dog_weight"
                   value={dogInfo.dog_weight}
                   onChange={onDogInfoChange}
+                  max="100"
                 />
               </FormGroup>
               <FormGroup>

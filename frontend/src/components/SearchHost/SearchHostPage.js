@@ -12,10 +12,10 @@ export default function SearchHostPage() {
   const [hostData, setHostData] = useState([]);
 
   return (
-    <div style={{overflowX:"hidden"}}>
-      <br/>
+    <div style={{overflowX:"hidden",paddingTop:"75px"}}>
+      
       <FilterOptionPane setisSearch={setisSearch} setHostData={setHostData}/>
-      <br/>
+      
       {isSearch ? (<HostList hostData={hostData} setHostData={setHostData}/>):(null)}
     </div>
   );

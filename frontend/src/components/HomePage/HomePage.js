@@ -27,7 +27,6 @@ export default function HomePage() {
                     <aside>
                         
                         <SideBar isOpen={isOpen}/>
-                        <br/><br/>
                         <ContentIsAuth />
                     </aside>
 

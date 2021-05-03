@@ -18,7 +18,7 @@ export default function InboxPage() {
     }, [cookies])
 
     return (
-        <div style={{ paddingTop: "35px" }}>
+        <div style={{ paddingTop: "75px" }}>
             <Container>
                 <h1 className="heading1">รายการคำร้องขอของคุณ :</h1>
             </Container>

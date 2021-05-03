@@ -2,8 +2,16 @@
     font-family: 'Kanit', sans-serif;
 }
 
+.LogInSize{
+    font-size: 18px !important;
+}
+
 @media only screen and (max-width: 450px){
     .LogInSize{
         font-size: 15px !important;
     }
+}
+
+.modal-header .close{
+    color: #264d59;
 }

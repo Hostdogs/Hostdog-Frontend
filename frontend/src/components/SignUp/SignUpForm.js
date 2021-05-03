@@ -74,7 +74,7 @@ export default function SignUpForm() {
               ) : (
                 <div>
                   <small style={{ color: "red" }}>{submitResponse}</small><br />
-                  <Button color="secondary" onClick={handleAskForm}>
+                  <Button style={{backgroundColor:"#264d59"}} onClick={handleAskForm}>
                     ถัดไป
             </Button></div>)}
             </FormGroup>

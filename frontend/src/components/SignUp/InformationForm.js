@@ -527,7 +527,7 @@ export default function InformationForm({ selectState }) {
                 กรุณาใส่รหัสผ่านให้ตรงกับรหัสผ่านก่อนหน้า
               </FormFeedback>
             </InputGroup>
-            <FormText style={{ textAlign: "left" }}>
+            <FormText style={{ textAlign: "left",marginLeft: "5px" }}>
               <li>
                 ตัวอักษรภาษาอังกฤษพิมพ์ใหญ่อย่างน้อย 1 ตัว
               </li>
@@ -649,8 +649,9 @@ export default function InformationForm({ selectState }) {
                         e.preventDefault();
                         getCurrentLocation();
                       }}
+                      style={{backgroundColor:"#f9e07f", border:"0px"}}
                     >
-                      <FontAwesomeIcon icon={faMapMarkerAlt} />
+                      <FontAwesomeIcon icon={faMapMarkerAlt} style={{color:"black"}} />
                     </Button>
 
                     <Button
@@ -658,8 +659,9 @@ export default function InformationForm({ selectState }) {
                         e.preventDefault();
                         geoCoding(userAddress);
                       }}
+                      style={{backgroundColor:"#f9e07f", border:"0px"}}
                     >
-                      <FontAwesomeIcon icon={faSearch} />
+                      <FontAwesomeIcon icon={faSearch} style={{color:"black"}}/>
                     </Button>
                   </InputGroupAddon>
                 </InputGroup>
@@ -673,7 +675,7 @@ export default function InformationForm({ selectState }) {
                 <small style={{ color: "red" }}>ขออภัย กรุณาลองใหม่</small>
               </div>
             ) : null}
-            <Button onClick={onSubmit}>ถัดไป</Button>
+            <Button onClick={onSubmit} style={{backgroundColor:"#264d59"}}>ถัดไป</Button>
           </FormGroup>
         </Form>
       </Container>

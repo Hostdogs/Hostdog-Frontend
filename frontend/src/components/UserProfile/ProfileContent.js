@@ -59,6 +59,7 @@ const ProfileContent = ({
       <Nav tabs style={{ cursor: "pointer" }}>
         <NavItem
           style={{ borderTopLeftRadius: "5px", borderTopRightRadius: "5px" }}
+          className="Profile_navItem"
         >
           <NavLink
             className={classnames({ active: activeTab === "1" })}

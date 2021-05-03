@@ -90,8 +90,8 @@ const LoginModal = ({ buttonLabel, className, MouseOver, MouseLeave }) => {
             backgroundColor: "#264d59",
             color: "#f9e07f",
             borderRadius: "7px",
-            fontSize: "20px",
           }}
+          className="LogInSize"
         >
           {buttonLabel}
         </Button>
@@ -103,13 +103,13 @@ const LoginModal = ({ buttonLabel, className, MouseOver, MouseLeave }) => {
         unmountOnClose={unmountOnClose}
         backdrop={backdrop}
       >
-        <ModalHeader toggle={toggle}>เข้าสู่ระบบ</ModalHeader>
+        <ModalHeader toggle={toggle} style={{backgroundColor:"#f9e07f"}}>เข้าสู่ระบบ</ModalHeader>
         <Form>
           <ModalBody>
             <br />
             <InputGroup>
               <InputGroupAddon addonType="prepend">
-                <InputGroupText style={{ width: "100px" }}>
+                <InputGroupText style={{ width: "100px",backgroundColor:"#f9e07f", color:"black" }}>
                   ชื่อผู้ใช้งาน
                 </InputGroupText>
               </InputGroupAddon>
@@ -122,7 +122,7 @@ const LoginModal = ({ buttonLabel, className, MouseOver, MouseLeave }) => {
             <br />
             <InputGroup>
               <InputGroupAddon addonType="prepend">
-                <InputGroupText style={{ width: "100px" }}>
+                <InputGroupText style={{ width: "100px", backgroundColor:"#f9e07f", color:"black" }}>
                   รหัสผ่าน
                 </InputGroupText>
               </InputGroupAddon>
@@ -136,7 +136,7 @@ const LoginModal = ({ buttonLabel, className, MouseOver, MouseLeave }) => {
             <small style={{ color: "red" }}>{loginRes}</small>
             <br />
             <br />
-            <Button color="warning" type="submit" onClick={loginBtn}>
+            <Button style={{backgroundColor:"#264d59"}} type="submit" onClick={loginBtn}>
               ยืนยัน
             </Button>
             <a style={{ marginLeft: "3%" }}>

@@ -17,15 +17,23 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
+  Card,
+  CardImg,
+  CardText,
+  CardBody,
+  CardTitle,
+  CardSubtitle,
 } from "reactstrap";
 import "./Service.css";
 import ServiceDetail from "./ServiceDetail";
 import HostAPI from "../API/HostAPI";
-import CustomerAPI from "../API/CustomerAPI";
+import MealAPI from "../API/MealAPI";
 import DogAPI from "../API/DogAPI";
 import HostServiceAPI from "../API/HostServiceAPI";
 import ServiceAPI from "../API/ServiceAPI";
-export default function ServiceForm({ mytoken, host_id, customer_id }) {
+import { useCookies } from "react-cookie";
+export default function ServiceForm({  host_id, customer_id }) {
+  const [cookies, setcookies] = useCookies(["mytoken", "user_id"]);
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
   const [dropdownTypeOpen, setTypeOpen] = useState(false);
@@ -36,27 +44,56 @@ export default function ServiceForm({ mytoken, host_id, customer_id }) {
   const [hostName, setHostName] = useState("");
 
   const [mealTypes, setMealTypes] = useState([]);
-  const [customerMealLabel,setCustomerMealLabel]=useState("เลือกประเภทอาหาร");
+
+  const [customerMealLabel, setCustomerMealLabel] = useState(
+    "เลือกประเภทอาหาร"
+  );
+  const [mealPrice, setMealPrice] = useState(0);
   const [customerDogs, setCustomerDogs] = useState([]);
+  const [listDogFeedingTime, setListDogFeedingTime] = useState([]);
+  const [hostService, setHostService] = useState({});
+  const [dogName,setDogName]=useState(null);
+  const [serviceID,setServiceID]=useState(null);
 
   const getHostDetails = async () => {
-    const response = await HostAPI.getHostDetails(mytoken, host_id);
+    const response = await HostAPI.getHostDetails(cookies.mytoken, host_id);
     const hostDetail = response.data;
 
     setHostName(hostDetail.first_name + " " + hostDetail.last_name);
   };
-  const getHostMealAvailable = async () => {
-    const response = await HostServiceAPI.getHostService(mytoken, host_id);
-    const hostServiceMeal = response.data;
+  const getHostService = async () => {
+    const response = await HostServiceAPI.getHostService(cookies.mytoken, host_id);
+    const hostService = response.data;
 
-    setMealTypes(hostServiceMeal.available_meals);
-    console.log(hostServiceMeal.available_meals)
+    setMealTypes(hostService.available_meals);
+    console.log(hostService.available_meals);
+    setHostService(hostService);
   };
+
   const listCustomerDog = async () => {
-    const response = await DogAPI.GetDog(mytoken, customer_id);
+    const response = await DogAPI.GetDog(cookies.mytoken, customer_id);
     const listDog = response.data;
     setCustomerDogs(listDog);
- 
+    console.log(listDog);
+  };
+  const getDogFeedingTime = async () => {
+    const response = await DogAPI.GetFeedingTime(
+      cookies.mytoken,
+      customer_id,
+      serviceInfo.dog
+    );
+
+    const dogFeedingTime = response.data;
+    console.log(dogFeedingTime);
+    setListDogFeedingTime(dogFeedingTime);
+  };
+  const getMealPrice = async () => {
+    const response = await MealAPI.getMeal(
+      cookies.mytoken,
+      serviceInfo.service_meal_type
+    );
+    const meal = response.data;
+    setMealPrice(meal.meal_price_per_gram);
   };
 
   const [serviceInfo, setServiceInfo] = useState({
@@ -66,14 +103,13 @@ export default function ServiceForm({ mytoken, host_id, customer_id }) {
     service_start_time: null,
     service_end_time: null,
     service_meal_type: null,
-    service_meal_weight: 100,
-    is_dog_walk: null,
-    is_get_dog: null,
-    is_delivery_dog: null,
-    is_bath_dog: null,
+    service_meal_weight: 20,
+    is_dog_walk: false,
+    is_get_dog: false,
+    is_delivery_dog: false,
+    is_bath_dog: false,
     service_bio: "",
   });
-
 
   function changeValue(name, value) {
     if (value === "true" || value === true) {
@@ -87,46 +123,80 @@ export default function ServiceForm({ mytoken, host_id, customer_id }) {
     }
   }
   function onServiceInfoChange(event) {
-    const { name, value,} = event.target;
+    const { name, value } = event.target;
     setServiceInfo((prevServiceInfo) => {
       return {
         ...prevServiceInfo,
         [name]: changeValue(name, value),
       };
     });
-    
-    if (name==="service_meal_type"){
-        for (var i=0;i<mealTypes.length;i++){
-          if (parseInt(value)===mealTypes[i].id){
-            setCustomerMealLabel(mealTypes[i].meal_type)
-          }
+
+    if (name === "service_meal_type") {
+      for (var i = 0; i < mealTypes.length; i++) {
+        if (parseInt(value) === mealTypes[i].id) {
+          setCustomerMealLabel(mealTypes[i].meal_type);
         }
+      }
     }
-
+    if(name==="dog"){
+      for (var i = 0; i < customerDogs.length; i++) {
+        console.log(customerDogs)
+        console.log(customerDogs[i])
+        if (parseInt(value) === customerDogs[i].id) {
+          setDogName(customerDogs[i].dog_name);
+        }
+      }
+    }
   }
-
   useEffect(() => {
     getHostDetails();
-    getHostMealAvailable();
+    getHostService();
     listCustomerDog();
+  }, []);
+
+  useEffect(() => {
+    getDogFeedingTime();
+    getMealPrice();
+  }, [serviceInfo.dog, serviceInfo.service_meal_type]);
+
+  useEffect(() => {
     console.log("serviceInfo");
     console.log(serviceInfo);
   }, [serviceInfo]);
 
   const customerDogElements = customerDogs.map((customerDog) => {
+    let gender = "";
+    if (customerDog.gender === "Male") {
+      gender = "เพศ : ผู้";
+    } else if (customerDog.gender === "Female") {
+      gender = "เพศ : เมีย";
+    }
     return (
-      <Button
-        key={customerDog.id}
-        name="dog"
-        value={customerDog.id}
-        onClick={(customerDog) => {
-          onServiceInfoChange(customerDog);
-          console.log(customerDog);
-          toggle();
-        }}
-      >
-        {customerDog.dog_name}
-      </Button>
+      <Card>
+        <CardImg
+          top
+          width="100%"
+          src={customerDog.picture}
+        />
+        <CardBody>
+          <CardTitle tag="h5"> {customerDog.dog_name}</CardTitle>
+          <CardText>
+                  สายพันธุ์ : {customerDog.dog_breed} , {gender} , วันเกิด :{" "}
+                  {customerDog.dog_dob} , น้ำหนัก : {customerDog.dog_weight} กิโลกรัม
+                </CardText>
+          <Button
+            key={customerDog.id}
+            name="dog"
+            value={customerDog.id}
+            onClick={(customerDog) => {
+              onServiceInfoChange(customerDog);
+              toggle();
+            }}
+          >
+            เลือก
+          </Button>
+        </CardBody>
+      </Card>
     );
   });
 
@@ -146,31 +216,20 @@ export default function ServiceForm({ mytoken, host_id, customer_id }) {
 
   function onServiceSubmit(event) {
     event.preventDefault();
-    if (serviceInfo.host === null) {
-      console.log("host");
-    }
-    if (serviceInfo.customer === null) {
-      console.log("customer");
-    }
-    if (serviceInfo.dog === null) {
-      console.log("dog");
-    }
-    if (serviceInfo.service_meal_type === null) {
-      console.log("service_meal_type");
-    }
 
-    ServiceAPI.createService(mytoken, serviceInfo)
+    ServiceAPI.createService(cookies.mytoken, serviceInfo)
       .then((response) => {
         console.log(response);
+        setServiceID(response.data.id);
       })
       .catch((error) => {
         console.log(error.response);
       });
-
   }
 
   return (
     <div>
+
       <Row>
         <Col xs="12" sm="12" md="12" lg="8">
           <Form>
@@ -184,7 +243,8 @@ export default function ServiceForm({ mytoken, host_id, customer_id }) {
                     เลือกสุนัขของคุณ
                   </Col>
                   <Col xs="5" sm="4">
-                    <Button color="primary" size="sm" onClick={toggle}>
+                    {dogName?(<Label>{dogName}</Label>):(<Label disable>ยังไม่ได้เลือก</Label>)}
+                    <Button color="primary" size="sm" onClick={toggle} >
                       เลือก
                     </Button>
                     <Modal isOpen={modal} fade={false} toggle={toggle}>
@@ -245,7 +305,7 @@ export default function ServiceForm({ mytoken, host_id, customer_id }) {
                       toggle={toggleType}
                     >
                       <DropdownToggle caret size="sm">
-              {customerMealLabel}
+                        {customerMealLabel}
                       </DropdownToggle>
                       <DropdownMenu>{mealTypeElements}</DropdownMenu>
                     </ButtonDropdown>
@@ -263,8 +323,8 @@ export default function ServiceForm({ mytoken, host_id, customer_id }) {
                       type="range"
                       id="weightRange"
                       name="service_meal_weight"
-                      min="30"
-                      max="200"
+                      min="10"
+                      max="100"
                       value={serviceInfo.service_meal_weight}
                       onChange={onServiceInfoChange}
                     />
@@ -279,114 +339,122 @@ export default function ServiceForm({ mytoken, host_id, customer_id }) {
               <h4>บริการเพิ่มเติม</h4>
             </FormGroup>
             <div className="list-service">
-              <FormGroup>
-                <Row>
-                  <Col xs="12" sm="4">
-                    พาสุนัขไปเดินเล่น
-                  </Col>
-                  <Col xs="6" sm="4">
-                    <CustomInput
-                      type="radio"
-                      id="walkRadio"
-                      name="is_dog_walk"
-                      value="true"
-                      label="ต้องการ"
-                      onChange={onServiceInfoChange}
-                    />
-                  </Col>
-                  <Col xs="6" sm="4">
-                    <CustomInput
-                      type="radio"
-                      id="walkRadio2"
-                      name="is_dog_walk"
-                      value="false"
-                      label="ไม่ต้องการ"
-                      onChange={onServiceInfoChange}
-                    />
-                  </Col>
-                </Row>
-              </FormGroup>
-              <FormGroup>
-                <Row>
-                  <Col xs="12" sm="4">
-                    ให้ผู้รับฝากไปรับสุนัข
-                  </Col>
-                  <Col xs="6" sm="4">
-                    <CustomInput
-                      type="radio"
-                      id="getDogRadio"
-                      name="is_get_dog"
-                      value="true"
-                      label="ต้องการ"
-                      onChange={onServiceInfoChange}
-                    />
-                  </Col>
-                  <Col xs="6" sm="4">
-                    <CustomInput
-                      type="radio"
-                      id="getDogRadio2"
-                      name="is_get_dog"
-                      value="false"
-                      label="ไม่ต้องการ"
-                      onChange={onServiceInfoChange}
-                    />
-                  </Col>
-                </Row>
-              </FormGroup>
-              <FormGroup>
-                <Row>
-                  <Col xs="12" sm="4">
-                    ให้ผู้รับฝากไปส่งสุนัข
-                  </Col>
-                  <Col xs="6" sm="4">
-                    <CustomInput
-                      type="radio"
-                      id="sendDogRadio"
-                      name="is_delivery_dog"
-                      value="true"
-                      label="ต้องการ"
-                      onChange={onServiceInfoChange}
-                    />
-                  </Col>
-                  <Col xs="6" sm="4">
-                    <CustomInput
-                      type="radio"
-                      id="sendDogRadio2"
-                      name="is_delivery_dog"
-                      value="false"
-                      label="ไม่ต้องการ"
-                      onChange={onServiceInfoChange}
-                    />
-                  </Col>
-                </Row>
-              </FormGroup>
-              <FormGroup>
-                <Row>
-                  <Col xs="12" sm="4">
-                    อาบน้ำสุนัข
-                  </Col>
-                  <Col xs="6" sm="4">
-                    <CustomInput
-                      type="radio"
-                      id="bathDogRadio"
-                      name="is_bath_dog"
-                      value="true"
-                      label="ต้องการ"
-                      onChange={onServiceInfoChange}
-                    />
-                  </Col>
-                  <Col xs="6" sm="4">
-                    <CustomInput
-                      type="radio"
-                      id="bathDogRadio2"
-                      name="is_bath_dog"
-                      value="false"
-                      label="ไม่ต้องการ"
-                      onChange={onServiceInfoChange}
-                    />
-                  </Col>
-                </Row>
-              </FormGroup>
+              {hostService.enable_dog_walk ? (
+                <FormGroup>
+                  <Row>
+                    <Col xs="12" sm="4">
+                      พาสุนัขไปเดินเล่น
+                    </Col>
+                    <Col xs="6" sm="4">
+                      <CustomInput
+                        type="radio"
+                        id="walkRadio"
+                        name="is_dog_walk"
+                        value="true"
+                        label="ต้องการ"
+                        onChange={onServiceInfoChange}
+                      />
+                    </Col>
+                    <Col xs="6" sm="4">
+                      <CustomInput
+                        type="radio"
+                        id="walkRadio2"
+                        name="is_dog_walk"
+                        value="false"
+                        label="ไม่ต้องการ"
+                        onChange={onServiceInfoChange}
+                      />
+                    </Col>
+                  </Row>
+                </FormGroup>
+              ) : null}
+              {hostService.enable_get_dog ? (
+                <FormGroup>
+                  <Row>
+                    <Col xs="12" sm="4">
+                      ให้ผู้รับฝากไปรับสุนัข
+                    </Col>
+                    <Col xs="6" sm="4">
+                      <CustomInput
+                        type="radio"
+                        id="getDogRadio"
+                        name="is_get_dog"
+                        value="true"
+                        label="ต้องการ"
+                        onChange={onServiceInfoChange}
+                      />
+                    </Col>
+                    <Col xs="6" sm="4">
+                      <CustomInput
+                        type="radio"
+                        id="getDogRadio2"
+                        name="is_get_dog"
+                        value="false"
+                        label="ไม่ต้องการ"
+                        onChange={onServiceInfoChange}
+                      />
+                    </Col>
+                  </Row>
+                </FormGroup>
+              ) : null}
+              {hostService.enable_delivery_dog ? (
+                <FormGroup>
+                  <Row>
+                    <Col xs="12" sm="4">
+                      ให้ผู้รับฝากไปส่งสุนัข
+                    </Col>
+                    <Col xs="6" sm="4">
+                      <CustomInput
+                        type="radio"
+                        id="sendDogRadio"
+                        name="is_delivery_dog"
+                        value="true"
+                        label="ต้องการ"
+                        onChange={onServiceInfoChange}
+                      />
+                    </Col>
+                    <Col xs="6" sm="4">
+                      <CustomInput
+                        type="radio"
+                        id="sendDogRadio2"
+                        name="is_delivery_dog"
+                        value="false"
+                        label="ไม่ต้องการ"
+                        onChange={onServiceInfoChange}
+                      />
+                    </Col>
+                  </Row>
+                </FormGroup>
+              ) : null}
+              {hostService.enable_bath_dog ? (
+                <FormGroup>
+                  <Row>
+                    <Col xs="12" sm="4">
+                      อาบน้ำสุนัข
+                    </Col>
+                    <Col xs="6" sm="4">
+                      <CustomInput
+                        type="radio"
+                        id="bathDogRadio"
+                        name="is_bath_dog"
+                        value="true"
+                        label="ต้องการ"
+                        onChange={onServiceInfoChange}
+                      />
+                    </Col>
+                    <Col xs="6" sm="4">
+                      <CustomInput
+                        type="radio"
+                        id="bathDogRadio2"
+                        name="is_bath_dog"
+                        value="false"
+                        label="ไม่ต้องการ"
+                        onChange={onServiceInfoChange}
+                      />
+                    </Col>
+                  </Row>
+                </FormGroup>
+              ) : null}
             </div>
             <FormGroup>
               <Row>
@@ -405,7 +473,13 @@ export default function ServiceForm({ mytoken, host_id, customer_id }) {
           </Form>
         </Col>
         <Col xs="12" sm="12" md="12" lg="4">
-          <ServiceDetail serviceInfo={serviceInfo} customerMealLabel={customerMealLabel}/>
+          <ServiceDetail
+            serviceInfo={serviceInfo}
+            customerMealLabel={customerMealLabel}
+            listDogFeedingTime={listDogFeedingTime}
+            mealPrice={mealPrice}
+            hostService={hostService}
+          />
 
           <Row>
             <Col align="right">

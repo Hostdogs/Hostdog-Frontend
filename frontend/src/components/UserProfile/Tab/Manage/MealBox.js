@@ -11,6 +11,8 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
+  FormGroup,
+  Container,
 } from "reactstrap";
 import moment from "moment-timezone";
 import HostImgAPI from "../../../API/HostImgAPI";
@@ -53,7 +55,7 @@ export default function MealBox() {
 
   const myMealElements = allMyMeals.map((theMeal, index) => {
     return (
-      <tr key={theMeal.id}>
+      <tr key={theMeal.id} style={{ color: "white" }}>
         <th scope="row">{index + 1}</th>
         <td>
           <Row>
@@ -131,24 +133,40 @@ export default function MealBox() {
   }
 
   return (
-    <div>
-      <Label>
+    <div
+      style={{
+        padding: "10px 10px",
+        color: "white",
+      }}
+    >
+      <FormGroup>
         <h4>อาหารสุนัข</h4>
-      </Label>
-      {allMyMeals.length > 0 ? (
-        <Table bordered>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>ประเภทอาหารสุนัข</th>
-              <th>ราคาต่อ100กรัม</th>
-              <th>แก้ไข</th>
-            </tr>
-          </thead>
-          <tbody>{myMealElements}</tbody>
-        </Table>
-      ) : null}
+        <hr
+          style={{
+            width: "50%",
+            margin: "0",
+            backgroundColor: "#264d59",
+          }}
+        />
+      </FormGroup>
+      <div className="table_meal">
+        {allMyMeals.length > 0 ? (
+          <Table bordered style={{ color: "white" }}>
+            <thead>
+              <tr>
+                <th style={{ fontWeight: "unset" }}>#</th>
+                <th style={{ fontWeight: "unset" }}>ประเภทอาหารสุนัข</th>
+                <th style={{ fontWeight: "unset" }}>ราคาต่อ100กรัม</th>
+                <th style={{ fontWeight: "unset", textAlign: "center" }}>
+                  แก้ไข
+                </th>
+              </tr>
+            </thead>
 
+            <tbody>{myMealElements}</tbody>
+          </Table>
+        ) : null}
+      </div>
       <Row>
         <Col xs="auto">เพิ่มประเภทอาหาร :</Col>
         <Col xs="auto">

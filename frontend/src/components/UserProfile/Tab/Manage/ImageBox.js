@@ -126,39 +126,53 @@ export default function ImageBox() {
   });
 
   return (
-    <div>
+    <div
+      className="col-bottom-left"
+      style={{
+        backgroundColor: "#43978d",
+        padding: "20px 20px",
+        color: "white",
+        borderRadius: "3%",
+      }}
+    >
       <Form>
         <FormGroup>
           <h4>รูปสถานที่รับฝาก</h4>
+          <hr
+            style={{
+              width: "50%",
+              margin: "0",
+              backgroundColor: "#264d59",
+            }}
+          />
         </FormGroup>
         <FormGroup>
           {allPictures.length !== 0 ? (
-            <Carousel
-              className="hostImage-content-small"
-              activeIndex={activeIndex}
-              next={next}
-              previous={previous}
-            >
-              <CarouselIndicators
-                items={allPictures}
+              <Carousel
+                className="hostImage-content-small"
                 activeIndex={activeIndex}
-                onClickHandler={goToIndex}
-              />
-              {slides}
-              <CarouselControl
-                direction="prev"
-                directionText="Previous"
-                onClickHandler={previous}
-              />
-              <CarouselControl
-                direction="next"
-                directionText="Next"
-                onClickHandler={next}
-              />
-            </Carousel>
+                next={next}
+                previous={previous}
+              >
+                <CarouselIndicators
+                  items={allPictures}
+                  activeIndex={activeIndex}
+                  onClickHandler={goToIndex}
+                />
+                {slides}
+                <CarouselControl
+                  direction="prev"
+                  directionText="Previous"
+                  onClickHandler={previous}
+                />
+                <CarouselControl
+                  direction="next"
+                  directionText="Next"
+                  onClickHandler={next}
+                />
+              </Carousel>
           ) : null}
-
-          <Label>เพิ่มรูป</Label>
+          <h5 style={{ margin: "5px", marginTop: "15px" }}>เพิ่มรูป</h5>
           <Input
             type="file"
             name="picture"

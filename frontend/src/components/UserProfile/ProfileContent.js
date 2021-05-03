@@ -27,7 +27,7 @@ const ProfileContent = ({
   profileId,
 }) => {
   const [activeTab, setActiveTab] = useState("1");
-  const [isHost, setisHost] = useState()
+  const [isHost, setisHost] = useState();
   // const [Profile, setProfile] = useState()
   const toggle = (tab) => {
     if (activeTab !== tab) setActiveTab(tab);
@@ -98,7 +98,6 @@ const ProfileContent = ({
           null
         )}
 
-
         {isHost && isOwned ? (
           <NavItem
             style={{ borderTopLeftRadius: "5px", borderTopRightRadius: "5px" }}
@@ -111,10 +110,9 @@ const ProfileContent = ({
               style={{ color: "#264d59" }}
             >
               จัดการการบริการ
-          </NavLink>
-          </NavItem>) : (null)}
-
-
+            </NavLink>
+          </NavItem>
+        ) : null}
 
         {isOwned ? (
           <NavItem
@@ -128,22 +126,17 @@ const ProfileContent = ({
               style={{ color: "#264d59" }}
             >
               ตั้งค่า
-          </NavLink>
+            </NavLink>
           </NavItem>
-        ) : (null)}
-
+        ) : null}
       </Nav>
       <TabContent activeTab={activeTab}>
         <TabPane tabId="1">
-          <MainTab
-            isOwned={isOwned}
-            isHost={isHost}
-            Account={Account}
-          />
+          <MainTab isOwned={isOwned} isHost={isHost} Account={Account} />
         </TabPane>
         {!isHost ? (
           <TabPane tabId="2">
-            <DogProfileTab profileId={profileId} />
+            <DogProfileTab profileId={profileId} isOwned={isOwned} />
           </TabPane>
         ) : (
           null
@@ -151,25 +144,24 @@ const ProfileContent = ({
 
         {isHost && !isOwned ? (
           <TabPane tabId="4">
-            <ServiceDetailTab profileId={profileId} />
+            <ServiceDetailTab profileId={profileId} isOwned={isOwned}/>
           </TabPane>
         ) : (null)}
 
 
         {isHost && isOwned ? (
           <TabPane tabId="3">
-            <HostServiceTab profileId={profileId} />
+            <HostServiceTab profileId={profileId} isOwned={isOwned} />
           </TabPane>
-        ) : (null)}
+        ) : null}
 
         {isOwned ? (
           <TabPane tabId="5">
             <SettingTab Account={Account} setAccount={setAccount} />
           </TabPane>
-        ) : (null)}
-
+        ) : null}
       </TabContent>
-    </div >
+    </div>
   );
 };
 

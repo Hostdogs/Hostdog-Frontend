@@ -8,9 +8,7 @@ export default function PendingList({ pendingData }) {
   return (
     
     <div>
-      <Container>
-        <h1 className="heading1">Your Pending :</h1>
-      </Container>
+      
     <div style={{paddingTop:"35px"}}>
     {pendingData.map((pendingTask) => (
         <div>

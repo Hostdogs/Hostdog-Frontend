@@ -149,7 +149,7 @@ export default function HostServiceBox(props) {
                 className="col-left-manage"
                 style={{
                   backgroundColor: "#43978d",
-                  padding: "10px 10px",
+                  padding: "20px 20px",
                   color: "white",
                   borderRadius: "3%",
                 }}
@@ -210,16 +210,22 @@ export default function HostServiceBox(props) {
                 </FormGroup>
               </div>
             </Col>
-            <Col xs="12" sm="12" md="12" lg="6" style={{ marginTop: "15px" }}>
-              <div
-                className="col-right-manage"
-                style={{
-                  backgroundColor: "#43978d",
-                  padding: "10px 10px",
-                  color: "white",
-                  borderRadius: "3%",
-                }}
-              >
+            <Col
+              xs="12"
+              sm="12"
+              md="12"
+              lg="6"
+              className="col-right-manage"
+              style={{
+                marginTop: "15px",
+                marginTop: "15px",
+                backgroundColor: "#43978d",
+                padding: "20px 20px",
+                color: "white",
+                borderRadius: "3%",
+              }}
+            >
+              <div>
                 <FormGroup>
                   <Row>
                     <Col>
@@ -390,9 +396,8 @@ export default function HostServiceBox(props) {
               </div>
             </Col>
           </Row>
-          <hr />
           {isChange ? (
-            <Row>
+            <Row style={{ marginTop: "15px" }}>
               <Col xs="6" style={{ textAlign: "end" }}>
                 <Button onClick={onSubmit} color="primary">
                   ยืนยัน
@@ -405,14 +410,39 @@ export default function HostServiceBox(props) {
               </Col>
             </Row>
           ) : null}
+
+          <hr />
           <Row>
-            <Col xs="12" sm="12" md="12" lg="6" style={{ marginTop: "15px" }}>
+            <Col
+              xs="12"
+              sm="12"
+              md="12"
+              lg="6"
+              style={{
+                marginTop: "15px",
+              }}
+            >
               <ImageBox />
             </Col>
-            <Col xs="12" sm="12" md="12" lg="6" style={{ marginTop: "15px" }}>
+            <Col
+              xs="12"
+              sm="12"
+              md="12"
+              lg="6"
+              className="col-bottom-right"
+              style={{
+                marginTop: "15px",
+                backgroundColor: "#43978d",
+                padding: "15px 15px",
+                color: "white",
+                borderRadius: "3%",
+              }}
+            >
               <MealBox />
             </Col>
           </Row>
+
+          <hr />
         </div>
       </Form>
     </div>

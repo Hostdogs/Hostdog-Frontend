@@ -49,7 +49,7 @@ export default function InformationForm({ selectState }) {
     username: "",
     email: "",
     password: "",
-    dob: "",
+    // dob: "",
     mobile: "",
     address: "",
     gender: "",
@@ -563,7 +563,7 @@ export default function InformationForm({ selectState }) {
               type="date"
               name="dob"
               placeholder="วัน/เดือน/ปี"
-              value={Information.dob}
+              value={Information.dob||moment(moment().year() - 18 + "-01-01", dayformat).format(dayformat)}
               onKeyPress={(e) => e.preventDefault()}
               onChange={(e) =>
                 setInformation({ ...Information, dob: e.target.value })

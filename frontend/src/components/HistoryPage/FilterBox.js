@@ -42,45 +42,7 @@ export default function FilterBox({ onFilter, }) {
   };
 
   return (
-    //     <div>
-    //  <UncontrolledButtonDropdown>
-    //   <DropdownToggle caret color={color[colorIndex]}>
-    //     {filterStatus[filterIndex]}
-    //   </DropdownToggle>
-    //   <DropdownMenu>
-    //   <DropdownItem onClick={()=>{
-    //     setFilterIndex(0);
-    //     setColorIndex(0);
-    //     onFilter(0);
-    //     fetchMore();
-    //     }}>{filterStatus[0]}</DropdownItem>
-    //     <DropdownItem onClick={()=>{
-    //     setFilterIndex(1);
-    //     setColorIndex(1);
-    //     onFilter(1);
-    //     fetchMore();
-    //     }}>{filterStatus[1]}</DropdownItem>
-    //     <DropdownItem onClick={()=>{
-    //     setFilterIndex(2);
-    //     setColorIndex(2);
-    //     onFilter(2);
-    //     fetchMore();
-    //     }}>{filterStatus[2]}</DropdownItem>
-    //     <DropdownItem onClick={()=>{
-    //     setFilterIndex(3);
-    //     setColorIndex(3);
-    //     onFilter(3);
-    //     fetchMore();
-    //     }}>{filterStatus[3]}</DropdownItem>
-    //     <DropdownItem onClick={()=>{
-    //     setFilterIndex(4);
-    //     setColorIndex(4);
-    //     onFilter(4);
-    //     fetchMore();
-    //     }}>{filterStatus[4]}</DropdownItem>
-    //   </DropdownMenu>
-    // </UncontrolledButtonDropdown>
-    //     </div>
+   
     <div>
       <Nav tabs style={{ cursor: "pointer"}}>
         <NavItem className="navItem0">

@@ -31,6 +31,9 @@ export default function ImageBox() {
   const myToken = cookies["mytoken"];
   const [activeIndex, setActiveIndex] = useState(0);
   const [animating, setAnimating] = useState(false);
+  const [isChange, setIsChange] = useState(false);
+  const [file, setFile] = useState(null);
+  //const [preview, setPreview] = useState(null);
 
   useEffect(() => {
     HostImgAPI.GetHostImg(myToken, myId).then((response) => {
@@ -38,9 +41,17 @@ export default function ImageBox() {
     });
   }, []);
 
+  useEffect(() => {
+    if (picture !== "" && picture !== null && picture !== undefined) {
+      setIsChange(true);
+    }
+  }, [picture]);
+
   function onHouseImgChange(event) {
-    const file = event.target.files[0];
-    setPicture(file);
+    if (event.target.files[0]) {
+      setPicture(event.target.files[0]);
+      setFile(URL.createObjectURL(event.target.files[0]));
+    }
   }
 
   function onAddImg(event) {
@@ -65,6 +76,15 @@ export default function ImageBox() {
         alert("กรุณาเลือกรูปภาพ");
       }
     }
+    setIsChange(false);
+    setFile(null);
+  }
+
+  function onCancelImg(event) {
+    event.preventDefault();
+    setIsChange(false);
+    setFile(null);
+    setPicture("");
   }
 
   function onDelete(pic) {
@@ -126,10 +146,25 @@ export default function ImageBox() {
   });
 
   return (
-    <div>
+    <div
+      className="col-bottom-left"
+      style={{
+        backgroundColor: "#43978d",
+        padding: "20px 20px",
+        color: "white",
+        borderRadius: "3%",
+      }}
+    >
       <Form>
         <FormGroup>
           <h4>รูปสถานที่รับฝาก</h4>
+          <hr
+            style={{
+              width: "50%",
+              margin: "0",
+              backgroundColor: "#264d59",
+            }}
+          />
         </FormGroup>
         <FormGroup>
           {allPictures.length !== 0 ? (
@@ -157,8 +192,7 @@ export default function ImageBox() {
               />
             </Carousel>
           ) : null}
-
-          <Label>เพิ่มรูป</Label>
+          <h5 style={{ margin: "5px", marginTop: "15px" }}>เพิ่มรูป</h5>
           <Input
             type="file"
             name="picture"
@@ -166,9 +200,26 @@ export default function ImageBox() {
             onChange={onHouseImgChange}
           />
         </FormGroup>
-        <Button color="primary" onClick={onAddImg}>
-          เพิ่ม
-        </Button>
+        {file ? (
+          <div style={{ textAlign: "center" }}>
+            <img className="resize-imgHost" src={file} />
+          </div>
+        ) : null}
+
+        {isChange ? (
+          <div style={{ textAlign: "center", marginTop: "10px" }}>
+            <Button
+              color="primary"
+              style={{ marginRight: "10px" }}
+              onClick={onAddImg}
+            >
+              ยืนยัน
+            </Button>
+            <Button color="danger" onClick={onCancelImg}>
+              ยกเลิก
+            </Button>
+          </div>
+        ) : null}
       </Form>
     </div>
   );

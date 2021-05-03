@@ -23,23 +23,23 @@ import "./HistoryPage.css";
 //   "ยกเลิกบริการ",
 // ]
 const filterItems = {
-  "Pending":"กำลังรอการตอบรับ",
-  "Payment":"กำลังรอการจ่ายเงิน",
-  "End":"สิ้นสุดบริการ",
-  "Wait for progress":"ที่กำลังจะมาถึง",
-  "In progress":"กำลังการบริการ",
-  "Late":"เกินเวลาให้บริการ",
-  "Cancelled":"ยกเลิกบริการ"
+  "pending":"กำลังรอการตอบรับ",
+  "payment":"กำลังรอการจ่ายเงิน",
+  "end":"สิ้นสุดบริการ",
+  "wait for progress":"ที่กำลังจะมาถึง",
+  "in progress":"กำลังการบริการ",
+  "late":"เกินเวลาให้บริการ",
+  "cancelled":"ยกเลิกบริการ"
 }
 // const filterColor = ["#28a745", "#ffc107", "#17a2b8", "#c82333"];
 const filterColor = {
-  "Pending":"#5bc0de",
-  "Payment":"#0275d8",
-  "End":"#5cb85c",
-  "Wait for progress":"#43978D",
-  "In progress":"#ffc107",
-  "Late":"#f0ad4e",
-  "Cancelled":"#c82333"
+  "pending":"#5bc0de",
+  "payment":"#0275d8",
+  "end":"#5cb85c",
+  "wait for progress":"#43978D",
+  "in progress":"#ffc107",
+  "late":"#f0ad4e",
+  "cancelled":"#c82333"
 }
 
 export default function History({ history }) {

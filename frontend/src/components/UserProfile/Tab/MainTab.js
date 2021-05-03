@@ -6,7 +6,7 @@ import Skeleton from 'react-loading-skeleton'
 import HostAPI from '../../API/HostAPI';
 import CustomerAPI from '../../API/CustomerAPI';
 import { useCookies } from "react-cookie";
-const MainTab = ({ isOwned, isHost, Account }) => {
+const MainTab = ({ isOwned, isHost, Account ,dogCount,setdogCount}) => {
   const [cookies, setCookie] = useCookies(["mytoken", "user_id"])
   const [Description, setDescription] = useState("")
   const [dateJoin, setdateJoin] = useState("")
@@ -15,8 +15,8 @@ const MainTab = ({ isOwned, isHost, Account }) => {
   const [gender, setgender] = useState("")
   const [isLoad, setisLoad] = useState(false)
   const [isEdit, setisEdit] = useState(false)
+  
   const [hostedCount, sethostedCount] = useState("")
-
   const editDescription = (e) => {
     if(Account){
       if (isOwned) {
@@ -44,9 +44,13 @@ const MainTab = ({ isOwned, isHost, Account }) => {
       if (Account.is_host) {
         roledata = "host"
         setDescription(Account.host.host_bio)
+        sethostedCount(Account.host.host_hosted_count)
       } else {
         roledata = "customer"
         setDescription(Account.customer.customer_bio)
+        setdogCount(Account.customer.customer_dog_count)
+        
+
       }
       if (Account[roledata].gender === "male") {
         setgender("ชาย")
@@ -96,7 +100,7 @@ const MainTab = ({ isOwned, isHost, Account }) => {
           {!isHost && isLoad ? (
             <ul>
               <li>เพศ {gender} อายุ {age} ปี</li>
-              <li>มีสุนัขในโปรไฟล์ 0 ตัว</li>
+              <li>มีสุนัขในโปรไฟล์ {dogCount} ตัว</li>
               <li>เริ่มใช้งานเมื่อวันที่ {dateJoin}</li>
               <li>ล็อกอินครั้งล่าสุด {lastLogin}</li>
 
@@ -106,7 +110,7 @@ const MainTab = ({ isOwned, isHost, Account }) => {
           {isHost && isLoad ? (
             <ul>
               <li>เพศ {gender} อายุ {age} ปี</li>
-              <li>รับเลี้ยงสุนัขมาแล้ว 0 ตัว</li>
+              <li>รับเลี้ยงสุนัขมาแล้ว {hostedCount} ตัว</li>
               <li>เริ่มใช้งานตั้งแต่ {dateJoin}</li>
               <li>ล็อกอินครั้งล่าสุด {lastLogin}</li>
             </ul>

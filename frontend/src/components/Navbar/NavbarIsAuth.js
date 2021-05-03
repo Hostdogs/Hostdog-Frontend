@@ -66,7 +66,7 @@ export default function NavbarIsAuth({ toggleSideBar }) {
         <Nav className="mr-auto"></Nav>
         <div>
           <w className="display_desktop">{Name} </w>
-          <w href={urllink}>
+          <a href={urllink}>
             <img
               src={img || placeholderPath}
               class="img-responsive center-block"
@@ -77,7 +77,7 @@ export default function NavbarIsAuth({ toggleSideBar }) {
                 objectFit: "cover",
               }}
             />
-          </w>
+          </a>
         </div>
       </Navbar>
     </div>

@@ -10,14 +10,14 @@ import HistoryAPI from "./HistoryAPI";
 
 
 const filterItems = [
-  "All",
-  "Pending",
-  "Payment",
-  "End",
-  "Wait for progress",
-  "In progress",
-  "Late",
-  "Cancelled"
+  "all",
+  "pending",
+  "payment",
+  "end",
+  "wait for progress",
+  "in progress",
+  "late",
+  "cancelled"
 ];
 
 

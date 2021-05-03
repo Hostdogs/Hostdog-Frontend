@@ -23,20 +23,30 @@ export default function NavbarIsAuth({ toggleSideBar }) {
   const [img, setimg] = useState();
   const placeholderPath = "/user_placeholder.svg";
   const urllink = `/profile/${cookie["user_id"]}`;
+  const [Account, setAccount] = useState()
   useEffect(() => {
-    AuthenAPI.getUserAllInfo(cookie["mytoken"], cookie["user_id"]).then(
-      (res) => {
-        console.log(res.data);
-        if (res.data.is_host) {
-          setName(res.data.host.first_name + " " + res.data.host.last_name);
-        } else {
-          setName(
-            res.data.customer.first_name + " " + res.data.customer.last_name
-          );
+    if (cookie["user_id"]) {
+      AuthenAPI.getUserAllInfo(cookie["mytoken"], cookie["user_id"]).then(
+        (res) => {
+          // console.log(res)
+          setAccount(res.data)
         }
+      );
+    }
+
+  }, [cookie]);
+  useEffect(() => {
+    if (Account) {
+      if (Account.is_host) {
+        setName(Account.host.first_name + " " + Account.host.last_name);
+      } else {
+        setName(
+          Account.customer.first_name + " " + Account.customer.last_name
+        );
       }
-    );
-  }, []);
+    }
+
+  }, [Account])
   return (
     <div>
       <Navbar

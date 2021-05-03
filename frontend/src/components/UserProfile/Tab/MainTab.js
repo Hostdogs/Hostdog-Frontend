@@ -6,7 +6,7 @@ import Skeleton from 'react-loading-skeleton'
 import HostAPI from '../../API/HostAPI';
 import CustomerAPI from '../../API/CustomerAPI';
 import { useCookies } from "react-cookie";
-const MainTab = ({ isOwned, isCustomer, Account }) => {
+const MainTab = ({ isOwned, isHost, Account }) => {
   const [cookies, setCookie] = useCookies(["mytoken", "user_id"])
   const [Description, setDescription] = useState("")
   const [dateJoin, setdateJoin] = useState("")
@@ -15,6 +15,7 @@ const MainTab = ({ isOwned, isCustomer, Account }) => {
   const [gender, setgender] = useState("")
   const [isLoad, setisLoad] = useState(false)
   const [isEdit, setisEdit] = useState(false)
+  const [hostedCount, sethostedCount] = useState("")
 
   const editDescription = (e) => {
     if(Account){
@@ -34,11 +35,11 @@ const MainTab = ({ isOwned, isCustomer, Account }) => {
     setisEdit(false)
   }
 
-  console.log(isEdit)
+  // console.log(isEdit)
   useEffect(() => {
     moment.updateLocale("th")
     if (Account) {
-      console.log("inherited profile", Account, moment.locale())
+      // console.log("inherited profile", Account, moment.locale())
       let roledata = ""
       if (Account.is_host) {
         roledata = "host"
@@ -55,8 +56,9 @@ const MainTab = ({ isOwned, isCustomer, Account }) => {
         setgender("ไม่ระบุ")
       }
       setage(moment().diff(moment(Account[roledata].dob), "years"))
-      setdateJoin(moment(Account[roledata].date_joined).format("L"))
-      setlastLogin(moment(Account[roledata].last_login).fromNow())
+      setdateJoin(moment(Account.date_joined).format("L"))
+      setlastLogin(moment(Account.last_login).fromNow())
+      // console.log(moment(Account.last_login))
       // console.log(moment(new Date("2021-04-20 22:57:36")).format("YYYY-MM-DD HH:mm:ss"))
       // console.log(moment().fromNow())
       setisLoad(true)
@@ -65,18 +67,20 @@ const MainTab = ({ isOwned, isCustomer, Account }) => {
   }, [Account])
 
   const onSetDescription = () => {
-    console.log(Description)
+    // console.log(Description)
 
     ////////////function => post to backend////////
     if (Account.is_host) {
       const data = { host_bio: Description }
       HostAPI.setHostInfo(cookies["mytoken"], Account.id, data).then(res => {
-        console.log(res)
+        // console.log(res)
+        Account.host.host_bio = res.data.host_bio
       })
     } else {
       const data = { customer_bio: Description }
       CustomerAPI.setCustomerInfo(cookies["mytoken"], Account.id, data).then(res => {
-        console.log(res)
+        // console.log(res)
+        Account.customer.customer_bio = res.data.customer_bio
       })
     }
   }
@@ -86,10 +90,10 @@ const MainTab = ({ isOwned, isCustomer, Account }) => {
     <div>
       <CardFooter style={{ height: "70%" }}>
         <br />
-        <CardText style={{ textAlign: "left" }}>
+        <div style={{ textAlign: "left" }}>
           <CardTitle tag="h5">รายละเอียด</CardTitle>
           {isLoad ? (null) : (<Skeleton count={4} />)}
-          {isCustomer && isLoad ? (
+          {!isHost && isLoad ? (
             <ul>
               <li>เพศ {gender} อายุ {age} ปี</li>
               <li>มีสุนัขในโปรไฟล์ 0 ตัว</li>
@@ -99,7 +103,7 @@ const MainTab = ({ isOwned, isCustomer, Account }) => {
             </ul>
           ) : (null)}
 
-          {!isCustomer && isLoad ? (
+          {isHost && isLoad ? (
             <ul>
               <li>เพศ {gender} อายุ {age} ปี</li>
               <li>รับเลี้ยงสุนัขมาแล้ว 0 ตัว</li>
@@ -125,7 +129,7 @@ const MainTab = ({ isOwned, isCustomer, Account }) => {
 
 
           </Container>
-        </CardText>
+        </div>
       </CardFooter>
     </div>
 

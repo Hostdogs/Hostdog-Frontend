@@ -16,6 +16,7 @@ import {
   InputGroupText,
   InputGroup,
   FormFeedback,
+  FormText,
 } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -32,6 +33,7 @@ import moment from "moment-timezone";
 import AuthenAPI from "../API/AuthenAPI";
 import CustomerAPI from "../API/CustomerAPI";
 import HostAPI from "../API/HostAPI";
+import "./SignUp.css";
 const loadScript = {
   googleAPIKey: "AIzaSyBWV06MM0QFyVnkuA1nHJhQ4altZjovYNs",
   language: "th",
@@ -68,7 +70,6 @@ export default function InformationForm({ selectState }) {
   const validatepassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,20}$/;
   const validateemail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   const validateusername = /^[A-Za-z0-9]{5,20}$/;
-
   const [emailValid, setemailValid] = useState({
     valid: false,
     invalid: false,
@@ -145,12 +146,10 @@ export default function InformationForm({ selectState }) {
       account_number: Information.account_number,
     };
 
-
     console.log(info);
     try {
       const resp = await AuthenAPI.initSignUp(info);
       if (resp.data.is_host) {
-        
         const profileInfo = {
           first_name: Information.first_name,
           last_name: Information.last_name,
@@ -159,18 +158,19 @@ export default function InformationForm({ selectState }) {
           dob: Information.dob,
           address: Information.address,
           latitude: geocode.lat,
-          longitude: geocode.lng
-        }
-        console.log("host",profileInfo,resp);
-        HostAPI.ProfileInitHost(resp.data.id, profileInfo, resp.data.token).then(res => {
-          console.log(res)
-        }).catch(error => {
-          if (error.response) {
-            console.log(error.response)
-          }
-        })
+          longitude: geocode.lng,
+        };
+        console.log("host", profileInfo, resp);
+        HostAPI.ProfileInitHost(resp.data.id, profileInfo, resp.data.token)
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((error) => {
+            if (error.response) {
+              console.log(error.response);
+            }
+          });
       } else {
-        
         const profileInfo = {
           first_name: Information.first_name,
           last_name: Information.last_name,
@@ -179,30 +179,35 @@ export default function InformationForm({ selectState }) {
           dob: Information.dob,
           address: Information.address,
           latitude: geocode.lat,
-          longitude: geocode.lng
-        }
-        console.log("customer",profileInfo,resp);
-        CustomerAPI.ProfileInitCustomer(resp.data.id, profileInfo, resp.data.token).then(res => {
-          console.log(res)
-        }).catch(error => {
-          if (error.response) {
-            console.log(error.response)
-          }
-
-        })
+          longitude: geocode.lng,
+        };
+        console.log("customer", profileInfo, resp);
+        CustomerAPI.ProfileInitCustomer(
+          resp.data.id,
+          profileInfo,
+          resp.data.token
+        )
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((error) => {
+            if (error.response) {
+              console.log(error.response);
+            }
+          });
       }
       setCookie("mytoken", resp.data.token);
       setCookie("user_id", resp.data.id);
     } catch (error) {
-      let errorMessage = "";
-      if (error.response.data.is_host !== undefined) {
-        errorMessage += "email";
-      }
-      if (error.response.data.username !== undefined) {
-        errorMessage += "username";
-      }
-      alert(errorMessage);
-      console.log(error.response.data);
+      // let errorMessage = "";
+      // if (error.response.data.is_host !== undefined) {
+      //   errorMessage += "email";
+      // }
+      // if (error.response.data.username !== undefined) {
+      //   errorMessage += "username";
+      // }
+      // alert(errorMessage);
+      // console.log(error.response.data);
     }
   }
 
@@ -243,10 +248,10 @@ export default function InformationForm({ selectState }) {
   useEffect(() => {
     if (selectState === "Host") {
       // Information.is_host = true;
-      setInformation({ ...Information,is_host:true});
+      setInformation({ ...Information, is_host: true });
     } else if (selectState === "Customer") {
       // Information.is_host = false;
-      setInformation({ ...Information,is_host:false});
+      setInformation({ ...Information, is_host: false });
     }
     // console.log(Information.is_host+selectState)
   }, [selectState]);
@@ -256,14 +261,11 @@ export default function InformationForm({ selectState }) {
   const [userAddress, setUserAddress] = useState("");
 
   const handleLocationFailed = () => {
-
-
     setShowLocationWarn(true);
-  }
+  };
   const handleLocationSuccess = () => {
-
     setShowLocationWarn(false);
-  }
+  };
 
   const getCurrentLocation = () => {
     if (navigator.geolocation) {
@@ -287,7 +289,6 @@ export default function InformationForm({ selectState }) {
   };
 
   const reverseGeocoding = async (lat, lng) => {
-
     const urlapi = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${loadScript.googleAPIKey}&language=th`;
     const response = await fetch(urlapi);
     const data = await response.json();
@@ -303,8 +304,6 @@ export default function InformationForm({ selectState }) {
   };
 
   const geoCoding = async (address) => {
-
-
     const urlapi = `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${loadScript.googleAPIKey}&language=th`;
     const response = await fetch(urlapi);
     const data = await response.json();
@@ -349,20 +348,19 @@ export default function InformationForm({ selectState }) {
     console.log("onPlaceChanged testAutoComplete");
     console.log(testAutoComplete);
 
-
     if (typeof testAutoComplete !== "undefined") {
       const gm_accessors = Object.values(testAutoComplete);
       const place = Object.values(gm_accessors[2].place);
       const always_change = Object.values(place[0].predictions);
-      const predictions = Object.values(always_change.length > 0 ? always_change[0] : []);
+      const predictions = Object.values(
+        always_change.length > 0 ? always_change[0] : []
+      );
       if (typeof data.formatted_address !== "undefined") {
         setUserAddress(data.formatted_address);
         geoCoding(data.formatted_address);
-
       } else if (predictions.length > 0) {
         setUserAddress(predictions[0]);
         geoCoding(predictions[0]);
-
       } else {
         handleLocationFailed();
       }
@@ -466,6 +464,13 @@ export default function InformationForm({ selectState }) {
                 }}
               />
             </InputGroup>
+
+            <FormText style={{ textAlign: "left" }}>
+              <li style={{ marginLeft: "5px" }}>
+                {" "}
+                ตัวอักษรภาษาอังกฤษ หรือ ตัวเลขตั้งแต่ 5 ถึง 20 ตัว
+              </li>
+            </FormText>
           </FormGroup>
           <FormGroup>
             <InputGroup>
@@ -522,6 +527,14 @@ export default function InformationForm({ selectState }) {
                 กรุณาใส่รหัสผ่านให้ตรงกับรหัสผ่านก่อนหน้า
               </FormFeedback>
             </InputGroup>
+            <FormText style={{ textAlign: "left" }}>
+              <li>
+                ตัวอักษรภาษาอังกฤษพิมพ์ใหญ่อย่างน้อย 1 ตัว
+              </li>
+              <li>ตัวอักษรภาษาอังกฤษพิมพ์เล็กอย่างน้อย 1 ตัว</li>
+              <li>ตัวเลขอย่างน้อย 1 ตัว</li>
+              <li>รหัสผ่านตั้งแต่ 8 ถึง 20 ตัว</li>
+            </FormText>
           </FormGroup>
 
           <FormGroup>
@@ -664,26 +677,6 @@ export default function InformationForm({ selectState }) {
           </FormGroup>
         </Form>
       </Container>
-      <UncontrolledPopover trigger="focus" placement="top" target="username">
-        <PopoverBody className="Popover">
-          <div>
-            ตัวอักษร (a-z, A-Z) หรือ
-            <br />
-            ตัวเลข (0-9) ตั้งแต่ 5 ถึง 20 ตัว
-          </div>
-        </PopoverBody>
-      </UncontrolledPopover>
-      <UncontrolledPopover trigger="focus" placement="top" target="password">
-        <PopoverBody className="Popover">
-          <div>
-            ตัวอักษร (a-z, A-Z) หรือ
-            <br />
-            ตัวเลข (0-9) หรือ
-            <br />
-            อักขระพิเศษ (_!@#$%) ตั้งแต่ 5 ถึง 20 ตัว
-          </div>
-        </PopoverBody>
-      </UncontrolledPopover>
     </div>
   );
 }

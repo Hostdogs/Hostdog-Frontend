@@ -20,5 +20,14 @@ export default class AuthenAPI {
             }
         });
     }
+
+    static changePassword(mytoken, user_id,old_password,new_password) {
+      const url = `${API_URL}accounts/${user_id}/change-password/`
+        return axios.post(url,{old_password,new_password}, {
+            headers: {
+                'Authorization': `Token ${mytoken}`
+            }
+        });
+    }
   }
   

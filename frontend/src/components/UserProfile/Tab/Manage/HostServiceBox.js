@@ -18,19 +18,32 @@ import moment from "moment-timezone";
 import { useCookies } from "react-cookie";
 import HostServiceAPI from "../../../API/HostServiceAPI";
 import HostAvailableDateAPI from "../../../API/HostAvailableDateAPI";
+import DayPicker, { DateUtils } from "react-day-picker";
+import ImageBox from "./ImageBox";
+import MealBox from "./MealBox";
 
 export default function HostServiceBox(props) {
-  const { serviceDetail } = props;
-
-  useEffect(() => {
-    setHostService(serviceDetail);
-  }, [serviceDetail]);
+  const {
+    serviceDetail,
+    setNewAvailableDates,
+    newAvailableDates,
+    availableDates,
+  } = props;
 
   const [cookies, setCookie] = useCookies(["mytoken", "user_id"]);
   const myId = cookies["user_id"];
   const myToken = cookies["mytoken"];
   const [hostService, setHostService] = useState(serviceDetail);
-  const [selectedDays, setSelectedDays] = useState([]);
+  const [selectedDays, setSelectedDays] = useState(newAvailableDates);
+  const [isChange, setIsChange] = useState(false);
+
+  useEffect(() => {
+    setHostService(serviceDetail);
+  }, [serviceDetail]);
+
+  useEffect(() => {
+    setSelectedDays(newAvailableDates);
+  }, [newAvailableDates]);
 
   function onEnableChange(event) {
     const name = event.target.name;
@@ -54,6 +67,7 @@ export default function HostServiceBox(props) {
   }
 
   function changeValue(name, value) {
+    setIsChange(true);
     if (value === "true" || value === true) {
       return true;
     } else if (value === "false" || value === false) {
@@ -71,41 +85,58 @@ export default function HostServiceBox(props) {
     const allDays = [];
 
     days.forEach((day) => {
-      const newDay = {};
-      newDay.id = "day" + day.getTime().toString();
-      console.log(newDay);
-      newDay.date = moment(day).format("YYYY-MM-DD");
-      allDays.push(newDay);
+      allDays.push(moment(day).format("YYYY-MM-DD"));
     });
     allDays.sort(function (a, b) {
-      return a.date.localeCompare(b.date);
+      return a.localeCompare(b);
     });
     return allDays;
+  }
+
+  function checkDeleteDate(allDays) {
+    const deleteDate = availableDates.filter((date) => {
+      return !allDays.includes(date.date);
+    });
+    return deleteDate;
   }
 
   async function onSubmit(event) {
     event.preventDefault();
     const allDays = dayFormatYMD(selectedDays);
-    //console.log(allDays);
+    const dateDelete = checkDeleteDate(allDays);
+
     const resp = await HostServiceAPI.UpdateHostService(
       myToken,
       myId,
       hostService
     );
+
     allDays.forEach((day) => {
-      HostAvailableDateAPI.AddHostAvailableDate(myToken, myId, day).then(
-        (resp) => {
-          console.log(resp.data);
-        }
-      );
+      HostAvailableDateAPI.AddHostAvailableDate(myToken, myId, {
+        date: day,
+      }).catch((err) => {
+        const mute = err;
+      });
     });
 
-    // console.log(resp.data);
+    dateDelete.forEach((date) => {
+      HostAvailableDateAPI.DeleteHostAvailableDate(
+        myToken,
+        myId,
+        date.id
+      ).catch((err) => {
+        const mute = err;
+      });
+    });
+    setNewAvailableDates(selectedDays);
+    setIsChange(false);
   }
 
   function onCancel(event) {
     event.preventDefault();
     setHostService(serviceDetail);
+    setSelectedDays(newAvailableDates);
+    setIsChange(false);
   }
 
   return (
@@ -172,6 +203,7 @@ export default function HostServiceBox(props) {
                       <SelectMultiDate
                         selectedDays={selectedDays}
                         setSelectedDays={setSelectedDays}
+                        setIsChange={setIsChange}
                       />
                     </Col>
                   </Row>
@@ -359,16 +391,26 @@ export default function HostServiceBox(props) {
             </Col>
           </Row>
           <hr />
+          {isChange ? (
+            <Row>
+              <Col xs="6" style={{ textAlign: "end" }}>
+                <Button onClick={onSubmit} color="primary">
+                  ยืนยัน
+                </Button>
+              </Col>
+              <Col xs="6" style={{ textAlign: "start" }}>
+                <Button onClick={onCancel} color="danger">
+                  ยกเลิก
+                </Button>
+              </Col>
+            </Row>
+          ) : null}
           <Row>
-            <Col xs="6" style={{ textAlign: "end" }}>
-              <Button onClick={onSubmit} color="primary">
-                ยืนยัน
-              </Button>
+            <Col xs="12" sm="12" md="12" lg="6" style={{ marginTop: "15px" }}>
+              <ImageBox />
             </Col>
-            <Col xs="6" style={{ textAlign: "start" }}>
-              <Button onClick={onCancel} color="danger">
-                ยกเลิก
-              </Button>
+            <Col xs="12" sm="12" md="12" lg="6" style={{ marginTop: "15px" }}>
+              <MealBox />
             </Col>
           </Row>
         </div>

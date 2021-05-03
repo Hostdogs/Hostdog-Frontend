@@ -31,12 +31,19 @@ export default function ImageBox() {
   const myToken = cookies["mytoken"];
   const [activeIndex, setActiveIndex] = useState(0);
   const [animating, setAnimating] = useState(false);
+  const [isChange, setIsChange] = useState(false);
 
   useEffect(() => {
     HostImgAPI.GetHostImg(myToken, myId).then((response) => {
       setAllPictures(response.data);
     });
   }, []);
+
+  useEffect(() => {
+    if (picture !== "") {
+      setIsChange(true);
+    }
+  }, [picture]);
 
   function onHouseImgChange(event) {
     const file = event.target.files[0];
@@ -65,6 +72,7 @@ export default function ImageBox() {
         alert("กรุณาเลือกรูปภาพ");
       }
     }
+    setIsChange(false);
   }
 
   function onDelete(pic) {
@@ -148,29 +156,29 @@ export default function ImageBox() {
         </FormGroup>
         <FormGroup>
           {allPictures.length !== 0 ? (
-              <Carousel
-                className="hostImage-content-small"
+            <Carousel
+              className="hostImage-content-small"
+              activeIndex={activeIndex}
+              next={next}
+              previous={previous}
+            >
+              <CarouselIndicators
+                items={allPictures}
                 activeIndex={activeIndex}
-                next={next}
-                previous={previous}
-              >
-                <CarouselIndicators
-                  items={allPictures}
-                  activeIndex={activeIndex}
-                  onClickHandler={goToIndex}
-                />
-                {slides}
-                <CarouselControl
-                  direction="prev"
-                  directionText="Previous"
-                  onClickHandler={previous}
-                />
-                <CarouselControl
-                  direction="next"
-                  directionText="Next"
-                  onClickHandler={next}
-                />
-              </Carousel>
+                onClickHandler={goToIndex}
+              />
+              {slides}
+              <CarouselControl
+                direction="prev"
+                directionText="Previous"
+                onClickHandler={previous}
+              />
+              <CarouselControl
+                direction="next"
+                directionText="Next"
+                onClickHandler={next}
+              />
+            </Carousel>
           ) : null}
           <h5 style={{ margin: "5px", marginTop: "15px" }}>เพิ่มรูป</h5>
           <Input
@@ -180,9 +188,11 @@ export default function ImageBox() {
             onChange={onHouseImgChange}
           />
         </FormGroup>
-        <Button color="primary" onClick={onAddImg}>
-          เพิ่ม
-        </Button>
+        {isChange ? (
+          <Button color="primary" onClick={onAddImg}>
+            ยืนยัน
+          </Button>
+        ) : null}
       </Form>
     </div>
   );

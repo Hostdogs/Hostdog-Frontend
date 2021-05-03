@@ -18,6 +18,7 @@ import MainTab from "./Tab/MainTab";
 import SettingTab from "./Tab/SettingTab";
 import HostServiceTab from "./Tab/Manage/HostServiceTab";
 import ServiceDetailTab from "./Tab/ServiceDetail/ServiceDetailTab";
+import Skeleton from "react-loading-skeleton";
 
 const ProfileContent = ({
   setpageCollapse,
@@ -28,6 +29,7 @@ const ProfileContent = ({
 }) => {
   const [activeTab, setActiveTab] = useState("1");
   const [isHost, setisHost] = useState();
+  const [isLoad, setisLoad] = useState(false)
   // const [Profile, setProfile] = useState()
   const toggle = (tab) => {
     if (activeTab !== tab) setActiveTab(tab);
@@ -36,6 +38,7 @@ const ProfileContent = ({
   useEffect(() => {
     if (Account) {
       setisHost(Account.is_host)
+      setisLoad(true)
     }
 
   }, [Account])
@@ -61,7 +64,7 @@ const ProfileContent = ({
             }}
             style={{ color: "#264d59" }}
           >
-            หน้าหลัก
+            {isLoad?("หน้าหลัก"):(<Skeleton/>)}
           </NavLink>
         </NavItem>
         {!isHost ? (
@@ -75,7 +78,7 @@ const ProfileContent = ({
               }}
               style={{ color: "#264d59" }}
             >
-              สุนัข
+              {isLoad?("สุนัข"):(<Skeleton/>)}
             </NavLink>) : (null)}
           </NavItem>
         ) : (null)}
@@ -91,7 +94,7 @@ const ProfileContent = ({
               }}
               style={{ color: "#264d59" }}
             >
-              รายละเอียดบริการ
+              {isLoad?("รายละเอียดบริการ"):(<Skeleton/>)}
           </NavLink>
           </NavItem>
         ) : (
@@ -109,7 +112,7 @@ const ProfileContent = ({
               }}
               style={{ color: "#264d59" }}
             >
-              จัดการการบริการ
+              {isLoad?("จัดการการบริการ"):(<Skeleton/>)}
             </NavLink>
           </NavItem>
         ) : null}
@@ -125,7 +128,7 @@ const ProfileContent = ({
               }}
               style={{ color: "#264d59" }}
             >
-              ตั้งค่า
+              {isLoad?("ตั้งค่า"):(<Skeleton/>)}
             </NavLink>
           </NavItem>
         ) : null}

@@ -51,7 +51,7 @@ export default function InformationForm({ selectState }) {
     password: "",
     // dob: "",
     mobile: "",
-    address: "",
+    // address: "",
     gender: "",
     account_number: "111111111111",
   });
@@ -177,7 +177,7 @@ export default function InformationForm({ selectState }) {
           gender: Information.gender,
           mobile: Information.mobile,
           dob: Information.dob,
-          address: Information.address,
+          address: userAddress,
           latitude: geocode.lat,
           longitude: geocode.lng,
         };

@@ -32,7 +32,7 @@ import DogAPI from "../API/DogAPI";
 import HostServiceAPI from "../API/HostServiceAPI";
 import ServiceAPI from "../API/ServiceAPI";
 import { useCookies } from "react-cookie";
-export default function ServiceForm({  host_id, customer_id }) {
+export default function ServiceForm({ host, customerAccount, hostService }) {
   const [cookies, setcookies] = useCookies(["mytoken", "user_id"]);
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
@@ -49,37 +49,44 @@ export default function ServiceForm({  host_id, customer_id }) {
     "เลือกประเภทอาหาร"
   );
   const [mealPrice, setMealPrice] = useState(0);
+
   const [customerDogs, setCustomerDogs] = useState([]);
   const [listDogFeedingTime, setListDogFeedingTime] = useState([]);
-  const [hostService, setHostService] = useState({});
-  const [dogName,setDogName]=useState(null);
-  const [serviceID,setServiceID]=useState(null);
 
-  const getHostDetails = async () => {
-    const response = await HostAPI.getHostDetails(cookies.mytoken, host_id);
-    const hostDetail = response.data;
+  const [dogName, setDogName] = useState(null);
+  const [isWalk, setisWalk] = useState(false);
+  const [isDeliver, setisDeliver] = useState(false);
+  const [isBath, setisBath] = useState(false);
+  const [isGet, setisGet] = useState(false)
 
-    setHostName(hostDetail.first_name + " " + hostDetail.last_name);
-  };
-  const getHostService = async () => {
-    const response = await HostServiceAPI.getHostService(cookies.mytoken, host_id);
-    const hostService = response.data;
+  useEffect(() => {
+    if (host) {
+      setHostName(host.first_name + " " + host.last_name);
+      setServiceInfo({...serviceInfo,host:host.account})
+    }
+    if (hostService) {
+      setMealTypes(hostService.available_meals);
+      setisWalk(hostService.is_dog_walk);
+      setisDeliver(hostService.is_delivery_dog);
+      setisBath(hostService.is_bath_dog);
+      setisGet(hostService.is_get_dog);
 
-    setMealTypes(hostService.available_meals);
-    console.log(hostService.available_meals);
-    setHostService(hostService);
-  };
+    }
+    if(customerAccount){
+ 
+      setCustomerDogs(customerAccount.customer.dog_customer)
+      setServiceInfo({...serviceInfo,customer:customerAccount.id})
+    }
+  }, [host, customerAccount, hostService]);
 
-  const listCustomerDog = async () => {
-    const response = await DogAPI.GetDog(cookies.mytoken, customer_id);
-    const listDog = response.data;
-    setCustomerDogs(listDog);
-    console.log(listDog);
-  };
+
+ 
+
+
   const getDogFeedingTime = async () => {
     const response = await DogAPI.GetFeedingTime(
-      cookies.mytoken,
-      customer_id,
+      cookies["mytoken"],
+      cookies["user_id"],
       serviceInfo.dog
     );
 
@@ -95,10 +102,9 @@ export default function ServiceForm({  host_id, customer_id }) {
     const meal = response.data;
     setMealPrice(meal.meal_price_per_gram);
   };
-
   const [serviceInfo, setServiceInfo] = useState({
-    host: host_id,
-    customer: customer_id,
+    host: null,
+    customer: null,
     dog: null,
     service_start_time: null,
     service_end_time: null,
@@ -138,7 +144,7 @@ export default function ServiceForm({  host_id, customer_id }) {
         }
       }
     }
-    if(name==="dog"){
+    if (name === "dog") {
       for (var i = 0; i < customerDogs.length; i++) {
         console.log(customerDogs)
         console.log(customerDogs[i])
@@ -148,11 +154,7 @@ export default function ServiceForm({  host_id, customer_id }) {
       }
     }
   }
-  useEffect(() => {
-    getHostDetails();
-    getHostService();
-    listCustomerDog();
-  }, []);
+
 
   useEffect(() => {
     getDogFeedingTime();
@@ -171,6 +173,7 @@ export default function ServiceForm({  host_id, customer_id }) {
     } else if (customerDog.gender === "Female") {
       gender = "เพศ : เมีย";
     }
+
     return (
       <Card>
         <CardImg
@@ -181,8 +184,8 @@ export default function ServiceForm({  host_id, customer_id }) {
         <CardBody>
           <CardTitle tag="h5"> {customerDog.dog_name}</CardTitle>
           <CardText>
-                  สายพันธุ์ : {customerDog.dog_breed} , {gender} , วันเกิด :{" "}
-                  {customerDog.dog_dob} , น้ำหนัก : {customerDog.dog_weight} กิโลกรัม
+            สายพันธุ์ : {customerDog.dog_breed} , {gender} , วันเกิด :{" "}
+            {customerDog.dog_dob} , น้ำหนัก : {customerDog.dog_weight} กิโลกรัม
                 </CardText>
           <Button
             key={customerDog.id}
@@ -221,7 +224,7 @@ export default function ServiceForm({  host_id, customer_id }) {
     ServiceAPI.createService(cookies.mytoken, serviceInfo)
       .then((response) => {
         console.log(response);
-        setServiceID(response.data.id);
+
       })
       .catch((error) => {
         console.log(error.response);
@@ -244,7 +247,7 @@ export default function ServiceForm({  host_id, customer_id }) {
                     เลือกสุนัขของคุณ
                   </Col>
                   <Col xs="5" sm="4">
-                    {dogName?(<Label>{dogName}</Label>):(<Label disable>ยังไม่ได้เลือก</Label>)}
+                    {dogName ? (<Label>{dogName}</Label>) : (<Label disable>ยังไม่ได้เลือก</Label>)}
                     <Button color="primary" size="sm" onClick={toggle} >
                       เลือก
                     </Button>
@@ -340,7 +343,7 @@ export default function ServiceForm({  host_id, customer_id }) {
               <h4>บริการเพิ่มเติม</h4>
             </FormGroup>
             <div className="list-service">
-              {hostService.enable_dog_walk ? (
+              {isWalk ? (
                 <FormGroup>
                   <Row>
                     <Col xs="12" sm="4">
@@ -369,7 +372,7 @@ export default function ServiceForm({  host_id, customer_id }) {
                   </Row>
                 </FormGroup>
               ) : null}
-              {hostService.enable_get_dog ? (
+              {isGet ? (
                 <FormGroup>
                   <Row>
                     <Col xs="12" sm="4">
@@ -398,7 +401,7 @@ export default function ServiceForm({  host_id, customer_id }) {
                   </Row>
                 </FormGroup>
               ) : null}
-              {hostService.enable_delivery_dog ? (
+              {isDeliver ? (
                 <FormGroup>
                   <Row>
                     <Col xs="12" sm="4">
@@ -427,7 +430,7 @@ export default function ServiceForm({  host_id, customer_id }) {
                   </Row>
                 </FormGroup>
               ) : null}
-              {hostService.enable_bath_dog ? (
+              {isBath ? (
                 <FormGroup>
                   <Row>
                     <Col xs="12" sm="4">

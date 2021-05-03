@@ -10,30 +10,30 @@ import {
   List,
   Collapse,
 } from "reactstrap";
-import Skeleton from "react-loading-skeleton"
-const ProfileCard = ({ pageCollapse, Account }) => {
-  const [img, setimg] = useState(null)
+import Skeleton from "react-loading-skeleton";
+const ProfileCard = ({ pageCollapse, Account, setAccount }) => {
+  const [img, setimg] = useState(null);
   const [role, setrole] = useState(null);
-  const [Name, setName] = useState(null)
-  const [isLoad, setisLoad] = useState(false)
-  const placeholderPath = "/user_placeholder.svg"
+  const [Name, setName] = useState(null);
+  const [isLoad, setisLoad] = useState(false);
+  const placeholderPath = "/user_placeholder.svg";
   useEffect(() => {
-    console.log("Acc",Account)
+    console.log("Acc", Account);
+
     if (Account) {
-      let roledata = ""
+      let roledata = "";
       if (Account.customer) {
-        roledata = "customer"
-        setrole("ผู้ฝากสุนัข")
+        roledata = "customer";
+        setrole("ผู้ฝากสุนัข");
       } else if (Account.host) {
-        roledata = "host"
-        setrole("ผู้รับเลี้ยงสุนัข")
+        roledata = "host";
+        setrole("ผู้รับเลี้ยงสุนัข");
       }
-      setimg(Account[roledata].picture)
-      setName(Account[roledata].first_name + " " + Account[roledata].last_name)
+      setimg(Account[roledata].picture);
+      setName(Account[roledata].first_name + " " + Account[roledata].last_name);
 
-      setisLoad(true)
+      setisLoad(true);
     }
-
   }, [Account]);
   // console.log(isHost)
   return (
@@ -60,7 +60,6 @@ const ProfileCard = ({ pageCollapse, Account }) => {
                   objectFit: "cover",
                 }}
               />
-
             </div>
           </div>
         </Collapse>

@@ -28,21 +28,31 @@ export default class HostAPI {
     });
   }
 
-    static getHostDetails(mytoken,host_id){
-        const url = `${API_URL}profilehost/${host_id}/?all=1`
-        return axios.get(url, {
-            headers: {
-                'Authorization': `Token ${mytoken}`
-            }
-        });
-    }
+  static getHostDetails(mytoken, host_id) {
+    const url = `${API_URL}profilehost/${host_id}/?all=1`;
+    return axios.get(url, {
+      headers: {
+        Authorization: `Token ${mytoken}`,
+      },
+    });
+  }
 
-    static setHostInfo(mytoken,host_id,data){
-        const url = `${API_URL}profilehost/${host_id}/?all=1`
-        return axios.patch(url,data, {
-            headers: {
-                'Authorization': `Token ${mytoken}`
-            }
-        });
-    }
+  static setHostInfo(mytoken, host_id, data) {
+    const url = `${API_URL}profilehost/${host_id}/?all=1`;
+    return axios.patch(url, data, {
+      headers: {
+        Authorization: `Token ${mytoken}`,
+      },
+    });
+  }
+
+  static AddHostImg(mytoken, host_id, pic) {
+    const url = `${API_URL}profilehost/${host_id}/?all=1`;
+    return axios.patch(url, pic, {
+      headers: {
+        "content-type": "multipart/form-data",
+        Authorization: `Token ${mytoken}`,
+      },
+    });
+  }
 }

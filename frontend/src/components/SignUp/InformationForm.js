@@ -499,14 +499,6 @@ export default function InformationForm({ selectState }) {
                 กรุณาใส่รหัสผ่านให้ตรงตามเงื่อนไข
               </FormFeedback>
             </InputGroup>
-            <FormText style={{ textAlign: "left" }}>
-              <li>
-                ตัวอักษรภาษาอังกฤษพิมพ์ใหญ่อย่างน้อย 1 ตัว
-              </li>
-              <li>ตัวอักษรภาษาอังกฤษพิมพ์เล็กอย่างน้อย 1 ตัว</li>
-              <li>ตัวเลขอย่างน้อย 1 ตัว</li>
-              <li>รหัสผ่านตั้งแต่ 8 ถึง 20 ตัว</li>
-            </FormText>
           </FormGroup>
 
           <FormGroup>
@@ -535,6 +527,14 @@ export default function InformationForm({ selectState }) {
                 กรุณาใส่รหัสผ่านให้ตรงกับรหัสผ่านก่อนหน้า
               </FormFeedback>
             </InputGroup>
+            <FormText style={{ textAlign: "left" }}>
+              <li>
+                ตัวอักษรภาษาอังกฤษพิมพ์ใหญ่อย่างน้อย 1 ตัว
+              </li>
+              <li>ตัวอักษรภาษาอังกฤษพิมพ์เล็กอย่างน้อย 1 ตัว</li>
+              <li>ตัวเลขอย่างน้อย 1 ตัว</li>
+              <li>รหัสผ่านตั้งแต่ 8 ถึง 20 ตัว</li>
+            </FormText>
           </FormGroup>
 
           <FormGroup>
@@ -677,26 +677,6 @@ export default function InformationForm({ selectState }) {
           </FormGroup>
         </Form>
       </Container>
-      <UncontrolledPopover trigger="focus" placement="top" target="username">
-        <PopoverBody className="Popover">
-          <div>
-            ตัวอักษร (a-z, A-Z) หรือ
-            <br />
-            ตัวเลข (0-9) ตั้งแต่ 5 ถึง 20 ตัว
-          </div>
-        </PopoverBody>
-      </UncontrolledPopover>
-      <UncontrolledPopover trigger="focus" placement="top" target="password">
-        <PopoverBody className="Popover">
-          <div>
-            ตัวอักษร (a-z, A-Z) หรือ
-            <br />
-            ตัวเลข (0-9) หรือ
-            <br />
-            อักขระพิเศษ (_!@#$%) ตั้งแต่ 5 ถึง 20 ตัว
-          </div>
-        </PopoverBody>
-      </UncontrolledPopover>
     </div>
   );
 }

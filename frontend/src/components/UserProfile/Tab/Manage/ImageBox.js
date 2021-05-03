@@ -32,6 +32,8 @@ export default function ImageBox() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [animating, setAnimating] = useState(false);
   const [isChange, setIsChange] = useState(false);
+  const [file, setFile] = useState(null);
+  //const [preview, setPreview] = useState(null);
 
   useEffect(() => {
     HostImgAPI.GetHostImg(myToken, myId).then((response) => {
@@ -46,8 +48,10 @@ export default function ImageBox() {
   }, [picture]);
 
   function onHouseImgChange(event) {
-    const file = event.target.files[0];
-    setPicture(file);
+    if (event.target.files[0]) {
+      setPicture(event.target.files[0]);
+      setFile(URL.createObjectURL(event.target.files[0]));
+    }
   }
 
   function onAddImg(event) {
@@ -73,6 +77,14 @@ export default function ImageBox() {
       }
     }
     setIsChange(false);
+    setFile(null);
+  }
+
+  function onCancelImg(event) {
+    event.preventDefault();
+    setIsChange(false);
+    setFile(null);
+    setPicture("");
   }
 
   function onDelete(pic) {
@@ -188,10 +200,25 @@ export default function ImageBox() {
             onChange={onHouseImgChange}
           />
         </FormGroup>
+        {file ? (
+          <div style={{ textAlign: "center" }}>
+            <img className="resize-imgHost" src={file} />
+          </div>
+        ) : null}
+
         {isChange ? (
-          <Button color="primary" onClick={onAddImg}>
-            ยืนยัน
-          </Button>
+          <div style={{ textAlign: "center", marginTop: "10px" }}>
+            <Button
+              color="primary"
+              style={{ marginRight: "10px" }}
+              onClick={onAddImg}
+            >
+              ยืนยัน
+            </Button>
+            <Button color="danger" onClick={onCancelImg}>
+              ยกเลิก
+            </Button>
+          </div>
         ) : null}
       </Form>
     </div>

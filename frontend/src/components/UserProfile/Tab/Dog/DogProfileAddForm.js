@@ -39,6 +39,7 @@ export default function DogProfileAddForm(props) {
   const [picture, setPicture] = useState("");
   const [allTimes, setAllTimes] = useState([]);
   const [cookies] = useCookies(["mytoken", "user_id"]);
+  const [preview, setPreview] = useState(null);
 
   const myId = cookies["user_id"];
   const myToken = cookies["mytoken"];
@@ -54,6 +55,7 @@ export default function DogProfileAddForm(props) {
     setDogInfo(startDogInfo);
     setPicture("");
     setAllTimes([]);
+    setPreview(null);
   };
 
   function onDogInfoChange(event) {
@@ -66,38 +68,48 @@ export default function DogProfileAddForm(props) {
     });
   }
   function onDogImgChange(event) {
-    const file = event.target.files[0];
-    setPicture(file);
+    if (event.target.files[0]) {
+      setPreview(URL.createObjectURL(event.target.files[0]));
+      setPicture(event.target.files[0]);
+    }
   }
 
   async function onDogSubmit(event) {
     event.preventDefault();
-    try {
-      const resp1 = await DogAPI.AddDog(myToken, myId, dogInfo);
-      if (picture !== "") {
-        let form_data = new FormData();
-        form_data.append("picture", picture, picture.name);
-        const resp2 = await DogAPI.UploadImgDog(
-          myToken,
-          myId,
-          resp1.data.id,
-          form_data
-        );
-        props.addDogInfo(resp2.data);
-        setPicture("");
-      } else {
-        props.addDogInfo(resp1.data);
+    if (allTimes.length > 0) {
+      try {
+        const resp1 = await DogAPI.AddDog(myToken, myId, dogInfo);
+        if (picture !== "") {
+          let form_data = new FormData();
+          form_data.append("picture", picture, picture.name);
+          const resp2 = await DogAPI.UploadImgDog(
+            myToken,
+            myId,
+            resp1.data.id,
+            form_data
+          );
+          props.addDogInfo(resp2.data);
+          setPicture("");
+        } else {
+          props.addDogInfo(resp1.data);
+        }
+        allTimes.forEach((time) => {
+          DogAPI.AddFeedingTime(
+            myToken,
+            myId,
+            resp1.data.id,
+            time
+          ).then((resp) => console.log(resp));
+        });
+        setDogInfo(startDogInfo);
+        setAllTimes([]);
+        toggle();
+      } catch (error) {
+        console.log(error.response);
       }
-      allTimes.forEach((time) => {
-        DogAPI.AddFeedingTime(myToken, myId, resp1.data.id, time).then((resp) =>
-          console.log(resp)
-        );
-      });
-      setDogInfo(startDogInfo);
-      setAllTimes([]);
-      toggle();
-    } catch (error) {
-      console.log(error.response);
+      setPreview(null);
+    } else {
+      alert("กรุณาเลือกเวลาให้อาหาร");
     }
   }
 
@@ -130,7 +142,13 @@ export default function DogProfileAddForm(props) {
         <ModalBody>
           <Form>
             <FormGroup>
+              {preview ? (
+                <div style={{ textAlign: "center" }}>
+                  <img className="resize-imgDog-preview" src={preview} />
+                </div>
+              ) : null}
               <Label>รูป</Label>
+
               <Input
                 type="file"
                 name="picture"

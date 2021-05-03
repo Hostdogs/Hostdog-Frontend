@@ -35,6 +35,7 @@ export default function DogProfileEditForm(props) {
   const [dogInfo, setDogInfo] = useState(startDogInfo);
   const [picture, setPicture] = useState("");
   const [cookies] = useCookies(["mytoken", "user_id"]);
+  const [preview, setPreview] = useState(null);
 
   const myId = cookies["user_id"];
   const myToken = cookies["mytoken"];
@@ -51,6 +52,7 @@ export default function DogProfileEditForm(props) {
     setCloseAll(true);
     setDogInfo(startDogInfo);
     setPicture("");
+    setPreview(null);
   };
 
   function onDogInfoChange(event) {
@@ -64,9 +66,10 @@ export default function DogProfileEditForm(props) {
   }
 
   function onDogImgChange(event) {
-    const file = event.target.files[0];
-    setPicture(file);
-    //console.log(picture.name);
+    if (event.target.files[0]) {
+      setPreview(URL.createObjectURL(event.target.files[0]));
+      setPicture(event.target.files[0]);
+    }
   }
 
   async function onDogUpdate(event) {
@@ -91,7 +94,7 @@ export default function DogProfileEditForm(props) {
       props.updateDogInfo(resp2.data);
       setPicture("");
     }
-
+    setPreview(null);
     toggle();
   } //update dog info
 
@@ -122,6 +125,11 @@ export default function DogProfileEditForm(props) {
           <ModalBody>
             <Form>
               <FormGroup>
+                {preview ? (
+                  <div style={{ textAlign: "center" }}>
+                    <img className="resize-imgDog-preview" src={preview} />
+                  </div>
+                ) : null}
                 <Label>รูป</Label>
                 <Input
                   type="file"

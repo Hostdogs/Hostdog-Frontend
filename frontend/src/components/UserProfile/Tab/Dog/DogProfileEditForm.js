@@ -17,6 +17,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faEdit } from "@fortawesome/free-solid-svg-icons";
 import { useCookies } from "react-cookie";
 import DogAPI from "../../../API/DogAPI";
+import moment from "moment-timezone";
 
 export default function DogProfileEditForm(props) {
   const { labelBtn, editDogInfo } = props;
@@ -36,7 +37,7 @@ export default function DogProfileEditForm(props) {
   const [picture, setPicture] = useState("");
   const [cookies] = useCookies(["mytoken", "user_id"]);
   const [preview, setPreview] = useState(null);
-
+  const maxDate = moment(new Date()).format("YYYY-MM-DD");
   const myId = cookies["user_id"];
   const myToken = cookies["mytoken"];
 
@@ -74,28 +75,31 @@ export default function DogProfileEditForm(props) {
 
   async function onDogUpdate(event) {
     event.preventDefault();
-    const resp1 = await DogAPI.UpdateDog(
-      myToken,
-      myId,
-      editDogInfo.id,
-      dogInfo
-    );
-    props.updateDogInfo(resp1.data);
-
-    if (picture !== "") {
-      let form_data = new FormData();
-      form_data.append("picture", picture, picture.name);
-      const resp2 = await DogAPI.UploadImgDog(
+    try {
+      const resp1 = await DogAPI.UpdateDog(
         myToken,
         myId,
-        resp1.data.id,
-        form_data
+        editDogInfo.id,
+        dogInfo
       );
-      props.updateDogInfo(resp2.data);
-      setPicture("");
+      props.updateDogInfo(resp1.data);
+      if (picture !== "") {
+        let form_data = new FormData();
+        form_data.append("picture", picture, picture.name);
+        const resp2 = await DogAPI.UploadImgDog(
+          myToken,
+          myId,
+          resp1.data.id,
+          form_data
+        );
+        props.updateDogInfo(resp2.data);
+        setPicture("");
+      }
+      setPreview(null);
+      toggle();
+    } catch (error) {
+      alert("กรุณากรอกข้อมูลให้ครบ");
     }
-    setPreview(null);
-    toggle();
   } //update dog info
 
   function changeValue(name, value) {
@@ -187,6 +191,7 @@ export default function DogProfileEditForm(props) {
                   <Input
                     type="date"
                     name="dog_dob"
+                    max={maxDate}
                     value={dogInfo.dog_dob}
                     onChange={onDogInfoChange}
                   />

@@ -117,7 +117,7 @@ export default function ImageBox() {
         onExited={() => setAnimating(false)}
         key={pic.id}
       >
-        <div className="container">
+        <div className="HostPicture">
           <img className="resize-imgHost" src={pic.picture} />
           <Button onClick={() => onDelete(pic)}>ลบ</Button>
         </div>

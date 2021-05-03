@@ -27,11 +27,11 @@
   margin-right: auto;
 }
 
-.container {
+.HostPicture {
   position: relative;
 }
 
-.container .btn {
+.HostPicture .btn {
   position: absolute;
   bottom: 0px;
   left: 50%;
@@ -46,6 +46,6 @@
   text-align: center;
 }
 
-.container .btn:hover {
+.HostPicture .btn:hover {
   background-color: black;
 }

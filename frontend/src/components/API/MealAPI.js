@@ -40,4 +40,14 @@ export default class MealAPI {
       },
     });
   }
+    static getMeal(mytoken, meal_id){
+        const url=`${API_URL}service/meals/${meal_id}/`
+        return axios.get(url,{
+            headers: {
+              "content-type": "application/json",
+              Authorization: `Token ${mytoken}`,
+            },
+          });
+
+    }
 }

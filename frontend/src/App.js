@@ -18,7 +18,7 @@ function App() {
 
           <Route exact path="/signup" component={SignUpPage} />
 
-          <Route exact path="/service" component={ServicePage} />
+          <Route exact path="/service/host" component={ServicePage} />
 
           <Route exact path="/profile/:profile_id" component={ProfilePage} />
 

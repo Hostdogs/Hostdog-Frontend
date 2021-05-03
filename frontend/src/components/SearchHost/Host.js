@@ -10,9 +10,10 @@ import {
   Row,
   Col,
   CardFooter,
+  CardLink,
 } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBone } from "@fortawesome/free-solid-svg-icons";
+import { faBone, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import HostGallery from "./HostGallery";
 import "./Host.css";
 import FreeDay from "./AvailableHost";
@@ -29,7 +30,7 @@ export default function Host({ host }) {
   const [hostInfo, sethostInfo] = useState({})
   useEffect(() => {
     if (host.distance < 1) {
-      setdistance(Math.round(host.distance*1000) + " m")
+      setdistance(Math.round(host.distance * 1000) + " m")
     } else {
       setdistance(Math.round(host.distance) + " km")
     }
@@ -53,7 +54,7 @@ export default function Host({ host }) {
     }
   }
   const placeholderPath = "user_placeholder.svg"
-  
+
 
   return (
 
@@ -62,12 +63,12 @@ export default function Host({ host }) {
         <CardHeader style={{ backgroundColor: "#f9e07f", borderRadius: "0", color: "#264d59" }}>
           <h4 style={{ position: "absolute", top: "5px", right: "10px" }}>{distance}</h4>
           <div style={{ position: "absolute", top: "7px", left: "15px" }}>
-            <FreeDay host={host}/>
+            <FreeDay host={host} />
           </div>
           <Row style={{ marginTop: "2%" }}>
             <Col xs="12" sm="12" md="2" lg="2" style={{ textAlign: "center" }}>
               <img
-                src={hostInfo.picture||placeholderPath}
+                src={hostInfo.picture || placeholderPath}
                 className="img-responsive center-block"
                 style={{
                   borderRadius: "50%",
@@ -142,27 +143,30 @@ export default function Host({ host }) {
             </Col>
           </Row>
         </CardHeader>
-        <CardBody style={{ backgroundColor: "#f3f4f5" }}>
-          <Col style={{ padding: "0px" }}>
-            <Container fluid="sm">
-              <HostGallery />
-            </Container>
-          </Col>
-        </CardBody>
+        {host.house_image.length > 0 ? (
+          <CardBody style={{ backgroundColor: "#f3f4f5" }}>
+            <Col style={{ padding: "0px" }}>
+              <Container fluid="sm">
+                <HostGallery host={host} />
+              </Container>
+            </Col>
+          </CardBody>
+        ) : (null)}
 
-        <CardFooter
+
+        <CardBody
           style={{ textAlign: "center", backgroundColor: "#f9e07f", color: "#264d59" }}
         >
-          <a href="#" style={{ color: "black" }} onClick={e => {
+          <CardLink href="#" style={{ color: "#264d59" }} onClick={e => {
             history.push(urllink)
             history.go(0)
             e.preventDefault()
           }}
 
           >
-            รายละเอียดเพิ่มเติม
-            </a>
-        </CardFooter>
+            รายละเอียดเพิ่มเติม <FontAwesomeIcon icon={faChevronRight}/><FontAwesomeIcon icon={faChevronRight}/>
+            </CardLink>
+        </CardBody>
 
       </Card>
     </div>

@@ -8,11 +8,9 @@ export default function ServicePage() {
   return (
     <div>
       <NavbarIsAuth />
-      <br />
-      <br />
-      <br />
+
       {/* <ServiceForm /> */}
-      <div className="content">
+      <div className="content" style={{paddingTop:"70px"}}>
         <Row>
           <Col xs="12" sm="12" md="12" lg="3">
             <ServiceHost />

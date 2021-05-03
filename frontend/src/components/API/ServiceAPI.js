@@ -30,7 +30,16 @@ export default class ServiceAPI {
             Authorization: `Token ${mytoken}`,
           },
         });
-
+  }
+  static responseService(mytoken,service_id,data){
+    const url=`${API_URL}${service_id}/response/`;
+    return axios.post(url,data,{
+      headers: {
+        "content-type": "application/json",
+        Authorization: `Token ${mytoken}`,
+      },
+    });
+ 
   }
 
 }

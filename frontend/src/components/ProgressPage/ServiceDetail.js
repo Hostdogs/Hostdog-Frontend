@@ -16,24 +16,28 @@ import { add, format } from "date-fns";
 import "./ProgressPage.css";
 import HostAPI from "../API/HostAPI";
 import CustomerAPI from "../API/CustomerAPI";
-
+import PaymentDepositModal from "../Payment/PaymentDepositModal";
 import DogAPI from "../API/DogAPI"
-import moment from "moment";
+import moment from "moment-timezone";
 import "moment/locale/th";
 import "./ServiceDetail.css";
 import { useCookies } from "react-cookie";
-export default function ServiceDetail({ onCancel, isExpand, ServiceInfo,hostInfo }) {
+export default function ServiceDetail({ onCancel, isExpand, ServiceInfo,hostInfo,serviceDetailStatusLabel,showDepositPayment}) {
+  const [serviceID,setServiceID]=useState(null);
   const [customer, setcustomer] = useState({})
   const [host, sethost] = useState("");
   const [dog, setdog] = useState("");
   const [timeRegister, settimeRegister] = useState("");
   const [timeEnd, settimeEnd] = useState("");
+  const [serviceCreateTime,setServiceCreateTime]=useState("");
   const [totalPrice,setTotalPrice]=useState(null); 
   const [mealType,setMealType]=useState(null);
   const [mealWeight,setMealWeight]=useState(null);
   const [dogFeedingTime,setDogFeedingTime]=useState([]);
   const [additionalService,setAdditionalService]=useState([]);
+
   const [cookies, setcookies] = useCookies(["mytoken", "user_id"]);
+  
   useEffect(() => {
     moment.updateLocale("th");
     if (ServiceInfo) {
@@ -71,14 +75,50 @@ export default function ServiceDetail({ onCancel, isExpand, ServiceInfo,hostInfo
         console.log("GetFeedingTime")
         console.log(error)
       })
-
+      setServiceID(ServiceInfo.id)
       settimeRegister(moment(ServiceInfo.service_reg_time).format("lll"));
       settimeEnd(moment(ServiceInfo.service_end_time).format("lll"));
+      
       setTotalPrice(ServiceInfo.total_price);
       setMealType(ServiceInfo.service_meal_type.meal_type);
       setMealWeight(ServiceInfo.service_meal_weight);
-
+  
       setAdditionalService([ServiceInfo.is_dog_walk,ServiceInfo.is_get_dog,ServiceInfo.is_delivery_dog,ServiceInfo.is_bath_dog]);    
+      
+      setServiceCreateTime(moment(ServiceInfo.service_create_time).format("lll"));
+      
+   
+
+      // if (ServiceInfo.main_status==="pending"){
+      //   setserviceDetailStatusLabel("กำลังรอคำตอบรับจากผู้รับฝาก");
+      //   setShowDepositPayment(false);
+      //   console.log("pending");
+      // }else if(ServiceInfo.main_status==="payment"){
+      //   setserviceDetailStatusLabel("รอการชำระเงิน");
+      //   setShowDepositPayment(true);
+      //   console.log("payment");
+      // }else if(ServiceInfo.main_status==="wait_for_progress"){
+      //   setserviceDetailStatusLabel("รอวันเริ่มบริการ");
+      //   setShowDepositPayment(false);
+      // }else if(ServiceInfo.main_status==="in_progress"){
+      //   setserviceDetailStatusLabel("อยู่ในการบริการ")
+      //   setShowDepositPayment(false);
+      //   console.log("in_progress");
+      // }else if(ServiceInfo.main_status==="end"){
+      //   setserviceDetailStatusLabel("สิ้นสุดบริการ")
+      //   setShowDepositPayment(false);
+      //   console.log("end");
+      // }else if(ServiceInfo.main_status==="late"){
+      //   setserviceDetailStatusLabel("เลยเวลาบริการแล้ว")
+      //   setShowDepositPayment(false);
+      //   console.log("late");
+      // }else if(ServiceInfo.main_status==="cancelled"){
+      //   setShowDepositPayment(false);
+      //   setserviceDetailStatusLabel("ยกเลิกบริการ")
+      //   console.log("cancelled");
+      // }
+
+    
     }
   }, [ServiceInfo]);
   const listDogFeedingTime= dogFeedingTime.map((dogFeeding)=>{
@@ -101,7 +141,7 @@ return(
               className="UpsideText_1"
               style={{ position: "absolute", right: "10px" }}
             >
-              อยู่ในการบริการ
+              {serviceDetailStatusLabel}
             </div>
             <a className="mobile_br">
               <br />
@@ -122,7 +162,7 @@ return(
                 </a>{" "}
                 ถึงวันที่: {timeEnd}{" "}
               </p>
-              <p>การฝากจะสิ้นสุดในเวลา {moment(timeEnd).fromNow()}</p>
+              <p>การฝากจะสิ้นสุดในเวลา: </p>
               <p>ค่าบริการทั้งหมด {totalPrice} บาท</p>
             </div>
 
@@ -151,8 +191,7 @@ return(
 
                     <h3 className="DownsideText_2">รายละเอียดเพิ่มเติม</h3>
                     <div className="DownsideText_3">
-                      <p>วันที่สร้างบริการ: </p>
-                      <p>วันที่สร้างบริการ: </p>
+                      <p>วันที่สร้างบริการ: {serviceCreateTime}</p>
                     </div>
                   </div>
                 </Col>
@@ -166,9 +205,7 @@ return(
                 float: "right",
               }}
             >
-              <Button onClick={toggle} color="danger">
-                <div className="Cancel_Button">ยกเลิกบริการ</div>
-              </Button>
+              {showDepositPayment?(<PaymentDepositModal service_id={serviceID}/>):null}
               <Button
                 onClick={toggle}
                 color="danger"

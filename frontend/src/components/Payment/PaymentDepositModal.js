@@ -4,7 +4,7 @@ import { useState,useEffect } from "react";
 import { faClosedCaptioning } from '@fortawesome/free-solid-svg-icons';
 import axios from "axios";
 import PaymentAPI from '../API/PaymentAPI'
-import ServiceAPI from ' ../API/ServiceAPI'
+
 export default function PaymentDepositModal({service_id}) {
 
 const [modal, setModal] = useState(false);
@@ -68,7 +68,7 @@ const [modal, setModal] = useState(false);
     return (
         <div>
           <div>{paymentID}</div>
-            <Button color="danger" onClick={handlePayment}>จ่ายเงินกันเถอะ ย้าฮูว</Button>
+            <Button color="success" onClick={handlePayment}>ชำระเงินค่าบริการ</Button>
             <Modal isOpen={modal} toggle={toggle} fade={false} >
         <ModalHeader toggle={toggle}><h2>ชำระเงินค่าบริการ</h2></ModalHeader>
         <ModalBody>

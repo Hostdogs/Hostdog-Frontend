@@ -48,8 +48,8 @@ export default function FilterOptionPane({ setisSearch ,setHostData ,setisLoad})
 
       const stDate = moment(selectionRange[0].startDate).format("YYYY-MM-DD")
       const endDate = moment(selectionRange[0].endDate).format("YYYY-MM-DD")
-      console.log(userAddress,distance[choiceDistance],area[choiceArea],userAddress,stDate,endDate,geocode)
-      HostAPI.getHostInformation(cookies["mytoken"],distance[choiceDistance],area[choiceArea],stDate,endDate,geocode.lat,geocode.lng).then(res=>{
+      // console.log(userAddress,distance[choiceDistance],area[choiceArea],userAddress,stDate,endDate,geocode)
+      HostAPI.getHostInformation(cookies["mytoken"],distance[choiceDistance],stDate,endDate,geocode.lat,geocode.lng).then(res=>{
         console.log(res.data)
         // let data = []
         // for(const object in res.data){
@@ -86,18 +86,18 @@ export default function FilterOptionPane({ setisSearch ,setHostData ,setisLoad})
 
   const [choiceDistance, setChoiceDistance] = useState(3);
 
-  const showArea = [
-    "เท่าไหร่ก็ได้",
-    "เล็ก(0-50 ตร.ม.)",
-    "กลาง(50-150 ตร.ม.)",
-    "ใหญ่(150-400 ตร.ม.)",
+  // const showArea = [
+  //   "เท่าไหร่ก็ได้",
+  //   "เล็ก(0-50 ตร.ม.)",
+  //   "กลาง(50-150 ตร.ม.)",
+  //   "ใหญ่(150-400 ตร.ม.)",
     
-  ];
+  // ];
 
-  const [choiceArea, setChoiceArea] = useState(0);
-  const area = [
-    [0,400],[0,50],[50,150],[150,400]
-  ]
+  // const [choiceArea, setChoiceArea] = useState(0);
+  // const area = [
+  //   [0,400],[0,50],[50,150],[150,400]
+  // ]
   const dayformat = "YYYY-MM-DD";
   const [selectionRange, setSelectionRange] = useState([
     {
@@ -164,7 +164,7 @@ export default function FilterOptionPane({ setisSearch ,setHostData ,setisLoad})
                     </DropdownMenu>
                   </UncontrolledDropdown>
                 </FormGroup>
-                <FormGroup>
+                {/* <FormGroup>
                   <UncontrolledDropdown>
                     <Label style={{ width: "225px" }}>
                       ขนาดบริเวณพื้นที่เลี้ยงขั้นต่ำ
@@ -190,7 +190,7 @@ export default function FilterOptionPane({ setisSearch ,setHostData ,setisLoad})
                       </DropdownItem>
                     </DropdownMenu>
                   </UncontrolledDropdown>
-                </FormGroup>
+                </FormGroup> */}
                 <FormGroup>
                   <Label style={{ width: "300px" }}>
                     ช่วงเวลาที่ต้องการฝาก

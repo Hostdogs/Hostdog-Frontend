@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Container,
   UncontrolledCarousel,
@@ -13,27 +13,17 @@ import {
 import "./Service.css";
 import GoogleMapService from "./GoogleMapService.js";
 
-export default function ServiceHost() {
-  const items = [
-    {
-      src: "host.jpg",
-      key: "1",
-      altText: "",
-      caption: "",
-    },
-    {
-      src: "map.jpg",
-      key: "2",
-      altText: "",
-      caption: "",
-    },
-    {
-      src: "host.jpg",
-      key: "3",
-      altText: "",
-      caption: "",
-    },
-  ];
+export default function ServiceHost({ host }) {
+  const [hostAddress, sethostAddress] = useState()
+  useEffect(() => {
+    if (host) {
+      sethostAddress(host.address)
+      setitems(host.house_image)
+      // console.log("wheremypicture",host)
+    }
+  }, [host])
+  const [items, setitems] = useState([])
+
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [animating, setAnimating] = useState(false);
@@ -60,12 +50,12 @@ export default function ServiceHost() {
       <CarouselItem
         onExiting={() => setAnimating(true)}
         onExited={() => setAnimating(false)}
-        key={item.key}
+        key={item.id}
       >
         <img
           className="resize-img"
-          src={item.src}
-          alt={item.altText}
+          src={item.picture}
+
           onClick={onImageOpenClick}
         />
         <CarouselCaption
@@ -148,19 +138,25 @@ export default function ServiceHost() {
           </Carousel>
         </Col>
       </Row>
-      <br />
-      <br />
-      <Row className="host-row">
+
+      <Row className="host-row" style={{ marginTop: "10px", marginBottom: "10px" }}>
         <Col>
-        <GoogleMapService mytoken={"ac5ff12742a6890c67a44a844e203d6ed5eee68f"} host_id={3} />
+          <GoogleMapService host={host} />
         </Col>
       </Row>
-      <br />
-      <br />
+
       <Row className="host-row">
-        <h4>ที่อยู่</h4>
-        <p>  Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis, assumenda quae incidunt commodi eius fugit corrupti reprehenderit modi perspiciatis facilis magni culpa quisquam consectetur pariatur minus doloribus dicta deserunt neque.
-</p>
+        <Col  xs={12}>
+          <h4>ที่อยู่</h4>
+        </Col>
+        <Col>
+ 
+            <p style={{ wordWrap:"break-word"}}>{hostAddress}</p>
+  
+        </Col>
+
+
+
       </Row>
       <Row>{imageHost}</Row>
     </div>

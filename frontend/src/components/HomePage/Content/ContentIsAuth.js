@@ -11,19 +11,26 @@ const ContentIsAuth = (props) => {
   const [cookies, setCookie, removeCookie] = useCookies(['mytoken', 'user_id'])
   const [isLoad, setisLoad] = useState(false)
   useEffect(() => {
-    if(cookies["user_id"]){
-      AuthenAPI.getUserAllInfo(cookies["mytoken"],cookies["user_id"]).then(res=>{
-        setisHost(res.data.is_host)
-        setisLoad(true)
-      })
-    }
+      console.log(cookies["user_id"])
+      if(!cookies["user_id"]){
+        window.location.reload()
+      }
+      if(cookies["user_id"]){
+        AuthenAPI.getUserAllInfo(cookies["mytoken"],cookies["user_id"]).then(res=>{
+          setisHost(res.data.is_host)
+          setisLoad(true)
+        })
+      }
+   
+    console.log(cookies["user_id"])
     
 
-  }, [cookies])
+  }, [cookies["user_id"]])
+ 
   return (
     <div >
       {isHost&&isLoad ? (<InboxPage/>):(null)}
-      {!isHost&&isLoad ? (<InboxPage/>):(null)}
+      {!isHost&&isLoad ? (<SearchHostPage/>):(null)}
       {!isLoad ? (<Loading/>):(null)}
       
     </div>

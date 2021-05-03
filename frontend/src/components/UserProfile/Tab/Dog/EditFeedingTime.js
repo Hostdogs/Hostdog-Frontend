@@ -29,26 +29,25 @@ export default function EditFeedingTime(props) {
 
   function submitBtn() {
     //console.log(allTimes);
-    idTimeDelete.forEach((timeId) => {
-      DogAPI.DeleteFeedingTime(
-        myToken,
-        myId,
-        props.dogId,
-        timeId
-      ).then((resp) => console.log(resp));
-    });
+    if (allTimes.length > 0) {
+      idTimeDelete.forEach((timeId) => {
+        DogAPI.DeleteFeedingTime(myToken, myId, props.dogId, timeId);
+      });
 
-    const newTime = allTimes.filter((time) => {
-      return isNaN(time.id);
-    });
-    newTime.forEach((time) => {
-      DogAPI.AddFeedingTime(myToken, myId, props.dogId, time).then((resp) =>
-        console.log(resp)
-      );
-    });
+      const newTime = allTimes.filter((time) => {
+        return isNaN(time.id);
+      });
+      newTime.forEach((time) => {
+        DogAPI.AddFeedingTime(myToken, myId, props.dogId, time).then((resp) =>
+          console.log(resp)
+        );
+      });
 
-    setIdTimeDelete([]);
-    toggle();
+      setIdTimeDelete([]);
+      toggle();
+    } else {
+      alert("กรุณาเพิ่มเวลาให้อาหาร");
+    }
   }
 
   return (

@@ -8,6 +8,8 @@
 .col-right-manage:hover {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
+
+
 .resize-imgHost {
   width: 500px;
   height: 300px;
@@ -18,6 +20,7 @@
   background-color: rgb(255, 255, 255);
   max-width: 1200px;
   position: relative;
+  border-radius: 10px;
 }
 .hostImage-content-small img {
   display: block;
@@ -48,4 +51,29 @@
 
 .HostPicture .btn:hover {
   background-color: black;
+}
+
+
+.col-bottom-left:hover {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.col-bottom-right:hover {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.table_meal{
+  
+}
+
+@media only screen and (max-width:499px){
+  .table_meal{
+      font-size: 13px;
+  }
+}
+
+@media only screen and (max-width:349px){
+  .table_meal{
+      font-size: 8px;
+  }
 }

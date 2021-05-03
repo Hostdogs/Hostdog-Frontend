@@ -35,10 +35,8 @@ export default function SettingTab({Account,setAccount}) {
   return (
     <div>
       <Container>
-        <hr style={{ borderWidth: "3px", backgroundColor: "#f9ad6a" }} />
-        <h1>การตั้งค่าโปรไฟล์ทั่วไป</h1>
-        <hr style={{ borderWidth: "3px", backgroundColor: "#f9ad6a" }} />
-        <ListGroup>
+        <h1 style={{marginTop:"15px", marginRight:"-10px", marginLeft:"-10px"}}><ins>การตั้งค่าโปรไฟล์ทั่วไป</ins></h1>        
+        <ListGroup style={{marginTop:"15px"}}>
           <ProfileimgPathSetting setSelected={setSelected} Selected={Selected} Account={Account}/>
           <NameSetting setSelected={setSelected} Selected={Selected} Account={Account} setAccount={setAccount}/>
           <PasswordSetting setSelected={setSelected} Selected={Selected} Account={Account}/>

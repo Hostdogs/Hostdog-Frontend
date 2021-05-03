@@ -14,7 +14,7 @@ export default function BlankPending() {
     }
   }, [cookies])
   return (
-    <div style={{ paddingTop: "35px", textAlign: "center" }}>
+    <div style={{ paddingTop: "35px", textAlign: "center", minHeight:"35vw" }}>
       <Container>
         <img src="/blankPending.gif" className="blankPending"/>
         <h2>

@@ -9,7 +9,7 @@ export default function PendingList({ pendingData }) {
     
     <div>
       
-    <div style={{paddingTop:"35px"}}>
+    <div style={{paddingTop:"35px", minHeight:"35vw"}}>
     {pendingData.map((pendingTask) => (
         <div>
           <Pending key={pendingTask.service_id} host={pendingTask} />

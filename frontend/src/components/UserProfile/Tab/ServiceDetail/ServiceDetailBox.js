@@ -67,7 +67,7 @@ export default function ServiceDetailBox(props) {
               <div
                 style={{
                   backgroundColor: "#43978d",
-                  padding: "10px 10px",
+                  padding: "20px 20px",
                   color: "white",
                   borderRadius: "3%",
                 }}
@@ -118,15 +118,20 @@ export default function ServiceDetailBox(props) {
               </div>
             </Col>
 
-            <Col xs="12" sm="12" md="12" lg="6" style={{ marginTop: "15px" }}>
-              <div
-                style={{
-                  backgroundColor: "#43978d",
-                  padding: "10px 10px",
-                  color: "white",
-                  borderRadius: "15px",
-                }}
-              >
+            <Col
+              xs="12"
+              sm="12"
+              md="12"
+              lg="6"
+              style={{
+                marginTop: "15px",
+                backgroundColor: "#43978d",
+                padding: "20px 20px",
+                color: "white",
+                borderRadius: "15px",
+              }}
+            >
+              <div>
                 <FormGroup>
                   <Row>
                     <Col>
@@ -145,6 +150,7 @@ export default function ServiceDetailBox(props) {
               </div>
             </Col>
           </Row>
+          <br/>
         </div>
       </Form>
     </div>

@@ -22,7 +22,8 @@ import moment from "moment-timezone";
 import "moment/locale/th";
 import "./ServiceDetail.css";
 import { useCookies } from "react-cookie";
-export default function ServiceDetail({ onCancel, isExpand, ServiceInfo,hostInfo,serviceDetailStatusLabel,showDepositPayment}) {
+import PaymentLateModal from "../Payment/PaymentLateModal";
+export default function ServiceDetail({ onCancel, isExpand, ServiceInfo,hostInfo,serviceDetailStatusLabel,showDepositPayment,showCancelService,showLateService}) {
   const [serviceID,setServiceID]=useState(null);
   const [customer, setcustomer] = useState({})
   const [host, sethost] = useState("");
@@ -205,14 +206,16 @@ return(
                 float: "right",
               }}
             >
+              {showLateService?(<PaymentLateModal service_id={serviceID}/>):null}
               {showDepositPayment?(<PaymentDepositModal service_id={serviceID}/>):null}
-              <Button
+
+              {showCancelService?(<Button
                 onClick={toggle}
                 color="danger"
                 style={{ marginLeft: "5px" }}
               >
-                <div className="Cancel_Button">ยกเลิกบริการ</div>
-              </Button>
+               <div className="Cancel_Button">ยกเลิกบริการ</div>
+              </Button>):null}
               <Modal isOpen={modal} toggle={toggle}>
                 <ModalHeader>กรุณายืนยันที่จะยกเลิกบริการ</ModalHeader>
                 <ModalFooter>

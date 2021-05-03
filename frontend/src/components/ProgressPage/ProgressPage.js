@@ -18,6 +18,8 @@ export default function ProgressPage({ match }) {
 
   const [gifIndex, setGifIndex] = useState(0);
   const [showDepositPayment,setShowDepositPayment]=useState(false);
+  const [showLateService,setShowLateService]=useState(false);
+  const [showCancelService,setShowCancelService]=useState(true);
   const [serviceDetailStatusLabel,setServiceDetailStatusLabel]=useState("");
 
   const getService =  () => {
@@ -33,6 +35,7 @@ export default function ProgressPage({ match }) {
   };
 
   const handleProgress = (ServiceInfo) => {
+
        if (ServiceInfo.main_status==="pending"){
         setServiceDetailStatusLabel("กำลังรอคำตอบรับจากผู้รับฝาก");
         setShowDepositPayment(false);
@@ -65,11 +68,12 @@ export default function ProgressPage({ match }) {
         setGifIndex(3);
         console.log("in_progress");
       }else if(ServiceInfo.main_status==="end"){
-        setServiceDetailStatusLabel("กรุณามารับสุนัข")
+        setServiceDetailStatusLabel("สิ้นสุดบริการ")
         setShowDepositPayment(false);
         setLabelIndex(4);
         setColorIndex(0);
         setProgressValue(100);
+        setShowCancelService(false);
         setGifIndex(5);
         console.log("end");
       }else if(ServiceInfo.main_status==="late"){
@@ -78,6 +82,8 @@ export default function ProgressPage({ match }) {
         console.log("late");
         setColorIndex(1);
         setProgressValue(100);
+        setShowCancelService(false);
+        setShowLateService(true);
         setGifIndex(6);
         setLabelIndex(7);
       }else if(ServiceInfo.main_status==="cancelled"){
@@ -86,6 +92,7 @@ export default function ProgressPage({ match }) {
         console.log("cancelled");
         setLabelIndex(6);
         setGifIndex(6);
+        setShowCancelService(false);
         setColorIndex(1);
       }
   };
@@ -153,7 +160,11 @@ export default function ProgressPage({ match }) {
             isExpand={isExpand}
             ServiceInfo={ServiceInfo}
             showDepositPayment={showDepositPayment}
-            serviceDetailStatusLabel={serviceDetailStatusLabel}/>
+            serviceDetailStatusLabel={serviceDetailStatusLabel}
+            showCancelService={showCancelService}
+            showLateService={showLateService}
+            />
+
         </Container>
         {/* {!isExpand?(<div style={{height:"100px"}}></div>):(null)} */}
       </div>

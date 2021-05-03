@@ -19,7 +19,7 @@ export default function ProfilePage({ match }) {
   // const [dateJoin, setdateJoin] = useState()
   const [isOwned, setisOwned] = useState(false);
   // const [isHost, setisHost] = useState(false);
-  const [Account, setAccount] = useState()
+  const [Account, setAccount] = useState();
   let path = match.params["profile_id"];
 
   const toggleSideBar = () => {
@@ -28,28 +28,26 @@ export default function ProfilePage({ match }) {
   };
 
   useEffect(() => {
-    if(!cookies["mytoken"]){
-      history.push("/")
-      history.go(0)
-    }else{
-      if(path===cookies["user_id"]){
-        setisOwned(true)
-      }else{
-        setisOwned(false)
+    if (!cookies["mytoken"]) {
+      history.push("/");
+      history.go(0);
+    } else {
+      if (path === cookies["user_id"]) {
+        setisOwned(true);
+      } else {
+        setisOwned(false);
       }
-      AuthenAPI.getUserAllInfo(cookies["mytoken"],path).then(res=>{
-        console.log(res)
+      AuthenAPI.getUserAllInfo(cookies["mytoken"], path).then((res) => {
+        console.log(res);
         // setisHost(res.data.is_host)
         // if(res.data.is_host){
         //   setProfile(res.data.host)
         // }else{
         //   setProfile(res.data.customer)
         // }
-        setAccount(res.data)
-      })
-      
+        setAccount(res.data);
+      });
     }
-    
   }, []);
 
   const [pageCollapse, setpageCollapse] = useState(true);

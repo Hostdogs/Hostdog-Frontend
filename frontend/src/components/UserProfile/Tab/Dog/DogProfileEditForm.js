@@ -17,6 +17,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faEdit } from "@fortawesome/free-solid-svg-icons";
 import { useCookies } from "react-cookie";
 import DogAPI from "../../../API/DogAPI";
+import moment from "moment-timezone";
 
 export default function DogProfileEditForm(props) {
   const { labelBtn, editDogInfo } = props;
@@ -29,15 +30,26 @@ export default function DogProfileEditForm(props) {
     dog_weight: editDogInfo.dog_weight,
     dog_bio: editDogInfo.dog_bio,
   };
+
   const [modal, setModal] = useState(false);
   const [nestedModal, setNestedModal] = useState(false);
   const [closeAll, setCloseAll] = useState(false);
   const [dogInfo, setDogInfo] = useState(startDogInfo);
   const [picture, setPicture] = useState("");
   const [cookies] = useCookies(["mytoken", "user_id"]);
-
+  const [preview, setPreview] = useState(null);
+  const maxDate = moment(new Date()).format("YYYY-MM-DD");
   const myId = cookies["user_id"];
   const myToken = cookies["mytoken"];
+  const [genderIsMale, setGenderIsMale] = useState(false);
+
+  useEffect(() => {
+    if (dogInfo.gender === "male") {
+      setGenderIsMale(true);
+    } else {
+      setGenderIsMale(false);
+    }
+  }, [dogInfo]);
 
   const toggle = () => setModal(!modal);
 
@@ -51,6 +63,7 @@ export default function DogProfileEditForm(props) {
     setCloseAll(true);
     setDogInfo(startDogInfo);
     setPicture("");
+    setPreview(null);
   };
 
   function onDogInfoChange(event) {
@@ -64,35 +77,39 @@ export default function DogProfileEditForm(props) {
   }
 
   function onDogImgChange(event) {
-    const file = event.target.files[0];
-    setPicture(file);
-    //console.log(picture.name);
+    if (event.target.files[0]) {
+      setPreview(URL.createObjectURL(event.target.files[0]));
+      setPicture(event.target.files[0]);
+    }
   }
 
   async function onDogUpdate(event) {
     event.preventDefault();
-    const resp1 = await DogAPI.UpdateDog(
-      myToken,
-      myId,
-      editDogInfo.id,
-      dogInfo
-    );
-    props.updateDogInfo(resp1.data);
-
-    if (picture !== "") {
-      let form_data = new FormData();
-      form_data.append("picture", picture, picture.name);
-      const resp2 = await DogAPI.UploadImgDog(
+    try {
+      const resp1 = await DogAPI.UpdateDog(
         myToken,
         myId,
-        resp1.data.id,
-        form_data
+        editDogInfo.id,
+        dogInfo
       );
-      props.updateDogInfo(resp2.data);
-      setPicture("");
+      props.updateDogInfo(resp1.data);
+      if (picture !== "") {
+        let form_data = new FormData();
+        form_data.append("picture", picture, picture.name);
+        const resp2 = await DogAPI.UploadImgDog(
+          myToken,
+          myId,
+          resp1.data.id,
+          form_data
+        );
+        props.updateDogInfo(resp2.data);
+        setPicture("");
+      }
+      setPreview(null);
+      toggle();
+    } catch (error) {
+      alert("กรุณากรอกข้อมูลให้ครบ");
     }
-
-    toggle();
   } //update dog info
 
   function changeValue(name, value) {
@@ -101,6 +118,9 @@ export default function DogProfileEditForm(props) {
     } else if (value === "false" || value === false) {
       return false;
     } else if (!isNaN(value) && name !== "dog_bio" && value !== "") {
+      if (name === "dog_weight" && value > 100) {
+        return Number(100);
+      }
       return Number(value);
     } else {
       return value;
@@ -122,6 +142,11 @@ export default function DogProfileEditForm(props) {
           <ModalBody>
             <Form>
               <FormGroup>
+                {preview ? (
+                  <div style={{ textAlign: "center" }}>
+                    <img className="resize-imgDog-preview" src={preview} />
+                  </div>
+                ) : null}
                 <Label>รูป</Label>
                 <Input
                   type="file"
@@ -159,6 +184,7 @@ export default function DogProfileEditForm(props) {
                       label="เพศผู้"
                       onChange={onDogInfoChange}
                       value="male"
+                      checked={genderIsMale}
                     />
                   </Col>
                   <Col xs="5" md="4">
@@ -169,6 +195,7 @@ export default function DogProfileEditForm(props) {
                       label="เพศเมีย"
                       onChange={onDogInfoChange}
                       value="female"
+                      checked={!genderIsMale}
                     />
                   </Col>
                 </Row>
@@ -179,6 +206,7 @@ export default function DogProfileEditForm(props) {
                   <Input
                     type="date"
                     name="dog_dob"
+                    max={maxDate}
                     value={dogInfo.dog_dob}
                     onChange={onDogInfoChange}
                   />
@@ -194,6 +222,7 @@ export default function DogProfileEditForm(props) {
                   name="dog_weight"
                   value={dogInfo.dog_weight}
                   onChange={onDogInfoChange}
+                  max="100"
                 />
               </FormGroup>
               <FormGroup>

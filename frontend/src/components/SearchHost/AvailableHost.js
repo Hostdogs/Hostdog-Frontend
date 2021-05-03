@@ -28,9 +28,9 @@ export default function AvailableHost({ host, className }) {
   const [newAvailableDates, setnewAvailableDates] = useState([])
   useEffect(() => {
     if (host) {
-      console.log("host", host)
+      // console.log("host", host)
       HostAvailableDateAPI.GetHostAvailableDate(cookies["mytoken"], host.account).then(res => {
-        console.log(res.data)
+        // console.log(res.data)
         setnewAvailableDates(formatDate(res.data));
       })
     }
@@ -41,7 +41,7 @@ export default function AvailableHost({ host, className }) {
 
       newDates.push(new Date(date.date));
     });
-    console.log(newDates);
+    // console.log(newDates);
     return newDates;
   }
   return (

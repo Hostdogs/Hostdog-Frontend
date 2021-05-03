@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button, Label, Input, Row, Col, Table } from "reactstrap";
 import moment from "moment-timezone";
 export default function DogFeedingTime(props) {
+  const { isOwned } = props;
   const [time, setTime] = useState("");
   const { allTimes, setAllTimes, idTimeDelete, setIdTimeDelete } = props;
 
@@ -46,15 +47,17 @@ export default function DogFeedingTime(props) {
           <td>
             <Row>
               <Col xs="6">{theTime.time.slice(0, 5)}</Col>
-              <Col xs="6" style={{ textAlign: "end" }}>
-                <Button
-                  color="danger"
-                  size="sm"
-                  onClick={() => onTimeDelete(theTime.id)}
-                >
-                  ลบ
-                </Button>
-              </Col>
+              {isOwned ? (
+                <Col xs="6" style={{ textAlign: "end" }}>
+                  <Button
+                    color="danger"
+                    size="sm"
+                    onClick={() => onTimeDelete(theTime.id)}
+                  >
+                    ลบ
+                  </Button>
+                </Col>
+              ) : null}
             </Row>
           </td>
         </tr>
@@ -75,15 +78,18 @@ export default function DogFeedingTime(props) {
           <tbody>{timeElements}</tbody>
         </Table>
       ) : null}
-
-      <Input type="time" name="time" value={time} onChange={onTimeChange} />
-      <Button
-        style={{ marginTop: "10px" }}
-        color="primary"
-        onClick={onTimeSubmit}
-      >
-        เพิ่ม
-      </Button>
+      {isOwned ? (
+        <div>
+          <Input type="time" name="time" value={time} onChange={onTimeChange} />
+          <Button
+            style={{ marginTop: "10px" }}
+            color="primary"
+            onClick={onTimeSubmit}
+          >
+            เพิ่ม
+          </Button>
+        </div>
+      ) : null}
     </div>
   );
 }

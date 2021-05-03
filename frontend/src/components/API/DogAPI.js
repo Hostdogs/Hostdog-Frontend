@@ -40,7 +40,7 @@ export default class DogAPI {
       },
     });
   }
-
+ 
   static GetDog(mytoken, user_id) {
     const url = `${API_URL}${user_id}/dogs/`;
     return axios.get(url, {
@@ -80,4 +80,14 @@ export default class DogAPI {
       },
     });
   }
+  static GetOneDog(mytoken, user_id,dog_id) {
+    const url = `${API_URL}${user_id}/dogs/${dog_id}/`;
+    return axios.get(url, {
+      headers: {
+        "content-type": "application/json",
+        Authorization: `Token ${mytoken}`,
+      },
+    });
+  }
+
 }

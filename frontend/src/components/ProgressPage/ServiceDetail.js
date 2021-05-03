@@ -12,38 +12,81 @@ import {
   Card,
 } from "reactstrap";
 import React, { useEffect, useState } from "react";
-import { format } from "date-fns";
+import { add, format } from "date-fns";
 import "./ProgressPage.css";
-import ProgressAPI from "./ProgressAPI";
+import HostAPI from "../API/HostAPI";
+import CustomerAPI from "../API/CustomerAPI";
+
+import DogAPI from "../API/DogAPI"
 import moment from "moment";
 import "moment/locale/th";
 import "./ServiceDetail.css";
-export default function ServiceDetail({ onCancel, isExpand, ServiceInfo }) {
-  // const [customer, setcustomer] = useState({})
+import { useCookies } from "react-cookie";
+export default function ServiceDetail({ onCancel, isExpand, ServiceInfo,hostInfo }) {
+  const [customer, setcustomer] = useState({})
   const [host, sethost] = useState("");
   const [dog, setdog] = useState("");
   const [timeRegister, settimeRegister] = useState("");
   const [timeEnd, settimeEnd] = useState("");
-
+  const [totalPrice,setTotalPrice]=useState(null); 
+  const [mealType,setMealType]=useState(null);
+  const [mealWeight,setMealWeight]=useState(null);
+  const [dogFeedingTime,setDogFeedingTime]=useState([]);
+  const [additionalService,setAdditionalService]=useState([]);
+  const [cookies, setcookies] = useCookies(["mytoken", "user_id"]);
   useEffect(() => {
     moment.updateLocale("th");
     if (ServiceInfo) {
-      // ProgressAPI.fakeCustomerProfile(ServiceInfo.customer_id).then(res=>{
-      //   setcustomer(res)
-      // })
+      HostAPI.getHostDetails(cookies.mytoken,ServiceInfo.host.account).then((response)=>{
+        sethost(response.data);
+        console.log("getHostDetails")
+        console.log(response.data)
+      }).catch((error)=>{
+        console.log("HostAPI");
+        console.log(error);
+      })
 
-      ProgressAPI.fakeHostProfile(ServiceInfo.host_id).then((res) => {
-        sethost(res);
-      });
+      CustomerAPI.getCustomerDetails(cookies.mytoken,ServiceInfo.customer.account).then((response)=>{
+        setcustomer(response.data);
+        console.log("getCustomerDetails")
+        console.log(response.data)
+      }).catch((error)=>{
+        console.log("customerAPI");
+        console.log(error);
+      })
+      DogAPI.GetOneDog(cookies.mytoken,ServiceInfo.customer.account,ServiceInfo.dog.id).then((response)=>{
+        setdog(response.data);
+        console.log("GetOneDog")
+        console.log(response.data)
+      }).catch((error)=>{
+        console.log("dogAPI");
+        console.log(error);
+      })
+      DogAPI.GetFeedingTime(cookies.mytoken,ServiceInfo.customer.account,ServiceInfo.dog.id).then((response)=>{
+        setDogFeedingTime(response.data);
+        console.log("GetFeedingTime");
+        console.log(response.data)
 
-      ProgressAPI.fakeDog(ServiceInfo.dog_id).then((res) => {
-        setdog(res);
-      });
+      }).catch((error)=>{
+        console.log("GetFeedingTime")
+        console.log(error)
+      })
 
       settimeRegister(moment(ServiceInfo.service_reg_time).format("lll"));
       settimeEnd(moment(ServiceInfo.service_end_time).format("lll"));
+      setTotalPrice(ServiceInfo.total_price);
+      setMealType(ServiceInfo.service_meal_type.meal_type);
+      setMealWeight(ServiceInfo.service_meal_weight);
+
+      setAdditionalService([ServiceInfo.is_dog_walk,ServiceInfo.is_get_dog,ServiceInfo.is_delivery_dog,ServiceInfo.is_bath_dog]);    
     }
   }, [ServiceInfo]);
+  const listDogFeedingTime= dogFeedingTime.map((dogFeeding)=>{
+return(
+  <li key={dogFeeding.id}>{dogFeeding.time}</li>
+)
+  });
+
 
   const [modal, setModal] = useState(false);
 
@@ -68,6 +111,9 @@ export default function ServiceDetail({ onCancel, isExpand, ServiceInfo }) {
               <p>
                 ผู้รับฝาก: {host.first_name} {host.last_name}
               </p>
+              <p>
+                ผู้ฝาก: {customer.first_name} {customer.last_name}
+              </p>
               <p>สุนัข: {dog.dog_name}</p>
               <p>
                 ฝากวันที่: {timeRegister}{" "}
@@ -76,21 +122,18 @@ export default function ServiceDetail({ onCancel, isExpand, ServiceInfo }) {
                 </a>{" "}
                 ถึงวันที่: {timeEnd}{" "}
               </p>
-              <p>การฝากจะสิ้นสุดในเวลา x</p>
-              <p>ค่าบริการทั้งหมด x บาท</p>
+              <p>การฝากจะสิ้นสุดในเวลา {moment(timeEnd).fromNow()}</p>
+              <p>ค่าบริการทั้งหมด {totalPrice} บาท</p>
             </div>
 
             <Collapse isOpen={isExpand}>
               <Row>
                 <Col>
                   <div className="DownsideText_1">
-                    <p>ประเภทอาหาร: x ปริมาณ x กรัมต่อมื้อ</p>
+                    <p>ประเภทอาหาร: {mealType} ปริมาณ {mealWeight} กรัมต่อมื้อ</p>
                     <p>เวลาในการให้อาหาร:</p>
                     <ul>
-                      <li>10.00</li>
-                      <li>12.00</li>
-                      <li>15.00</li>
-                      <li>18.00</li>
+                    {listDogFeedingTime}
                     </ul>
                   </div>
                 </Col>
@@ -99,8 +142,10 @@ export default function ServiceDetail({ onCancel, isExpand, ServiceInfo }) {
                     <h3 className="DownsideText_2">บริการเพิ่มเติม</h3>
                     <div className="DownsideText_3">
                       <ol>
-                        <li>พาไปเดินเล่น</li>
-                        <li>ตัดขน</li>
+                      {additionalService[0]?(<li>พาสุนัขไปเดินเล่น</li>):null}
+                      {additionalService[1]?(<li>ให้ผู้รับฝากไปรับสุนัข</li>):null}
+                      {additionalService[2]?(<li>ให้ผู้รับฝากไปส่งสุนัข</li>):null}
+                      {additionalService[3]?(<li>อาบน้ำสุนัข</li>):null}
                       </ol>
                     </div>
 

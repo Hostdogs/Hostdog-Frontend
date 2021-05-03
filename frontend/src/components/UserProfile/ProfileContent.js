@@ -18,6 +18,7 @@ import MainTab from "./Tab/MainTab";
 import SettingTab from "./Tab/SettingTab";
 import HostServiceTab from "./Tab/Manage/HostServiceTab";
 import ServiceDetailTab from "./Tab/ServiceDetail/ServiceDetailTab";
+import Skeleton from "react-loading-skeleton";
 
 const ProfileContent = ({
   setpageCollapse,
@@ -27,17 +28,22 @@ const ProfileContent = ({
   profileId,
 }) => {
   const [activeTab, setActiveTab] = useState("1");
-  const [isHost, setisHost] = useState()
+  const [isHost, setisHost] = useState();
+  const [isLoad, setisLoad] = useState(false)
+
   // const [Profile, setProfile] = useState()
+  const [dogCount, setdogCount] = useState("")
+
   const toggle = (tab) => {
     if (activeTab !== tab) setActiveTab(tab);
   };
 
   useEffect(() => {
-    if(Account){
+    if (Account) {
       setisHost(Account.is_host)
+      setisLoad(true)
     }
-    
+
   }, [Account])
 
   useEffect(() => {
@@ -61,24 +67,10 @@ const ProfileContent = ({
             }}
             style={{ color: "#264d59" }}
           >
-            หน้าหลัก
+            {isLoad?("หน้าหลัก"):(<Skeleton/>)}
           </NavLink>
         </NavItem>
-        {isHost ? (
-          <NavItem
-            style={{ borderTopLeftRadius: "5px", borderTopRightRadius: "5px" }}
-          >
-            <NavLink
-              className={classnames({ active: activeTab === "4" })}
-              onClick={() => {
-                toggle("4");
-              }}
-              style={{ color: "#264d59" }}
-            >
-              รายละเอียดบริการ
-          </NavLink>
-          </NavItem>
-        ) : (
+        {!isHost ? (
           <NavItem
             style={{ borderTopLeftRadius: "5px", borderTopRightRadius: "5px" }}
           >
@@ -89,11 +81,28 @@ const ProfileContent = ({
               }}
               style={{ color: "#264d59" }}
             >
-              สุนัข
+              {isLoad?("สุนัข"):(<Skeleton/>)}
             </NavLink>) : (null)}
           </NavItem>
-        )}
+        ) : (null)}
 
+        {isHost && !isOwned? (
+          <NavItem
+            style={{ borderTopLeftRadius: "5px", borderTopRightRadius: "5px" }}
+          >
+            <NavLink
+              className={classnames({ active: activeTab === "4" })}
+              onClick={() => {
+                toggle("4");
+              }}
+              style={{ color: "#264d59" }}
+            >
+              {isLoad?("รายละเอียดบริการ"):(<Skeleton/>)}
+          </NavLink>
+          </NavItem>
+        ) : (
+          null
+        )}
 
         {isHost && isOwned ? (
           <NavItem
@@ -106,11 +115,10 @@ const ProfileContent = ({
               }}
               style={{ color: "#264d59" }}
             >
-              จัดการการบริการ
-          </NavLink>
-          </NavItem>) : (null)}
-
-
+              {isLoad?("จัดการการบริการ"):(<Skeleton/>)}
+            </NavLink>
+          </NavItem>
+        ) : null}
 
         {isOwned ? (
           <NavItem
@@ -123,42 +131,43 @@ const ProfileContent = ({
               }}
               style={{ color: "#264d59" }}
             >
-              ตั้งค่า
-          </NavLink>
+              {isLoad?("ตั้งค่า"):(<Skeleton/>)}
+            </NavLink>
           </NavItem>
-        ) : (null)}
-
+        ) : null}
       </Nav>
       <TabContent activeTab={activeTab}>
         <TabPane tabId="1">
-          <MainTab
-            isOwned={isOwned}
-            isHost={isHost}
-            Account={Account}
-          />
+          <MainTab isOwned={isOwned} isHost={isHost} Account={Account} dogCount={dogCount} setdogCount={setdogCount} />
         </TabPane>
-        {isHost ? (
-          <TabPane tabId="4">
-            <ServiceDetailTab profileId={profileId} />
-          </TabPane>) : (
+        {!isHost ? (
           <TabPane tabId="2">
-            <DogProfileTab profileId={profileId} />
+            <DogProfileTab profileId={profileId} isOwned={isOwned} setdogCount={setdogCount}/>
           </TabPane>
+        ) : (
+          null
         )}
 
-        {isHost && isOwned ? (
-          <TabPane tabId="3">
-            <HostServiceTab profileId={profileId} />
-          </TabPane>) : (null)}
-
-        {isOwned ? (
-          <TabPane tabId="5">
-            <SettingTab Account={Account} setAccount={setAccount}/>
+        {isHost && !isOwned ? (
+          <TabPane tabId="4">
+            <ServiceDetailTab profileId={profileId} isOwned={isOwned}/>
           </TabPane>
         ) : (null)}
 
+
+        {isHost && isOwned ? (
+          <TabPane tabId="3">
+            <HostServiceTab profileId={profileId} isOwned={isOwned} />
+          </TabPane>
+        ) : null}
+
+        {isOwned ? (
+          <TabPane tabId="5">
+            <SettingTab Account={Account} setAccount={setAccount} />
+          </TabPane>
+        ) : null}
       </TabContent>
-    </div >
+    </div>
   );
 };
 

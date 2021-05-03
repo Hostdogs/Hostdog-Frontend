@@ -14,9 +14,11 @@ import {
 } from "reactstrap";
 
 import ShowAvailableDate from "./ShowAvailableDate";
+import ServiceImgHost from "./ServiceImgHost";
+import ServiceMealHost from "./ServiceMealHost";
 
 export default function ServiceDetailBox(props) {
-  const { serviceDetail, newAvailableDates } = props;
+  const { serviceDetail, newAvailableDates, profileId } = props;
 
   const etcServicesDetail = [
     {
@@ -65,6 +67,7 @@ export default function ServiceDetailBox(props) {
           <Row>
             <Col xs="12" sm="12" md="12" lg="6" style={{ marginTop: "15px" }}>
               <div
+                className="col-left-manage"
                 style={{
                   backgroundColor: "#43978d",
                   padding: "20px 20px",
@@ -123,15 +126,23 @@ export default function ServiceDetailBox(props) {
               sm="12"
               md="12"
               lg="6"
+              className="col-right-manage"
               style={{
                 marginTop: "15px",
                 backgroundColor: "#43978d",
                 padding: "20px 20px",
                 color: "white",
-                borderRadius: "15px",
+                borderRadius: "3%",
               }}
             >
-              <div>
+              <div
+                style={{
+                  backgroundColor: "#43978d",
+                  padding: "10px 10px",
+                  color: "white",
+                  borderRadius: "15px",
+                }}
+              >
                 <FormGroup>
                   <Row>
                     <Col>
@@ -148,6 +159,25 @@ export default function ServiceDetailBox(props) {
                 </FormGroup>
                 <div className="list-service">{etcServicesElement}</div>
               </div>
+            </Col>
+            <Col xs="12" sm="12" md="12" lg="6" style={{ marginTop: "15px" }}>
+              <ServiceImgHost profileId={profileId} />
+            </Col>
+            <Col
+              xs="12"
+              sm="12"
+              md="12"
+              lg="6"
+              className="col-bottom-right"
+              style={{
+                marginTop: "15px",
+                backgroundColor: "#43978d",
+                padding: "15px 15px",
+                color: "white",
+                borderRadius: "3%",
+              }}
+            >
+              <ServiceMealHost profileId={profileId} />
             </Col>
           </Row>
           <br/>

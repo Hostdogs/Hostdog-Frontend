@@ -20,7 +20,7 @@ import EditFeedingTime from "./EditFeedingTime";
 import "./DogTab.css";
 
 export default function DogProfileList(props) {
-  const { dogInfos } = props;
+  const { dogInfos, isOwned } = props;
   const [cookies] = useCookies(["mytoken", "user_id"]);
 
   const myId = cookies["user_id"];
@@ -72,23 +72,31 @@ export default function DogProfileList(props) {
                   <p className="text-muted">รายละเอียด : {dogInfo.dog_bio}</p>
                 </CardText>
                 <ButtonGroup>
-                  <EditFeedingTime labelBtn="เวลาให้อาหาร" dogId={dogInfo.id} />
-                </ButtonGroup>
-                <ButtonGroup style={{ marginLeft: "15px" }}>
-                  <DogProfileEditForm
-                    labelBtn="แก้ไข"
-                    editDogInfo={dogInfo}
-                    updateDogInfo={updateDogInfo}
+                  <EditFeedingTime
+                    labelBtn="เวลาให้อาหาร"
+                    dogId={dogInfo.id}
+                    isOwned={isOwned}
                   />
                 </ButtonGroup>
-                <Button
-                  color="danger"
-                  size="sm"
-                  style={{ marginLeft: "15px" }}
-                  onClick={() => deleteDogInfo(dogInfo)}
-                >
-                  ลบ
-                </Button>
+                {isOwned ? (
+                  <ButtonGroup style={{ marginLeft: "15px" }}>
+                    <DogProfileEditForm
+                      labelBtn="แก้ไข"
+                      editDogInfo={dogInfo}
+                      updateDogInfo={updateDogInfo}
+                    />
+                  </ButtonGroup>
+                ) : null}
+                {isOwned ? (
+                  <Button
+                    color="danger"
+                    size="sm"
+                    style={{ marginLeft: "15px" }}
+                    onClick={() => deleteDogInfo(dogInfo)}
+                  >
+                    ลบ
+                  </Button>
+                ) : null}
               </CardBody>
             </Col>
           </Row>

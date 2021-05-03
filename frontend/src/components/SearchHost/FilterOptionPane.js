@@ -27,7 +27,7 @@ import { useCookies } from "react-cookie";
 import HostAPI from "../API/HostAPI";
 
 
-export default function FilterOptionPane({ setisSearch ,setHostData}) {
+export default function FilterOptionPane({ setisSearch ,setHostData ,setisLoad}) {
   const [isDateOpen, setIsDateOpen] = useState(false);
   const toggleDate = () => setIsDateOpen(!isDateOpen);
   const [userAddress, setUserAddress] = useState("");
@@ -44,7 +44,7 @@ export default function FilterOptionPane({ setisSearch ,setHostData}) {
           top: 1250,
           behavior: 'smooth',
         })
-      }, 100);
+      }, 500);
 
       const stDate = moment(selectionRange[0].startDate).format("YYYY-MM-DD")
       const endDate = moment(selectionRange[0].endDate).format("YYYY-MM-DD")
@@ -57,6 +57,7 @@ export default function FilterOptionPane({ setisSearch ,setHostData}) {
         //   data.push(object)
         // }
         setHostData(res.data)
+        setisLoad(true)
       }).catch(error=>{
         if(error.response){
           console.log(error.response)

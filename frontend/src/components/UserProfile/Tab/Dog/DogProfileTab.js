@@ -14,7 +14,7 @@ import axios from "axios";
 import { useCookies } from "react-cookie";
 import DogAPI from "../../../API/DogAPI";
 
-export default function DogProfileTab({ profileId }) {
+export default function DogProfileTab({ profileId, isOwned }) {
   const [dogInfos, setDogInfos] = useState([]);
   const [cookies, setCookie] = useCookies(["mytoken", "user_id"]);
 
@@ -51,14 +51,26 @@ export default function DogProfileTab({ profileId }) {
 
   return (
     <div>
-      <ButtonGroup style={{ marginTop: "9px" }}>
-        <DogProfileAddForm labelBtn="เพิ่มสุนัข" addDogInfo={addDogInfo} />
-      </ButtonGroup>
-      <hr />
+      {isOwned ? (
+        <div>
+          <ButtonGroup style={{ marginTop: "9px" }}>
+            <DogProfileAddForm
+              labelBtn="เพิ่มสุนัข"
+              addDogInfo={addDogInfo}
+              isOwned={isOwned}
+            />
+          </ButtonGroup>
+          <hr />
+        </div>
+      ) : (
+        <br />
+      )}
+
       <DogProfileList
         dogInfos={dogInfos}
         updateDogInfo={updateDogInfo}
         deleteDogInfo={deleteDogInfo}
+        isOwned={isOwned}
       />
     </div>
   );

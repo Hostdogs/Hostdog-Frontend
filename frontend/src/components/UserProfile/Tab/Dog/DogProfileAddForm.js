@@ -31,7 +31,7 @@ const startDogInfo = {
 };
 
 export default function DogProfileAddForm(props) {
-  const { labelBtn } = props;
+  const { labelBtn, isOwned } = props;
   const [modal, setModal] = useState(false);
   const [nestedModal, setNestedModal] = useState(false);
   const [closeAll, setCloseAll] = useState(false);
@@ -214,7 +214,11 @@ export default function DogProfileAddForm(props) {
               />
             </FormGroup>
             <FormGroup>
-              <DogFeedingTime allTimes={allTimes} setAllTimes={setAllTimes} />
+              <DogFeedingTime
+                allTimes={allTimes}
+                setAllTimes={setAllTimes}
+                isOwned={isOwned}
+              />
             </FormGroup>
 
             <FormGroup>

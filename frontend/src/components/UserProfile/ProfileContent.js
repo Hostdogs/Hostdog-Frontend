@@ -27,18 +27,17 @@ const ProfileContent = ({
   profileId,
 }) => {
   const [activeTab, setActiveTab] = useState("1");
-  const [isHost, setisHost] = useState()
+  const [isHost, setisHost] = useState();
   // const [Profile, setProfile] = useState()
   const toggle = (tab) => {
     if (activeTab !== tab) setActiveTab(tab);
   };
 
   useEffect(() => {
-    if(Account){
-      setisHost(Account.is_host)
+    if (Account) {
+      setisHost(Account.is_host);
     }
-    
-  }, [Account])
+  }, [Account]);
 
   useEffect(() => {
     if (activeTab === "1") {
@@ -76,24 +75,25 @@ const ProfileContent = ({
               style={{ color: "#264d59" }}
             >
               รายละเอียดบริการ
-          </NavLink>
+            </NavLink>
           </NavItem>
         ) : (
           <NavItem
             style={{ borderTopLeftRadius: "5px", borderTopRightRadius: "5px" }}
           >
-            {!isHost ? (<NavLink
-              className={classnames({ active: activeTab === "2" })}
-              onClick={() => {
-                toggle("2");
-              }}
-              style={{ color: "#264d59" }}
-            >
-              สุนัข
-            </NavLink>) : (null)}
+            {!isHost ? (
+              <NavLink
+                className={classnames({ active: activeTab === "2" })}
+                onClick={() => {
+                  toggle("2");
+                }}
+                style={{ color: "#264d59" }}
+              >
+                สุนัข
+              </NavLink>
+            ) : null}
           </NavItem>
         )}
-
 
         {isHost && isOwned ? (
           <NavItem
@@ -107,10 +107,9 @@ const ProfileContent = ({
               style={{ color: "#264d59" }}
             >
               จัดการการบริการ
-          </NavLink>
-          </NavItem>) : (null)}
-
-
+            </NavLink>
+          </NavItem>
+        ) : null}
 
         {isOwned ? (
           <NavItem
@@ -124,41 +123,37 @@ const ProfileContent = ({
               style={{ color: "#264d59" }}
             >
               ตั้งค่า
-          </NavLink>
+            </NavLink>
           </NavItem>
-        ) : (null)}
-
+        ) : null}
       </Nav>
       <TabContent activeTab={activeTab}>
         <TabPane tabId="1">
-          <MainTab
-            isOwned={isOwned}
-            isHost={isHost}
-            Account={Account}
-          />
+          <MainTab isOwned={isOwned} isHost={isHost} Account={Account} />
         </TabPane>
         {isHost ? (
           <TabPane tabId="4">
-            <ServiceDetailTab profileId={profileId} />
-          </TabPane>) : (
+            <ServiceDetailTab profileId={profileId} isOwned={isOwned} />
+          </TabPane>
+        ) : (
           <TabPane tabId="2">
-            <DogProfileTab profileId={profileId} />
+            <DogProfileTab profileId={profileId} isOwned={isOwned} />
           </TabPane>
         )}
 
         {isHost && isOwned ? (
           <TabPane tabId="3">
-            <HostServiceTab profileId={profileId} />
-          </TabPane>) : (null)}
+            <HostServiceTab profileId={profileId} isOwned={isOwned} />
+          </TabPane>
+        ) : null}
 
         {isOwned ? (
           <TabPane tabId="5">
-            <SettingTab Account={Account} setAccount={setAccount}/>
+            <SettingTab Account={Account} setAccount={setAccount} />
           </TabPane>
-        ) : (null)}
-
+        ) : null}
       </TabContent>
-    </div >
+    </div>
   );
 };
 

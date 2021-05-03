@@ -137,9 +137,13 @@ export default function MealBox() {
 
   return (
     <div
+      className="col-bottom-right"
       style={{
-        padding: "10px 10px",
+        marginTop: "15px",
+        backgroundColor: "#43978d",
+        padding: "15px 15px",
         color: "white",
+        borderRadius: "20px",
       }}
     >
       <FormGroup>

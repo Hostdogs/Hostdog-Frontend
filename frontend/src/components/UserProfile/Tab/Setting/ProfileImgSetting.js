@@ -43,9 +43,7 @@ export default function ProfileimgPathSetting({
           console.log(response.data.picture);
           setAccount({
             ...Account,
-            host: {
-              picture: response.data.picture,
-            },
+            host: { ...Account.host, picture: response.data.picture },
           });
         });
       } else {
@@ -54,6 +52,7 @@ export default function ProfileimgPathSetting({
             setAccount({
               ...Account,
               customer: {
+                ...Account.customer,
                 picture: response.data.picture,
               },
             });

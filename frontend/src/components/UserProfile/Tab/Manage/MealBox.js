@@ -32,6 +32,7 @@ export default function MealBox() {
   const [cookies, setCookie] = useCookies(["mytoken", "user_id"]);
   const myId = cookies["user_id"];
   const myToken = cookies["mytoken"];
+  const [isChange, setIsChange] = useState(false);
   const [dropdownTypeOpen, setTypeOpen] = useState(false);
   const toggleType = () => setTypeOpen(!dropdownTypeOpen);
 
@@ -86,6 +87,7 @@ export default function MealBox() {
 
   function onAddMeal(meal) {
     setMeal(meal);
+    setIsChange(true);
   }
 
   const mealTypeElements = allMeals
@@ -112,6 +114,7 @@ export default function MealBox() {
       updateMyMeals(meal);
     });
     setMeal(startMeal);
+    setIsChange(false);
   }
 
   const deleteMyMeal = (meal_id) => {
@@ -178,9 +181,11 @@ export default function MealBox() {
           </ButtonDropdown>
         </Col>
         <Col xs="auto">
-          <Button size="sm" color="primary" onClick={onSubmitMeal}>
-            เพิ่ม
-          </Button>
+          {isChange ? (
+            <Button size="sm" color="primary" onClick={onSubmitMeal}>
+              ยืนยัน
+            </Button>
+          ) : null}
         </Col>
       </Row>
     </div>

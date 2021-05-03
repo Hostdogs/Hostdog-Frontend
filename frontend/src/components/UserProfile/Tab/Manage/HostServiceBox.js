@@ -225,8 +225,7 @@ export default function HostServiceBox(props) {
                 borderRadius: "3%",
               }}
             >
-              <div
-              >
+              <div>
                 <FormGroup>
                   <Row>
                     <Col>
@@ -397,7 +396,21 @@ export default function HostServiceBox(props) {
               </div>
             </Col>
           </Row>
-          <br/>
+          {isChange ? (
+            <Row style={{ marginTop: "15px" }}>
+              <Col xs="6" style={{ textAlign: "end" }}>
+                <Button onClick={onSubmit} color="primary">
+                  ยืนยัน
+                </Button>
+              </Col>
+              <Col xs="6" style={{ textAlign: "start" }}>
+                <Button onClick={onCancel} color="danger">
+                  ยกเลิก
+                </Button>
+              </Col>
+            </Row>
+          ) : null}
+
           <hr />
           <Row>
             <Col
@@ -428,21 +441,7 @@ export default function HostServiceBox(props) {
               <MealBox />
             </Col>
           </Row>
-          <br />
-          {isChange ? (
-            <Row>
-              <Col xs="6" style={{ textAlign: "end" }}>
-                <Button onClick={onSubmit} color="primary">
-                  ยืนยัน
-                </Button>
-              </Col>
-              <Col xs="6" style={{ textAlign: "start" }}>
-                <Button onClick={onCancel} color="danger">
-                  ยกเลิก
-                </Button>
-              </Col>
-            </Row>
-          ) : null}
+
           <hr />
         </div>
       </Form>

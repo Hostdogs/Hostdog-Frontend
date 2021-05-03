@@ -52,17 +52,18 @@ export default function SideBar({ isOpen }) {
           {isHost ? (
             <NavItem style={{ marginTop: "10%" }} className="navItemSidebar">
               <NavLink tag={Link} to={"/"} style={{ color: "black" }}>
-                <FontAwesomeIcon icon={faSearch} className="mr-2" />
-            ค้นหาผู้รับฝาก
-          </NavLink>
+                <FontAwesomeIcon icon={faEnvelope} className="mr-2" />
+                การบริการที่ถูกร้องขอ
+              </NavLink>
             </NavItem>
           ) : (
             <NavItem style={{ marginTop: "10%" }} className="navItemSidebar">
               <NavLink tag={Link} to={"/"} style={{ color: "black" }}>
-                <FontAwesomeIcon icon={faEnvelope} className="mr-2" />
-            การบริการที่ถูกร้องขอ
+                <FontAwesomeIcon icon={faSearch} className="mr-2" />
+            ค้นหาผู้รับฝาก
           </NavLink>
-            </NavItem>)}
+            </NavItem>
+          )}
           <NavItem className="navItemSidebar">
             <NavLink tag={Link} onClick={yourProfile} style={{ color: "black" }}>
               <FontAwesomeIcon icon={faUser} className="mr-2" />

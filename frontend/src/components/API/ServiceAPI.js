@@ -22,4 +22,15 @@ export default class ServiceAPI {
           });
     }
 
+    static getAllPending(mytoken){
+      const url=`${API_URL}?main_status=pending`;
+      return axios.get(url,{
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Token ${mytoken}`,
+          },
+        });
+
+  }
+
 }

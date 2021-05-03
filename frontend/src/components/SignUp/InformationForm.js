@@ -49,7 +49,7 @@ export default function InformationForm({ selectState }) {
     username: "",
     email: "",
     password: "",
-    dob: "",
+    dob: moment(moment().year() - 18 + "-01-01", dayformat).format(dayformat),
     mobile: "",
     address: "",
     gender: "",
@@ -236,13 +236,13 @@ export default function InformationForm({ selectState }) {
     console.log(name, Information[name]);
   };
 
-  useEffect(() => {
-    // setdob(moment(moment().year() - 18 + "-01-01", dayformat).format(dayformat))
-    setInformation({
-      ...Information,
-      dob: moment(moment().year() - 18 + "-01-01", dayformat).format(dayformat),
-    });
-  }, []);
+  // useEffect(() => {
+  //   // setdob(moment(moment().year() - 18 + "-01-01", dayformat).format(dayformat))
+  //   setInformation({
+  //     ...Information,
+  //     dob: moment(moment().year() - 18 + "-01-01", dayformat).format(dayformat),
+  //   });
+  // }, []);
 
   //Google Map
   useEffect(() => {

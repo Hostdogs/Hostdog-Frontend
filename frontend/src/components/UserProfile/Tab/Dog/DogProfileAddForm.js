@@ -18,6 +18,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import DogFeedingTime from "./DogFeedingTime";
 import { useCookies } from "react-cookie";
 import DogAPI from "../../../API/DogAPI";
+import moment from "moment-timezone";
 
 const startDogInfo = {
   customer: "",
@@ -43,6 +44,8 @@ export default function DogProfileAddForm(props) {
 
   const myId = cookies["user_id"];
   const myToken = cookies["mytoken"];
+
+  const maxDate = moment(new Date()).format("YYYY-MM-DD");
 
   const toggle = () => setModal(!modal);
   const toggleNested = () => {
@@ -75,6 +78,7 @@ export default function DogProfileAddForm(props) {
   }
 
   async function onDogSubmit(event) {
+    console.log(maxDate);
     event.preventDefault();
     if (allTimes.length > 0) {
       try {
@@ -105,7 +109,7 @@ export default function DogProfileAddForm(props) {
         setAllTimes([]);
         toggle();
       } catch (error) {
-        console.log(error.response);
+        alert("กรุณากรอกข้อมูลให้ครบ");
       }
       setPreview(null);
     } else {
@@ -205,6 +209,7 @@ export default function DogProfileAddForm(props) {
                 <Input
                   type="date"
                   name="dog_dob"
+                  max={maxDate}
                   value={dogInfo.dog_dob}
                   onChange={onDogInfoChange}
                 />

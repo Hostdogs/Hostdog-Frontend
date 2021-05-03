@@ -34,10 +34,10 @@ const ProfileContent = ({
   };
 
   useEffect(() => {
-    if(Account){
+    if (Account) {
       setisHost(Account.is_host)
     }
-    
+
   }, [Account])
 
   useEffect(() => {
@@ -64,7 +64,23 @@ const ProfileContent = ({
             หน้าหลัก
           </NavLink>
         </NavItem>
-        {isHost ? (
+        {!isHost ? (
+          <NavItem
+            style={{ borderTopLeftRadius: "5px", borderTopRightRadius: "5px" }}
+          >
+            {!isHost ? (<NavLink
+              className={classnames({ active: activeTab === "2" })}
+              onClick={() => {
+                toggle("2");
+              }}
+              style={{ color: "#264d59" }}
+            >
+              สุนัข
+            </NavLink>) : (null)}
+          </NavItem>
+        ) : (null)}
+
+        {isHost && !isOwned? (
           <NavItem
             style={{ borderTopLeftRadius: "5px", borderTopRightRadius: "5px" }}
           >
@@ -79,19 +95,7 @@ const ProfileContent = ({
           </NavLink>
           </NavItem>
         ) : (
-          <NavItem
-            style={{ borderTopLeftRadius: "5px", borderTopRightRadius: "5px" }}
-          >
-            {!isHost ? (<NavLink
-              className={classnames({ active: activeTab === "2" })}
-              onClick={() => {
-                toggle("2");
-              }}
-              style={{ color: "#264d59" }}
-            >
-              สุนัข
-            </NavLink>) : (null)}
-          </NavItem>
+          null
         )}
 
 
@@ -137,23 +141,30 @@ const ProfileContent = ({
             Account={Account}
           />
         </TabPane>
-        {isHost ? (
-          <TabPane tabId="4">
-            <ServiceDetailTab profileId={profileId} />
-          </TabPane>) : (
+        {!isHost ? (
           <TabPane tabId="2">
             <DogProfileTab profileId={profileId} />
           </TabPane>
+        ) : (
+          null
         )}
+
+        {isHost && !isOwned ? (
+          <TabPane tabId="4">
+            <ServiceDetailTab profileId={profileId} />
+          </TabPane>
+        ) : (null)}
+
 
         {isHost && isOwned ? (
           <TabPane tabId="3">
             <HostServiceTab profileId={profileId} />
-          </TabPane>) : (null)}
+          </TabPane>
+        ) : (null)}
 
         {isOwned ? (
           <TabPane tabId="5">
-            <SettingTab Account={Account} setAccount={setAccount}/>
+            <SettingTab Account={Account} setAccount={setAccount} />
           </TabPane>
         ) : (null)}
 

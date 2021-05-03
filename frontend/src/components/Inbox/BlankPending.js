@@ -16,7 +16,9 @@ export default function BlankPending() {
   return (
     <div style={{  textAlign: "center",height: "100vh"}}>
       <Container>
+        <div className="blankPending" style={{ minHeight: "40vh"}}>
         <img src="/blankPending.gif" className="blankPending"/>
+        </div>
         <h2>
           ดูเหมือนคุณจะยังไม่มีผู้ใช้บริการ จัดการโปรไฟล์ของคุณ{" "}
           <a className="mobile_br"><br/></a>

@@ -151,7 +151,7 @@ export default function HostServiceBox(props) {
                   backgroundColor: "#43978d",
                   padding: "20px 20px",
                   color: "white",
-                  borderRadius: "3%",
+                  borderRadius: "20px",
                 }}
               >
                 <FormGroup>
@@ -210,22 +210,19 @@ export default function HostServiceBox(props) {
                 </FormGroup>
               </div>
             </Col>
-            <Col
-              xs="12"
-              sm="12"
-              md="12"
-              lg="6"
-              className="col-right-manage"
-              style={{
-                marginTop: "15px",
-                marginTop: "15px",
-                backgroundColor: "#43978d",
-                padding: "20px 20px",
-                color: "white",
-                borderRadius: "3%",
-              }}
-            >
-              <div>
+            <Col xs="12" sm="12" md="12" lg="6">
+              <div
+                className="col-right-manage"
+                style={{
+                  marginTop: "15px",
+                  marginTop: "15px",
+                  backgroundColor: "#43978d",
+                  padding: "20px 20px",
+                  color: "white",
+                  borderRadius: "20px",
+                  paddingBottom: "180px"
+                }}
+              >
                 <FormGroup>
                   <Row>
                     <Col>
@@ -429,14 +426,6 @@ export default function HostServiceBox(props) {
               sm="12"
               md="12"
               lg="6"
-              className="col-bottom-right"
-              style={{
-                marginTop: "15px",
-                backgroundColor: "#43978d",
-                padding: "15px 15px",
-                color: "white",
-                borderRadius: "3%",
-              }}
             >
               <MealBox />
             </Col>

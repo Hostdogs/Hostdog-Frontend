@@ -14,13 +14,12 @@ export default class HostAPI {
   static getHostInformation(
     mytoken,
     distance,
-    arearange,
     stDate,
     endDate,
     latitude,
     longitude
   ) {
-    const url = `${API_URL}profilehost/?latitude=${latitude}&longitude=${longitude}&distance=${distance}&area_range=${arearange[0]}&area_range=${arearange[1]}&date_full_range=${stDate}&date_full_range=${endDate}`;
+    const url = `${API_URL}profilehost/?latitude=${latitude}&longitude=${longitude}&distance=${distance}&date_full_range=${stDate}&date_full_range=${endDate}`;
     return axios.get(url, {
       headers: {
         Authorization: `Token ${mytoken}`,

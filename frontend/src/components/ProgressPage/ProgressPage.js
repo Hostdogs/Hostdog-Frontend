@@ -17,12 +17,13 @@ export default function ProgressPage({ match }) {
   const [labelIndex, setLabelIndex] = useState(0);
 
   const [gifIndex, setGifIndex] = useState(0);
-
-
+  const [showDepositPayment,setShowDepositPayment]=useState(false);
+  const [serviceDetailStatusLabel,setServiceDetailStatusLabel]=useState("");
 
   const getService =  () => {
     ServiceAPI.getService(cookies.mytoken, servicePath).then((response)=>{
       setServiceInfo(response.data);
+      handleProgress(response.data);
       console.log(response.data);
     }).catch((error)=>{
       console.log("getService");
@@ -31,44 +32,94 @@ export default function ProgressPage({ match }) {
 
   };
 
- 
-  const handleProgress = () => {
-    if (progressValue >= 100 || gifIndex >= 6) {
-      setLabelIndex(0);
-      setProgressValue(16.67);
-      setColorIndex(3);
-      setGifIndex(0);
-    } else {
-      setLabelIndex(labelIndex + 1);
-      setColorIndex(3);
-      setProgressValue(progressValue + 16.67);
-      setGifIndex(gifIndex + 1);
-    }
+  const handleProgress = (ServiceInfo) => {
+       if (ServiceInfo.main_status==="pending"){
+        setServiceDetailStatusLabel("กำลังรอคำตอบรับจากผู้รับฝาก");
+        setShowDepositPayment(false);
+        setLabelIndex(0);
+        setColorIndex(0);
+        setGifIndex(1);
+        setProgressValue(16.67);
+        console.log("pending");
+      }else if(ServiceInfo.main_status==="payment"){
+        setServiceDetailStatusLabel("รอการชำระเงิน");
+        setShowDepositPayment(true);
+        setLabelIndex(1);
+        setColorIndex(0);
+        setProgressValue(32);
+        setGifIndex(2);
+        console.log("payment");
+      }else if(ServiceInfo.main_status==="wait_for_progress"){
+        setServiceDetailStatusLabel("รอวันเริ่มบริการ");
+        setShowDepositPayment(false);
+        setLabelIndex(2);
+        setGifIndex(0);
+        setProgressValue(48);
+        setColorIndex(0);
+      }else if(ServiceInfo.main_status==="in_progress"){
+        setServiceDetailStatusLabel("อยู่ในการบริการ")
+        setShowDepositPayment(false);
+        setLabelIndex(3);
+        setColorIndex(0);
+        setProgressValue(64);
+        setGifIndex(3);
+        console.log("in_progress");
+      }else if(ServiceInfo.main_status==="end"){
+        setServiceDetailStatusLabel("กรุณามารับสุนัข")
+        setShowDepositPayment(false);
+        setLabelIndex(4);
+        setColorIndex(0);
+        setProgressValue(100);
+        setGifIndex(5);
+        console.log("end");
+      }else if(ServiceInfo.main_status==="late"){
+        setServiceDetailStatusLabel("เลยเวลาบริการแล้ว")
+        setShowDepositPayment(false);
+        console.log("late");
+        setColorIndex(1);
+        setProgressValue(100);
+        setGifIndex(6);
+        setLabelIndex(7);
+      }else if(ServiceInfo.main_status==="cancelled"){
+        setShowDepositPayment(false);
+        setServiceDetailStatusLabel("ยกเลิกบริการ")
+        console.log("cancelled");
+        setLabelIndex(6);
+        setGifIndex(6);
+        setColorIndex(1);
+      }
   };
   const handleCancel = () => {
-    setColorIndex(4);
+    ServiceAPI.responseService(cookies.mytoken,servicePath,{cancel:true}).then((response)=>{
+      console.log("response");
+      console.log(response);
+    }).catch((error)=>{
+      console.log("error");
+      console.log(error);
+    })
+    setColorIndex(2);
     setLabelIndex(6);
     setGifIndex(6);
   };
+
+  const [ServiceInfo, setServiceInfo] = useState(null);
   useEffect(() => {
-    setProgressValue(progressValue + 16.67);
     getService();
+
+
   }, []);
+
 
   /////////////expand info//////////////////
   const [isExpand, setisExpand] = useState(false);
   const [offset, setOffset] = useState(0);
   ///////////// get service info //////////////
-  const [ServiceInfo, setServiceInfo] = useState(null);
+
 
   let servicePath = match.params["service_id"];
-  useEffect(() => {
-    // ProgressAPI.fakeServiceProgress(servicePath).then(res => {
-    //   setServiceInfo(res)
-    // })
-  }, []);
 
   useEffect(() => {
+
     window.onscroll = () => {
       if (window.pageYOffset > offset) {
         setisExpand(true);
@@ -78,6 +129,7 @@ export default function ProgressPage({ match }) {
       setOffset(window.pageYOffset);
       // console.log(window.pageYOffset,"::",offset)
     };
+
   }, [offset]);
 
   return (
@@ -90,6 +142,7 @@ export default function ProgressPage({ match }) {
           labelIndex={labelIndex}
           gifIndex={gifIndex}
           handleProgress={handleProgress}
+    
         />
 
         <br />
@@ -99,8 +152,8 @@ export default function ProgressPage({ match }) {
             onCancel={handleCancel}
             isExpand={isExpand}
             ServiceInfo={ServiceInfo}
-      
-          />
+            showDepositPayment={showDepositPayment}
+            serviceDetailStatusLabel={serviceDetailStatusLabel}/>
         </Container>
         {/* {!isExpand?(<div style={{height:"100px"}}></div>):(null)} */}
       </div>

@@ -157,7 +157,7 @@ export default function ImageBox() {
         backgroundColor: "#43978d",
         padding: "20px 20px",
         color: "white",
-        borderRadius: "3%",
+        borderRadius: "20px",
       }}
     >
       <Form>

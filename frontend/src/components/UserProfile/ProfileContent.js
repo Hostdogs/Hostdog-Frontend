@@ -30,7 +30,10 @@ const ProfileContent = ({
   const [activeTab, setActiveTab] = useState("1");
   const [isHost, setisHost] = useState();
   const [isLoad, setisLoad] = useState(false)
+
   // const [Profile, setProfile] = useState()
+  const [dogCount, setdogCount] = useState("")
+
   const toggle = (tab) => {
     if (activeTab !== tab) setActiveTab(tab);
   };
@@ -135,11 +138,11 @@ const ProfileContent = ({
       </Nav>
       <TabContent activeTab={activeTab}>
         <TabPane tabId="1">
-          <MainTab isOwned={isOwned} isHost={isHost} Account={Account} />
+          <MainTab isOwned={isOwned} isHost={isHost} Account={Account} dogCount={dogCount} setdogCount={setdogCount} />
         </TabPane>
         {!isHost ? (
           <TabPane tabId="2">
-            <DogProfileTab profileId={profileId} isOwned={isOwned} />
+            <DogProfileTab profileId={profileId} isOwned={isOwned} setdogCount={setdogCount}/>
           </TabPane>
         ) : (
           null

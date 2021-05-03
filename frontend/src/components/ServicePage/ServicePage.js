@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Col, Container } from "reactstrap";
 import NavbarIsAuth from "../Navbar/NavbarIsAuth";
 import ServiceForm from "./ServiceForm";
 import ServiceHost from "./ServiceHost";
 import ServiceDetail from "./ServiceDetail";
-export default function ServicePage() {
+export default function ServicePage({match}) {
+  let path = match.params["profile_id"];
+  const [host, sethost] = useState()
+  useEffect(() => {
+    
+  }, [])
   return (
     <div>
       <NavbarIsAuth />
@@ -16,7 +21,7 @@ export default function ServicePage() {
             <ServiceHost />
           </Col>
           <Col xs="12" sm="12" md="12" lg="9">
-            <ServiceForm />
+            <ServiceForm host_id={2} customer_id={1} />
             <br />
           </Col>
         </Row>

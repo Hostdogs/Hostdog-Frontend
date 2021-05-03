@@ -11,6 +11,8 @@ import {
   CarouselCaption,
 } from "reactstrap";
 import "./Service.css";
+import GoogleMapService from "./GoogleMapService.js";
+
 export default function ServiceHost() {
   const items = [
     {
@@ -150,7 +152,7 @@ export default function ServiceHost() {
       <br />
       <Row className="host-row">
         <Col>
-          <img style={{ width: "100%" }} src="map.jpg" />
+        <GoogleMapService mytoken={"ac5ff12742a6890c67a44a844e203d6ed5eee68f"} host_id={3} />
         </Col>
       </Row>
       <br />

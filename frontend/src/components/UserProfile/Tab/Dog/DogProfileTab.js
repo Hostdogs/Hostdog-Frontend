@@ -14,7 +14,7 @@ import axios from "axios";
 import { useCookies } from "react-cookie";
 import DogAPI from "../../../API/DogAPI";
 
-export default function DogProfileTab({ profileId, isOwned }) {
+export default function DogProfileTab({ profileId, isOwned ,setdogCount}) {
   const [dogInfos, setDogInfos] = useState([]);
   const [cookies, setCookie] = useCookies(["mytoken", "user_id"]);
 
@@ -39,6 +39,7 @@ export default function DogProfileTab({ profileId, isOwned }) {
     console.log(dogInfo);
     const new_dogInfos = [...dogInfos, dogInfo];
     setDogInfos(new_dogInfos);
+    setdogCount(new_dogInfos.length)
   };
 
   const deleteDogInfo = (dogInfo) => {
@@ -47,6 +48,7 @@ export default function DogProfileTab({ profileId, isOwned }) {
     });
 
     setDogInfos(new_dogInfos);
+    setdogCount(new_dogInfos.length)
   };
 
   return (

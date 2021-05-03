@@ -30,7 +30,7 @@ const [modal, setModal] = useState(false);
   const handlePay=()=>{
     toggleAll();
     const data={accept_payment:true}
-    PaymentAPI.pay(service_id,paymentID,data)
+    PaymentAPI.payDeposit(service_id,paymentID,data)
   }
   const setPaymentTotal=async(payment_id)=>{
       const response= await PaymentAPI.getPayment(service_id,payment_id)
@@ -45,7 +45,7 @@ const [modal, setModal] = useState(false);
       const listPayment=response.data
 
       for (var i=0;i<listPayment.length;i++){
-        if (listPayment[i].service===service_id){
+        if (listPayment[i].service===service_id&&listPayment[i].type_payments==="deposit"){
           setPaymentID(listPayment[i].id);
           setPaymentTotal(listPayment[i].id);
           break;
@@ -55,9 +55,7 @@ const [modal, setModal] = useState(false);
       console.log("listPayment")
       console.log(listPayment)
   }
-  const getCustomerInfo=()=>{
-    
-  }
+
 
   const handlePayment=async()=>{
     getPaymentIDFromService_setTotalPayment();
@@ -67,7 +65,7 @@ const [modal, setModal] = useState(false);
 
     return (
         <div>
-          <div>{paymentID}</div>
+   
             <Button color="success" onClick={handlePayment}>ชำระเงินค่าบริการ</Button>
             <Modal isOpen={modal} toggle={toggle} fade={false} >
         <ModalHeader toggle={toggle}><h2>ชำระเงินค่าบริการ</h2></ModalHeader>

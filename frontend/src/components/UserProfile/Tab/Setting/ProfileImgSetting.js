@@ -24,11 +24,13 @@ export default function ProfileimgPathSetting({
   setAccount,
 }) {
   const [Image, setImage] = useState("");
+  const [preview, setPreview] = useState(null);
   const [cookies, setCookie] = useCookies(["mytoken", "user_id"]);
   const myId = cookies["user_id"];
   const myToken = cookies["mytoken"];
   const Reset = () => {
     setImage("");
+    setPreview(null);
     setSelected(0);
   };
 
@@ -61,6 +63,13 @@ export default function ProfileimgPathSetting({
       }
     }
     Reset();
+  }
+
+  function onImgChange(event) {
+    if (event.target.files[0]) {
+      setPreview(URL.createObjectURL(event.target.files[0]));
+      setImage(event.target.files[0]);
+    }
   }
 
   return (
@@ -99,13 +108,24 @@ export default function ProfileimgPathSetting({
           >
             <br />
             <Container style={{ maxWidth: "" }}>
+              {preview ? (
+                <img
+                  style={{
+                    width: "300px",
+                    height: "200px",
+                    objectFit: "contain",
+                  }}
+                  src={preview}
+                />
+              ) : null}
+
               <FormGroup>
                 <Label for="exampleFile">เปลี่ยนรูปโปรไฟล์ผู้ใช้ของคุณ</Label>
                 <Input
                   type="file"
                   name="picture"
                   accept="image/*"
-                  onChange={(e) => setImage(e.target.files[0])}
+                  onChange={onImgChange}
                 />
                 <FormText color="muted">
                   This is some placeholder block-level help text for the above

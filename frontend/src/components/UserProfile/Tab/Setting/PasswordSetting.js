@@ -20,8 +20,8 @@ export default function PasswordSetting({ setSelected, Selected, Account }) {
 
   const [cookies, setcookies] = useCookies(["mytoken", "user_id"]);
   const [OldPassword, setOldPassword] = useState("");
-  const [newPassword, setnewPassword] = useState("");
-  const [confirmPassword, setconfirmPassword] = useState("");
+  const [NewPassword, setNewPassword] = useState("");
+  const [ConfirmPassword, setConfirmPassword] = useState("");
 
   const inputpassword = /^[A-Za-z0-9]/;
   const validatepassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,20}$/;
@@ -39,33 +39,69 @@ export default function PasswordSetting({ setSelected, Selected, Account }) {
     }
   };
 
-  const onChangeOldPassword = (e, regexp = null) => {
-    e.preventDefault();
-    if (regexp) {
-      console.log(OldPassword, regexp.test(OldPassword));
-      if (OldPassword === "" || regexp.test(OldPassword)) {
-        setOldPassword(e.target.value);
-      }
-    } else {
+  const onChangeOldPassword = (e) => {
+    if (e.target.value === "" || inputpassword.test(e.target.value)) {
       setOldPassword(e.target.value);
     }
-  }
+  };
+
+  const [NewPasswordValid, setNewPasswordValid] = useState({
+    valid: false,
+    invalid: false,
+  });
+
+  const isNewPasswordValidate = () => {
+    if (validatepassword.test(NewPassword)) {
+      setNewPasswordValid({ valid: true, invalid: false });
+    } else {
+      setNewPasswordValid({ valid: false, invalid: true });
+    }
+  };
+
+  const onChangeNewPassword = (e) => {
+    if (e.target.value === "" || inputpassword.test(e.target.value)) {
+      setNewPassword(e.target.value);
+    }
+  };
+
+  const [ConfirmPasswordValid, setConfirmPasswordValid] = useState({
+    valid: false,
+    invalid: false,
+  });
+
+
+  const isConfirmPasswordValidate = () => {
+    if (
+      NewPassword === ConfirmPassword &&
+      NewPassword.length >= 1
+    ) {
+      setConfirmPasswordValid({ valid: true, invalid: false });
+    } else {
+      setConfirmPasswordValid({ valid: false, invalid: true });
+    }
+  };
+
+  const onChangeConfirmPassword = (e) => {
+    if (e.target.value === "" || inputpassword.test(e.target.value)) {
+      setConfirmPassword(e.target.value);
+    }
+  };
 
   const Reset = () => {
     setOldPassword("");
-    setnewPassword("");
-    setconfirmPassword("");
+    setNewPassword("");
+    setConfirmPassword("");
     setSelected(0);
   };
 
   const infoSet = (e) => {
     e.preventDefault();
-    if (newPassword === confirmPassword) {
+    if (NewPassword === ConfirmPassword) {
       AuthenAPI.changePassword(
         cookies["mytoken"],
         Account.id,
         OldPassword,
-        newPassword
+        NewPassword
       )
         .then((res) => {
           console.log("password Changed");
@@ -122,7 +158,7 @@ export default function PasswordSetting({ setSelected, Selected, Account }) {
                     color: "black",
                     width: "120px",
                     justifyContent: "center",
-                    textAlign:"center"
+                    textAlign: "center",
                   }}
                 >
                   รหัสผ่านเดิม
@@ -131,18 +167,21 @@ export default function PasswordSetting({ setSelected, Selected, Account }) {
               <Input
                 valid={OldPasswordValid.valid}
                 invalid={OldPasswordValid.invalid}
-                onChange={(e) => onChangeOldPassword(e, inputpassword)}
+                onChange={onChangeOldPassword}
                 onBlur={isOldPasswordValidate}
                 onFocus={() => {
-                    OldPasswordValid.valid = false;
-                    OldPasswordValid.invalid = false;
-                  }}
+                  OldPasswordValid.valid = false;
+                  OldPasswordValid.invalid = false;
+                }}
                 maxLength="20"
                 value={OldPassword}
                 style={{ minWidth: "150px", maxWidth: "30vw" }}
                 type="password"
               ></Input>
-              <FormFeedback invalid={OldPasswordValid.invalid} style={{textAlign:"center"}}>
+              <FormFeedback
+                invalid={OldPasswordValid.invalid}
+                style={{ textAlign: "center" }}
+              >
                 กรุณาใส่รหัสผ่านให้ตรงตามเงื่อนไข
               </FormFeedback>
             </InputGroup>
@@ -166,11 +205,25 @@ export default function PasswordSetting({ setSelected, Selected, Account }) {
                 </InputGroupText>
               </InputGroupAddon>
               <Input
-                onChange={(e) => setnewPassword(e.target.value)}
-                value={newPassword}
+                valid={NewPasswordValid.valid}
+                invalid={NewPasswordValid.invalid}
+                onChange={onChangeNewPassword}
+                onBlur={isNewPasswordValidate}
+                onFocus={() => {
+                  NewPasswordValid.valid = false;
+                  NewPasswordValid.invalid = false;
+                }}
+                maxLength="20"
+                value={NewPassword}
                 style={{ minWidth: "150px", maxWidth: "30vw" }}
                 type="password"
               ></Input>
+              <FormFeedback
+                invalid={NewPasswordValid.invalid}
+                style={{ textAlign: "center" }}
+              >
+                กรุณาใส่รหัสผ่านให้ตรงตามเงื่อนไข
+              </FormFeedback>
             </InputGroup>
             <InputGroup
               style={{
@@ -191,11 +244,25 @@ export default function PasswordSetting({ setSelected, Selected, Account }) {
                 </InputGroupText>
               </InputGroupAddon>
               <Input
-                onChange={(e) => setconfirmPassword(e.target.value)}
-                value={confirmPassword}
+                valid={ConfirmPasswordValid.valid}
+                invalid={ConfirmPasswordValid.invalid}
+                onChange={onChangeConfirmPassword}
+                onBlur={isConfirmPasswordValidate}
+                onFocus={() => {
+                  ConfirmPasswordValid.valid = false;
+                  ConfirmPasswordValid.invalid = false;
+                }}
+                maxLength="20"
+                value={ConfirmPassword}
                 style={{ minWidth: "150px", maxWidth: "30vw" }}
                 type="password"
               ></Input>
+              <FormFeedback
+                invalid={ConfirmPasswordValid.invalid}
+                style={{ textAlign: "center" }}
+              >
+                กรุณาใส่รหัสผ่านให้ตรงกับรหัสผ่านก่อนหน้า
+              </FormFeedback>
             </InputGroup>
 
             <div style={{ marginTop: "1%", textAlign: "right" }}>

@@ -216,7 +216,8 @@ export default function ServiceForm({  host_id, customer_id }) {
 
   function onServiceSubmit(event) {
     event.preventDefault();
-
+    console.log("serviceInfo");
+    console.log(serviceInfo);
     ServiceAPI.createService(cookies.mytoken, serviceInfo)
       .then((response) => {
         console.log(response);

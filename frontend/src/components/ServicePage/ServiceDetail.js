@@ -42,28 +42,28 @@ if(serviceInfo.service_start_time!==null&&serviceInfo.service_end_time!==null){
     let all_date_in_service=getDatesBetweenDates(start_date,end_date);
     
     let day_service=all_date_in_service.length
-    console.log("all_date_in_service");
-    console.log(all_date_in_service)
-    console.log("day_service");
-    console.log(day_service);
-    console.log(listDogFeedingTime)
+    // console.log("all_date_in_service");
+    // console.log(all_date_in_service)
+    // console.log("day_service");
+    // console.log(day_service);
+    // console.log(listDogFeedingTime)
     for (var i=0;i<all_date_in_service.length;i++){
       for(var j=0;j<listDogFeedingTime.length;j++){
-        console.log("all_date_in_service[i]");
-        console.log(all_date_in_service[i]);
-        console.log("listDogFeedingTime[j].time");
-        console.log(listDogFeedingTime[j].time);
+        // console.log("all_date_in_service[i]");
+        // console.log(all_date_in_service[i]);
+        // console.log("listDogFeedingTime[j].time");
+        // console.log(listDogFeedingTime[j].time);
         let dateISOFormat=moment(all_date_in_service[i]).format("YYYY-MM-DD");
-        console.log("dateISOFormat")
-        console.log(dateISOFormat)
+        // console.log("dateISOFormat")
+        // console.log(dateISOFormat)
         let dogfeedingtime_date=new Date(dateISOFormat+ 'T' +listDogFeedingTime[j].time);
-        console.log("dogfeedingtime_date");
-        console.log( dogfeedingtime_date);
-        console.log("start_time");
-        console.log (start_time);
-        console.log("end_time");
-        console.log(end_time);
-        console.log(start_time<dogfeedingtime_date && dogfeedingtime_date<end_time);
+        // console.log("dogfeedingtime_date");
+        // console.log( dogfeedingtime_date);
+        // console.log("start_time");
+        // console.log (start_time);
+        // console.log("end_time");
+        // console.log(end_time);
+        // console.log(start_time<dogfeedingtime_date && dogfeedingtime_date<end_time);
         if(start_time<dogfeedingtime_date && dogfeedingtime_date<end_time){
               amountOfMeal+=1
         }

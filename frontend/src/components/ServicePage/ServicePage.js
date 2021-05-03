@@ -18,7 +18,7 @@ export default function ServicePage() {
             <ServiceHost />
           </Col>
           <Col xs="12" sm="12" md="12" lg="9">
-            <ServiceForm host_id={3} customer_id={1} />
+            <ServiceForm host_id={2} customer_id={1} />
             <br />
           </Col>
         </Row>

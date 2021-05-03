@@ -20,6 +20,7 @@ import HostServiceAPI from "../../../API/HostServiceAPI";
 import HostAvailableDateAPI from "../../../API/HostAvailableDateAPI";
 import DayPicker, { DateUtils } from "react-day-picker";
 import ImageBox from "./ImageBox";
+import MealBox from "./MealBox";
 
 export default function HostServiceBox(props) {
   const {
@@ -407,6 +408,9 @@ export default function HostServiceBox(props) {
           <Row>
             <Col xs="12" sm="12" md="12" lg="6" style={{ marginTop: "15px" }}>
               <ImageBox />
+            </Col>
+            <Col xs="12" sm="12" md="12" lg="6" style={{ marginTop: "15px" }}>
+              <MealBox />
             </Col>
           </Row>
         </div>

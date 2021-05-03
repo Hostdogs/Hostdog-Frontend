@@ -6,6 +6,7 @@ import { useCookies } from "react-cookie";
 
 import HostServiceAPI from "../../../API/HostServiceAPI";
 import HostAvailableDateAPI from "../../../API/HostAvailableDateAPI";
+import MealAPI from "../../../API/MealAPI";
 
 export default function HostServiceTab({ profileId }) {
   const [cookies, setCookie] = useCookies(["mytoken", "user_id"]);

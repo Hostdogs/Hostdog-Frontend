@@ -21,7 +21,6 @@ export default function ShowAvailableDate(props) {
 
   useEffect(() => {
     setAvailableDates(newAvailableDates);
-    console.log(newAvailableDates)
   }, [newAvailableDates]);
 
   let twoMonthsLater = new Date();

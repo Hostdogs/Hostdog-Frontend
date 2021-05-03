@@ -35,7 +35,6 @@ export default function ImageBox() {
   useEffect(() => {
     HostImgAPI.GetHostImg(myToken, myId).then((response) => {
       setAllPictures(response.data);
-      console.log(response.data);
     });
   }, []);
 
@@ -46,17 +45,24 @@ export default function ImageBox() {
 
   function onAddImg(event) {
     event.preventDefault();
-    if (picture !== "" && allPictures.length < 5) {
+    if (
+      picture !== "" &&
+      allPictures.length < 5 &&
+      picture !== null &&
+      picture !== undefined
+    ) {
       let form_data = new FormData();
       form_data.append("picture", picture, picture.name);
       HostImgAPI.AddHostImg(myToken, myId, form_data).then((response) => {
         updatePicture(response.data);
       });
+      setPicture("");
     } else {
-      if (picture === "") {
-        alert("กรุณาเลือกรูปภาพ");
-      } else {
+      if (allPictures.length >= 5) {
         alert("คุณใส่รูปเยอะเกินไป");
+        setPicture("");
+      } else {
+        alert("กรุณาเลือกรูปภาพ");
       }
     }
   }

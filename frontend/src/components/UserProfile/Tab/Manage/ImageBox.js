@@ -30,6 +30,7 @@ export default function ImageBox() {
   const myId = cookies["user_id"];
   const myToken = cookies["mytoken"];
   const [activeIndex, setActiveIndex] = useState(0);
+  const [animating, setAnimating] = useState(false);
 
   useEffect(() => {
     HostImgAPI.GetHostImg(myToken, myId).then((response) => {
@@ -45,30 +46,71 @@ export default function ImageBox() {
 
   function onAddImg(event) {
     event.preventDefault();
-    if (picture !== "") {
+    if (picture !== "" && allPictures.length < 5) {
       let form_data = new FormData();
       form_data.append("picture", picture, picture.name);
       HostImgAPI.AddHostImg(myToken, myId, form_data).then((response) => {
-        console.log(response);
+        updatePicture(response.data);
       });
+    } else {
+      if (picture === "") {
+        alert("กรุณาเลือกรูปภาพ");
+      } else {
+        alert("คุณใส่รูปเยอะเกินไป");
+      }
     }
   }
 
+  function onDelete(pic) {
+    HostImgAPI.DeleteHostImg(myToken, myId, pic.id).then((resp) => {
+      deletePicture(pic.id);
+    });
+  }
+
+  const updatePicture = (pic) => {
+    setAllPictures((prevAllPic) => {
+      return [...prevAllPic, pic];
+    });
+  };
+
+  useEffect(() => {
+    goToIndex(allPictures.length - 1);
+  }, [allPictures]);
+
+  const deletePicture = (pic_id) => {
+    setAllPictures((prevAllPic) => {
+      return prevAllPic.filter((pic) => {
+        return pic.id !== pic_id;
+      });
+    });
+  };
+
   const next = () => {
+    if (animating) return;
     const nextIndex =
       activeIndex === allPictures.length - 1 ? 0 : activeIndex + 1;
     setActiveIndex(nextIndex);
   };
 
   const previous = () => {
+    if (animating) return;
     const nextIndex =
       activeIndex === 0 ? allPictures.length - 1 : activeIndex - 1;
     setActiveIndex(nextIndex);
   };
 
+  const goToIndex = (newIndex) => {
+    if (animating) return;
+    setActiveIndex(newIndex);
+  };
+
   const slides = allPictures.map((pic) => {
     return (
-      <CarouselItem key={pic.id}>
+      <CarouselItem
+        onExiting={() => setAnimating(true)}
+        onExited={() => setAnimating(false)}
+        key={pic.id}
+      >
         <div className="container">
           <img className="resize-imgHost" src={pic.picture} />
           <Button onClick={() => onDelete(pic)}>ลบ</Button>
@@ -77,24 +119,25 @@ export default function ImageBox() {
     );
   });
 
-  function onDelete(pic) {
-    console.log(pic.id);
-    HostImgAPI.DeleteHostImg(myToken, myId, pic.id).then((resp) => {
-      console.log(resp);
-    });
-  }
-
   return (
     <div>
       <Form>
         <FormGroup>
-          {allPictures !== [] ? (
+          <h4>รูปสถานที่รับฝาก</h4>
+        </FormGroup>
+        <FormGroup>
+          {allPictures.length !== 0 ? (
             <Carousel
               className="hostImage-content-small"
               activeIndex={activeIndex}
               next={next}
               previous={previous}
             >
+              <CarouselIndicators
+                items={allPictures}
+                activeIndex={activeIndex}
+                onClickHandler={goToIndex}
+              />
               {slides}
               <CarouselControl
                 direction="prev"
@@ -117,7 +160,9 @@ export default function ImageBox() {
             onChange={onHouseImgChange}
           />
         </FormGroup>
-        <Button onClick={onAddImg}>เพิ่ม</Button>
+        <Button color="primary" onClick={onAddImg}>
+          เพิ่ม
+        </Button>
       </Form>
     </div>
   );

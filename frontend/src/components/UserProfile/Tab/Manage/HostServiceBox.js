@@ -388,9 +388,6 @@ export default function HostServiceBox(props) {
                 </div>
               </div>
             </Col>
-            <Col xs="12" sm="12" md="12" lg="6" style={{ marginTop: "15px" }}>
-              <ImageBox />
-            </Col>
           </Row>
           <hr />
           {isChange ? (
@@ -407,6 +404,11 @@ export default function HostServiceBox(props) {
               </Col>
             </Row>
           ) : null}
+          <Row>
+            <Col xs="12" sm="12" md="12" lg="6" style={{ marginTop: "15px" }}>
+              <ImageBox />
+            </Col>
+          </Row>
         </div>
       </Form>
     </div>

@@ -79,7 +79,7 @@ const fakeService = [
     service_reply_time:"",
     service_reg_time:"2021-04-25 08:00:00",
     service_end_time:"2021-04-27 16:00:00",
-    service_status:"Pending", 
+    service_status:"pending", 
 },{
     service_id:2,
     host_id:4,
@@ -89,7 +89,7 @@ const fakeService = [
     service_reply_time:"",
     service_reg_time:"2021-04-25 08:00:00",
     service_end_time:"2021-04-27 16:00:00",
-    service_status:"Payment", 
+    service_status:"payment", 
 },{
     service_id:3,
     host_id:4,
@@ -99,7 +99,7 @@ const fakeService = [
     service_reply_time:"",
     service_reg_time:"2021-04-25 08:00:00",
     service_end_time:"2021-04-27 16:00:00",
-    service_status:"End", 
+    service_status:"end", 
 },{
     service_id:4,
     host_id:3,
@@ -109,7 +109,7 @@ const fakeService = [
     service_reply_time:"",
     service_reg_time:"2021-04-25 08:00:00",
     service_end_time:"2021-04-27 16:00:00",
-    service_status:"Wait for progress", 
+    service_status:"wait for progress", 
 },{
     service_id:5,
     host_id:4,
@@ -119,7 +119,7 @@ const fakeService = [
     service_reply_time:"",
     service_reg_time:"2021-04-25 08:00:00",
     service_end_time:"2021-04-27 16:00:00",
-    service_status:"In progress", 
+    service_status:"in progress", 
 },{
     service_id:6,
     host_id:5,
@@ -129,7 +129,7 @@ const fakeService = [
     service_reply_time:"",
     service_reg_time:"2021-04-25 08:00:00",
     service_end_time:"2021-04-27 16:00:00",
-    service_status:"Late", 
+    service_status:"late", 
 },{
     service_id:7,
     host_id:4,
@@ -139,7 +139,7 @@ const fakeService = [
     service_reply_time:"",
     service_reg_time:"2021-04-25 08:00:00",
     service_end_time:"2021-04-27 16:00:00",
-    service_status:"Cancelled", 
+    service_status:"cancelled", 
 },{
     service_id:8,
     host_id:5,
@@ -149,7 +149,7 @@ const fakeService = [
     service_reply_time:"",
     service_reg_time:"2021-04-25 08:00:00",
     service_end_time:"2021-04-27 16:00:00",
-    service_status:"Wait for progress", 
+    service_status:"wait for progress", 
 }
 
 ]

@@ -4,7 +4,7 @@ import { Container } from "reactstrap";
 import Pending from "./Pending";
 import './Pending.css'
 
-export default function PendingList({ pendingData }) {
+export default function PendingList({ pendingData ,isLoad}) {
   // const [pendingList, setpendingList] = useState()
   useEffect(() => {
     if (pendingData) {
@@ -15,16 +15,15 @@ export default function PendingList({ pendingData }) {
   return (
 
     <div>
-
-      <div style={{ height: "100vh" }}>
+      
+      <div >
         <br />
         {pendingData ? (
           <div>
             {pendingData.map((pendingTask) => (
-              <div>
-                <Pending key={pendingTask.service_id} service={pendingTask} />
-                <br />
-              </div>
+ 
+                <Pending key={pendingTask.id} service={pendingTask} />
+   
             ))}
           </div>
         ) : (null)}

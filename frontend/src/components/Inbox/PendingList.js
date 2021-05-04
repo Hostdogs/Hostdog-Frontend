@@ -2,36 +2,33 @@ import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { Container } from "reactstrap";
 import Pending from "./Pending";
-import './Pending.css'
+import "./Pending.css";
 
-export default function PendingList({ pendingData ,isLoad}) {
-  
+export default function PendingList({ pendingData, isLoad, setpendingData }) {
   // const [pendingList, setpendingList] = useState()
   useEffect(() => {
     if (pendingData) {
       // setpendingList(pendingData)
-      console.log(pendingData)
+      console.log(pendingData);
     }
-  }, [pendingData])
+  }, [pendingData]);
   return (
-
     <div>
-      
-      <div >
+      <div>
         <br />
-        {pendingData.length>0 ? (
+        {pendingData.length > 0 ? (
           <div>
             {pendingData.map((pendingTask) => (
- 
-                <Pending key={pendingTask.id} service={pendingTask} />
-   
+              <Pending
+                key={pendingTask.id}
+                service={pendingTask}
+                pendingData={pendingData}
+                setpendingData={setpendingData}
+              />
             ))}
           </div>
-        ) : (null)}
-
-
+        ) : null}
       </div>
-
     </div>
   );
 }

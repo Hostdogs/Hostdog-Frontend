@@ -9,7 +9,7 @@ import CustomerAPI from '../API/CustomerAPI'
 import DogAPI from '../API/DogAPI'
 import AccountAPI from '../API/AccountAPI'
 import { useCookies } from "react-cookie";
-export default function PaymentDepositModal({service_id,customer,dog}) {
+export default function PaymentDepositModal({service_id,customer,dog,checkHostOrCustomer}) {
   const [cookies, setcookies] = useCookies(["mytoken", "user_id"]);
 const [modal, setModal] = useState(false);
   const [nestedModal, setNestedModal] = useState(false);
@@ -35,6 +35,7 @@ const [modal, setModal] = useState(false);
     toggleAll();
     const data={accept_payment:true}
     PaymentAPI.payDeposit(service_id,paymentID,data)
+    checkHostOrCustomer();
   }
   const setPaymentTotal=async(payment_id)=>{
       const response= await PaymentAPI.getPayment(service_id,payment_id)

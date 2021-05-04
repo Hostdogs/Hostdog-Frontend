@@ -33,6 +33,7 @@ import DogAPI from "../API/DogAPI";
 import HostServiceAPI from "../API/HostServiceAPI";
 import ServiceAPI from "../API/ServiceAPI";
 import { useCookies } from "react-cookie";
+import AlertModal from "../ProgressPage/AlertModal"
 export default function ServiceForm({ host, customerAccount, hostService }) {
   const [cookies, setcookies] = useCookies(["mytoken", "user_id"]);
   const [modal, setModal] = useState(false);
@@ -58,32 +59,25 @@ export default function ServiceForm({ host, customerAccount, hostService }) {
   const [isWalk, setisWalk] = useState(false);
   const [isDeliver, setisDeliver] = useState(false);
   const [isBath, setisBath] = useState(false);
-  const [isGet, setisGet] = useState(false)
+  const [isGet, setisGet] = useState(false);
 
   useEffect(() => {
     if (host) {
       setHostName(host.first_name + " " + host.last_name);
-      setServiceInfo({...serviceInfo,host:host.account})
+      setServiceInfo({ ...serviceInfo, host: host.account });
     }
     if (hostService) {
-
       setMealTypes(hostService.available_meals);
       setisWalk(hostService.enable_dog_walk);
       setisDeliver(hostService.enable_delivery_dog);
       setisBath(hostService.enable_bath_dog);
       setisGet(hostService.enable_get_dog);
-
     }
-    if(customerAccount){
- 
-      setCustomerDogs(customerAccount.customer.dog_customer)
-      setServiceInfo({...serviceInfo,customer:customerAccount.id})
+    if (customerAccount) {
+      setCustomerDogs(customerAccount.customer.dog_customer);
+      setServiceInfo({ ...serviceInfo, customer: customerAccount.id });
     }
   }, [host, customerAccount, hostService]);
-
-
- 
-
 
   const getDogFeedingTime = async () => {
     const response = await DogAPI.GetFeedingTime(
@@ -148,15 +142,14 @@ export default function ServiceForm({ host, customerAccount, hostService }) {
     }
     if (name === "dog") {
       for (var i = 0; i < customerDogs.length; i++) {
-        console.log(customerDogs)
-        console.log(customerDogs[i])
+        console.log(customerDogs);
+        console.log(customerDogs[i]);
         if (parseInt(value) === customerDogs[i].id) {
           setDogName(customerDogs[i].dog_name);
         }
       }
     }
   }
-
 
   useEffect(() => {
     getDogFeedingTime();
@@ -178,17 +171,13 @@ export default function ServiceForm({ host, customerAccount, hostService }) {
 
     return (
       <Card>
-        <CardImg
-          top
-          width="100%"
-          src={customerDog.picture}
-        />
+        <CardImg top width="100%" src={customerDog.picture} />
         <CardBody>
           <CardTitle tag="h5"> {customerDog.dog_name}</CardTitle>
           <CardText>
             สายพันธุ์ : {customerDog.dog_breed} , {gender} , วันเกิด :{" "}
             {customerDog.dog_dob} , น้ำหนัก : {customerDog.dog_weight} กิโลกรัม
-                </CardText>
+          </CardText>
           <Button
             key={customerDog.id}
             name="dog"
@@ -220,22 +209,31 @@ export default function ServiceForm({ host, customerAccount, hostService }) {
   });
 
   function onServiceSubmit(event) {
+
+
     event.preventDefault();
     console.log("serviceInfo");
     console.log(serviceInfo);
+
     ServiceAPI.createService(cookies.mytoken, serviceInfo)
       .then((response) => {
         console.log(response);
-
       })
       .catch((error) => {
         console.log(error.response);
+        toggleError();
       });
   }
+  const [modalSubmit, setModalSubmit] = useState(false);
+
+const toggleSubmit = () => setModalSubmit(!modalSubmit);
+
+const [modalError, setModalError] = useState(false);
+
+const toggleError = () => setModalError(!modalError);
 
   return (
     <div>
-
       <Row>
         <Col xs="12" sm="12" md="12" lg="8">
           <Form>
@@ -249,8 +247,12 @@ export default function ServiceForm({ host, customerAccount, hostService }) {
                     เลือกสุนัขของคุณ
                   </Col>
                   <Col xs="5" sm="4">
-                    {dogName ? (<Label>{dogName}</Label>) : (<Label disable>ยังไม่ได้เลือก</Label>)}
-                    <Button color="primary" size="sm" onClick={toggle} >
+                    {dogName ? (
+                      <Label>{dogName}</Label>
+                    ) : (
+                      <Label disable>ยังไม่ได้เลือก</Label>
+                    )}
+                    <Button color="primary" size="sm" onClick={toggle}>
                       เลือก
                     </Button>
                     <Modal isOpen={modal} fade={false} toggle={toggle}>
@@ -341,9 +343,11 @@ export default function ServiceForm({ host, customerAccount, hostService }) {
                 </Row>
               </FormGroup>
             </div>
-            {(isWalk||isGet||isDeliver||isBath)?(<FormGroup>
-              <h4>บริการเพิ่มเติม</h4>
-            </FormGroup>):null}
+            {isWalk || isGet || isDeliver || isBath ? (
+              <FormGroup>
+                <h4>บริการเพิ่มเติม</h4>
+              </FormGroup>
+            ) : null}
             <div className="list-service">
               {isWalk ? (
                 <FormGroup>
@@ -488,8 +492,28 @@ export default function ServiceForm({ host, customerAccount, hostService }) {
           />
 
           <Row>
+          <AlertModal message={"ไม่สามารถสร้างบริการได้ ลองใหม่อีกครั้ง" } alertModal={modalError} alertToggle={toggleError}/>
             <Col align="right">
-              <Button onClick={onServiceSubmit}>ยืนยัน</Button>
+              <Button onClick={toggleSubmit }>ยืนยัน</Button>
+              <Modal isOpen={modalSubmit} toggle={toggleSubmit }>
+                <ModalHeader>
+                  คุณต้องการยืนยันการสร้างบริการใช่หรือไม่
+                </ModalHeader>
+                <ModalFooter>
+                  <Button
+                    color="danger"
+                    onClick={(e) => {
+                      onServiceSubmit(e);
+                      toggleSubmit ();
+                    }}
+                  >
+                    ยืนยัน
+                  </Button>{" "}
+                  <Button color="secondary" onClick={toggleSubmit}>
+                    ยกเลิก
+                  </Button>
+                </ModalFooter>
+              </Modal>
             </Col>
           </Row>
         </Col>
@@ -497,3 +521,4 @@ export default function ServiceForm({ host, customerAccount, hostService }) {
     </div>
   );
 }
+

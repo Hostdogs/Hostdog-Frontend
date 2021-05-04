@@ -20,6 +20,9 @@ import EditFeedingTime from "./EditFeedingTime";
 import "./DogTab.css";
 import moment from "moment-timezone";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+
 export default function DogProfileList(props) {
   const { dogInfos, isOwned } = props;
   const [cookies] = useCookies(["mytoken", "user_id"]);
@@ -75,16 +78,16 @@ export default function DogProfileList(props) {
       }
       return (
         <div key={dogInfo.id}>
-          <Card>
+          <Card style={{border:"0px"}}>
             <Row>
-              <Col xs="12" sm="6" md="6" lg="4">
+              <Col xs="12" sm="6" md="6" lg="4" >
                 <CardImg
                   className="resize-imgDog"
-                  Width="100%"
                   src={dogInfo.picture}
+                  style={{border:"5px solid wheat", borderStyle:"initial"}}
                 />
               </Col>
-              <Col xs="12" sm="6" md="6" lg="8">
+              <Col xs="12" sm="6" md="6" lg="8" style={{backgroundColor:"wheat"}}>
                 <CardBody>
                   <CardTitle tag="h5">
                     {dogInfo.dog_name}
@@ -129,6 +132,7 @@ export default function DogProfileList(props) {
                       style={{ marginLeft: "15px" }}
                       onClick={() => deleteDogInfo(dogInfo)}
                     >
+                      <FontAwesomeIcon icon={faTrashAlt}/>{" "}
                       ลบ
                     </Button>
                   ) : null}

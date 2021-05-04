@@ -19,6 +19,7 @@ import DogFeedingTime from "./DogFeedingTime";
 import { useCookies } from "react-cookie";
 import DogAPI from "../../../API/DogAPI";
 import moment from "moment-timezone";
+import './DogTab.css'
 
 const startDogInfo = {
   customer: "",
@@ -138,8 +139,8 @@ export default function DogProfileAddForm(props) {
     <div>
       <Row>
         <Col xs="12">
-          <Button color="warning" onClick={toggle}>
-            <FontAwesomeIcon icon={faPlus} /> {labelBtn}
+          <Button onClick={toggle} style={{color:"black",backgroundColor:"#f9e07f", border:"0px", fontSize:"15px"}}>
+            <FontAwesomeIcon icon={faPlus} className="IconFaPlus"/> {labelBtn}
           </Button>
         </Col>
       </Row>

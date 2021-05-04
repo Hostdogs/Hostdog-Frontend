@@ -10,7 +10,7 @@ import {
   List,
   Collapse,
 } from "reactstrap";
-import Skeleton from "react-loading-skeleton";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 const ProfileCard = ({ pageCollapse, Account, setAccount }) => {
   const [img, setimg] = useState(null);
   const [role, setrole] = useState(null);
@@ -66,10 +66,10 @@ const ProfileCard = ({ pageCollapse, Account, setAccount }) => {
         
         <br />
         <CardTitle tag="h3">
-          {Name || <Skeleton style={{ width: "250px" }} />}
+          {Name ||<SkeletonTheme color="#f9e07f"> <Skeleton style={{ width: "250px" }} /></SkeletonTheme>}
         </CardTitle>
         <CardSubtitle tag="h6" className="mb-2 text-muted">
-          {role || <Skeleton style={{ width: "100px" }} />}
+          {role || <SkeletonTheme color="#f9e07f"><Skeleton style={{ width: "100px" }} /></SkeletonTheme>}
         </CardSubtitle>
         <Collapse isOpen={pageCollapse}>
           <br />

@@ -76,6 +76,7 @@ export default function NameSetting({
         setAccount({
           ...Account,
           host: {
+            ...Account.host,
             first_name: res.data.first_name,
             last_name: res.data.last_name,
           },
@@ -87,6 +88,7 @@ export default function NameSetting({
           setAccount({
             ...Account,
             customer: {
+              ...Account.customer,
               first_name: res.data.first_name,
               last_name: res.data.last_name,
             },

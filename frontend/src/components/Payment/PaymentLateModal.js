@@ -3,17 +3,18 @@ import { useState,useEffect } from "react";
 import { faClosedCaptioning } from '@fortawesome/free-solid-svg-icons';
 import axios from "axios";
 import PaymentAPI from '../API/PaymentAPI'
-
-export default function PaymentLateModal({service_id}){
-
+import AccountAPI from '../API/AccountAPI'
+import { useCookies } from "react-cookie";
+export default function PaymentLateModal({service_id,customer,dog}){
+  const [cookies, setcookies] = useCookies(["mytoken", "user_id"]);
     const [modal, setModal] = useState(false);
     const [nestedModal, setNestedModal] = useState(false);
     const [closeAll, setCloseAll] = useState(false);
     const toggle = () => setModal(!modal);
   
-    const [customerName,setCustomerName]=useState("บาส บางขุนเทียน")
-    const [dogName,setDogName]=useState("น้องบาส หลังอาน")
-    const [accountNumber,setAccountNumber]=useState("1234567890");
+    const [customerName,setCustomerName]=useState(null)
+    const [dogName,setDogName]=useState(null)
+    const [accountNumber,setAccountNumber]=useState(null);
     const [totalPrice,setTotalPrice]=useState(null)
     const [paymentID,setPaymentID]=useState(null);
   
@@ -55,11 +56,20 @@ export default function PaymentLateModal({service_id}){
         console.log("listPayment")
         console.log(listPayment)
     }
+    const getAccountNumber=async()=>{
 
+      const responseAccount=await AccountAPI.getAccount(cookies.mytoken,customer.account)
+      const accountInfo=responseAccount.data
+      console.log("accountInfo")
+      console.log(accountInfo)
+      setAccountNumber(accountInfo.account_number)
+  
+  
+    }
   
     const handlePayment=async()=>{
       getPaymentIDFromService_setTotalPayment();
-      
+      getAccountNumber();
       toggle();
     }
   
@@ -73,11 +83,11 @@ export default function PaymentLateModal({service_id}){
   
            <div style={{justifyContent:"space-between",display:"flex"}}>
           <h5>ชื่อ:</h5>
-          <Label>{customerName}</Label>
+          <Label>{customer.first_name+" "+customer.last_name}</Label>
           </div>
           <div style={{justifyContent:"space-between",display:"flex"}}>
           <h5>สุนัข:</h5>
-          <Label>{dogName}</Label>
+          <Label>{dog.dog_name}</Label>
           </div>
           <div style={{justifyContent:"space-between",display:"flex"}}>
            <h5>หมายเลขบัญชี:</h5>

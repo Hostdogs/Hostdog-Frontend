@@ -4,17 +4,21 @@ import { useState,useEffect } from "react";
 import { faClosedCaptioning } from '@fortawesome/free-solid-svg-icons';
 import axios from "axios";
 import PaymentAPI from '../API/PaymentAPI'
-
-export default function PaymentDepositModal({service_id, customer, dog}) {
-
+import ServiceAPI from '../API/ServiceAPI'
+import CustomerAPI from '../API/CustomerAPI'
+import DogAPI from '../API/DogAPI'
+import AccountAPI from '../API/AccountAPI'
+import { useCookies } from "react-cookie";
+export default function PaymentDepositModal({service_id,customer,dog}) {
+  const [cookies, setcookies] = useCookies(["mytoken", "user_id"]);
 const [modal, setModal] = useState(false);
   const [nestedModal, setNestedModal] = useState(false);
   const [closeAll, setCloseAll] = useState(false);
   const toggle = () => setModal(!modal);
 
-  const [customerName,setCustomerName]=useState(null)
-  const [dogName,setDogName]=useState(null)
-  const [accountNumber,setAccountNumber]=useState(null);
+  const [customerName,setCustomerName]=useState("")
+  const [dogName,setDogName]=useState("")
+  const [accountNumber,setAccountNumber]=useState("");
   const [totalPrice,setTotalPrice]=useState(null)
   const [paymentID,setPaymentID]=useState(null);
 
@@ -55,17 +59,25 @@ const [modal, setModal] = useState(false);
       console.log("listPayment")
       console.log(listPayment)
   }
+  const getAccountNumber=async()=>{
 
+    const responseAccount=await AccountAPI.getAccount(cookies.mytoken,customer.account)
+    const accountInfo=responseAccount.data
+    console.log("accountInfo")
+    console.log(accountInfo)
+    setAccountNumber(accountInfo.account_number)
+
+
+  }
 
   const handlePayment=async()=>{
     getPaymentIDFromService_setTotalPayment();
-    
+    getAccountNumber();
     toggle();
   }
 
     return (
         <div>
-   
             <Button color="success" onClick={handlePayment}>ชำระเงินค่าบริการ</Button>
             <Modal isOpen={modal} toggle={toggle} fade={false} >
         <ModalHeader toggle={toggle}><h2>ชำระเงินค่าบริการ</h2></ModalHeader>
@@ -84,8 +96,8 @@ const [modal, setModal] = useState(false);
          <Label >{accountNumber}</Label>
          </div>
          <div style={{justifyContent:"space-between",display:"flex"}}>
-         <h5>ยอดชำระเงินรวม:</h5>
-         <Label > {totalPrice} บาท</Label>
+         <h4>ยอดชำระเงินรวม:</h4>
+         <h4> {totalPrice} บาท</h4>
          </div>
          <small style={{ color: "red" }}>หมายเหตุ: กรุณาชำระค่าบริการภายใน 1 ชั่วโมง มิฉะนั้นบริการของคุณจะถูกยกเลิก</small>
           <br />

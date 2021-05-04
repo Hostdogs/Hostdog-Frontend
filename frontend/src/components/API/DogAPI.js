@@ -50,6 +50,15 @@ export default class DogAPI {
       },
     });
   }
+  static GetOneDog(mytoken,user_id,dog_id){
+    const url=`${API_URL}${user_id}/dogs/${dog_id}/`
+    return axios.get(url,{
+      headers:{
+        "content-type":"application/json",
+        Authorization:`Token ${mytoken}`,
+      },
+    });
+  }
 
   static AddFeedingTime(mytoken, user_id, dog_id, data) {
     const url = `${API_URL}${user_id}/dogs/${dog_id}/feeding-time/`;

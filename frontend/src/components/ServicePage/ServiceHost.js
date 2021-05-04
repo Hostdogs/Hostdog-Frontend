@@ -12,8 +12,9 @@ import {
 } from "reactstrap";
 import "./Service.css";
 import GoogleMapService from "./GoogleMapService.js";
+import Loading from "../Handle/Loading";
 
-export default function ServiceHost({ host ,customerAccount}) {
+export default function ServiceHost({ host, customerAccount }) {
   const [hostAddress, sethostAddress] = useState()
   const [hostImg, sethostImg] = useState()
   const [customerImg, setcustomerImg] = useState()
@@ -25,11 +26,11 @@ export default function ServiceHost({ host ,customerAccount}) {
       // console.log("wheremypicture",host)
     }
   }, [host])
-useEffect(() => {
-  if(customerAccount){
-    setcustomerImg(customerAccount.customer.picture)
-  }
-}, [customerAccount])
+  useEffect(() => {
+    if (customerAccount) {
+      setcustomerImg(customerAccount.customer.picture)
+    }
+  }, [customerAccount])
 
   const [items, setitems] = useState([])
 
@@ -120,54 +121,60 @@ useEffect(() => {
 
   return (
     <div>
-      <Row  style={{paddingRight:"25px"}}> 
-        <Col>
-          <Carousel
-            className="hostImage-content-small"
-            activeIndex={activeIndex}
-            next={next}
-            previous={previous}
-          >
-            <CarouselIndicators
-              items={items}
-              activeIndex={activeIndex}
-              onClickHandler={goToIndex}
-            />
-            {slides}
-            <CarouselControl
-              direction="prev"
-              directionText="Previous"
-              onClickHandler={previous}
-            />
-            <CarouselControl
-              direction="next"
-              directionText="Next"
-              onClickHandler={next}
-            />
-          </Carousel>
-        </Col>
-      </Row>
+      {host && customerAccount ? (
+        <div>
+          <Row style={{ paddingRight: "25px" }}>
+            <Col>
+              <Carousel
+                className="hostImage-content-small"
+                activeIndex={activeIndex}
+                next={next}
+                previous={previous}
+              >
+                <CarouselIndicators
+                  items={items}
+                  activeIndex={activeIndex}
+                  onClickHandler={goToIndex}
+                />
+                {slides}
+                <CarouselControl
+                  direction="prev"
+                  directionText="Previous"
+                  onClickHandler={previous}
+                />
+                <CarouselControl
+                  direction="next"
+                  directionText="Next"
+                  onClickHandler={next}
+                />
+              </Carousel>
+            </Col>
+          </Row>
 
-      <Row className="host-row" style={{ marginTop: "10px", marginBottom: "10px", paddingRight:"25px" }}>
-        <Col>
-          <GoogleMapService host={host} hostImg={hostImg} customerImg={customerImg}/>
-        </Col>
-      </Row>
+          <Row className="host-row" style={{ marginTop: "10px", marginBottom: "10px", paddingRight: "25px" }}>
+            <Col>
+              <GoogleMapService host={host} hostImg={hostImg} customerImg={customerImg} />
+            </Col>
+          </Row>
 
-      <Row className="host-row" style={{paddingRight:"25px"}}>
-        <Col  xs={12}>
-          <h4>ที่อยู่</h4>
-        </Col>
-        <Col>
- 
-            <p style={{ wordWrap:"break-word"}}>{hostAddress}</p>
-  
-        </Col>
+          <Row className="host-row" style={{ paddingRight: "25px" }}>
+            <Col xs={12}>
+              <h4>ที่อยู่</h4>
+            </Col>
+            <Col>
+
+              <p style={{ wordWrap: "break-word" }}>{hostAddress}</p>
+
+            </Col>
 
 
 
-      </Row>
-      <Row>{imageHost}</Row>
+          </Row>
+          <Row>{imageHost}</Row>
+        </div>
+      ) : (<Loading />)}
+
+
     </div>
   );
 }

@@ -9,6 +9,7 @@ import { useCookies } from "react-cookie";
 import HostServiceAPI from "../API/HostServiceAPI";
 import SideBar from "../sidebar/SideBar";
 import AuthenAPI from "../API/AuthenAPI";
+import LoadingScreen from "../Handle/LoadingScreen";
 export default function ServicePage({ match }) {
   const [cookies, setcookies] = useCookies(["mytoken", "user_id"]);
   const [isOpen, setIsOpen] = useState(false);
@@ -20,36 +21,39 @@ export default function ServicePage({ match }) {
   const toggleSideBar = () => {
     setIsOpen(!isOpen)
   }
- 
+
   useEffect(() => {
 
-    HostAPI.getHostDetails(cookies["mytoken"],path).then(res=>{
+    HostAPI.getHostDetails(cookies["mytoken"], path).then(res => {
       sethost(res.data)
       console.log(res.data)
     })
-    HostServiceAPI.getHostService(cookies["mytoken"],path).then(res=>{
+    HostServiceAPI.getHostService(cookies["mytoken"], path).then(res => {
       sethostService(res.data)
-      console.log("service",res.data)
+      console.log("service", res.data)
     })
-    
-    AuthenAPI.getUserAllInfo(cookies["mytoken"],cookies["user_id"]).then(res=>{
+
+    AuthenAPI.getUserAllInfo(cookies["mytoken"], cookies["user_id"]).then(res => {
       setcustomerAccount(res.data)
-      console.log("hello",res.data)
+      console.log("hello", res.data)
     })
   }, [])
-
+  const [isLoadScreen, setisLoadScreen] = useState(false)
   return (
     <div>
+
+      {isLoadScreen ? (<LoadingScreen />) : (null)}
       <NavbarIsAuth toggleSideBar={toggleSideBar} />
       <SideBar isOpen={isOpen} />
       {/* <ServiceForm /> */}
       <div className="content" style={{ paddingTop: "70px" }}>
+
         <Row>
           <Col xs="12" sm="12" md="12" lg="3" style={{ paddingTop: "10px" }}>
-            <ServiceHost host={host} customerAccount={customerAccount}/>
+            <ServiceHost host={host} customerAccount={customerAccount} />
           </Col>
           <Col xs="12" sm="12" md="12" lg="9">
-            <ServiceForm host={host} customerAccount={customerAccount} hostService={hostService}/>
+            <ServiceForm host={host} customerAccount={customerAccount} hostService={hostService} setisLoadScreen={setisLoadScreen}/>
             <br />
           </Col>
         </Row>

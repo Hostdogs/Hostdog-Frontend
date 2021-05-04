@@ -37,7 +37,8 @@ import { useCookies } from "react-cookie";
 import AlertModal from "../ProgressPage/AlertModal";
 import moment from "moment-timezone";
 import { useHistory } from "react-router-dom"
-export default function ServiceForm({ host, customerAccount, hostService }) {
+import LoadingScreen from "../Handle/LoadingScreen";
+export default function ServiceForm({ host, customerAccount, hostService,setisLoadScreen }) {
   let history = useHistory()
   const [cookies, setcookies] = useCookies(["mytoken", "user_id"]);
   const [modal, setModal] = useState(false);
@@ -145,6 +146,15 @@ export default function ServiceForm({ host, customerAccount, hostService }) {
     is_bath_dog: false,
     service_bio: "",
   });
+  const [submitable, setsubmitable] = useState(false)
+  useEffect(() => {
+    if(serviceInfo.service_start_time&&serviceInfo.service_end_time&&serviceInfo.service_meal_type&&serviceInfo.dog){
+      setsubmitable(true)
+    }else{
+      setsubmitable(false)
+    }
+  }, [serviceInfo])
+ 
 
   function changeValue(name, value) {
     if (value === "true" || value === true) {
@@ -246,15 +256,17 @@ export default function ServiceForm({ host, customerAccount, hostService }) {
     event.preventDefault();
     console.log("serviceInfo");
     console.log(serviceInfo);
-
+    setisLoadScreen(true)
     ServiceAPI.createService(cookies.mytoken, serviceInfo)
       .then((response) => {
         console.log(response);
+        setisLoadScreen(false)
         history.push("/history")
         history.go(0)
       })
       .catch((error) => {
         console.log(error.response);
+        setisLoadScreen(false)
         toggleError();
       });
   }
@@ -266,8 +278,10 @@ export default function ServiceForm({ host, customerAccount, hostService }) {
 
   const toggleError = () => setModalError(!modalError);
 
+  
   return (
     <div>
+       
       <Row>
         <Col
           xs="12"
@@ -557,7 +571,7 @@ export default function ServiceForm({ host, customerAccount, hostService }) {
               alertToggle={toggleError}
             />
             <Col align="right">
-              <Button onClick={toggleSubmit} style={{backgroundColor:"#264d59"}}>ยืนยัน</Button>
+              <Button onClick={toggleSubmit} style={{backgroundColor:"#264d59"}} disabled={!submitable}>ยืนยัน</Button>
               <Modal isOpen={modalSubmit} toggle={toggleSubmit}>
                 <ModalHeader>
                   คุณต้องการยืนยันการสร้างบริการใช่หรือไม่

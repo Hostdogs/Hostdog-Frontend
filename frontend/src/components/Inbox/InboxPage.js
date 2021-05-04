@@ -26,7 +26,7 @@ export default function InboxPage() {
             <Container>
                 <h1 className="heading1">รายการคำร้องขอของคุณ :</h1>
             </Container>
-            <div style={{ height: "100vh" }}>
+            <div style={{ minHeight: "100vh" }}>
                 {isLoad && pendingData ? (<PendingList pendingData={pendingData}  />) : (null)}
                 {isLoad && !pendingData ? (<BlankPending />) : (null)}
             </div>

@@ -58,32 +58,25 @@ export default function ServiceForm({ host, customerAccount, hostService }) {
   const [isWalk, setisWalk] = useState(false);
   const [isDeliver, setisDeliver] = useState(false);
   const [isBath, setisBath] = useState(false);
-  const [isGet, setisGet] = useState(false)
+  const [isGet, setisGet] = useState(false);
 
   useEffect(() => {
     if (host) {
       setHostName(host.first_name + " " + host.last_name);
-      setServiceInfo({...serviceInfo,host:host.account})
+      setServiceInfo({ ...serviceInfo, host: host.account });
     }
     if (hostService) {
-
       setMealTypes(hostService.available_meals);
       setisWalk(hostService.enable_dog_walk);
       setisDeliver(hostService.enable_delivery_dog);
       setisBath(hostService.enable_bath_dog);
       setisGet(hostService.enable_get_dog);
-
     }
-    if(customerAccount){
- 
-      setCustomerDogs(customerAccount.customer.dog_customer)
-      setServiceInfo({...serviceInfo,customer:customerAccount.id})
+    if (customerAccount) {
+      setCustomerDogs(customerAccount.customer.dog_customer);
+      setServiceInfo({ ...serviceInfo, customer: customerAccount.id });
     }
   }, [host, customerAccount, hostService]);
-
-
- 
-
 
   const getDogFeedingTime = async () => {
     const response = await DogAPI.GetFeedingTime(
@@ -148,15 +141,14 @@ export default function ServiceForm({ host, customerAccount, hostService }) {
     }
     if (name === "dog") {
       for (var i = 0; i < customerDogs.length; i++) {
-        console.log(customerDogs)
-        console.log(customerDogs[i])
+        console.log(customerDogs);
+        console.log(customerDogs[i]);
         if (parseInt(value) === customerDogs[i].id) {
           setDogName(customerDogs[i].dog_name);
         }
       }
     }
   }
-
 
   useEffect(() => {
     getDogFeedingTime();
@@ -178,17 +170,13 @@ export default function ServiceForm({ host, customerAccount, hostService }) {
 
     return (
       <Card>
-        <CardImg
-          top
-          width="100%"
-          src={customerDog.picture}
-        />
+        <CardImg top width="100%" src={customerDog.picture} />
         <CardBody>
           <CardTitle tag="h5"> {customerDog.dog_name}</CardTitle>
           <CardText>
             สายพันธุ์ : {customerDog.dog_breed} , {gender} , วันเกิด :{" "}
             {customerDog.dog_dob} , น้ำหนัก : {customerDog.dog_weight} กิโลกรัม
-                </CardText>
+          </CardText>
           <Button
             key={customerDog.id}
             name="dog"
@@ -226,7 +214,6 @@ export default function ServiceForm({ host, customerAccount, hostService }) {
     ServiceAPI.createService(cookies.mytoken, serviceInfo)
       .then((response) => {
         console.log(response);
-
       })
       .catch((error) => {
         console.log(error.response);
@@ -235,7 +222,6 @@ export default function ServiceForm({ host, customerAccount, hostService }) {
 
   return (
     <div>
-
       <Row>
         <Col xs="12" sm="12" md="12" lg="8">
           <Form>
@@ -249,8 +235,12 @@ export default function ServiceForm({ host, customerAccount, hostService }) {
                     เลือกสุนัขของคุณ
                   </Col>
                   <Col xs="5" sm="4">
-                    {dogName ? (<Label>{dogName}</Label>) : (<Label disable>ยังไม่ได้เลือก</Label>)}
-                    <Button color="primary" size="sm" onClick={toggle} >
+                    {dogName ? (
+                      <Label>{dogName}</Label>
+                    ) : (
+                      <Label disable>ยังไม่ได้เลือก</Label>
+                    )}
+                    <Button color="primary" size="sm" onClick={toggle}>
                       เลือก
                     </Button>
                     <Modal isOpen={modal} fade={false} toggle={toggle}>
@@ -341,9 +331,11 @@ export default function ServiceForm({ host, customerAccount, hostService }) {
                 </Row>
               </FormGroup>
             </div>
-            {(isWalk||isGet||isDeliver||isBath)?(<FormGroup>
-              <h4>บริการเพิ่มเติม</h4>
-            </FormGroup>):null}
+            {isWalk || isGet || isDeliver || isBath ? (
+              <FormGroup>
+                <h4>บริการเพิ่มเติม</h4>
+              </FormGroup>
+            ) : null}
             <div className="list-service">
               {isWalk ? (
                 <FormGroup>
@@ -358,6 +350,7 @@ export default function ServiceForm({ host, customerAccount, hostService }) {
                         name="is_dog_walk"
                         value="true"
                         label="ต้องการ"
+                        checked={serviceInfo.is_dog_walk}
                         onChange={onServiceInfoChange}
                       />
                     </Col>
@@ -368,6 +361,7 @@ export default function ServiceForm({ host, customerAccount, hostService }) {
                         name="is_dog_walk"
                         value="false"
                         label="ไม่ต้องการ"
+                        checked={!serviceInfo.is_dog_walk}
                         onChange={onServiceInfoChange}
                       />
                     </Col>
@@ -387,6 +381,7 @@ export default function ServiceForm({ host, customerAccount, hostService }) {
                         name="is_get_dog"
                         value="true"
                         label="ต้องการ"
+                        checked={serviceInfo.is_get_dog}
                         onChange={onServiceInfoChange}
                       />
                     </Col>
@@ -397,6 +392,7 @@ export default function ServiceForm({ host, customerAccount, hostService }) {
                         name="is_get_dog"
                         value="false"
                         label="ไม่ต้องการ"
+                        checked={!serviceInfo.is_get_dog}
                         onChange={onServiceInfoChange}
                       />
                     </Col>
@@ -416,6 +412,7 @@ export default function ServiceForm({ host, customerAccount, hostService }) {
                         name="is_delivery_dog"
                         value="true"
                         label="ต้องการ"
+                        checked={serviceInfo.is_delivery_dog}
                         onChange={onServiceInfoChange}
                       />
                     </Col>
@@ -426,6 +423,7 @@ export default function ServiceForm({ host, customerAccount, hostService }) {
                         name="is_delivery_dog"
                         value="false"
                         label="ไม่ต้องการ"
+                        checked={!serviceInfo.is_delivery_dog}
                         onChange={onServiceInfoChange}
                       />
                     </Col>
@@ -445,6 +443,7 @@ export default function ServiceForm({ host, customerAccount, hostService }) {
                         name="is_bath_dog"
                         value="true"
                         label="ต้องการ"
+                        checked={serviceInfo.is_bath_dog}
                         onChange={onServiceInfoChange}
                       />
                     </Col>
@@ -455,6 +454,7 @@ export default function ServiceForm({ host, customerAccount, hostService }) {
                         name="is_bath_dog"
                         value="false"
                         label="ไม่ต้องการ"
+                        checked={!serviceInfo.is_bath_dog}
                         onChange={onServiceInfoChange}
                       />
                     </Col>

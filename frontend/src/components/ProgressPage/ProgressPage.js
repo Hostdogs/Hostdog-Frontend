@@ -291,7 +291,12 @@ export default function ProgressPage({ match }) {
         setShowHostRecieveDog(false);
         setHostReturnDog(false);
       } else {
-        setShowCustomerReview(true);
+        if(ServiceInfo.is_review){
+          setShowCustomerReview(false);
+        }else{
+          setShowCustomerReview(true);
+        }
+        
 
         setShowCustomerDepositPayment(false);
         setshowCustomerLatePayment(false);

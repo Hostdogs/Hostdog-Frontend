@@ -8,37 +8,43 @@ export default function HistoryPage() {
 
     const [cookies, setcookies] = useCookies(["mytoken", "user_id"]);
     const [isOpen, setIsOpen] = useState(false);
-    const [customerService,setCustomerService]=useState([]);
-    const [oneService,setOneService]=useState();
+    // const [Service,setCustomerService]=useState();
+    const [serviceList, setserviceList] = useState()
+
+    // const [oneService,setOneService]=useState();
     const toggleSideBar = () => {
         console.log("hello")
         setIsOpen(!isOpen)
     }
-    const getCustomerService=async()=>{
-        const response =await ServiceAPI.listService(cookies.mytoken)
-        setCustomerService((response.data).filter((history) => {
-            if (history.customer.account===parseInt(cookies.user_id)){
-              return history;
-            } else {
-              return null;
-            }
-            }
-          ));
+    // const getCustomerService=async()=>{
+    //     const response =await ServiceAPI.listService(cookies.mytoken)
+    //     setCustomerService((response.data).filter((history) => {
+    //         if (history.customer.account===parseInt(cookies.user_id)){
+    //           return history;
+    //         } else {
+    //           return null;
+    //         }
+    //         }
+    //       ));
          
       
             
 
-    }
+    // }
 
     useEffect(() => {
-        getCustomerService();
+        ServiceAPI.listService(cookies["mytoken"]).then(res=>{
+            console.log(res.data)
+            setserviceList(res.data)
+        })
+        // getCustomerService();
     }, [])
     return (
         <div>
  
             <NavbarisAuth toggleSideBar={toggleSideBar}/>
             <SideBar isOpen={isOpen}/>
-            <HistoryList ServiceList={customerService}/>
+            <HistoryList serviceList={serviceList}/>
         </div>
     )
 }

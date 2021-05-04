@@ -34,48 +34,24 @@ export default function ServiceDetail({ onCancel, isExpand, ServiceInfo,hostInfo
   const [totalPrice,setTotalPrice]=useState(null); 
   const [mealType,setMealType]=useState(null);
   const [mealWeight,setMealWeight]=useState(null);
-  const [dogFeedingTime,setDogFeedingTime]=useState([]);
-  const [additionalService,setAdditionalService]=useState([]);
-
-  const [cookies, setcookies] = useCookies(["mytoken", "user_id"]);
   
+  const [additionalService,setAdditionalService]=useState([]);
+  const [dogFeedingTime,setDogFeedingTime]=useState([]);
+  const [cookies, setcookies] = useCookies(["mytoken", "user_id"]);
+ 
   useEffect(() => {
     moment.updateLocale("th");
     if (ServiceInfo) {
-      // HostAPI.getHostDetails(cookies.mytoken,ServiceInfo.host.account).then((response)=>{
-      //   sethost(response.data);
-      //   console.log("getHostDetails")
-      //   console.log(response.data)
-      // }).catch((error)=>{
-      //   console.log("HostAPI");
-      //   console.log(error);
-      // })
-
-      // CustomerAPI.getCustomerDetails(cookies.mytoken,ServiceInfo.customer.account).then((response)=>{
-      //   setcustomer(response.data);
-      //   console.log("getCustomerDetails")
-      //   console.log(response.data)
-      // }).catch((error)=>{
-      //   console.log("customerAPI");
-      //   console.log(error);
-      // })
-      // DogAPI.GetOneDog(cookies.mytoken,ServiceInfo.customer.account,ServiceInfo.dog.id).then((response)=>{
-      //   setdog(response.data);
-      //   console.log("GetOneDog")
-      //   console.log(response.data)
-      // }).catch((error)=>{
-      //   console.log("dogAPI");
-      //   console.log(error);
-      // })
       DogAPI.GetFeedingTime(cookies.mytoken,ServiceInfo.customer.account,ServiceInfo.dog.id).then((response)=>{
         setDogFeedingTime(response.data);
         console.log("GetFeedingTime");
         console.log(response.data)
-
+  
       }).catch((error)=>{
         console.log("GetFeedingTime")
         console.log(error)
       })
+ 
       setServiceID(ServiceInfo.id)
       settimeRegister(moment(ServiceInfo.service_reg_time).format("lll"));
       settimeEnd(moment(ServiceInfo.service_end_time).format("lll"));
@@ -91,34 +67,7 @@ export default function ServiceDetail({ onCancel, isExpand, ServiceInfo,hostInfo
       setdog(ServiceInfo.dog);
       setcustomer(ServiceInfo.customer);
       sethost(ServiceInfo.host);
-      // if (ServiceInfo.main_status==="pending"){
-      //   setserviceDetailStatusLabel("กำลังรอคำตอบรับจากผู้รับฝาก");
-      //   setShowDepositPayment(false);
-      //   console.log("pending");
-      // }else if(ServiceInfo.main_status==="payment"){
-      //   setserviceDetailStatusLabel("รอการชำระเงิน");
-      //   setShowDepositPayment(true);
-      //   console.log("payment");
-      // }else if(ServiceInfo.main_status==="wait_for_progress"){
-      //   setserviceDetailStatusLabel("รอวันเริ่มบริการ");
-      //   setShowDepositPayment(false);
-      // }else if(ServiceInfo.main_status==="in_progress"){
-      //   setserviceDetailStatusLabel("อยู่ในการบริการ")
-      //   setShowDepositPayment(false);
-      //   console.log("in_progress");
-      // }else if(ServiceInfo.main_status==="end"){
-      //   setserviceDetailStatusLabel("สิ้นสุดบริการ")
-      //   setShowDepositPayment(false);
-      //   console.log("end");
-      // }else if(ServiceInfo.main_status==="late"){
-      //   setserviceDetailStatusLabel("เลยเวลาบริการแล้ว")
-      //   setShowDepositPayment(false);
-      //   console.log("late");
-      // }else if(ServiceInfo.main_status==="cancelled"){
-      //   setShowDepositPayment(false);
-      //   setserviceDetailStatusLabel("ยกเลิกบริการ")
-      //   console.log("cancelled");
-      // }
+  
 
     
     }

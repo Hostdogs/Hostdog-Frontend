@@ -5,7 +5,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import ServiceDetail from "./ServiceDetail";
 import { Collapse, Container } from "reactstrap";
 import ServiceAPI from "../API/ServiceAPI";
-
+import DogAPI from "../API/DogAPI"
 import { useCookies } from "react-cookie";
 export default function ProgressPage({ match }) {
   const [cookies, setcookies] = useCookies(["mytoken", "user_id"]);
@@ -21,8 +21,10 @@ export default function ProgressPage({ match }) {
   const [showLateService,setShowLateService]=useState(false);
   const [showCancelService,setShowCancelService]=useState(true);
   const [serviceDetailStatusLabel,setServiceDetailStatusLabel]=useState("");
+  
   setTimeout(() => {
     getService();
+    console.log("send API");
   }, 60000);
   const getService =  () => {
     ServiceAPI.getService(cookies.mytoken, servicePath).then((response)=>{
@@ -34,6 +36,7 @@ export default function ProgressPage({ match }) {
       console.log(error);
     })
 
+ 
   };
 
   const handleProgress = (ServiceInfo) => {
@@ -114,8 +117,6 @@ export default function ProgressPage({ match }) {
   const [ServiceInfo, setServiceInfo] = useState(null);
   useEffect(() => {
     getService();
-
-
   }, []);
 
 
@@ -165,6 +166,7 @@ export default function ProgressPage({ match }) {
             serviceDetailStatusLabel={serviceDetailStatusLabel}
             showCancelService={showCancelService}
             showLateService={showLateService}
+ 
             />
 
         </Container>

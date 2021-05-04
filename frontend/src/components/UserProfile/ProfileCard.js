@@ -63,7 +63,7 @@ const ProfileCard = ({ pageCollapse, Account, setAccount }) => {
             </div>
           </div>
         </Collapse>
-
+        
         <br />
         <CardTitle tag="h3">
           {Name || <Skeleton style={{ width: "250px" }} />}

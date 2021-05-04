@@ -15,7 +15,7 @@ import { useState, useEffect } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFilter } from "@fortawesome/free-solid-svg-icons";
+import { faFilter, faSortAmountDown } from "@fortawesome/free-solid-svg-icons";
 import Loading from "../Handle/Loading";
 
 export default function HostList({ hostData, setHostData, isLoad }) {
@@ -80,7 +80,7 @@ export default function HostList({ hostData, setHostData, isLoad }) {
 
 
   }
-  const sortcmp = ["distance", "host_rating", "host_hosted_count", "host_host_count"]
+  const sortcmp = ["distance", "host_rating", "host_hosted_count", "host_hosted_count"]
   const sortingList = ["ระยะทางใกล้ที่สุด", "คะแนนรีวิวสูงที่สุด", "ประวัติการรับฝากน้อยที่สุด","ประวัติการรับฝากมากที่สุด","อัตราค่าบริการต่ำถูกที่สุด", "อัตราค่าบริการแพงที่สุด"]
   const [selectedSort, setselectedSort] = useState(0)
   // console.log(selectedSort)
@@ -92,7 +92,7 @@ export default function HostList({ hostData, setHostData, isLoad }) {
 
       <Container className="host-container" fluid="xl"  >
         <Dropdown isOpen={dropdownOpen} toggle={toggle} style={{ marginTop: "10px", marginBottom: "10px" }}>
-          <DropdownToggle caret style={{backgroundColor:"#f9e07f", border:"3px solid #264d59", color:"#264d59"}}><FontAwesomeIcon icon={faFilter} /> {sortingList[selectedSort]}</DropdownToggle>
+          <DropdownToggle caret style={{backgroundColor:"#f9e07f", border:"3px solid #264d59", color:"#264d59"}}><FontAwesomeIcon icon={faSortAmountDown} /> {sortingList[selectedSort]}</DropdownToggle>
           <DropdownMenu>
             <DropdownItem onClick={() => setselectedSort(0)}>{sortingList[0]}</DropdownItem>
             <DropdownItem onClick={() => setselectedSort(1)}>{sortingList[1]}</DropdownItem>

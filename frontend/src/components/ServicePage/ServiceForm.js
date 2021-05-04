@@ -39,7 +39,8 @@ import moment from "moment-timezone";
 import { useHistory } from "react-router-dom"
 import LoadingScreen from "../Handle/LoadingScreen";
 import Skeleton from "react-loading-skeleton";
-export default function ServiceForm({ host, customerAccount, hostService,setisLoadScreen }) {
+import AvailableHost from "../SearchHost/AvailableHost";
+export default function ServiceForm({ host, customerAccount, hostService, setisLoadScreen }) {
   let history = useHistory()
   const [cookies, setcookies] = useCookies(["mytoken", "user_id"]);
   const [modal, setModal] = useState(false);
@@ -149,13 +150,13 @@ export default function ServiceForm({ host, customerAccount, hostService,setisLo
   });
   const [submitable, setsubmitable] = useState(false)
   useEffect(() => {
-    if(serviceInfo.service_start_time&&serviceInfo.service_end_time&&serviceInfo.service_meal_type&&serviceInfo.dog){
+    if (serviceInfo.service_start_time && serviceInfo.service_end_time && serviceInfo.service_meal_type && serviceInfo.dog) {
       setsubmitable(true)
-    }else{
+    } else {
       setsubmitable(false)
     }
   }, [serviceInfo])
- 
+
 
   function changeValue(name, value) {
     if (value === "true" || value === true) {
@@ -214,8 +215,8 @@ export default function ServiceForm({ host, customerAccount, hostService,setisLo
     }
     console.log(serviceInfo)
     return (
-      <Card style={{borderRadius:"0"}}>
-        <CardImg style={{objectFit:"contain",width:"100%",height:"200px", textAlign:"center"}} src={customerDog.picture} />
+      <Card style={{ borderRadius: "0" }}>
+        <CardImg style={{ objectFit: "contain", width: "100%", height: "200px", textAlign: "center" }} src={customerDog.picture} />
         <CardBody>
           <CardTitle tag="h5"> {customerDog.dog_name}</CardTitle>
           <CardText>
@@ -230,7 +231,7 @@ export default function ServiceForm({ host, customerAccount, hostService,setisLo
               onServiceInfoChange(customerDog);
               toggle();
             }}
-            style={{backgroundColor:"#43978d", border:"0px"}}
+            style={{ backgroundColor: "#43978d", border: "0px" }}
           >
             เลือก
           </Button>
@@ -279,10 +280,10 @@ export default function ServiceForm({ host, customerAccount, hostService,setisLo
 
   const toggleError = () => setModalError(!modalError);
 
-  
+
   return (
     <div>
-       
+
       <Row>
         <Col
           xs="12"
@@ -308,11 +309,11 @@ export default function ServiceForm({ host, customerAccount, hostService,setisLo
                       <Label disable>ยังไม่ได้เลือก</Label>
                     )}
                     {" "}
-                    <Button size="sm" onClick={toggle} style={{backgroundColor:"#43978d",color:"white",fontSize:"14px"}}>
+                    <Button size="sm" onClick={toggle} style={{ backgroundColor: "#43978d", color: "white", fontSize: "14px" }}>
                       เลือก
                     </Button>
                     <Modal isOpen={modal} fade={false} toggle={toggle}>
-                      <ModalHeader toggle={toggle} style={{backgroundColor:"#f9e07f"}}>
+                      <ModalHeader toggle={toggle} style={{ backgroundColor: "#f9e07f" }}>
                         เลือกสุนัขของคุณ
                       </ModalHeader>
                       <ModalBody>{customerDogElements}</ModalBody>
@@ -326,14 +327,16 @@ export default function ServiceForm({ host, customerAccount, hostService,setisLo
                     ผู้รับฝาก
                   </Col>
                   <Col xs="12" sm="6">
-                    {hostName||<Skeleton style={{width:"150px"}}/>}
+                    {hostName || <Skeleton style={{ width: "150px" }} />}
                   </Col>
                 </Row>
               </FormGroup>
               <FormGroup>
                 <Row>
                   <Col xs="12" sm="4">
-                    วันที่ใช้บริการฝาก
+                    
+                  วันที่ใช้บริการฝาก  <AvailableHost host={host} />
+                    
                   </Col>
                   <Col sm="6" xs="12">
                     <Row>
@@ -371,7 +374,7 @@ export default function ServiceForm({ host, customerAccount, hostService,setisLo
                       isOpen={dropdownTypeOpen}
                       toggle={toggleType}
                     >
-                      <DropdownToggle caret size="sm" style={{backgroundColor:"#43978d",color:"white", fontSize:"14px"}}>
+                      <DropdownToggle caret size="sm" style={{ backgroundColor: "#43978d", color: "white", fontSize: "14px" }}>
                         {customerMealLabel}
                       </DropdownToggle>
                       <DropdownMenu>{mealTypeElements}</DropdownMenu>
@@ -407,7 +410,7 @@ export default function ServiceForm({ host, customerAccount, hostService,setisLo
               <FormGroup>
                 <h4>บริการเพิ่มเติม</h4>
               </FormGroup>
-            ) : <h4><Skeleton style={{width:"150px"}}/></h4>}
+            ) : <h4><Skeleton style={{ width: "150px" }} /></h4>}
             <div className="list-service">
               {isWalk ? (
                 <FormGroup>
@@ -537,7 +540,7 @@ export default function ServiceForm({ host, customerAccount, hostService,setisLo
             <FormGroup>
               <div>
                 <h4>รายละเอียดเพิ่มเติม</h4>
-                <div style={{paddingLeft:"25px",paddingRight:"25px"}}>
+                <div style={{ paddingLeft: "25px", paddingRight: "25px" }}>
                   <Input
                     rows="5"
                     type="textarea"
@@ -573,7 +576,7 @@ export default function ServiceForm({ host, customerAccount, hostService,setisLo
               alertToggle={toggleError}
             />
             <Col align="right">
-              <Button onClick={toggleSubmit} style={{backgroundColor:"#264d59"}} disabled={!submitable}>ยืนยัน</Button>
+              <Button onClick={toggleSubmit} style={{ backgroundColor: "#264d59" }} disabled={!submitable}>ยืนยัน</Button>
               <Modal isOpen={modalSubmit} toggle={toggleSubmit}>
                 <ModalHeader>
                   คุณต้องการยืนยันการสร้างบริการใช่หรือไม่
@@ -584,7 +587,7 @@ export default function ServiceForm({ host, customerAccount, hostService,setisLo
                       onServiceSubmit(e);
                       toggleSubmit();
                     }}
-                    style={{backgroundColor:"#264d59"}}
+                    style={{ backgroundColor: "#264d59" }}
                   >
                     ยืนยัน
                   </Button>{" "}

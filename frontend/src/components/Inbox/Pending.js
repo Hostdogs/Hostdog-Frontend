@@ -33,19 +33,20 @@ export default function Pending({ service, pendingData, setpendingData }) {
   const [serviceDetails, setServiceDetails] = useState([]);
   const [isNotAllEtc, setNotIsAllEtc] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [address,setAddress]=useState(null);
   useEffect(() => {
     if (service) {
       setcustomerName(
         service.customer.first_name + " " + service.customer.last_name
       );
       // sethostName(service.host.first_name + " " + service.host.last_name)
-
+      setAddress(service.customer.address);
       setdog(service.dog);
 
       let age = getAgemonth(service.dog.dog_dob);
 
       setdogAge(age);
-      setregDate(moment(service.service_reg_time).format("ll"));
+      setregDate(moment(service.service_start_time).format("ll"));
       setendDate(moment(service.service_end_time).format("ll"));
       setmeal(service.service_meal_type.meal_type);
       setmealTime(service.dog.dog_feeding_time);
@@ -182,7 +183,7 @@ export default function Pending({ service, pendingData, setpendingData }) {
                   <List type="unstyled">
                     <h4>ที่อยู่</h4>
                     <ul>
-                      <li>{service.customer.address||<Skeleton/>}</li>
+                      <li>{address||<Skeleton/>}</li>
 
                     </ul>
                   </List>

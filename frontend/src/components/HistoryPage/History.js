@@ -88,7 +88,7 @@ export default function History({ history }) {
 
   const handleInfo = (e) => {
     e.preventDefault();
-    if (history.main_status === "pending"&& userIsHost) {
+    if (history.main_status === "pending"&& userIsHost) { 
       usehistory.push("/")
       usehistory.go(0)
     } else {

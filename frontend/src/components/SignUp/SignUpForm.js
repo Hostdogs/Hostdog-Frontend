@@ -56,12 +56,13 @@ export default function SignUpForm() {
               <legend>คุณต้องการสมัครเป็นอะไร</legend>
               <div >
                 <Row >
+                
 
-                  <Col style={{ textAlign: "right" }}>
+                  <Col sm="6" md="6"  style={{ textAlign: "end" }}>
                     <CustomInput type="radio" id="roleRadio" name="roleRadio" label="ผู้ฝากสุนัข" value="Customer" onChange={selectRole} />
                   </Col>
-                  <Col style={{ maxWidth: "10%" }}></Col>
-                  <Col style={{ textAlign: "left" }}>
+                  {/* <Col style={{ maxWidth: "10%" }}></Col> */}
+                  <Col  sm="6" md="6" style={{ textAlign: "start" }}>
                     <CustomInput type="radio" id="roleRadio2" name="roleRadio" label="ผู้รับฝากสุนัข" value="Host" onChange={selectRole} />
                   </Col>
 

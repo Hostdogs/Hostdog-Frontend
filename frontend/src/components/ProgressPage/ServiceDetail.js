@@ -75,8 +75,9 @@ export default function ServiceDetail({
   const [additionalService, setAdditionalService] = useState([]);
   const [dogFeedingTime, setDogFeedingTime] = useState([]);
   const [cookies, setcookies] = useCookies(["mytoken", "user_id"]);
-  const [timeLeft, setTimeLeft] = useState(null);
-
+  const [timeBeforeEnd, setTimeBeforeEnd] = useState(null);
+  const [timeBeforeStart, setTimeBeforeStart] = useState(null);
+  const [start,setStart]=useState(null);
   useEffect(() => {
     moment.updateLocale("th");
     if (ServiceInfo) {
@@ -140,19 +141,41 @@ export default function ServiceDetail({
       let leftHours = dayOne.diff(moment(), "hours");
       let leftMinutes = dayOne.diff(moment(), "minutes");
       if(ServiceInfo.main_status==="end"){
-        setTimeLeft("สิ้นสุดแล้ว");
+        setTimeBeforeEnd("สิ้นสุดแล้ว");
       }
       else if (leftDays === 0 && leftHours === 0 && leftMinutes === 0) {
-        setTimeLeft("ภายใน 1 นาที");
+        setTimeBeforeEnd("ภายใน 1 นาที");
       } else if (leftDays < 0 || leftHours < 0 || leftMinutes < 0) {
-        setTimeLeft("สิ้นสุดแล้ว");
+        setTimeBeforeEnd("สิ้นสุดแล้ว");
       } else if (leftDays > 0) {
-        setTimeLeft(String(leftDays) + " วัน");
+        setTimeBeforeEnd(String(leftDays) + " วัน");
       } else if (leftHours > 0) {
-        setTimeLeft(String(leftHours) + " ชั่วโมง");
+        setTimeBeforeEnd(String(leftHours) + " ชั่วโมง");
       } else {
-        setTimeLeft(String(leftMinutes) + " นาที");
+        setTimeBeforeEnd(String(leftMinutes) + " นาที");
       }
+
+      let startDay=moment(ServiceInfo.service_start_time);
+      let beforeDays=startDay.diff(moment(),"days");
+      let beforeHours=startDay.diff(moment(),"hours");
+      let beforeMinutes=startDay.diff(moment(),"minutes");
+
+      if(beforeDays>0){
+        setTimeBeforeStart(String(beforeDays)+" วัน");
+      }else if (beforeHours>0){
+        setTimeBeforeStart(String(beforeHours)+" ชั่วโมง");
+      }else{
+        setTimeBeforeStart(String(beforeMinutes)+" นาที");
+      }
+
+      console.log(startDay.diff(moment(),"minutes"));
+      if(startDay.diff(moment(),"minutes")>=0){
+        setStart(true);
+      }else{
+        setStart(false);
+      }
+
+
     }
   }, [ServiceInfo]);
   const listDogFeedingTime = dogFeedingTime.sort((a,b)=>{
@@ -208,7 +231,8 @@ export default function ServiceDetail({
                 </a>{" "}
                 ถึงวันที่: {timeEnd}{" น."}
               </p>
-              <p>การฝากจะสิ้นสุดในเวลาประมาณ: {timeLeft} </p>
+              {start?(<p>การฝากจะเริ่มต้นในเวลาประมาณ: {timeBeforeStart}</p>):(<p>การฝากจะสิ้นสุดในเวลาประมาณ: {timeBeforeEnd} </p>)}
+  
               <p>ค่าบริการทั้งหมด {totalPrice} บาท</p>
             </div>
 

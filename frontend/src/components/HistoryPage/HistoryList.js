@@ -6,6 +6,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import FilterBox from "./FilterBox";
 import "./HistoryPage.css";
 import HistoryAPI from "./HistoryAPI";
+import moment from "moment";
 
 
 
@@ -39,6 +40,25 @@ export default function HistoryList({ serviceList }) {
   const handleFilter = (fi) => {
     setFilterIndex(fi);
   };
+
+  const sortbyTime = (a,b) =>{
+    let now = moment();
+    let timea = moment(a.service_create_time)
+    let timeb = moment(b.service_create_time)
+    let diffa = now.diff(timea,"seconds")
+    let diffb = now.diff(timeb,"seconds")
+
+    if(diffa>diffb){
+      return 1
+    }
+    if (diffa===diffb){
+      return 0
+    }
+    if(diffb>diffa){
+      return -1
+    }
+
+  }
 
   return (
     <>
@@ -76,7 +96,7 @@ export default function HistoryList({ serviceList }) {
                 } else {
                   return history;
                 }
-              })
+              }).sort((a, b) => sortbyTime(a,b))
               .map((hd) => (
                 <History key={hd.id} history={hd} />
               ))}

@@ -71,9 +71,9 @@ export default function History({ history }) {
       setcreateDate(moment(history.service_create_time).format("lll"))
       if (cookie["user_id"] == history.customer.account) {
 
-        setshowedName("ผู้รับฝาก: "+ history.host.first_name+" "+ history.host.last_name)
+        setshowedName("ผู้รับฝาก: " + history.host.first_name + " " + history.host.last_name)
       } else if (cookie["user_id"] == history.host.account) {
-        setshowedName("ผู้ฝาก: "+ history.customer.first_name+ " "+ history.customer.last_name)
+        setshowedName("ผู้ฝาก: " + history.customer.first_name + " " + history.customer.last_name)
       }
       console.log("history", history)
       console.log(cookie["user_id"])
@@ -84,6 +84,17 @@ export default function History({ history }) {
 
   }, [history])
 
+  const handleInfo = (e) => {
+    e.preventDefault();
+    if (history.main_status === "pending") {
+      usehistory.push("/")
+      usehistory.go(0)
+    } else {
+      usehistory.push(urllink)
+      usehistory.go(0)
+    }
+
+  }
   return (
     <div>
       <Card
@@ -132,11 +143,8 @@ export default function History({ history }) {
                   backgroundColor:
                     filterColor[history.main_status],
                 }}
-                onClick={e => {
-                  e.preventDefault();
-                  usehistory.push(urllink)
-                  usehistory.go(0)
-                }}
+                onClick={e => handleInfo(e)
+                }
               >
                 <FontAwesomeIcon icon={faInfoCircle} style={""} /> รายละเอียดเพิ่มเติม
               </Button>{" "}

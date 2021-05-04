@@ -43,8 +43,8 @@ export default function Host({ host }) {
     setrating(host.host_rating.toFixed(1))
     // console.log(host)
     sethostInfo(host)
-    HostServiceAPI.getHostService(cookies["mytoken"],host.account).then(res=>{
-      console.log("hostservice:",res.data)
+    HostServiceAPI.getHostService(cookies["mytoken"], host.account).then(res => {
+      console.log("hostservice:", res.data)
       setservicePrice(res.data.deposit_price)
     })
   }, [host])
@@ -129,12 +129,19 @@ export default function Host({ host }) {
                       </div>
 
                       <div>
+                        ค่าบริการขั้นต่ำวันละ{" "}
+                        <a className="mobile-br">
+                          <br />
+                        </a>
+                        <b>{servicePrice} บาท(++)</b>
+                      </div>
+                      {/* <div>
                         ขนาดบริเวณพื้นที่เลี้ยง{" "}
                         <a className="mobile-br">
                           <br />
                         </a>
                         <b>{hostInfo.host_area} ตารางเมตร</b>
-                      </div>
+                      </div> */}
 
                       <a className="mobile-br2">
                         <br />
@@ -174,8 +181,8 @@ export default function Host({ host }) {
           }}
 
           >
-            รายละเอียดเพิ่มเติม <FontAwesomeIcon icon={faChevronRight}/><FontAwesomeIcon icon={faChevronRight}/>
-            </CardLink>
+            รายละเอียดเพิ่มเติม <FontAwesomeIcon icon={faChevronRight} /><FontAwesomeIcon icon={faChevronRight} />
+          </CardLink>
         </CardBody>
 
       </Card>

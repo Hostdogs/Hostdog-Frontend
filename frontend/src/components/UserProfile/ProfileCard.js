@@ -9,13 +9,20 @@ import {
   CardFooter,
   List,
   Collapse,
+  Button,
 } from "reactstrap";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
-const ProfileCard = ({ pageCollapse, Account, setAccount }) => {
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import {  useHistory } from "react-router-dom";
+const ProfileCard = ({ pageCollapse, Account, setAccount, userIsHost }) => {
+  
+  let history = useHistory()
   const [img, setimg] = useState(null);
   const [role, setrole] = useState(null);
   const [Name, setName] = useState(null);
   const [isLoad, setisLoad] = useState(false);
+  const [urllink, seturllink] = useState(null)
   const placeholderPath = "/user_placeholder.svg";
   useEffect(() => {
     console.log("Acc", Account);
@@ -31,11 +38,15 @@ const ProfileCard = ({ pageCollapse, Account, setAccount }) => {
       }
       setimg(Account[roledata].picture);
       setName(Account[roledata].first_name + " " + Account[roledata].last_name);
-
+      seturllink("/service/host/"+Account.id)
       setisLoad(true);
     }
   }, [Account]);
   // console.log(isHost)
+  const onClickService = () => {
+    history.push(urllink)
+    history.go(0)
+  }
   return (
     <Card style={{ border: "none" }}>
       <CardBody
@@ -46,6 +57,13 @@ const ProfileCard = ({ pageCollapse, Account, setAccount }) => {
           width: "100%",
         }}
       >
+        {userIsHost ? (null) : (
+          <div style={{ position: "absolute", right: "5px", top: "25px" }}>
+            <Button onClick={onClickService} >ใช้บริการ <FontAwesomeIcon icon={faArrowRight} /></Button>
+          </div>
+        )}
+
+
         <Collapse isOpen={pageCollapse}>
           <div id="mainContainer" class="container">
             <div class="panel-body">
@@ -63,10 +81,10 @@ const ProfileCard = ({ pageCollapse, Account, setAccount }) => {
             </div>
           </div>
         </Collapse>
-        
+
         <br />
         <CardTitle tag="h3">
-          {Name ||<SkeletonTheme color="#f9e07f"> <Skeleton style={{ width: "250px" }} /></SkeletonTheme>}
+          {Name || <SkeletonTheme color="#f9e07f"> <Skeleton style={{ width: "250px" }} /></SkeletonTheme>}
         </CardTitle>
         <CardSubtitle tag="h6" className="mb-2 text-muted">
           {role || <SkeletonTheme color="#f9e07f"><Skeleton style={{ width: "100px" }} /></SkeletonTheme>}

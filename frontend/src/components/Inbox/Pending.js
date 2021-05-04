@@ -10,12 +10,13 @@ import {
   Label,
   Row,
   List,
+  Spinner,
 } from "reactstrap";
 import "./Pending.css";
 import { useCookies } from "react-cookie";
 import ServiceAPI from "../API/ServiceAPI";
 import moment from "moment";
-export default function Pending({ service }) {
+export default function Pending({ service, pendingData, setpendingData }) {
   const [customerName, setcustomerName] = useState();
   // const [hostName, sethostName] = useState()
   const [dog, setdog] = useState(null);
@@ -30,6 +31,7 @@ export default function Pending({ service }) {
   const [Price, setPrice] = useState();
   const [serviceDetails, setServiceDetails] = useState([]);
   const [isNotAllEtc, setNotIsAllEtc] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     if (service) {
       setcustomerName(
@@ -75,24 +77,33 @@ export default function Pending({ service }) {
   };
 
   const handleHostAccept = () => {
+    setIsLoading(true);
     ServiceAPI.responseService(cookies.mytoken, service.id, { accept: true })
       .then((response) => {
-        console.log("handleHostAccept");
-        console.log(response);
-        
+        const new_pending = pendingData.filter((pen) => {
+          return pen.id !== service.id;
+        });
+        setIsLoading(false);
+        setpendingData(new_pending);
       })
       .catch((error) => {
+        setIsLoading(false);
         console.log("error");
         console.log(error);
       });
   };
   const handleHostDecline = () => {
+    setIsLoading(true);
     ServiceAPI.responseService(cookies.mytoken, service.id, { accept: false })
       .then((response) => {
-        console.log("handleHostAccept");
-        console.log(response);
+        const new_pending = pendingData.filter((pen) => {
+          return pen.id !== service.id;
+        });
+        setIsLoading(false);
+        setpendingData(new_pending);
       })
       .catch((error) => {
+        setIsLoading(false);
         console.log("error");
         console.log(error);
       });
@@ -263,6 +274,7 @@ export default function Pending({ service }) {
           </CardBody>
 
           {/* </Container> */}
+          {isLoading ? <div className="loading"></div> : null}
         </Card>
       </Container>
       <br />

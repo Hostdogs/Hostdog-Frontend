@@ -362,6 +362,7 @@ const toggleError = () => setModalError(!modalError);
                         name="is_dog_walk"
                         value="true"
                         label="ต้องการ"
+                        checked={serviceInfo.is_dog_walk}
                         onChange={onServiceInfoChange}
                       />
                     </Col>
@@ -372,6 +373,7 @@ const toggleError = () => setModalError(!modalError);
                         name="is_dog_walk"
                         value="false"
                         label="ไม่ต้องการ"
+                        checked={!serviceInfo.is_dog_walk}
                         onChange={onServiceInfoChange}
                       />
                     </Col>
@@ -391,6 +393,7 @@ const toggleError = () => setModalError(!modalError);
                         name="is_get_dog"
                         value="true"
                         label="ต้องการ"
+                        checked={serviceInfo.is_get_dog}
                         onChange={onServiceInfoChange}
                       />
                     </Col>
@@ -401,6 +404,7 @@ const toggleError = () => setModalError(!modalError);
                         name="is_get_dog"
                         value="false"
                         label="ไม่ต้องการ"
+                        checked={!serviceInfo.is_get_dog}
                         onChange={onServiceInfoChange}
                       />
                     </Col>
@@ -420,6 +424,7 @@ const toggleError = () => setModalError(!modalError);
                         name="is_delivery_dog"
                         value="true"
                         label="ต้องการ"
+                        checked={serviceInfo.is_delivery_dog}
                         onChange={onServiceInfoChange}
                       />
                     </Col>
@@ -430,6 +435,7 @@ const toggleError = () => setModalError(!modalError);
                         name="is_delivery_dog"
                         value="false"
                         label="ไม่ต้องการ"
+                        checked={!serviceInfo.is_delivery_dog}
                         onChange={onServiceInfoChange}
                       />
                     </Col>
@@ -449,6 +455,7 @@ const toggleError = () => setModalError(!modalError);
                         name="is_bath_dog"
                         value="true"
                         label="ต้องการ"
+                        checked={serviceInfo.is_bath_dog}
                         onChange={onServiceInfoChange}
                       />
                     </Col>
@@ -459,6 +466,7 @@ const toggleError = () => setModalError(!modalError);
                         name="is_bath_dog"
                         value="false"
                         label="ไม่ต้องการ"
+                        checked={!serviceInfo.is_bath_dog}
                         onChange={onServiceInfoChange}
                       />
                     </Col>

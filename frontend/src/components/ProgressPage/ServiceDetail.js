@@ -153,9 +153,7 @@ export default function ServiceDetail({
 
   const toggleReview = () => setModalReview(!modalReview);
 
-  const [alertModal, setAlertModal] = useState(false);
-
-  const toggleAlert = () => setAlertModal(!alertModal);
+ 
 
   return (
     <div>
@@ -264,8 +262,8 @@ export default function ServiceDetail({
                 customer={customer}
                 dog={dog}
               />{" "}
-              <Button onClick={()=>{handleHostReceiveDog();toggleAlert();}}>รับสุนัข</Button>{" "}
-              <AlertModal message={"รับสุนัข"} alertModal={alertModal} alertToggle={toggleAlert}/>
+              <Button onClick={handleHostReceiveDog}>รับสุนัข</Button>{" "}
+              <AlertModal message={message} alertModal={alertModal} alertToggle={toggleAlert}/>
               <Button onClick={handleHostReturnDog}>คืนสุนัข</Button>{" "}
               <Button onClick={toggleReview}>ให้คะแนนผู้รับฝาก</Button>{" "}
               <Modal isOpen={modalReview} fade={false} toggle={toggleReview}>

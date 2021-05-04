@@ -24,6 +24,10 @@ export default function ProgressPage({ match }) {
   const [serviceDetailStatusLabel, setServiceDetailStatusLabel] = useState("");
   const [isLoad, setisLoad] = useState(false)
   const [isOpen, setIsOpen] = useState(false);
+  const [alertModal, setAlertModal] = useState(false);
+  const toggleAlert = () => setAlertModal(!alertModal);
+  const [message,setMessage] =useState("")
+
   const toggleSideBar = () => {
 
     setIsOpen(!isOpen)
@@ -52,6 +56,8 @@ export default function ProgressPage({ match }) {
     ServiceAPI.responseService(cookies.mytoken, servicePath, { receive_dog: true }).then((response) => {
       console.log("handleHostReceiveDog");
       console.log(response);
+      setMessage("รับสุนัข");
+
     }).catch((error) => {
       console.log("error");
       console.log(error);
@@ -63,6 +69,7 @@ export default function ProgressPage({ match }) {
     ServiceAPI.responseService(cookies.mytoken, servicePath, { return_dog: true }).then((response) => {
       console.log("handleHostReturnDog");
       console.log(response);
+      setMessage("คืนสุนัข");
     }).catch((error) => {
       console.log("error");
       console.log(error);

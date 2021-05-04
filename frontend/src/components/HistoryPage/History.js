@@ -1,5 +1,5 @@
 import { faAlignRight } from "@fortawesome/free-solid-svg-icons";
-import React,{useEffect,useState} from "react";
+import React, { useEffect, useState } from "react";
 import {
   Container,
   Card,
@@ -12,6 +12,7 @@ import {
 import HistoryAPI from "./HistoryAPI";
 import moment from "moment-timezone"
 import "./HistoryPage.css";
+import { useHistory } from "react-router";
 // const filterItems = [
 //   "ทั้งหมด",
 //   "กำลังรอการตอบรับ",
@@ -23,31 +24,33 @@ import "./HistoryPage.css";
 //   "ยกเลิกบริการ",
 // ]
 const filterItems = {
-  "pending":"กำลังรอการตอบรับ",
-  "payment":"กำลังรอการจ่ายเงิน",
-  "end":"สิ้นสุดบริการ",
-  "wait for progress":"ที่กำลังจะมาถึง",
-  "in progress":"กำลังการบริการ",
-  "late":"เกินเวลาให้บริการ",
-  "cancelled":"ยกเลิกบริการ"
+  "pending": "กำลังรอการตอบรับ",
+  "payment": "กำลังรอการจ่ายเงิน",
+  "end": "สิ้นสุดบริการ",
+  "wait for progress": "ที่กำลังจะมาถึง",
+  "in progress": "กำลังการบริการ",
+  "late": "เกินเวลาให้บริการ",
+  "cancelled": "ยกเลิกบริการ"
 }
 // const filterColor = ["#28a745", "#ffc107", "#17a2b8", "#c82333"];
 const filterColor = {
-  "pending":"#5bc0de",
-  "payment":"#0275d8",
-  "end":"#5cb85c",
-  "wait for progress":"#43978D",
-  "in progress":"#ffc107",
-  "late":"#f0ad4e",
-  "cancelled":"#c82333"
+  "pending": "#5bc0de",
+  "payment": "#0275d8",
+  "end": "#5cb85c",
+  "wait for progress": "#43978D",
+  "in progress": "#ffc107",
+  "late": "#f0ad4e",
+  "cancelled": "#c82333"
 }
 
 export default function History({ history }) {
-    // const [hostName, sethostName] = useState("")
-    // const [dogName, setdogName] = useState("")
-    const [regDate, setregDate] = useState("")
-    const [endDate, setendDate] = useState("")
-    const [status, setstatus] = useState("")
+  let usehistory = useHistory()
+  // const [hostName, sethostName] = useState("")
+  // const [dogName, setdogName] = useState("")
+  const [regDate, setregDate] = useState("")
+  const [endDate, setendDate] = useState("")
+  const [status, setstatus] = useState("")
+  const [urllink, seturllink] = useState("")
   useEffect(() => {
     // HistoryAPI.fakeHostProfile(history.host_id).then(res=>{
     //   sethostName(res.first_name+" "+res.last_name)
@@ -58,8 +61,9 @@ export default function History({ history }) {
     setregDate(moment(history.service_reg_time).format("ll"))
     setendDate(moment(history.service_end_time).format("ll"))
     setstatus(filterItems[history.main_status])
+    seturllink("/progress/"+history.id)
     // console.log("history",history)
-    
+
   }, [history])
 
   return (
@@ -88,7 +92,7 @@ export default function History({ history }) {
         </Row>
         <CardText>
           <ul className="fontSizeRepo">
-            <div>ผู้ฝาก: {history.host.first_name+" "+history.host.last_name}</div>
+            <div>ผู้ฝาก: {history.host.first_name + " " + history.host.last_name}</div>
             <div>วันที่เริ่มบริการ: {regDate}</div>
             <div>วันสิ้นสุดบริการ: {endDate}</div>
           </ul>
@@ -103,16 +107,24 @@ export default function History({ history }) {
               </h4>
             </Col>
             <Col xs="12" sm="7" md="8" lg="8">
-              <Button
-                className="Button1"
-                style={{
-                  border: "none",
-                  backgroundColor:
-                    filterColor[history.main_status],
-                }}
-              >
-                รายละเอียดเพิ่มเติม
+              <a href="">
+                <Button
+                  className="Button1"
+                  style={{
+                    border: "none",
+                    backgroundColor:
+                      filterColor[history.main_status],
+                  }}
+                  onClick={e=>{
+                    e.preventDefault();
+                    usehistory.push(urllink)
+                    usehistory.go(0)
+                  }}
+                >
+                  รายละเอียดเพิ่มเติม
               </Button>{" "}
+              </a>
+
               {/* <a className="mobile-br2">
                 <br />
               </a>

@@ -11,7 +11,8 @@ export default function InboxPage() {
         // setpendingData([{ service_id: "1", customer_id: "1", dog_id: "1", main_status: "Pending", }, { service_id: "1", customer_id: "1", dog_id: "1", main_status: "Pending", }])
         if(cookies["mytoken"]){
             ServiceAPI.getAllPending(cookies["mytoken"]).then(res=>{
-                console.log(res.data)
+                console.log("Pendingdata:",res.data)
+                setpendingData(res.data)
             })
         }
         

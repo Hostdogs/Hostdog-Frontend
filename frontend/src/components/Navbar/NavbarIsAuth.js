@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
+import Skeleton from "react-loading-skeleton";
 import {
   Collapse,
   Navbar,
@@ -67,7 +68,7 @@ export default function NavbarIsAuth({ toggleSideBar }) {
         </NavbarBrand>
         <Nav className="mr-auto"></Nav>
         <div>
-          <w className="display_desktop">{Name} </w>
+          <w className="display_desktop">{Name||<Skeleton style={{ width:"120px"}}/>} </w>
           <a href={urllink}>
             <img
               src={img || placeholderPath}

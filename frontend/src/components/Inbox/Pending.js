@@ -1,7 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import Skeleton from "react-loading-skeleton";
 import { Button, Container } from "reactstrap";
 import "./Pending.css";
-export default function Pending(pendingTask) {
+export default function Pending({service}) {
+  const [customerName, setcustomerName] = useState()
+  // const [hostName, sethostName] = useState()
+  const [dogName, setdogName] = useState()
+  const [dog, setdog] = useState()
+  const [hostService, sethostService] = useState()
+
+  useEffect(() => {
+    if(service){
+      setcustomerName("ผู้ฝากสุนัข: "+service.customer.first_name + " " + service.customer.last_name)
+      // sethostName(service.host.first_name + " " + service.host.last_name)
+      setdogName(service.dog.dog_name)
+    }
+  }, [service])
+  console.log("task",service)
   return (
     <div className="PendingBox">
       <div className="PendingBox2">
@@ -10,7 +25,7 @@ export default function Pending(pendingTask) {
             <h3 className="heading3">Hello This is Pending</h3>
             <ul>
               <div className="InDesktop">
-                <div>ผู้ฝาก:</div>
+                <div>{customerName||<Skeleton/>} </div>
                 <div>สุนัข:</div>
                 <div>รายละเอียดการบริการ:</div>
                 <div>บริการที่เพิ่มเติม:</div>
@@ -18,7 +33,7 @@ export default function Pending(pendingTask) {
             </ul>
 
             <div className="InMobile">
-              <div>ผู้ฝาก:</div>
+              <div>{customerName||<Skeleton/>}</div>
               <div>สุนัข:</div>
               <div>รายละเอียดการบริการ:</div>
               <div>บริการที่เพิ่มเติม:</div>

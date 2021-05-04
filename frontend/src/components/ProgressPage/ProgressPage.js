@@ -77,7 +77,7 @@ export default function ProgressPage({ match }) {
   const [reviewScore,setReviewScore]=useState(5);
   const handleReview=()=>{
  
-    ServiceAPI.responseService(cookies.mytoken,servicePath,{review:reviewScore}).then((response)=>{
+    ServiceAPI.responseService(cookies.mytoken,servicePath,{review:parseInt(reviewScore)}).then((response)=>{
       console.log("handleReview");
       console.log(response);
     }).catch((error)=>{

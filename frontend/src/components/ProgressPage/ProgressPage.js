@@ -9,6 +9,7 @@ import DogAPI from "../API/DogAPI";
 import { useCookies } from "react-cookie";
 import Loading from "../Handle/Loading";
 import AuthenAPI from "../API/AuthenAPI";
+import { faGlasses } from "@fortawesome/free-solid-svg-icons";
 export default function ProgressPage({ match }) {
   const [cookies, setcookies] = useCookies(["mytoken", "user_id"]);
 
@@ -314,7 +315,7 @@ export default function ProgressPage({ match }) {
       console.log("end");
     } else if (ServiceInfo.main_status === "late") {
       if (isHost) {
-        setHostReturnDog(true);
+        setHostReturnDog(false);
         setShowCustomerDepositPayment(false);
         setshowCustomerLatePayment(false);
         setShowCustomerCancelService(false);
@@ -322,7 +323,7 @@ export default function ProgressPage({ match }) {
         setShowCustomerReceiveDogToEnd(false);
         setShowHostRecieveDog(false);
       } else {
-        setShowCustomerReceiveDogToEnd(true);
+        setShowCustomerReceiveDogToEnd(false);
         setshowCustomerLatePayment(true);
 
         setShowCustomerDepositPayment(false);

@@ -258,13 +258,13 @@ export default function ServiceDetail({
                       )}
 
                       {serviceCustomerSendDogTime !== null ? (
-                        <p>ผู้ฝากฝากสุนัข: {serviceCustomerSendDogTime}</p>
+                        <p>ผู้รับฝากรับสุนัข: {serviceCustomerSendDogTime}</p>
                       ) : (
-                        <p>ผู้ฝากฝากสุนัข: - </p>
+                        <p>ผู้รับฝากรับสุนัข: - </p>
                       )}
 
                       {serviceCustomerGetDogTime !== null ? (
-                        <p>ผู้รับฝากรับสุนัข: {serviceCustomerGetDogTime}</p>
+                        <p>ผู้รับฝากคืนสุนัข: {serviceCustomerGetDogTime}</p>
                       ) : (
                         <p>ผู้รับฝากคืนสุนัข: - </p>
                       )}

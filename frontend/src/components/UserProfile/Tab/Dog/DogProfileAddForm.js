@@ -123,8 +123,11 @@ export default function DogProfileAddForm(props) {
     } else if (value === "false" || value === false) {
       return false;
     } else if (!isNaN(value) && name !== "dog_bio" && value !== "") {
-      if (name === "dog_weight" && value > 100) {
+      if (name === "dog_weight" && Number(value) > 100) {
         return Number(100);
+      }
+      if (name === "dog_weight" && Number(value) < 0) {
+        return Number(1);
       }
       return Number(value);
     } else if (value === "" && name === "picture") {
@@ -229,6 +232,7 @@ export default function DogProfileAddForm(props) {
                 value={dogInfo.dog_weight}
                 onChange={onDogInfoChange}
                 max="100"
+                min="0"
               />
             </FormGroup>
             <FormGroup>

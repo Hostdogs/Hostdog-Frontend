@@ -15,6 +15,7 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import {  useHistory } from "react-router-dom";
+import './ProfileCard.css'
 const ProfileCard = ({ pageCollapse, Account, setAccount, userIsHost }) => {
   
   let history = useHistory()
@@ -59,7 +60,7 @@ const ProfileCard = ({ pageCollapse, Account, setAccount, userIsHost }) => {
       >
         {userIsHost ? (null) : (
           <div style={{ position: "absolute", right: "5px", top: "25px" }}>
-            <Button onClick={onClickService} >ใช้บริการ <FontAwesomeIcon icon={faArrowRight} /></Button>
+            <button className="buttonUseService" onClick={onClickService} >ใช้บริการ <FontAwesomeIcon icon={faArrowRight} /></button>
           </div>
         )}
 

@@ -61,8 +61,8 @@ export default function AvailableHost({ host, className }) {
         className={className}
         unmountOnClose={unmountOnClose}
       >
-        <ModalHeader toggle={toggle}>วันที่รับบริการ</ModalHeader>
-        <ModalBody >
+        <ModalHeader toggle={toggle} style={{backgroundColor:"#f9e07f"}}>วันที่รับบริการ</ModalHeader>
+        <ModalBody>
           <div style={{textAlign: 'center'}}>
             <ShowAvailableDate
               newAvailableDates={newAvailableDates}

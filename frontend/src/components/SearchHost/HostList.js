@@ -128,7 +128,7 @@ export default function HostList({ hostData, setHostData, isLoad }) {
 
         <Button
           onClick={scrollToTop}
-          style={{ position: "fixed", bottom: 0, right: 0, backgroundColor:"#f9e07f", border:"none" }}
+          style={{ position: "fixed", bottom: 0, right: 0, backgroundColor:"#f9e07f", border:"none", color:"black" }}
         >
           ขึ้นข้างบน
           </Button>

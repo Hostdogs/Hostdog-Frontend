@@ -1,0 +1,14 @@
+.buttonUseService{
+    border-radius: 5px;
+    padding: 7.5px;
+    background-color: #264d59;
+    color: white;
+    border: 3px solid #264d59;
+}
+
+
+.buttonUseService:hover{
+    background-color: transparent;
+    color: #264d59;
+    border: 3px solid #264d59;
+}

@@ -220,7 +220,7 @@ export default function HostServiceBox(props) {
                   padding: "20px 20px",
                   color: "white",
                   borderRadius: "20px",
-                  paddingBottom: "180px"
+                  paddingBottom: "180px",
                 }}
               >
                 <FormGroup>
@@ -247,10 +247,17 @@ export default function HostServiceBox(props) {
                     }}
                   >
                     <Row>
-                      {/* <Col xs="12" sm="5" lg="6">
-                        ราคาพาสุนัขไปเดินเล่น
-                      </Col> */}
-                      <Col xs="5" sm="3" lg="3">
+                      <Col xs="6">
+                        <CustomInput
+                          type="switch"
+                          id="walk_dog"
+                          name="enable_dog_walk"
+                          label="พาสุนัขไปเดินเล่น"
+                          onChange={onEnableChange}
+                          checked={hostService.enable_dog_walk}
+                        />
+                      </Col>
+                      <Col xs="4" sm="3" lg="3">
                         <Input
                           type="number"
                           name="price_dog_walk"
@@ -261,18 +268,6 @@ export default function HostServiceBox(props) {
                         />
                       </Col>
                       <Col xs="auto">บาท</Col>
-                    </Row>
-                    <Row>
-                      <Col xs="12">
-                        <CustomInput
-                          type="switch"
-                          id="walk_dog"
-                          name="enable_dog_walk"
-                          label="พาสุนัขไปเดินเล่น"
-                          onChange={onEnableChange}
-                          checked={hostService.enable_dog_walk}
-                        />
-                      </Col>
                     </Row>
                   </FormGroup>
                   <FormGroup
@@ -285,10 +280,17 @@ export default function HostServiceBox(props) {
                     }}
                   >
                     <Row>
-                      {/* <Col xs="12" sm="5" lg="6">
-                        ราคาไปรับสุนัขต่อกิโลเมตร
-                      </Col> */}
-                      <Col xs="5" sm="3" lg="3">
+                      <Col xs="6">
+                        <CustomInput
+                          type="switch"
+                          id="get_dog"
+                          name="enable_get_dog"
+                          label="ไปรับสุนัข"
+                          onChange={onEnableChange}
+                          checked={hostService.enable_get_dog}
+                        />
+                      </Col>
+                      <Col xs="4" sm="3" lg="3">
                         <Input
                           type="number"
                           name="price_get_dog"
@@ -299,18 +301,6 @@ export default function HostServiceBox(props) {
                         />
                       </Col>
                       <Col xs="auto">บาท</Col>
-                    </Row>
-                    <Row>
-                      <Col xs="12">
-                        <CustomInput
-                          type="switch"
-                          id="get_dog"
-                          name="enable_get_dog"
-                          label="ไปรับสุนัข"
-                          onChange={onEnableChange}
-                          checked={hostService.enable_get_dog}
-                        />
-                      </Col>
                     </Row>
                   </FormGroup>
                   <FormGroup
@@ -323,10 +313,17 @@ export default function HostServiceBox(props) {
                     }}
                   >
                     <Row>
-                      {/* <Col xs="12" sm="5" lg="6">
-                        ราคาไปส่งสุนัขต่อกิโลเมตร
-                      </Col> */}
-                      <Col xs="5" sm="3" lg="3">
+                      <Col xs="6">
+                        <CustomInput
+                          type="switch"
+                          id="send_dog"
+                          name="enable_delivery_dog"
+                          label="ไปส่งสุนัข"
+                          onChange={onEnableChange}
+                          checked={hostService.enable_delivery_dog}
+                        />
+                      </Col>
+                      <Col xs="4" sm="3" lg="3">
                         <Input
                           type="number"
                           name="price_deliver_dog"
@@ -337,18 +334,6 @@ export default function HostServiceBox(props) {
                         />
                       </Col>
                       <Col xs="auto">บาท</Col>
-                    </Row>
-                    <Row>
-                      <Col xs="12">
-                        <CustomInput
-                          type="switch"
-                          id="send_dog"
-                          name="enable_delivery_dog"
-                          label="ไปส่งสุนัข"
-                          onChange={onEnableChange}
-                          checked={hostService.enable_delivery_dog}
-                        />
-                      </Col>
                     </Row>
                   </FormGroup>
                   <FormGroup
@@ -361,10 +346,17 @@ export default function HostServiceBox(props) {
                     }}
                   >
                     <Row>
-                      {/* <Col xs="12" sm="5" lg="6">
-                        ราคาอาบน้ำสุนัข
-                      </Col> */}
-                      <Col xs="5" sm="3" lg="3">
+                      <Col xs="6">
+                        <CustomInput
+                          type="switch"
+                          id="bath_dog"
+                          name="enable_bath_dog"
+                          label="อาบน้ำสุนัข"
+                          onChange={onEnableChange}
+                          checked={hostService.enable_bath_dog}
+                        />
+                      </Col>
+                      <Col xs="4" sm="3" lg="3">
                         <Input
                           type="number"
                           name="price_bath_dog"
@@ -375,18 +367,6 @@ export default function HostServiceBox(props) {
                         />
                       </Col>
                       <Col xs="auto">บาท</Col>
-                    </Row>
-                    <Row>
-                      <Col xs="12">
-                        <CustomInput
-                          type="switch"
-                          id="bath_dog"
-                          name="enable_bath_dog"
-                          label="อาบน้ำสุนัข"
-                          onChange={onEnableChange}
-                          checked={hostService.enable_bath_dog}
-                        />
-                      </Col>
                     </Row>
                   </FormGroup>
                 </div>
@@ -421,12 +401,7 @@ export default function HostServiceBox(props) {
             >
               <ImageBox />
             </Col>
-            <Col
-              xs="12"
-              sm="12"
-              md="12"
-              lg="6"
-            >
+            <Col xs="12" sm="12" md="12" lg="6">
               <MealBox />
             </Col>
           </Row>

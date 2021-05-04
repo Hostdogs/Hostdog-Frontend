@@ -162,10 +162,10 @@ export default function ServiceForm({ host, customerAccount, hostService }) {
     getMealPrice();
   }, [serviceInfo.dog, serviceInfo.service_meal_type]);
 
-  useEffect(() => {
-    console.log("serviceInfo");
-    console.log(serviceInfo);
-  }, [serviceInfo]);
+  // useEffect(() => {
+  //   console.log("serviceInfo");
+  //   console.log(serviceInfo);
+  // }, [serviceInfo]);
 
   const customerDogElements = customerDogs.map((customerDog) => {
     let gender = "";

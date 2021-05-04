@@ -29,12 +29,13 @@ export default function ProfileimgPathSetting({
   const myId = cookies["user_id"];
   const myToken = cookies["mytoken"];
   const Reset = () => {
-    setImage("");
+    setImage(null);
     setPreview(null);
     setSelected(0);
   };
 
   function onSubmit(event) {
+    console.log(event)
     event.preventDefault();
     if (Image !== "" && Image !== null && Image !== undefined) {
       let form_data = new FormData();
@@ -63,12 +64,17 @@ export default function ProfileimgPathSetting({
       }
     }
     Reset();
+
   }
 
   function onImgChange(event) {
+      console.log(event)
     if (event.target.files[0]) {
       setPreview(URL.createObjectURL(event.target.files[0]));
       setImage(event.target.files[0]);
+    }else{
+        setPreview(null)
+        setImage(null);
     }
   }
 
@@ -127,10 +133,10 @@ export default function ProfileimgPathSetting({
                   accept="image/*"
                   onChange={onImgChange}
                 />
-                <FormText color="muted">
+                {/* <FormText color="muted">
                   This is some placeholder block-level help text for the above
                   input. It's a bit lighter and easily wraps to a new line.
-                </FormText>
+                </FormText> */}
               </FormGroup>
               <FormGroup tag="fieldset"></FormGroup>
             </Container>

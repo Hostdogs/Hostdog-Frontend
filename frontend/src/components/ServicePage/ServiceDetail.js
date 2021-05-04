@@ -81,7 +81,7 @@ if(serviceInfo.service_start_time!==null&&serviceInfo.service_end_time!==null){
 
     let mealTotalPrice=(mealPrice*serviceInfo.service_meal_weight)*amountOfMeal
     detailServices[0].price=mealTotalPrice;
-    console.log(detailServices)
+    // console.log(detailServices)
 
   }
 

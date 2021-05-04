@@ -20,7 +20,7 @@ export default function AlertModal({message,alertModal,alertToggle}) {
     <Modal isOpen={alertModal} toggle={alertToggle} >
     
         <ModalBody>
-          คุณได้ทำการ{message}แล้ว
+          {message}
         </ModalBody>
 
       </Modal>

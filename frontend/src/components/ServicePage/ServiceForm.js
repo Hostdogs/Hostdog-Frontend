@@ -33,6 +33,7 @@ import DogAPI from "../API/DogAPI";
 import HostServiceAPI from "../API/HostServiceAPI";
 import ServiceAPI from "../API/ServiceAPI";
 import { useCookies } from "react-cookie";
+import AlertModal from "../ProgressPage/AlertModal"
 export default function ServiceForm({ host, customerAccount, hostService }) {
   const [cookies, setcookies] = useCookies(["mytoken", "user_id"]);
   const [modal, setModal] = useState(false);
@@ -208,17 +209,28 @@ export default function ServiceForm({ host, customerAccount, hostService }) {
   });
 
   function onServiceSubmit(event) {
+
+
     event.preventDefault();
     console.log("serviceInfo");
     console.log(serviceInfo);
+
     ServiceAPI.createService(cookies.mytoken, serviceInfo)
       .then((response) => {
         console.log(response);
       })
       .catch((error) => {
         console.log(error.response);
+        toggleError();
       });
   }
+  const [modalSubmit, setModalSubmit] = useState(false);
+
+const toggleSubmit = () => setModalSubmit(!modalSubmit);
+
+const [modalError, setModalError] = useState(false);
+
+const toggleError = () => setModalError(!modalError);
 
   return (
     <div>
@@ -488,8 +500,28 @@ export default function ServiceForm({ host, customerAccount, hostService }) {
           />
 
           <Row>
+          <AlertModal message={"ไม่สามารถสร้างบริการได้ ลองใหม่อีกครั้ง" } alertModal={modalError} alertToggle={toggleError}/>
             <Col align="right">
-              <Button onClick={onServiceSubmit}>ยืนยัน</Button>
+              <Button onClick={toggleSubmit }>ยืนยัน</Button>
+              <Modal isOpen={modalSubmit} toggle={toggleSubmit }>
+                <ModalHeader>
+                  คุณต้องการยืนยันการสร้างบริการใช่หรือไม่
+                </ModalHeader>
+                <ModalFooter>
+                  <Button
+                    color="danger"
+                    onClick={(e) => {
+                      onServiceSubmit(e);
+                      toggleSubmit ();
+                    }}
+                  >
+                    ยืนยัน
+                  </Button>{" "}
+                  <Button color="secondary" onClick={toggleSubmit}>
+                    ยกเลิก
+                  </Button>
+                </ModalFooter>
+              </Modal>
             </Col>
           </Row>
         </Col>
@@ -497,3 +529,4 @@ export default function ServiceForm({ host, customerAccount, hostService }) {
     </div>
   );
 }
+

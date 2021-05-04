@@ -201,18 +201,18 @@ export default function ServiceDetail({
 
                     <h3 className="DownsideText_2">รายละเอียดเพิ่มเติม</h3>
                     <div className="DownsideText_3">
-                      {serviceCreateTime !== null ? (
-                        <p>สร้างบริการ: {serviceCreateTime}</p>
-                      ) : null}
-                      {serviceHostReplyTime !== null ? (
-                        <p>ผู้รับฝากตอบรับ: {serviceHostReplyTime}</p>
-                      ) : null}
-                      {serviceCustomerSendDogTime !== null ? (
-                        <p>ผู้ฝากฝากสุนัข: {serviceCustomerSendDogTime}</p>
-                      ) : null}
-                      {serviceCustomerGetDogTime !== null ? (
-                        <p>ผู้ฝากรับสุนัข: {serviceCustomerGetDogTime}</p>
-                      ) : null}
+                      
+                        {serviceCreateTime !== null ? (<p>สร้างบริการ: {serviceCreateTime}</p>) :(<p>สร้างบริการ: - </p>)}
+                      
+                      
+                         {serviceHostReplyTime !== null ? (<p>ผู้รับฝากตอบรับ: {serviceHostReplyTime}</p>) :(<p>ผู้รับฝากตอบรับ: -</p>)}
+                      
+                     
+                         {serviceCustomerSendDogTime !== null ? (<p>ผู้ฝากฝากสุนัข: {serviceCustomerSendDogTime}</p>) :(<p>ผู้ฝากฝากสุนัข: - </p>)}
+                      
+                     
+                        {serviceCustomerGetDogTime !== null ? (<p>ผู้ฝากรับสุนัข: {serviceCustomerGetDogTime}</p>) :(<p>ผู้ฝากรับสุนัข: - </p>)}
+                      
                     </div>
                   </div>
                 </Col>

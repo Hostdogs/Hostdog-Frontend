@@ -33,6 +33,9 @@ const MainTab = ({ isOwned, isHost, Account, dogCount, setdogCount }) => {
       if (isOwned) {
         setDescription(e.target.value);
         setisEdit(true);
+        if(e.target.value.length===0){
+          setisEdit(false);
+        }
       }
     }
   };

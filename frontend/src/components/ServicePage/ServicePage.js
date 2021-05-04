@@ -43,9 +43,9 @@ export default function ServicePage({ match }) {
       <NavbarIsAuth toggleSideBar={toggleSideBar} />
       <SideBar isOpen={isOpen} />
       {/* <ServiceForm /> */}
-      <div className="content" style={{ paddingTop: "80px" }}>
+      <div className="content" style={{ paddingTop: "70px" }}>
         <Row>
-          <Col xs="12" sm="12" md="12" lg="3">
+          <Col xs="12" sm="12" md="12" lg="3" style={{ paddingTop: "10px" }}>
             <ServiceHost host={host} customerAccount={customerAccount}/>
           </Col>
           <Col xs="12" sm="12" md="12" lg="9">

@@ -120,7 +120,7 @@ useEffect(() => {
 
   return (
     <div>
-      <Row>
+      <Row  style={{paddingRight:"25px"}}> 
         <Col>
           <Carousel
             className="hostImage-content-small"
@@ -148,13 +148,13 @@ useEffect(() => {
         </Col>
       </Row>
 
-      <Row className="host-row" style={{ marginTop: "10px", marginBottom: "10px" }}>
+      <Row className="host-row" style={{ marginTop: "10px", marginBottom: "10px", paddingRight:"25px" }}>
         <Col>
           <GoogleMapService host={host} hostImg={hostImg} customerImg={customerImg}/>
         </Col>
       </Row>
 
-      <Row className="host-row">
+      <Row className="host-row" style={{paddingRight:"25px"}}>
         <Col  xs={12}>
           <h4>ที่อยู่</h4>
         </Col>

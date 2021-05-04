@@ -10,7 +10,7 @@ const loadScript = {
   googleAPIKey: "AIzaSyBWV06MM0QFyVnkuA1nHJhQ4altZjovYNs",
   language: "th",
 }
-export default function GoogleMapService({ host, customerImg, hostImg }) {
+export default function GoogleMapService({ host, customerImg, hostImg ,setgoogleLoad}) {
   const [customerGeocode, setCustomerGeocode] = useState({})
   const [hostGeocode, setHostGeocode] = useState({})
   const placeholderPath = "user_placeholder.svg"
@@ -43,8 +43,9 @@ export default function GoogleMapService({ host, customerImg, hostImg }) {
         lat: parseFloat(host.latitude),
         lng: parseFloat(host.longitude),
       });
-    
+      
     }
+  
 
   }, [host])
   // console.log(customerImg)

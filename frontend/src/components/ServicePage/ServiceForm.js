@@ -199,8 +199,8 @@ export default function ServiceForm({ host, customerAccount, hostService }) {
     }
 
     return (
-      <Card>
-        <CardImg top width="100%" src={customerDog.picture} />
+      <Card style={{borderRadius:"0"}}>
+        <CardImg style={{objectFit:"contain",width:"100%",height:"200px", textAlign:"center"}} src={customerDog.picture} />
         <CardBody>
           <CardTitle tag="h5"> {customerDog.dog_name}</CardTitle>
           <CardText>
@@ -215,6 +215,7 @@ export default function ServiceForm({ host, customerAccount, hostService }) {
               onServiceInfoChange(customerDog);
               toggle();
             }}
+            style={{backgroundColor:"#43978d", border:"0px"}}
           >
             เลือก
           </Button>
@@ -262,9 +263,15 @@ export default function ServiceForm({ host, customerAccount, hostService }) {
   return (
     <div>
       <Row>
-        <Col xs="12" sm="12" md="12" lg="8">
+        <Col
+          xs="12"
+          sm="12"
+          md="12"
+          lg="8"
+          style={{ backgroundColor: "#fef7ef" }}
+        >
           <Form>
-            <FormGroup>
+            <FormGroup style={{ paddingTop: "20px" }}>
               <h4>เลือกบริการของคุณ</h4>
             </FormGroup>
             <div className="list-service">
@@ -279,11 +286,12 @@ export default function ServiceForm({ host, customerAccount, hostService }) {
                     ) : (
                       <Label disable>ยังไม่ได้เลือก</Label>
                     )}
-                    <Button color="primary" size="sm" onClick={toggle}>
+                    {" "}
+                    <Button size="sm" onClick={toggle} style={{backgroundColor:"#43978d",color:"white",fontSize:"14px"}}>
                       เลือก
                     </Button>
                     <Modal isOpen={modal} fade={false} toggle={toggle}>
-                      <ModalHeader toggle={toggle}>
+                      <ModalHeader toggle={toggle} style={{backgroundColor:"#f9e07f"}}>
                         เลือกสุนัขของคุณ
                       </ModalHeader>
                       <ModalBody>{customerDogElements}</ModalBody>
@@ -342,7 +350,7 @@ export default function ServiceForm({ host, customerAccount, hostService }) {
                       isOpen={dropdownTypeOpen}
                       toggle={toggleType}
                     >
-                      <DropdownToggle caret size="sm">
+                      <DropdownToggle caret size="sm" style={{backgroundColor:"#43978d",color:"white", fontSize:"14px"}}>
                         {customerMealLabel}
                       </DropdownToggle>
                       <DropdownMenu>{mealTypeElements}</DropdownMenu>
@@ -505,22 +513,29 @@ export default function ServiceForm({ host, customerAccount, hostService }) {
               ) : null}
             </div>
             <FormGroup>
-              <Row>
-                <h4>รายละเอียดเพิ่มเติมเพิ่มเติม</h4>
-                <Input
-                  rows="5"
-                  type="textarea"
-                  placeholder="ระบุรายละเอียดเพิ่มเติม"
-                  name="service_bio"
-                  value={serviceInfo.service_bio}
-                  onChange={onServiceInfoChange}
-                />
-              </Row>
-              <Row></Row>
+              <div>
+                <h4>รายละเอียดเพิ่มเติม</h4>
+                <div style={{paddingLeft:"25px",paddingRight:"25px"}}>
+                  <Input
+                    rows="5"
+                    type="textarea"
+                    placeholder="ระบุรายละเอียดเพิ่มเติม"
+                    name="service_bio"
+                    value={serviceInfo.service_bio}
+                    onChange={onServiceInfoChange}
+                  />
+                </div>
+              </div>
             </FormGroup>
           </Form>
         </Col>
-        <Col xs="12" sm="12" md="12" lg="4">
+        <Col
+          xs="12"
+          sm="12"
+          md="12"
+          lg="4"
+          style={{ paddingTop: "20px", paddingLeft: "50px" }}
+        >
           <ServiceDetail
             serviceInfo={serviceInfo}
             customerMealLabel={customerMealLabel}
@@ -536,22 +551,22 @@ export default function ServiceForm({ host, customerAccount, hostService }) {
               alertToggle={toggleError}
             />
             <Col align="right">
-              <Button onClick={toggleSubmit}>ยืนยัน</Button>
+              <Button onClick={toggleSubmit} style={{backgroundColor:"#264d59"}}>ยืนยัน</Button>
               <Modal isOpen={modalSubmit} toggle={toggleSubmit}>
                 <ModalHeader>
                   คุณต้องการยืนยันการสร้างบริการใช่หรือไม่
                 </ModalHeader>
                 <ModalFooter>
                   <Button
-                    color="danger"
                     onClick={(e) => {
                       onServiceSubmit(e);
                       toggleSubmit();
                     }}
+                    style={{backgroundColor:"#264d59"}}
                   >
                     ยืนยัน
                   </Button>{" "}
-                  <Button color="secondary" onClick={toggleSubmit}>
+                  <Button color="danger" onClick={toggleSubmit}>
                     ยกเลิก
                   </Button>
                 </ModalFooter>

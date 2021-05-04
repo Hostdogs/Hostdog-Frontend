@@ -13,7 +13,7 @@ const loadScript = {
 export default function GoogleMapService({ host, customerImg, hostImg ,setgoogleLoad}) {
   const [customerGeocode, setCustomerGeocode] = useState({})
   const [hostGeocode, setHostGeocode] = useState({})
-  const placeholderPath = "user_placeholder.svg"
+  const placeholderPath = "/user_placeholder.svg"
   const getUserLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(success);
@@ -45,9 +45,9 @@ export default function GoogleMapService({ host, customerImg, hostImg ,setgoogle
       });
       
     }
-  
 
   }, [host])
+
   // console.log(customerImg)
   // console.log(hostImg)
   return (
@@ -62,7 +62,7 @@ export default function GoogleMapService({ host, customerImg, hostImg ,setgoogle
           zoom={12}
         >
           <Marker position={hostGeocode} draggable={false} icon={{
-            url:`${ hostImg||placeholderPath }`,// url
+            url:`${ hostImg||placeholderPath}`,// url
             scaledSize: {width: 30, height: 30},
 
             // scaledSize: new google.maps.Size(50, 50), // scaled size
@@ -70,7 +70,7 @@ export default function GoogleMapService({ host, customerImg, hostImg ,setgoogle
             // anchor: new google.maps.Point(0, 0) // anchor
           }} />
           <Marker position={customerGeocode} draggable={false} icon={{
-            url:`${ customerImg||placeholderPath }`,// url
+            url:`${ customerImg||placeholderPath}`,// url
             scaledSize: {width: 30, height: 30} 
             // scaledSize: new google.maps.Size(50, 50), // scaled size
             // origin: new google.maps.Point(0, 0), // origin

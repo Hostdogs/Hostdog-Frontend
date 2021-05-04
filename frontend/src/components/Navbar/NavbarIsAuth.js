@@ -39,10 +39,12 @@ export default function NavbarIsAuth({ toggleSideBar }) {
     if (Account) {
       if (Account.is_host) {
         setName(Account.host.first_name + " " + Account.host.last_name);
+        setimg(Account.host.picture)
       } else {
         setName(
           Account.customer.first_name + " " + Account.customer.last_name
         );
+        setimg(Account.customer.picture)
       }
     }
 

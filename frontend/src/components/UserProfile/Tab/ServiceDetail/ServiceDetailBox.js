@@ -22,22 +22,22 @@ export default function ServiceDetailBox(props) {
 
   const etcServicesDetail = [
     {
-      name: "ราคาพาสุนัขไปเดินเล่น",
+      name: "พาสุนัขไปเดินเล่น",
       price: serviceDetail.price_dog_walk,
       enable: serviceDetail.enable_dog_walk,
     },
     {
-      name: "ราคาไปรับสุนัขต่อกิโลเมตร",
+      name: "ไปรับสุนัขเมื่อเริ่มบริการ",
       price: serviceDetail.price_get_dog,
       enable: serviceDetail.enable_get_dog,
     },
     {
-      name: "ราคาไปส่งสุนัขต่อกิโลเมตร",
+      name: "ไปส่งสุนัขเมื่อสิ้นสุดบริการ",
       price: serviceDetail.price_deliver_dog,
       enable: serviceDetail.enable_delivery_dog,
     },
     {
-      name: "ราคาอาบน้ำสุนัข",
+      name: "อาบน้ำสุนัข",
       price: serviceDetail.price_bath_dog,
       enable: serviceDetail.enable_bath_dog,
     },

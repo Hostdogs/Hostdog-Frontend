@@ -156,7 +156,7 @@ export default function InformationForm({ selectState }) {
           gender: Information.gender,
           mobile: Information.mobile,
           dob: Information.dob,
-          address: Information.address,
+          address: userAddress,
           latitude: geocode.lat,
           longitude: geocode.lng,
         };

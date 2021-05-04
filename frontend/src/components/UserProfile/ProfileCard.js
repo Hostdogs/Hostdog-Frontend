@@ -56,7 +56,7 @@ const ProfileCard = ({ pageCollapse, Account, setAccount }) => {
                 style={{
                   borderRadius: "50%",
                   width: "120px",
-                  height: "100%",
+                  height: "120px",
                   objectFit: "cover",
                 }}
               />

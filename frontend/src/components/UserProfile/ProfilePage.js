@@ -7,7 +7,7 @@ import SideBar from "../sidebar/SideBar";
 // import ProfileAPI from "./ProfileAPI";
 import { useCookies } from "react-cookie";
 import NotFound from "../Handle/NotFound";
-import { useHistory } from "react-router";
+import {useHistory } from "react-router-dom";
 import HostAPI from "../API/HostAPI";
 import CustomerAPI from "../API/CustomerAPI";
 import AuthenAPI from "../API/AuthenAPI";
@@ -20,6 +20,7 @@ export default function ProfilePage({ match }) {
   const [isOwned, setisOwned] = useState(false);
   // const [isHost, setisHost] = useState(false);
   const [Account, setAccount] = useState();
+  const [userIsHost, setuserIsHost] = useState(true)
   let path = match.params["profile_id"];
 
   const toggleSideBar = () => {
@@ -45,8 +46,15 @@ export default function ProfilePage({ match }) {
         // }else{
         //   setProfile(res.data.customer)
         // }
+
         setAccount(res.data);
+
+        
       });
+      AuthenAPI.getUserAllInfo(cookies["mytoken"], cookies["user_id"]).then(res=>{
+        console.log(res.data)
+        setuserIsHost(res.data.is_host)
+      })
     }
   }, []);
 
@@ -66,6 +74,8 @@ export default function ProfilePage({ match }) {
             // isHost={isHost}
             // dateJoin={dateJoin}
             Account={Account}
+            isOwned={isOwned}
+            userIsHost={userIsHost}
           />
           <ProfileContent
             setpageCollapse={setpageCollapse}

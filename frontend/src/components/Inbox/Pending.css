@@ -70,11 +70,6 @@
   }
 }
 
-.forUnskew {
-  /* transform: skew(-15deg); */
-  padding-left: 3vw;
-}
-
 .container_pending {
   --borderWidth: 5px;
   background: #fcf1c5;
@@ -288,5 +283,18 @@
     -ms-transform: rotate(360deg);
     -o-transform: rotate(360deg);
     transform: rotate(360deg);
+  }
+}
+
+
+@media all and (max-width: 800px){
+  .reponsive_br{
+    display: inline;
+  }
+}
+
+@media all and (min-width: 801px){
+  .reponsive_br{
+    display: none;
   }
 }

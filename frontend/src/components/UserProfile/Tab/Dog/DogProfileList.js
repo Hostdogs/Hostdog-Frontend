@@ -76,9 +76,10 @@ export default function DogProfileList(props) {
                     labelBtn="เวลาให้อาหาร"
                     dogId={dogInfo.id}
                     isOwned={isOwned}
+                    dog_status={dogInfo.dog_status}
                   />
                 </ButtonGroup>
-                {isOwned ? (
+                {isOwned && dogInfo.dog_status === "idle" ? (
                   <ButtonGroup style={{ marginLeft: "15px" }}>
                     <DogProfileEditForm
                       labelBtn="แก้ไข"
@@ -87,7 +88,7 @@ export default function DogProfileList(props) {
                     />
                   </ButtonGroup>
                 ) : null}
-                {isOwned ? (
+                {isOwned && dogInfo.dog_status === "idle" ? (
                   <Button
                     color="danger"
                     size="sm"

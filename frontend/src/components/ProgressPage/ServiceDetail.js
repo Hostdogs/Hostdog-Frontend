@@ -43,6 +43,15 @@ export default function ServiceDetail({
   message,
   alertModal,
   toggleAlert,
+  showCustomerDepositPayment,
+  showCustomerLatePayment,
+  showCustomerCancelService,
+  showCustomerReview,
+  showCustomerReceiveDogToEnd,
+  showHostRecieveDog,
+  showHostReturnDog,
+  checkHostOrCustomer,
+ 
 }) {
   const [serviceID, setServiceID] = useState(null);
   const [customer, setcustomer] = useState({});
@@ -142,8 +151,10 @@ export default function ServiceDetail({
       }
     }
   }, [ServiceInfo]);
-  const listDogFeedingTime = dogFeedingTime.map((dogFeeding) => {
-    return <li key={dogFeeding.id}>{dogFeeding.time}</li>;
+  const listDogFeedingTime = dogFeedingTime.sort((a,b)=>{
+    return a.time.localeCompare(b.time);
+  }).map((dogFeeding) => {
+    return <li key={dogFeeding.id}>{dogFeeding.time} น.</li>;
   });
 
   const [modal, setModal] = useState(false);
@@ -273,20 +284,22 @@ export default function ServiceDetail({
                 alertModal={alertModal}
                 alertToggle={toggleAlert}
               />
-              {/* {showLatePayment?(<PaymentLateModal service_id={serviceID} customer={customer} dog={dog}/>):null}
-              {showDepositPayment?(<PaymentDepositModal service_id={serviceID} customer={customer} dog={dog}/>):null} */}
-              <PaymentLateModal
-                service_id={serviceID}
-                customer={customer}
-                dog={dog}
-              />{" "}
-              <PaymentDepositModal
-                service_id={serviceID}
-                customer={customer}
-                dog={dog}
-              />{" "}
+ 
 
-              <Button onClick={toggleReceive}>รับสุนัข</Button>{" "}
+               {showCustomerLatePayment?(<PaymentLateModal
+                service_id={serviceID}
+                customer={customer}
+                dog={dog}
+                checkHostOrCustomer={checkHostOrCustomer}
+              />):null}
+              {showCustomerDepositPayment?(<PaymentDepositModal
+                service_id={serviceID}
+                customer={customer}
+                dog={dog}
+                checkHostOrCustomer={checkHostOrCustomer}
+              />):null}
+
+              {showHostRecieveDog?(<Button onClick={toggleReceive}>รับสุนัข</Button>):null}
               <Modal isOpen={modalReceive} toggle={toggleReceive}>
                 <ModalHeader>กรุณายืนยันที่จะรับสุนัข</ModalHeader>
                 <ModalFooter>
@@ -305,7 +318,7 @@ export default function ServiceDetail({
                 </ModalFooter>
               </Modal>
 
-              <Button onClick={toggleReturn}>คืนสุนัข</Button>{" "}
+              {showHostReturnDog?(<Button onClick={toggleReturn}>คืนสุนัข</Button>):null}
               <Modal isOpen={modalReturn} toggle={toggleReturn}>
                 <ModalHeader>กรุณายืนยันที่จะคืนสุนัข</ModalHeader>
                 <ModalFooter>
@@ -323,7 +336,7 @@ export default function ServiceDetail({
                   </Button>
                 </ModalFooter>
               </Modal>
-              <Button onClick={toggleReview}>ให้คะแนนผู้รับฝาก</Button>{" "}
+              {showCustomerReview?(<Button onClick={toggleReview}>ให้คะแนนผู้รับฝาก</Button>):null}
               <Modal isOpen={modalReview} fade={false} toggle={toggleReview}>
                 <ModalHeader toggle={toggleReview}>
                   ให้คะแนนผู้รับฝาก
@@ -352,9 +365,9 @@ export default function ServiceDetail({
                   </Button>{" "}
                 </ModalFooter>
               </Modal>
-              <Button onClick={toggleEnd} color="danger">
+              {showCustomerReceiveDogToEnd?(<Button onClick={toggleEnd} color="danger">
                 สิ้นสุดบริการ
-              </Button>{" "}
+              </Button>):null}
               <Modal isOpen={modalEnd} toggle={toggleEnd}>
                 <ModalHeader>กรุณายืนยันที่จะสิ้นสุดบริการ</ModalHeader>
                 <ModalFooter>
@@ -381,13 +394,13 @@ export default function ServiceDetail({
                   <div className="Cancel_Button">ยกเลิกบริการ</div>
                 </Button>
               ) : null} */}
-              <Button
+              {showCustomerCancelService?(<Button
                 onClick={toggle}
                 color="danger"
                 style={{ marginLeft: "5px" }}
               >
                 <div className="Cancel_Button">ยกเลิกบริการ</div>
-              </Button>
+              </Button>):null}
               <Modal isOpen={modal} toggle={toggle}>
                 <ModalHeader>กรุณายืนยันที่จะยกเลิกบริการ</ModalHeader>
                 <ModalFooter>

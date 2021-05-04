@@ -57,6 +57,7 @@ export default function ProgressPage({ match }) {
       console.log("handleHostReceiveDog");
       console.log(response);
       setMessage("รับสุนัข");
+      toggleAlert();
 
     }).catch((error) => {
       console.log("error");
@@ -70,6 +71,7 @@ export default function ProgressPage({ match }) {
       console.log("handleHostReturnDog");
       console.log(response);
       setMessage("คืนสุนัข");
+      toggleAlert();
     }).catch((error) => {
       console.log("error");
       console.log(error);
@@ -81,6 +83,8 @@ export default function ProgressPage({ match }) {
     ServiceAPI.responseService(cookies.mytoken, servicePath, { receive_dog: true }).then((response) => {
       console.log("handleCustomerEnd_customerReceiveDog");
       console.log(response);
+      setMessage("ทำการสิ้นสุดบริการ");
+      toggleAlert();
     }).catch((error) => {
       console.log("error");
       console.log(error);
@@ -102,6 +106,8 @@ export default function ProgressPage({ match }) {
     ServiceAPI.responseService(cookies.mytoken, servicePath, { cancel: true }).then((response) => {
       console.log("handleCancel");
       console.log(response);
+      setMessage("ทำการยกเลิกบริการ");
+      toggleAlert();
     }).catch((error) => {
       console.log("error");
       console.log(error);
@@ -241,6 +247,9 @@ export default function ProgressPage({ match }) {
 
                 onChangeReview={onChangeReview}
                 reviewScore={reviewScore}
+                message={message}
+                alertModal={alertModal}
+                toggleAlert={toggleAlert}
               />
 
             </Container>

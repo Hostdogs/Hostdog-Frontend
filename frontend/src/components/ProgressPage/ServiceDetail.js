@@ -40,6 +40,9 @@ export default function ServiceDetail({
   handleReview,
   onChangeReview,
   reviewScore,
+  message,
+  alertModal,
+  toggleAlert,
 }) {
   const [serviceID, setServiceID] = useState(null);
   const [customer, setcustomer] = useState({});

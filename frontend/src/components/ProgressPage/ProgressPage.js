@@ -104,7 +104,7 @@ const onChangeReview=(e)=>{
   const handleProgress = (ServiceInfo) => {
 
        if (ServiceInfo.main_status==="pending"){
-        setServiceDetailStatusLabel("กำลังรอคำตอบรับจากผู้รับฝาก");
+        setServiceDetailStatusLabel("การส่งคำขอ");
         setShowDepositPayment(false);
         setLabelIndex(0);
         setColorIndex(0);
@@ -112,7 +112,7 @@ const onChangeReview=(e)=>{
         setProgressValue(16.67);
         console.log("pending");
       }else if(ServiceInfo.main_status==="payment"){
-        setServiceDetailStatusLabel("รอการชำระเงิน");
+        setServiceDetailStatusLabel("การชำระเงิน");
         setShowDepositPayment(true);
         setLabelIndex(1);
         setColorIndex(0);
@@ -120,14 +120,14 @@ const onChangeReview=(e)=>{
         setGifIndex(2);
         console.log("payment");
       }else if(ServiceInfo.main_status==="wait_for_progress"){
-        setServiceDetailStatusLabel("รอวันเริ่มบริการ");
+        setServiceDetailStatusLabel("การรอบริการ");
         setShowDepositPayment(false);
         setLabelIndex(2);
         setGifIndex(0);
         setProgressValue(48);
         setColorIndex(0);
       }else if(ServiceInfo.main_status==="in_progress"){
-        setServiceDetailStatusLabel("อยู่ในการบริการ")
+        setServiceDetailStatusLabel("ในการบริการ")
         setShowDepositPayment(false);
         setLabelIndex(3);
         setColorIndex(0);

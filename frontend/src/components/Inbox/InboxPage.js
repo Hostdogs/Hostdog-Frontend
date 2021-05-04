@@ -14,7 +14,7 @@ export default function InboxPage() {
         if (cookies["mytoken"]) {
             getPending()
             console.log("interval set")
-            setInterval(()=>getPending(),5000);
+            setInterval(()=>getPending(),10000);
         }
 
     }, [cookies])

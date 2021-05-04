@@ -199,6 +199,7 @@ export default function InformationForm({ selectState }) {
       setCookie("mytoken", resp.data.token);
       setCookie("user_id", resp.data.id);
     } catch (error) {
+      console.log(error.response)
       // let errorMessage = "";
       // if (error.response.data.is_host !== undefined) {
       //   errorMessage += "email";

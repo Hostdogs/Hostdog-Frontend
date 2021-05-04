@@ -148,7 +148,7 @@ export default function History({ history }) {
               >
                 <FontAwesomeIcon icon={faInfoCircle} style={""} /> รายละเอียดเพิ่มเติม
               </Button>{" "}
-
+              <span className="Responsivedouble_br"><br/><br/></span>
 
               {/* <a className="mobile-br2">
                 <br />

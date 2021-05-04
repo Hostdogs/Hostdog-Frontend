@@ -9,7 +9,7 @@ import {
   Col,
   Row,
 } from "reactstrap";
-import HistoryAPI from "./HistoryAPI";
+
 import moment from "moment-timezone"
 import "./HistoryPage.css";
 import { useHistory } from "react-router";
@@ -56,6 +56,7 @@ export default function History({ history }) {
   const [urllink, seturllink] = useState("")
   const [createDate, setcreateDate] = useState("")
   const [showedName, setshowedName] = useState("")
+  const [userIsHost,setUserIsHost]=useState("");
   useEffect(() => {
     // HistoryAPI.fakeHostProfile(history.host_id).then(res=>{
     //   sethostName(res.first_name+" "+res.last_name)
@@ -70,10 +71,11 @@ export default function History({ history }) {
       seturllink("/progress/" + history.id)
       setcreateDate(moment(history.service_create_time).format("lll"))
       if (cookie["user_id"] == history.customer.account) {
-
+        setUserIsHost(false);
         setshowedName("ผู้รับฝาก: " + history.host.first_name + " " + history.host.last_name)
       } else if (cookie["user_id"] == history.host.account) {
         setshowedName("ผู้ฝาก: " + history.customer.first_name + " " + history.customer.last_name)
+        setUserIsHost(true);
       }
       console.log("history", history)
       console.log(cookie["user_id"])
@@ -86,7 +88,7 @@ export default function History({ history }) {
 
   const handleInfo = (e) => {
     e.preventDefault();
-    if (history.main_status === "pending") {
+    if (history.main_status === "pending"&& userIsHost) {
       usehistory.push("/")
       usehistory.go(0)
     } else {

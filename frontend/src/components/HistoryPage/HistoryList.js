@@ -5,7 +5,7 @@ import History from "./History";
 import InfiniteScroll from "react-infinite-scroll-component";
 import FilterBox from "./FilterBox";
 import "./HistoryPage.css";
-import HistoryAPI from "./HistoryAPI";
+
 import moment from "moment";
 import Loading from "../Handle/Loading";
 

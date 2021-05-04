@@ -386,7 +386,7 @@ export default function ProgressPage({ match }) {
   const [ServiceInfo, setServiceInfo] = useState(null);
   useEffect(() => {
     checkHostOrCustomer();
-    setInterval(()=>checkHostOrCustomer(),60000);
+    setInterval(()=>checkHostOrCustomer(),30000);
   }, []);
   
   /////////////expand info//////////////////

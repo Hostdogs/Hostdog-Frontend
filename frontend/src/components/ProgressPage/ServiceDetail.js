@@ -206,8 +206,8 @@ return(
                 float: "right",
               }}
             >
-              {showLateService?(<PaymentLateModal service_id={serviceID}/>):null}
-              {showDepositPayment?(<PaymentDepositModal service_id={serviceID}/>):null}
+              {showLateService?(<PaymentLateModal service_id={serviceID} customer={customer} dog={dog}/>):null}
+              {showDepositPayment?(<PaymentDepositModal service_id={serviceID} customer={customer} dog={dog}/>):null}
 
               {showCancelService?(<Button
                 onClick={toggle}

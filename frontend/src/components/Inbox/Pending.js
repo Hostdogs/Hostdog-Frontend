@@ -113,61 +113,71 @@ export default function Pending({ service, pendingData, setpendingData }) {
     <div className="PendingBox">
       <Container>
         <Card className="PendingBox2">
-          <CardHeader className="forUnskew">
+          <CardHeader style={{backgroundColor:"#264d59", color:"white", paddingTop:"18px"}}>
             <h3 className="heading3">
               คำขอบริการ: <small>{customerName}</small>{" "}
             </h3>
           </CardHeader>
-          <CardBody>
+          <CardBody style={{backgroundColor:"#f2f9f8"}}>
             <Label>
               <h5>
                 ระยะเวลาบริการ {regDate} ถึง {endDate}
               </h5>{" "}
             </Label>
             <Row>
-              <Col md="4" xs="6" sm="5" style={{ alignItems: "center" }}>
+              <Col
+                md="4"
+                xs="12"
+                sm="12"
+                style={{ alignItems: "center", textAlign: "center" }}
+              >
                 <img
                   src={dog ? dog.picture : null}
                   class="img-responsive center-block"
                   style={{
                     width: "200px",
                     height: "200px",
-                    objectFit: "cover",
+                    objectFit: "contain",
                     marginBottom: "15px",
                   }}
                 />
               </Col>
               <Col>
-                <Label>
-                  <h4>รายละเอียดสุนัข</h4>
-                </Label>
-                <br />
-                <Label>สุนัข: {dog ? dog.dog_name : ""}</Label>
-                <br />
-                <Label>สายพันธุ์: {dog ? dog.dog_breed : ""}</Label>
-                <br />
-                <Label>อายุ: {dogAge ? dogAge : ""}</Label>
-                <br />
-                <Label>
-                  ประเภทอาหาร: {meal}
-                  <br />
-                </Label>
-                <br />
-                <Label>
-                  เวลาให้อาหาร:
-                  {mealTime ? (
-                    <div>
-                      {mealTime.map((item) => (
-                        <span key={item.id} style={{ paddingRight: "10px" }}>
-                          {item.time.slice(0, 5)}
-                        </span>
-                      ))}
-                    </div>
-                  ) : null}
-                </Label>
-                <br />
+                <div style={{backgroundColor:"#f9e07f", padding:"10px 10px", borderTopLeftRadius:"10px", borderBottomRightRadius:"50px"}}>
+                  <List type="unstyled">
+                    <h4>รายละเอียดสุนัข</h4>
+                    <ul>
+                      <li>สุนัข: {dog ? dog.dog_name : ""}</li>
+
+                      <li>สายพันธุ์: {dog ? dog.dog_breed : ""}</li>
+
+                      <li>อายุ: {dogAge ? dogAge : ""}</li>
+
+                      <li>
+                        เวลาให้อาหาร:
+                        {mealTime ? (
+                          <ul>
+                            <li>
+                              {mealTime.map((item) => (
+                                <span
+                                  key={item.id}
+                                  style={{ paddingRight: "10px" }}
+                                >
+                                  {item.time.slice(0, 5)}
+                                </span>
+                              ))}
+                            </li>
+                          </ul>
+                        ) : null}
+                      </li>
+                    </ul>
+                  </List>
+                </div>
+               <span className="reponsive_br"><br/><br/></span>
               </Col>
+              
               <Col>
+              <div style={{backgroundColor:"#f9e07f", padding:"10px 10px", borderTopLeftRadius:"10px", borderBottomRightRadius:"50px"}}>
                 <List type="unstyled">
                   <li>
                     <h4>รายละเอียดบริการ</h4>
@@ -214,19 +224,21 @@ export default function Pending({ service, pendingData, setpendingData }) {
                     </ul>
                   </List>
                 )}
+                </div>
               </Col>
             </Row>
+            <span className="reponsive_br"><br/></span>
             <Label>
               <h4>รายละเอียดเพิ่มเติม</h4>
             </Label>
             <br />
-            <p style={{ wordWrap: "break-word" }}>{serviceDescription}</p>
+            <ul style={{ wordWrap: "break-word" }}>- {serviceDescription}</ul>
             <br />
             <Label>
               <h4>ค่าบริการ</h4>
             </Label>
             <br />
-            {Price ? <Label>{Price} บาท</Label> : null}
+            {Price ? <ul>- {Price} บาท</ul> : null}
             {/* <ul>
               <div className="InDesktop">
 
@@ -247,13 +259,12 @@ export default function Pending({ service, pendingData, setpendingData }) {
             <br />
             <Button
               style={{
-                color: "black",
                 border: "none",
                 position: "absolute",
                 bottom: "10px",
                 right: "85px",
               }}
-              color="warning"
+              color="primary"
               onClick={handleHostAccept}
             >
               ยืนยัน

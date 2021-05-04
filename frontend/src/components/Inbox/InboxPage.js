@@ -17,7 +17,7 @@ export default function InboxPage() {
         }
         
     }, [cookies])
-
+  
     return (
         <div style={{ paddingTop: "75px" }}>
             <Container>

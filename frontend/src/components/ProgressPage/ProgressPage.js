@@ -330,7 +330,7 @@ export default function ProgressPage({ match }) {
         setShowHostRecieveDog(false);
         setHostReturnDog(false);
       } else {
-        setShowCustomerReview(true);
+        setShowCustomerReview(false);
         setShowCustomerDepositPayment(false);
         setshowCustomerLatePayment(false);
         setShowCustomerCancelService(false);
@@ -344,6 +344,7 @@ export default function ProgressPage({ match }) {
       setLabelIndex(6);
       setGifIndex(6);
       setColorIndex(1);
+      setProgressValue(100);
     }
   };
   const checkHostOrCustomer = () => {

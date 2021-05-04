@@ -44,9 +44,16 @@ export default function ServiceDetail({
   const [customer, setcustomer] = useState({});
   const [host, sethost] = useState("");
   const [dog, setdog] = useState("");
-  const [timeRegister, settimeRegister] = useState("");
-  const [timeEnd, settimeEnd] = useState("");
-  const [serviceCreateTime, setServiceCreateTime] = useState("");
+  const [timeStart, settimeStart] = useState(null);
+  const [timeEnd, settimeEnd] = useState(null);
+  const [serviceCreateTime, setServiceCreateTime] = useState(null);
+  const [serviceHostReplyTime, setServiceHostReplyTime] = useState(null);
+  const [serviceCustomerSendDogTime, setServiceCustomerSendDogTime] = useState(
+    null
+  );
+  const [serviceCustomerGetDogTime, setServiceCustomerGetDogTime] = useState(
+    null
+  );
   const [totalPrice, setTotalPrice] = useState(null);
   const [mealType, setMealType] = useState(null);
   const [mealWeight, setMealWeight] = useState(null);
@@ -74,8 +81,6 @@ export default function ServiceDetail({
         });
 
       setServiceID(ServiceInfo.id);
-      settimeRegister(moment(ServiceInfo.service_reg_time).format("lll"));
-      settimeEnd(moment(ServiceInfo.service_end_time).format("lll"));
 
       setTotalPrice(ServiceInfo.total_price);
       setMealType(ServiceInfo.service_meal_type.meal_type);
@@ -92,6 +97,23 @@ export default function ServiceDetail({
         moment(ServiceInfo.service_create_time).format("lll")
       );
 
+      settimeStart(moment(ServiceInfo.service_start_time).format("lll"));
+      settimeEnd(moment(ServiceInfo.service_end_time).format("lll"));
+      
+      if (ServiceInfo.service_reply_time!==null){
+      setServiceHostReplyTime(
+        moment(ServiceInfo.service_reply_time).format("lll")
+      );}
+      if(ServiceInfo.service_send_time!==null){
+      setServiceCustomerSendDogTime(
+        moment(ServiceInfo.service_send_time).format("lll")
+      );}
+      if(ServiceInfo.service_get_time!==null){
+      setServiceCustomerGetDogTime(
+        moment(ServiceInfo.service_get_time).format("lll")
+      );
+    }
+      
       setdog(ServiceInfo.dog);
       setcustomer(ServiceInfo.customer);
       sethost(ServiceInfo.host);
@@ -133,7 +155,7 @@ export default function ServiceDetail({
               </p>
               <p>สุนัข: {dog.dog_name}</p>
               <p>
-                ฝากวันที่: {timeRegister}{" "}
+                ฝากวันที่: {timeStart}{" "}
                 <a className="mobile_br">
                   <br />
                 </a>{" "}
@@ -156,7 +178,12 @@ export default function ServiceDetail({
                 </Col>
                 <Col>
                   <div>
-                    <h3 className="DownsideText_2">บริการเพิ่มเติม</h3>
+                    {additionalService[0] ||
+                    additionalService[1] ||
+                    additionalService[2] ||
+                    additionalService[3] ? (
+                      <h3 className="DownsideText_2">บริการเพิ่มเติม</h3>
+                    ) : null}
                     <div className="DownsideText_3">
                       <ol>
                         {additionalService[0] ? (
@@ -174,7 +201,18 @@ export default function ServiceDetail({
 
                     <h3 className="DownsideText_2">รายละเอียดเพิ่มเติม</h3>
                     <div className="DownsideText_3">
-                      <p>วันที่สร้างบริการ: {serviceCreateTime}</p>
+                      {serviceCreateTime !== null ? (
+                        <p>สร้างบริการ: {serviceCreateTime}</p>
+                      ) : null}
+                      {serviceHostReplyTime !== null ? (
+                        <p>ผู้รับฝากตอบรับ: {serviceHostReplyTime}</p>
+                      ) : null}
+                      {serviceCustomerSendDogTime !== null ? (
+                        <p>ผู้ฝากฝากสุนัข: {serviceCustomerSendDogTime}</p>
+                      ) : null}
+                      {serviceCustomerGetDogTime !== null ? (
+                        <p>ผู้ฝากรับสุนัข: {serviceCustomerGetDogTime}</p>
+                      ) : null}
                     </div>
                   </div>
                 </Col>
@@ -207,7 +245,7 @@ export default function ServiceDetail({
                 <ModalHeader toggle={toggleReview}>
                   ให้คะแนนผู้รับฝาก
                 </ModalHeader>
-                <ModalBody style={{textAlign:"center"}}>
+                <ModalBody style={{ textAlign: "center" }}>
                   <CustomInput
                     type="range"
                     id="exampleCustomRange"

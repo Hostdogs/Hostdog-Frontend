@@ -24,7 +24,7 @@ import "moment/locale/th";
 import "./ServiceDetail.css";
 import { useCookies } from "react-cookie";
 import PaymentLateModal from "../Payment/PaymentLateModal";
-import AlertModal from "./AlertModal"
+import AlertModal from "./AlertModal";
 export default function ServiceDetail({
   onCancel,
   isExpand,
@@ -65,7 +65,7 @@ export default function ServiceDetail({
   const [additionalService, setAdditionalService] = useState([]);
   const [dogFeedingTime, setDogFeedingTime] = useState([]);
   const [cookies, setcookies] = useCookies(["mytoken", "user_id"]);
-  const [timeLeft,setTimeLeft]=useState(null);
+  const [timeLeft, setTimeLeft] = useState(null);
 
   useEffect(() => {
     moment.updateLocale("th");
@@ -104,45 +104,43 @@ export default function ServiceDetail({
 
       settimeStart(moment(ServiceInfo.service_start_time).format("lll"));
       settimeEnd(moment(ServiceInfo.service_end_time).format("lll"));
-      
-      if (ServiceInfo.service_reply_time!==null){
-      setServiceHostReplyTime(
-        moment(ServiceInfo.service_reply_time).format("lll")
-      );}
-      if(ServiceInfo.service_send_time!==null){
-      setServiceCustomerSendDogTime(
-        moment(ServiceInfo.service_send_time).format("lll")
-      );}
-      if(ServiceInfo.service_get_time!==null){
-      setServiceCustomerGetDogTime(
-        moment(ServiceInfo.service_get_time).format("lll")
-      );
-    }
-      
+
+      if (ServiceInfo.service_reply_time !== null) {
+        setServiceHostReplyTime(
+          moment(ServiceInfo.service_reply_time).format("lll")
+        );
+      }
+      if (ServiceInfo.service_send_time !== null) {
+        setServiceCustomerSendDogTime(
+          moment(ServiceInfo.service_send_time).format("lll")
+        );
+      }
+      if (ServiceInfo.service_get_time !== null) {
+        setServiceCustomerGetDogTime(
+          moment(ServiceInfo.service_get_time).format("lll")
+        );
+      }
+
       setdog(ServiceInfo.dog);
       setcustomer(ServiceInfo.customer);
       sethost(ServiceInfo.host);
 
-      let dayOne=moment(ServiceInfo.service_end_time)
-      let leftDays=dayOne.diff(moment(),'days')
-      let leftHours=dayOne.diff(moment(),'hours')
-      let leftMinutes=dayOne.diff(moment(),'minutes')
-      if(leftDays===0&&leftHours===0&&leftMinutes===0){
+      let dayOne = moment(ServiceInfo.service_end_time);
+      let leftDays = dayOne.diff(moment(), "days");
+      let leftHours = dayOne.diff(moment(), "hours");
+      let leftMinutes = dayOne.diff(moment(), "minutes");
+      if (leftDays === 0 && leftHours === 0 && leftMinutes === 0) {
         setTimeLeft("ภายใน 1 นาที");
-      }
-      else if(leftDays<0||leftHours<0||leftMinutes<0){
+      } else if (leftDays < 0 || leftHours < 0 || leftMinutes < 0) {
         setTimeLeft("สิ้นสุดแล้ว");
+      } else if (leftDays > 0) {
+        setTimeLeft(String(leftDays) + " วัน");
+      } else if (leftHours > 0) {
+        setTimeLeft(String(leftHours) + " ชั่วโมง");
+      } else {
+        setTimeLeft(String(leftMinutes) + " นาที");
       }
-      else if (leftDays>0){
-        setTimeLeft(String(leftDays)+" วัน");
-      }else if(leftHours>0){
-        setTimeLeft(String(leftHours)+" ชั่วโมง");
-      }else{
-        setTimeLeft(String(leftMinutes)+" นาที");
-      }
-      
     }
-
   }, [ServiceInfo]);
   const listDogFeedingTime = dogFeedingTime.map((dogFeeding) => {
     return <li key={dogFeeding.id}>{dogFeeding.time}</li>;
@@ -151,12 +149,18 @@ export default function ServiceDetail({
   const [modal, setModal] = useState(false);
 
   const toggle = () => setModal(!modal);
+  const [modalEnd, setModalEnd] = useState(false);
+  const toggleEnd = () => setModalEnd(!modalEnd);
 
   const [modalReview, setModalReview] = useState(false);
 
   const toggleReview = () => setModalReview(!modalReview);
 
- 
+  const [modalReturn, setModalReturn] = useState(false);
+  const toggleReturn = () => setModalReturn(!modalReturn);
+
+  const [modalReceive, setModalReceive] = useState(false);
+  const toggleReceive = () => setModalReceive(!modalReceive);
 
   return (
     <div>
@@ -187,7 +191,7 @@ export default function ServiceDetail({
                   <br />
                 </a>{" "}
                 ถึงวันที่: {timeEnd}{" "}
-              </p> 
+              </p>
               <p>การฝากจะสิ้นสุดในเวลา: {timeLeft} </p>
               <p>ค่าบริการทั้งหมด {totalPrice} บาท</p>
             </div>
@@ -228,18 +232,29 @@ export default function ServiceDetail({
 
                     <h3 className="DownsideText_2">รายละเอียดเพิ่มเติม</h3>
                     <div className="DownsideText_3">
-                      
-                        {serviceCreateTime !== null ? (<p>สร้างบริการ: {serviceCreateTime}</p>) :(<p>สร้างบริการ: - </p>)}
-                      
-                      
-                         {serviceHostReplyTime !== null ? (<p>ผู้รับฝากตอบรับ: {serviceHostReplyTime}</p>) :(<p>ผู้รับฝากตอบรับ: -</p>)}
-                      
-                     
-                         {serviceCustomerSendDogTime !== null ? (<p>ผู้ฝากฝากสุนัข: {serviceCustomerSendDogTime}</p>) :(<p>ผู้ฝากฝากสุนัข: - </p>)}
-                      
-                     
-                        {serviceCustomerGetDogTime !== null ? (<p>ผู้ฝากรับสุนัข: {serviceCustomerGetDogTime}</p>) :(<p>ผู้ฝากรับสุนัข: - </p>)}
-                      
+                      {serviceCreateTime !== null ? (
+                        <p>สร้างบริการ: {serviceCreateTime}</p>
+                      ) : (
+                        <p>สร้างบริการ: - </p>
+                      )}
+
+                      {serviceHostReplyTime !== null ? (
+                        <p>ผู้รับฝากตอบรับ: {serviceHostReplyTime}</p>
+                      ) : (
+                        <p>ผู้รับฝากตอบรับ: -</p>
+                      )}
+
+                      {serviceCustomerSendDogTime !== null ? (
+                        <p>ผู้ฝากฝากสุนัข: {serviceCustomerSendDogTime}</p>
+                      ) : (
+                        <p>ผู้ฝากฝากสุนัข: - </p>
+                      )}
+
+                      {serviceCustomerGetDogTime !== null ? (
+                        <p>ผู้ฝากรับสุนัข: {serviceCustomerGetDogTime}</p>
+                      ) : (
+                        <p>ผู้ฝากรับสุนัข: - </p>
+                      )}
                     </div>
                   </div>
                 </Col>
@@ -253,6 +268,11 @@ export default function ServiceDetail({
                 float: "right",
               }}
             >
+              <AlertModal
+                message={message}
+                alertModal={alertModal}
+                alertToggle={toggleAlert}
+              />
               {/* {showLatePayment?(<PaymentLateModal service_id={serviceID} customer={customer} dog={dog}/>):null}
               {showDepositPayment?(<PaymentDepositModal service_id={serviceID} customer={customer} dog={dog}/>):null} */}
               <PaymentLateModal
@@ -265,9 +285,44 @@ export default function ServiceDetail({
                 customer={customer}
                 dog={dog}
               />{" "}
-              <Button onClick={handleHostReceiveDog}>รับสุนัข</Button>{" "}
-              <AlertModal message={message} alertModal={alertModal} alertToggle={toggleAlert}/>
-              <Button onClick={handleHostReturnDog}>คืนสุนัข</Button>{" "}
+
+              <Button onClick={toggleReceive}>รับสุนัข</Button>{" "}
+              <Modal isOpen={modalReceive} toggle={toggleReceive}>
+                <ModalHeader>กรุณายืนยันที่จะรับสุนัข</ModalHeader>
+                <ModalFooter>
+                  <Button
+                    color="danger"
+                    onClick={() => {
+                      handleHostReceiveDog();
+                      toggleReceive();
+                    }}
+                  >
+                    ยืนยัน
+                  </Button>{" "}
+                  <Button color="secondary" onClick={toggleReceive}>
+                    ยกเลิก
+                  </Button>
+                </ModalFooter>
+              </Modal>
+
+              <Button onClick={toggleReturn}>คืนสุนัข</Button>{" "}
+              <Modal isOpen={modalReturn} toggle={toggleReturn}>
+                <ModalHeader>กรุณายืนยันที่จะคืนสุนัข</ModalHeader>
+                <ModalFooter>
+                  <Button
+                    color="danger"
+                    onClick={() => {
+                      handleHostReturnDog();
+                      toggleReturn();
+                    }}
+                  >
+                    ยืนยัน
+                  </Button>{" "}
+                  <Button color="secondary" onClick={toggleReturn}>
+                    ยกเลิก
+                  </Button>
+                </ModalFooter>
+              </Modal>
               <Button onClick={toggleReview}>ให้คะแนนผู้รับฝาก</Button>{" "}
               <Modal isOpen={modalReview} fade={false} toggle={toggleReview}>
                 <ModalHeader toggle={toggleReview}>
@@ -286,17 +341,37 @@ export default function ServiceDetail({
                   {reviewScore} คะแนน
                 </ModalBody>
                 <ModalFooter>
-                  <Button color="primary" onClick={()=>{handleReview();toggleReview();}}>
+                  <Button
+                    color="primary"
+                    onClick={() => {
+                      handleReview();
+                      toggleReview();
+                    }}
+                  >
                     ยืนยัน
                   </Button>{" "}
                 </ModalFooter>
               </Modal>
-              <Button
-                onClick={handleCustomerEnd_customerReceiveDog}
-                color="danger"
-              >
+              <Button onClick={toggleEnd} color="danger">
                 สิ้นสุดบริการ
               </Button>{" "}
+              <Modal isOpen={modalEnd} toggle={toggleEnd}>
+                <ModalHeader>กรุณายืนยันที่จะสิ้นสุดบริการ</ModalHeader>
+                <ModalFooter>
+                  <Button
+                    color="danger"
+                    onClick={() => {
+                      handleCustomerEnd_customerReceiveDog();
+                      toggleEnd();
+                    }}
+                  >
+                    ยืนยัน
+                  </Button>{" "}
+                  <Button color="secondary" onClick={toggleEnd}>
+                    ยกเลิก
+                  </Button>
+                </ModalFooter>
+              </Modal>
               {/* {showCancelService ? (
                 <Button
                   onClick={toggle}
@@ -306,13 +381,13 @@ export default function ServiceDetail({
                   <div className="Cancel_Button">ยกเลิกบริการ</div>
                 </Button>
               ) : null} */}
-                       <Button
-                  onClick={toggle}
-                  color="danger"
-                  style={{ marginLeft: "5px" }}
-                >
-                  <div className="Cancel_Button">ยกเลิกบริการ</div>
-                </Button>
+              <Button
+                onClick={toggle}
+                color="danger"
+                style={{ marginLeft: "5px" }}
+              >
+                <div className="Cancel_Button">ยกเลิกบริการ</div>
+              </Button>
               <Modal isOpen={modal} toggle={toggle}>
                 <ModalHeader>กรุณายืนยันที่จะยกเลิกบริการ</ModalHeader>
                 <ModalFooter>

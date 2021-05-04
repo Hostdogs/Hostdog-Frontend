@@ -56,12 +56,15 @@ export default function ProgressPage({ match }) {
     ServiceAPI.responseService(cookies.mytoken, servicePath, { receive_dog: true }).then((response) => {
       console.log("handleHostReceiveDog");
       console.log(response);
-      setMessage("รับสุนัข");
+      setMessage("คุณได้ทำการรับสุนัขแล้ว");
       toggleAlert();
 
     }).catch((error) => {
       console.log("error");
       console.log(error);
+      setMessage("ไม่สามารถรับสุนัขได้");
+      
+      toggleAlert();
     })
 
   }
@@ -70,10 +73,12 @@ export default function ProgressPage({ match }) {
     ServiceAPI.responseService(cookies.mytoken, servicePath, { return_dog: true }).then((response) => {
       console.log("handleHostReturnDog");
       console.log(response);
-      setMessage("คืนสุนัข");
+      setMessage("คุณได้ทำการคืนสุนัขแล้ว");
       toggleAlert();
     }).catch((error) => {
       console.log("error");
+      setMessage("ไม่สามารถคืนสุนัขได้");
+      toggleAlert();
       console.log(error);
     })
 
@@ -83,10 +88,12 @@ export default function ProgressPage({ match }) {
     ServiceAPI.responseService(cookies.mytoken, servicePath, { receive_dog: true }).then((response) => {
       console.log("handleCustomerEnd_customerReceiveDog");
       console.log(response);
-      setMessage("ทำการสิ้นสุดบริการ");
+      setMessage("คุณได้ทำการสิ้นสุดบริการ");
       toggleAlert();
     }).catch((error) => {
       console.log("error");
+      setMessage("ไม่สามารถทำการสิ้นสุดบริการ");
+      toggleAlert();
       console.log(error);
     })
 
@@ -96,20 +103,25 @@ export default function ProgressPage({ match }) {
 
     ServiceAPI.responseService(cookies.mytoken, servicePath, { review: parseInt(reviewScore) }).then((response) => {
       console.log("handleReview");
+      setMessage("ขอบคุณสำหรับคะแนนบริการ");
       console.log(response);
     }).catch((error) => {
       console.log("error");
+      setMessage("ไม่สามารถให้คะแนนบริการ");
       console.log(error);
+      toggleAlert();
     })
   }
   const handleCancel = () => {
     ServiceAPI.responseService(cookies.mytoken, servicePath, { cancel: true }).then((response) => {
       console.log("handleCancel");
       console.log(response);
-      setMessage("ทำการยกเลิกบริการ");
+      setMessage("คุณได้ทำการยกเลิกบริการ");
       toggleAlert();
     }).catch((error) => {
       console.log("error");
+      setMessage("ไม่สามารถยกเลิกบริการ");
+      toggleAlert();
       console.log(error);
     })
 
@@ -143,7 +155,7 @@ export default function ProgressPage({ match }) {
       setShowDepositPayment(false);
       setLabelIndex(2);
       setGifIndex(0);
-      setProgressValue(48);
+      setProgressValue(40);
       setColorIndex(0);
     } else if (ServiceInfo.main_status === "in_progress") {
       setServiceDetailStatusLabel("อยู่ในการบริการ")
@@ -187,6 +199,7 @@ export default function ProgressPage({ match }) {
   const [ServiceInfo, setServiceInfo] = useState(null);
   useEffect(() => {
     getService();
+
   }, []);
 
 

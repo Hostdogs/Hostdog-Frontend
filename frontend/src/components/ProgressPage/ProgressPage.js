@@ -40,6 +40,7 @@ export default function ProgressPage({ match }) {
   const [alertModal, setAlertModal] = useState(false);
   const toggleAlert = () => setAlertModal(!alertModal);
   const [message, setMessage] = useState("");
+  const [is_Host,setIs_Host]=useState(false);
  
 
   const toggleSideBar = () => {
@@ -55,6 +56,7 @@ export default function ProgressPage({ match }) {
     ServiceAPI.getService(cookies.mytoken, servicePath)
       .then((response) => {
         setServiceInfo(response.data);
+        setIs_Host(isHost);
         handleProgress(response.data,isHost);
         console.log(response.data);
         setisLoad(true);
@@ -251,7 +253,6 @@ export default function ProgressPage({ match }) {
           setHostReturnDog(false);
         }
         
-        
         setShowCustomerDepositPayment(false);
         setshowCustomerLatePayment(false);
         setShowCustomerCancelService(false);
@@ -259,7 +260,12 @@ export default function ProgressPage({ match }) {
         setShowCustomerReceiveDogToEnd(false);
   
       } else {
-        setShowCustomerReceiveDogToEnd(true);
+        if(ServiceInfo.is_customer_receive_dog){
+          setShowCustomerReceiveDogToEnd(false);
+        }else{
+          setShowCustomerReceiveDogToEnd(true);
+        }
+        
 
         setShowCustomerDepositPayment(false);
         setshowCustomerLatePayment(false);
@@ -438,6 +444,7 @@ export default function ProgressPage({ match }) {
                 showHostRecieveDog={showHostRecieveDog}
                 showHostReturnDog={showHostReturnDog}
                 checkHostOrCustomer={checkHostOrCustomer}
+                is_Host={is_Host}
              
               />
             </Container>

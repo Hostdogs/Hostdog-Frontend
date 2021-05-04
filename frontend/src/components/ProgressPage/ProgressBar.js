@@ -51,12 +51,6 @@ export default function ProgressBar({
         </Progress>
       </Container>
 
-      <Button
-        onClick={handleProgress}
-        style={{ position: "fixed", bottom: 0, right: 0,zIndex:"0" }}
-      >
-        Progress
-      </Button>
 
     </div>
   );

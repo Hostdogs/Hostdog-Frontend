@@ -51,6 +51,7 @@ export default function ServiceDetail({
   showHostRecieveDog,
   showHostReturnDog,
   checkHostOrCustomer,
+  is_Host,
  
 }) {
   const [serviceID, setServiceID] = useState(null);
@@ -263,9 +264,9 @@ export default function ServiceDetail({
                       )}
 
                       {serviceCustomerGetDogTime !== null ? (
-                        <p>ผู้ฝากรับสุนัข: {serviceCustomerGetDogTime}</p>
+                        <p>ผู้รับฝากรับสุนัข: {serviceCustomerGetDogTime}</p>
                       ) : (
-                        <p>ผู้ฝากรับสุนัข: - </p>
+                        <p>ผู้รับฝากคืนสุนัข: - </p>
                       )}
                     </div>
                   </div>
@@ -285,7 +286,7 @@ export default function ServiceDetail({
                 alertModal={alertModal}
                 alertToggle={toggleAlert}
               />
- 
+          {((!is_Host)&&(!showCustomerReceiveDogToEnd)&&(ServiceInfo.is_customer_receive_dog)&&(ServiceInfo.main_status==="in_progress"))?(<p style={{color:"red"}}>กำลังรอผู้รับฝากกดคืนสุนัขเพื่อสิ้นสุดบริการ</p>):null}
 
                {showCustomerLatePayment?(<PaymentLateModal
                 service_id={serviceID}

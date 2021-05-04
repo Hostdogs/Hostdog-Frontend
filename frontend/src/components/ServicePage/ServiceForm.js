@@ -32,8 +32,10 @@ import MealAPI from "../API/MealAPI";
 import DogAPI from "../API/DogAPI";
 import HostServiceAPI from "../API/HostServiceAPI";
 import ServiceAPI from "../API/ServiceAPI";
+import HostAvailableDateAPI from "../API/HostAvailableDateAPI";
 import { useCookies } from "react-cookie";
-import AlertModal from "../ProgressPage/AlertModal"
+import AlertModal from "../ProgressPage/AlertModal";
+import moment from "moment-timezone";
 export default function ServiceForm({ host, customerAccount, hostService }) {
   const [cookies, setcookies] = useCookies(["mytoken", "user_id"]);
   const [modal, setModal] = useState(false);
@@ -60,6 +62,33 @@ export default function ServiceForm({ host, customerAccount, hostService }) {
   const [isDeliver, setisDeliver] = useState(false);
   const [isBath, setisBath] = useState(false);
   const [isGet, setisGet] = useState(false);
+
+  const [availableDates, setAvailableDates] = useState([]);
+  const [startDate, setStartDate] = useState(
+    moment(new Date()).format("YYYY-MM-DDTHH:mm")
+  );
+  let twoMonthsLater = new Date();
+  twoMonthsLater.setMonth(twoMonthsLater.getMonth() + 2);
+  const [endDate, setEndDate] = useState(
+    moment(twoMonthsLater).format("YYYY-MM-DDT23:59")
+  );
+
+  useEffect(() => {
+    if (host) {
+      HostAvailableDateAPI.GetHostAvailableDate(
+        cookies["mytoken"],
+        host.account
+      ).then((resp) => {
+        const sortDate = resp.data.sort(function (a, b) {
+          return a.date.localeCompare(b.date);
+        });
+        setAvailableDates(sortDate);
+        setStartDate(sortDate[0].date + "T00:00");
+        setEndDate(sortDate[sortDate.length - 1].date + "T00:00");
+        //console.log(sortDate[0].date + "T:00:00");
+      });
+    }
+  }, [host]);
 
   useEffect(() => {
     if (host) {
@@ -209,8 +238,6 @@ export default function ServiceForm({ host, customerAccount, hostService }) {
   });
 
   function onServiceSubmit(event) {
-
-
     event.preventDefault();
     console.log("serviceInfo");
     console.log(serviceInfo);
@@ -226,11 +253,11 @@ export default function ServiceForm({ host, customerAccount, hostService }) {
   }
   const [modalSubmit, setModalSubmit] = useState(false);
 
-const toggleSubmit = () => setModalSubmit(!modalSubmit);
+  const toggleSubmit = () => setModalSubmit(!modalSubmit);
 
-const [modalError, setModalError] = useState(false);
+  const [modalError, setModalError] = useState(false);
 
-const toggleError = () => setModalError(!modalError);
+  const toggleError = () => setModalError(!modalError);
 
   return (
     <div>
@@ -286,15 +313,18 @@ const toggleError = () => setModalError(!modalError);
                         <Input
                           type="datetime-local"
                           name="service_start_time"
+                          min={startDate}
+                          max={endDate}
                           onChange={onServiceInfoChange}
                         />
                       </Col>
-
                       <Col xs="12" sm="12" md="12">
                         ถึง:
                         <Input
                           type="datetime-local"
                           name="service_end_time"
+                          min={serviceInfo.service_start_time}
+                          max={endDate}
                           onChange={onServiceInfoChange}
                         />
                       </Col>
@@ -362,6 +392,7 @@ const toggleError = () => setModalError(!modalError);
                         name="is_dog_walk"
                         value="true"
                         label="ต้องการ"
+                        checked={serviceInfo.is_dog_walk}
                         onChange={onServiceInfoChange}
                       />
                     </Col>
@@ -372,6 +403,7 @@ const toggleError = () => setModalError(!modalError);
                         name="is_dog_walk"
                         value="false"
                         label="ไม่ต้องการ"
+                        checked={!serviceInfo.is_dog_walk}
                         onChange={onServiceInfoChange}
                       />
                     </Col>
@@ -391,6 +423,7 @@ const toggleError = () => setModalError(!modalError);
                         name="is_get_dog"
                         value="true"
                         label="ต้องการ"
+                        checked={serviceInfo.is_get_dog}
                         onChange={onServiceInfoChange}
                       />
                     </Col>
@@ -401,6 +434,7 @@ const toggleError = () => setModalError(!modalError);
                         name="is_get_dog"
                         value="false"
                         label="ไม่ต้องการ"
+                        checked={!serviceInfo.is_get_dog}
                         onChange={onServiceInfoChange}
                       />
                     </Col>
@@ -420,6 +454,7 @@ const toggleError = () => setModalError(!modalError);
                         name="is_delivery_dog"
                         value="true"
                         label="ต้องการ"
+                        checked={serviceInfo.is_delivery_dog}
                         onChange={onServiceInfoChange}
                       />
                     </Col>
@@ -430,6 +465,7 @@ const toggleError = () => setModalError(!modalError);
                         name="is_delivery_dog"
                         value="false"
                         label="ไม่ต้องการ"
+                        checked={!serviceInfo.is_delivery_dog}
                         onChange={onServiceInfoChange}
                       />
                     </Col>
@@ -449,6 +485,7 @@ const toggleError = () => setModalError(!modalError);
                         name="is_bath_dog"
                         value="true"
                         label="ต้องการ"
+                        checked={serviceInfo.is_bath_dog}
                         onChange={onServiceInfoChange}
                       />
                     </Col>
@@ -459,6 +496,7 @@ const toggleError = () => setModalError(!modalError);
                         name="is_bath_dog"
                         value="false"
                         label="ไม่ต้องการ"
+                        checked={!serviceInfo.is_bath_dog}
                         onChange={onServiceInfoChange}
                       />
                     </Col>
@@ -492,10 +530,14 @@ const toggleError = () => setModalError(!modalError);
           />
 
           <Row>
-          <AlertModal message={"ไม่สามารถสร้างบริการได้ ลองใหม่อีกครั้ง" } alertModal={modalError} alertToggle={toggleError}/>
+            <AlertModal
+              message={"ไม่สามารถสร้างบริการได้ ลองใหม่อีกครั้ง"}
+              alertModal={modalError}
+              alertToggle={toggleError}
+            />
             <Col align="right">
-              <Button onClick={toggleSubmit }>ยืนยัน</Button>
-              <Modal isOpen={modalSubmit} toggle={toggleSubmit }>
+              <Button onClick={toggleSubmit}>ยืนยัน</Button>
+              <Modal isOpen={modalSubmit} toggle={toggleSubmit}>
                 <ModalHeader>
                   คุณต้องการยืนยันการสร้างบริการใช่หรือไม่
                 </ModalHeader>
@@ -504,7 +546,7 @@ const toggleError = () => setModalError(!modalError);
                     color="danger"
                     onClick={(e) => {
                       onServiceSubmit(e);
-                      toggleSubmit ();
+                      toggleSubmit();
                     }}
                   >
                     ยืนยัน
@@ -521,4 +563,3 @@ const toggleError = () => setModalError(!modalError);
     </div>
   );
 }
-

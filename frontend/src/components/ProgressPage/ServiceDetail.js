@@ -217,8 +217,6 @@ export default function ServiceDetail({
                     <p>เวลาในการให้อาหาร:</p>
                     <ul>{listDogFeedingTime}</ul>
                   </div>
-                </Col>
-                <Col>
                   <div>
                     {additionalService[0] ||
                     additionalService[1] ||

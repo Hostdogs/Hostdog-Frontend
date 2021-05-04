@@ -26,6 +26,7 @@ import {
   faMobileAlt,
   faMapMarkerAlt,
   faSearch,
+  faCreditCard,
 } from "@fortawesome/free-solid-svg-icons";
 import { Autocomplete, LoadScript } from "@react-google-maps/api";
 import SignUpMap from "./SignUpMap";
@@ -53,7 +54,7 @@ export default function InformationForm({ selectState }) {
     mobile: "",
     // address: "",
     gender: "",
-    account_number: "111111111111",
+    account_number: "",
   });
   const [cookies, setCookie, removeCookie] = useCookies(["mytoken", "user_id"]);
   // console.log(Information.is_host)
@@ -552,6 +553,24 @@ export default function InformationForm({ selectState }) {
                 onChange={(e) => onChangeInformation(e, inputnumberonly)}
                 value={Information.mobile}
                 maxLength="10"
+              />
+            </InputGroup>
+          </FormGroup>
+
+          <FormGroup>
+            <InputGroup>
+              <InputGroupAddon addonType="prepend">
+                <InputGroupText style={{ minWidth: "45px" }}>
+                  <FontAwesomeIcon icon={faCreditCard} />
+                </InputGroupText>
+              </InputGroupAddon>
+              <Input
+                type="text"
+                name="account_number"
+                placeholder="หมายเลขบัญชี"
+                onChange={(e) => onChangeInformation(e, inputnumberonly)}
+                value={Information.account_number}
+                maxLength="15"
               />
             </InputGroup>
           </FormGroup>

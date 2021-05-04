@@ -92,7 +92,7 @@ export default function HostList({ hostData, setHostData, isLoad }) {
 
       <Container className="host-container" fluid="xl"  >
         <Dropdown isOpen={dropdownOpen} toggle={toggle} style={{ marginTop: "10px", marginBottom: "10px" }}>
-          <DropdownToggle caret><FontAwesomeIcon icon={faFilter} /> {sortingList[selectedSort]}</DropdownToggle>
+          <DropdownToggle caret style={{backgroundColor:"#f9e07f", border:"3px solid #264d59", color:"#264d59"}}><FontAwesomeIcon icon={faFilter} /> {sortingList[selectedSort]}</DropdownToggle>
           <DropdownMenu>
             <DropdownItem onClick={() => setselectedSort(0)}>{sortingList[0]}</DropdownItem>
             <DropdownItem onClick={() => setselectedSort(1)}>{sortingList[1]}</DropdownItem>
@@ -128,7 +128,7 @@ export default function HostList({ hostData, setHostData, isLoad }) {
 
         <Button
           onClick={scrollToTop}
-          style={{ position: "fixed", bottom: 0, right: 0 }}
+          style={{ position: "fixed", bottom: 0, right: 0, backgroundColor:"#f9e07f", border:"none" }}
         >
           ขึ้นข้างบน
           </Button>

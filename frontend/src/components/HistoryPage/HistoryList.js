@@ -7,6 +7,7 @@ import FilterBox from "./FilterBox";
 import "./HistoryPage.css";
 import HistoryAPI from "./HistoryAPI";
 import moment from "moment";
+import Loading from "../Handle/Loading";
 
 
 
@@ -101,7 +102,8 @@ export default function HistoryList({ serviceList }) {
                 <History key={hd.id} history={hd} />
               ))}
           </div>
-        ) : (null)}
+        ) : (<Loading/>)}
+        
 
       </Container>
       {/* </InfiniteScroll> */}

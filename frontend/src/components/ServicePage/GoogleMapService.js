@@ -10,7 +10,7 @@ const loadScript = {
   googleAPIKey: "AIzaSyBWV06MM0QFyVnkuA1nHJhQ4altZjovYNs",
   language: "th",
 }
-export default function GoogleMapService({ host }) {
+export default function GoogleMapService({ host, customerImg, hostImg }) {
   const [customerGeocode, setCustomerGeocode] = useState({})
   const [hostGeocode, setHostGeocode] = useState({})
   const getUserLocation = () => {
@@ -42,10 +42,12 @@ export default function GoogleMapService({ host }) {
         lat: parseFloat(host.latitude),
         lng: parseFloat(host.longitude),
       });
+    
     }
 
   }, [host])
-
+  console.log(customerImg)
+  console.log(hostImg)
   return (
     <div >
       <LoadScript
@@ -57,8 +59,21 @@ export default function GoogleMapService({ host }) {
           center={customerGeocode}
           zoom={12}
         >
-          <Marker position={hostGeocode} draggable={false} />
-          <Marker position={customerGeocode} draggable={false} />
+          <Marker position={hostGeocode} draggable={false} icon={{
+            url:`${ hostImg }`,// url
+            scaledSize: {width: 30, height: 30},
+            
+            // scaledSize: new google.maps.Size(50, 50), // scaled size
+            // origin: new google.maps.Point(0, 0), // origin
+            // anchor: new google.maps.Point(0, 0) // anchor
+          }} />
+          <Marker position={customerGeocode} draggable={false} icon={{
+            url:`${ customerImg }`,// url
+            scaledSize: {width: 30, height: 30} 
+            // scaledSize: new google.maps.Size(50, 50), // scaled size
+            // origin: new google.maps.Point(0, 0), // origin
+            // anchor: new google.maps.Point(0, 0) // anchor
+          }} />
 
         </GoogleMap>
       </LoadScript>

@@ -15,7 +15,7 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import {  useHistory } from "react-router-dom";
-const ProfileCard = ({ pageCollapse, Account, setAccount, userIsHost }) => {
+const ProfileCard = ({ pageCollapse, Account, setAccount, userIsHost,isOwned }) => {
   
   let history = useHistory()
   const [img, setimg] = useState(null);
@@ -57,7 +57,7 @@ const ProfileCard = ({ pageCollapse, Account, setAccount, userIsHost }) => {
           width: "100%",
         }}
       >
-        {userIsHost ? (null) : (
+        {userIsHost||role==="ผู้ฝากสุนัข" ? (null) : (
           <div style={{ position: "absolute", right: "5px", top: "25px" }}>
             <Button onClick={onClickService} >ใช้บริการ <FontAwesomeIcon icon={faArrowRight} /></Button>
           </div>

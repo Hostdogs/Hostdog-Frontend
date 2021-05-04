@@ -46,7 +46,7 @@ export default function ServicePage({ match }) {
       <div className="content" style={{ paddingTop: "80px" }}>
         <Row>
           <Col xs="12" sm="12" md="12" lg="3">
-            <ServiceHost host={host}/>
+            <ServiceHost host={host} customerAccount={customerAccount}/>
           </Col>
           <Col xs="12" sm="12" md="12" lg="9">
             <ServiceForm host={host} customerAccount={customerAccount} hostService={hostService}/>

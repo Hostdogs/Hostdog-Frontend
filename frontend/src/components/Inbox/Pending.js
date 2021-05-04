@@ -16,6 +16,7 @@ import "./Pending.css";
 import { useCookies } from "react-cookie";
 import ServiceAPI from "../API/ServiceAPI";
 import moment from "moment";
+import Loading from "../Handle/Loading";
 export default function Pending({ service, pendingData, setpendingData }) {
   const [customerName, setcustomerName] = useState();
   // const [hostName, sethostName] = useState()
@@ -112,13 +113,15 @@ export default function Pending({ service, pendingData, setpendingData }) {
   return (
     <div className="PendingBox">
       <Container>
+        {/* {isLoading ? <Spinner :} */}
+
         <Card className="PendingBox2">
-          <CardHeader style={{backgroundColor:"#264d59", color:"white", paddingTop:"18px"}}>
+          <CardHeader style={{ backgroundColor: "#264d59", color: "white", paddingTop: "18px" }}>
             <h3 className="heading3">
               คำขอบริการ: <small>{customerName}</small>{" "}
             </h3>
           </CardHeader>
-          <CardBody style={{backgroundColor:"#f2f9f8"}}>
+          <CardBody style={{ backgroundColor: "#f2f9f8" }}>
             <Label>
               <h5>
                 ระยะเวลาบริการ {regDate} ถึง {endDate}
@@ -143,7 +146,7 @@ export default function Pending({ service, pendingData, setpendingData }) {
                 />
               </Col>
               <Col>
-                <div style={{backgroundColor:"#f9e07f", padding:"10px 10px", borderTopLeftRadius:"10px", borderBottomRightRadius:"50px"}}>
+                <div style={{ backgroundColor: "#f9e07f", padding: "10px 10px", borderTopLeftRadius: "10px", borderBottomRightRadius: "50px" }}>
                   <List type="unstyled">
                     <h4>รายละเอียดสุนัข</h4>
                     <ul>
@@ -173,61 +176,61 @@ export default function Pending({ service, pendingData, setpendingData }) {
                     </ul>
                   </List>
                 </div>
-               <span className="reponsive_br"><br/><br/></span>
+                <span className="reponsive_br"><br /><br /></span>
               </Col>
-              
+
               <Col>
-              <div style={{backgroundColor:"#f9e07f", padding:"10px 10px", borderTopLeftRadius:"10px", borderBottomRightRadius:"50px"}}>
-                <List type="unstyled">
-                  <li>
-                    <h4>รายละเอียดบริการ</h4>
-                  </li>
-                  <li style={{ marginLeft: "10px" }}>
-                    <h5>บริการทั่วไป</h5>
-                  </li>
-                  <ul>
-                    <li>
-                      เริ่มบริการ :{" "}
-                      {moment
-                        .tz(service.service_start_time, "Asia/Bangkok")
-                        .format("DD MMM YYYY, เวลา : HH:mm")}
-                    </li>
-
-                    <li>
-                      สิ้นสุดบริการ :{" "}
-                      {moment
-                        .tz(service.service_end_time, "Asia/Bangkok")
-                        .format("DD MMM YYYY, เวลา : HH:mm")}
-                    </li>
-
-                    <li>ประเภทอาหาร : {service.service_meal_type.meal_type}</li>
-
-                    <li>
-                      ปริมาณอาหาร : {service.service_meal_weight} กรัม/มื้อ
-                    </li>
-                  </ul>
-                </List>
-                {isNotAllEtc ? null : (
+                <div style={{ backgroundColor: "#f9e07f", padding: "10px 10px", borderTopLeftRadius: "10px", borderBottomRightRadius: "50px" }}>
                   <List type="unstyled">
+                    <li>
+                      <h4>รายละเอียดบริการ</h4>
+                    </li>
                     <li style={{ marginLeft: "10px" }}>
-                      <h5>บริการเพิ่มเติม</h5>
+                      <h5>บริการทั่วไป</h5>
                     </li>
                     <ul>
-                      {service.is_dog_walk ? <li>พาสุนัขไปเดินเล่น</li> : null}
-                      {service.is_bath_dog ? <li>อาบน้ำสุนัข</li> : null}
-                      {service.is_get_dog ? (
-                        <li>ให้ผู้รับฝากไปรับสุนัข</li>
-                      ) : null}
-                      {service.is_delivery_dog ? (
-                        <li>ให้ผู้รับฝากไปส่งสุนัข</li>
-                      ) : null}
+                      <li>
+                        เริ่มบริการ :{" "}
+                        {moment
+                          .tz(service.service_start_time, "Asia/Bangkok")
+                          .format("DD MMM YYYY, เวลา : HH:mm")}
+                      </li>
+
+                      <li>
+                        สิ้นสุดบริการ :{" "}
+                        {moment
+                          .tz(service.service_end_time, "Asia/Bangkok")
+                          .format("DD MMM YYYY, เวลา : HH:mm")}
+                      </li>
+
+                      <li>ประเภทอาหาร : {service.service_meal_type.meal_type}</li>
+
+                      <li>
+                        ปริมาณอาหาร : {service.service_meal_weight} กรัม/มื้อ
+                    </li>
                     </ul>
                   </List>
-                )}
+                  {isNotAllEtc ? null : (
+                    <List type="unstyled">
+                      <li style={{ marginLeft: "10px" }}>
+                        <h5>บริการเพิ่มเติม</h5>
+                      </li>
+                      <ul>
+                        {service.is_dog_walk ? <li>พาสุนัขไปเดินเล่น</li> : null}
+                        {service.is_bath_dog ? <li>อาบน้ำสุนัข</li> : null}
+                        {service.is_get_dog ? (
+                          <li>ให้ผู้รับฝากไปรับสุนัข</li>
+                        ) : null}
+                        {service.is_delivery_dog ? (
+                          <li>ให้ผู้รับฝากไปส่งสุนัข</li>
+                        ) : null}
+                      </ul>
+                    </List>
+                  )}
                 </div>
               </Col>
             </Row>
-            <span className="reponsive_br"><br/></span>
+            <span className="reponsive_br"><br /></span>
             <Label>
               <h4>รายละเอียดเพิ่มเติม</h4>
             </Label>
@@ -257,6 +260,7 @@ export default function Pending({ service, pendingData, setpendingData }) {
               <div>บริการที่เพิ่มเติม:</div>
             </div> */}
             <br />
+
             <Button
               style={{
                 border: "none",
@@ -285,7 +289,13 @@ export default function Pending({ service, pendingData, setpendingData }) {
           </CardBody>
 
           {/* </Container> */}
-          {isLoading ? <div className="loading"></div> : null}
+
+
+          {isLoading ? <Spinner style={{
+            position: "absolute",
+            bottom: "10px",
+            right: "160px",
+          }} color="warning" /> : null}
         </Card>
       </Container>
       <br />

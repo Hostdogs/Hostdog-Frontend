@@ -36,7 +36,9 @@ import HostAvailableDateAPI from "../API/HostAvailableDateAPI";
 import { useCookies } from "react-cookie";
 import AlertModal from "../ProgressPage/AlertModal";
 import moment from "moment-timezone";
+import { useHistory } from "react-router-dom"
 export default function ServiceForm({ host, customerAccount, hostService }) {
+  let history = useHistory()
   const [cookies, setcookies] = useCookies(["mytoken", "user_id"]);
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
@@ -55,6 +57,7 @@ export default function ServiceForm({ host, customerAccount, hostService }) {
   const [mealPrice, setMealPrice] = useState(0);
 
   const [customerDogs, setCustomerDogs] = useState([]);
+  const [customerImg, setcustomerImg] = useState()
   const [listDogFeedingTime, setListDogFeedingTime] = useState([]);
 
   const [dogName, setDogName] = useState(null);
@@ -105,6 +108,7 @@ export default function ServiceForm({ host, customerAccount, hostService }) {
     if (customerAccount) {
       setCustomerDogs(customerAccount.customer.dog_customer);
       setServiceInfo({ ...serviceInfo, customer: customerAccount.id });
+
     }
   }, [host, customerAccount, hostService]);
 
@@ -245,6 +249,8 @@ export default function ServiceForm({ host, customerAccount, hostService }) {
     ServiceAPI.createService(cookies.mytoken, serviceInfo)
       .then((response) => {
         console.log(response);
+        history.push("/history")
+        history.go(0)
       })
       .catch((error) => {
         console.log(error.response);

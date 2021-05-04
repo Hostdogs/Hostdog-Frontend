@@ -15,6 +15,7 @@ import NameSetting from "./Setting/NameSetting";
 import PasswordSetting from "./Setting/PasswordSetting";
 import MobileSetting from "./Setting/MobileSetting";
 import ProfileimgPathSetting from "./Setting/ProfileImgSetting";
+import AddressSetting from "./Setting/AddressSetting";
 export default function SettingTab({ Account, setAccount }) {
   const [Selected, setSelected] = useState(0);
 
@@ -59,6 +60,11 @@ export default function SettingTab({ Account, setAccount }) {
             Account={Account}
           />
           <MobileSetting
+            setSelected={setSelected}
+            Selected={Selected}
+            Account={Account}
+          />
+          <AddressSetting
             setSelected={setSelected}
             Selected={Selected}
             Account={Account}

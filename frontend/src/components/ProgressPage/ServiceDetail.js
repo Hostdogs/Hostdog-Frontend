@@ -158,7 +158,8 @@ export default function ServiceDetail({
   const listDogFeedingTime = dogFeedingTime.sort((a,b)=>{
     return a.time.localeCompare(b.time);
   }).map((dogFeeding) => {
-    return <li key={dogFeeding.id}>{dogFeeding.time} น.</li>;
+
+    return <li key={dogFeeding.id}>{dogFeeding.time.slice(0,5)} น.</li>;
   });
 
   const [modal, setModal] = useState(false);
@@ -201,11 +202,11 @@ export default function ServiceDetail({
               </p>
               <p>สุนัข: {dog.dog_name}</p>
               <p>
-                ฝากวันที่: {timeStart}{" "}
+                ฝากวันที่: {timeStart}{" น."}
                 <a className="mobile_br">
                   <br />
                 </a>{" "}
-                ถึงวันที่: {timeEnd}{" "}
+                ถึงวันที่: {timeEnd}{" น."}
               </p>
               <p>การฝากจะสิ้นสุดในเวลาประมาณ: {timeLeft} </p>
               <p>ค่าบริการทั้งหมด {totalPrice} บาท</p>
@@ -246,25 +247,25 @@ export default function ServiceDetail({
                     <h3 className="DownsideText_2">รายละเอียดเพิ่มเติม</h3>
                     <div className="DownsideText_3">
                       {serviceCreateTime !== null ? (
-                        <p>สร้างบริการ: {serviceCreateTime}</p>
+                        <p>สร้างบริการ: {serviceCreateTime}{" น."}</p>
                       ) : (
                         <p>สร้างบริการ: - </p>
                       )}
 
                       {serviceHostReplyTime !== null ? (
-                        <p>ผู้รับฝากตอบรับ: {serviceHostReplyTime}</p>
+                        <p>ผู้รับฝากตอบรับ: {serviceHostReplyTime}{" น."}</p>
                       ) : (
                         <p>ผู้รับฝากตอบรับ: -</p>
                       )}
 
                       {serviceCustomerSendDogTime !== null ? (
-                        <p>ผู้รับฝากรับสุนัข: {serviceCustomerSendDogTime}</p>
+                        <p>ผู้รับฝากรับสุนัข: {serviceCustomerSendDogTime}{" น."}</p>
                       ) : (
                         <p>ผู้รับฝากรับสุนัข: - </p>
                       )}
 
                       {serviceCustomerGetDogTime !== null ? (
-                        <p>ผู้รับฝากคืนสุนัข: {serviceCustomerGetDogTime}</p>
+                        <p>ผู้รับฝากคืนสุนัข: {serviceCustomerGetDogTime}{" น."}</p>
                       ) : (
                         <p>ผู้รับฝากคืนสุนัข: - </p>
                       )}

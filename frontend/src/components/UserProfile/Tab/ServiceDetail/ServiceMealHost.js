@@ -47,7 +47,6 @@ export default function ServiceMealHost(props) {
             </Col>
           </Row>
         </td>
-        <td></td>
       </tr>
     );
   });
@@ -77,9 +76,6 @@ export default function ServiceMealHost(props) {
                 <th style={{ fontWeight: "unset" }}>#</th>
                 <th style={{ fontWeight: "unset" }}>ประเภทอาหารสุนัข</th>
                 <th style={{ fontWeight: "unset" }}>ราคาต่อ100กรัม</th>
-                <th style={{ fontWeight: "unset", textAlign: "center" }}>
-                  แก้ไข
-                </th>
               </tr>
             </thead>
 

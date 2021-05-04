@@ -330,7 +330,7 @@ export default function ProgressPage({ match }) {
         setShowHostRecieveDog(false);
         setHostReturnDog(false);
       } else {
-        setShowCustomerReview(true);
+        setShowCustomerReview(false);
         setShowCustomerDepositPayment(false);
         setshowCustomerLatePayment(false);
         setShowCustomerCancelService(false);
@@ -344,6 +344,7 @@ export default function ProgressPage({ match }) {
       setLabelIndex(6);
       setGifIndex(6);
       setColorIndex(1);
+      setProgressValue(100);
     }
   };
   const checkHostOrCustomer = () => {
@@ -358,13 +359,16 @@ export default function ProgressPage({ match }) {
         console.log(error);
       });
   };
+  const printSomeThing=()=>{
+    console.log("asdfasdfadf")
+  }
 
   const [ServiceInfo, setServiceInfo] = useState(null);
   useEffect(() => {
     checkHostOrCustomer();
-    setInterval(()=>checkHostOrCustomer,6000);
+    setInterval(()=>checkHostOrCustomer(),60000);
   }, []);
-
+  
   /////////////expand info//////////////////
   const [isExpand, setisExpand] = useState(false);
   const [offset, setOffset] = useState(0);

@@ -107,65 +107,65 @@ export default function ProgressPage({ match }) {
 
   const handleProgress = (ServiceInfo) => {
 
-    if (ServiceInfo.main_status === "pending") {
-      setServiceDetailStatusLabel("กำลังรอคำตอบรับจากผู้รับฝาก");
-      setShowDepositPayment(false);
-      setLabelIndex(0);
-      setColorIndex(0);
-      setGifIndex(1);
-      setProgressValue(16.67);
-      console.log("pending");
-    } else if (ServiceInfo.main_status === "payment") {
-      setServiceDetailStatusLabel("รอการชำระเงิน");
-      setShowDepositPayment(true);
-      setLabelIndex(1);
-      setColorIndex(0);
-      setProgressValue(32);
-      setGifIndex(2);
-      console.log("payment");
-    } else if (ServiceInfo.main_status === "wait_for_progress") {
-      setServiceDetailStatusLabel("รอวันเริ่มบริการ");
-      setShowDepositPayment(false);
-      setLabelIndex(2);
-      setGifIndex(0);
-      setProgressValue(48);
-      setColorIndex(0);
-    } else if (ServiceInfo.main_status === "in_progress") {
-      setServiceDetailStatusLabel("อยู่ในการบริการ")
-      setShowDepositPayment(false);
-      setLabelIndex(3);
-      setColorIndex(0);
-      setProgressValue(64);
-      setGifIndex(3);
-      console.log("in_progress");
-    } else if (ServiceInfo.main_status === "end") {
-      setServiceDetailStatusLabel("สิ้นสุดบริการ")
-      setShowDepositPayment(false);
-      setLabelIndex(4);
-      setColorIndex(0);
-      setProgressValue(100);
-      setShowCancelService(false);
-      setGifIndex(5);
-      console.log("end");
-    } else if (ServiceInfo.main_status === "late") {
-      setServiceDetailStatusLabel("เลยเวลาบริการแล้ว")
-      setShowDepositPayment(false);
-      console.log("late");
-      setColorIndex(1);
-      setProgressValue(100);
-      setShowCancelService(false);
-      setShowLateService(true);
-      setGifIndex(6);
-      setLabelIndex(7);
-    } else if (ServiceInfo.main_status === "cancelled") {
-      setShowDepositPayment(false);
-      setServiceDetailStatusLabel("ยกเลิกบริการ")
-      console.log("cancelled");
-      setLabelIndex(6);
-      setGifIndex(6);
-      setShowCancelService(false);
-      setColorIndex(1);
-    }
+       if (ServiceInfo.main_status==="pending"){
+        setServiceDetailStatusLabel("การส่งคำขอ");
+        setShowDepositPayment(false);
+        setLabelIndex(0);
+        setColorIndex(0);
+        setGifIndex(1);
+        setProgressValue(16.67);
+        console.log("pending");
+      }else if(ServiceInfo.main_status==="payment"){
+        setServiceDetailStatusLabel("การชำระเงิน");
+        setShowDepositPayment(true);
+        setLabelIndex(1);
+        setColorIndex(0);
+        setProgressValue(32);
+        setGifIndex(2);
+        console.log("payment");
+      }else if(ServiceInfo.main_status==="wait_for_progress"){
+        setServiceDetailStatusLabel("การรอบริการ");
+        setShowDepositPayment(false);
+        setLabelIndex(2);
+        setGifIndex(0);
+        setProgressValue(48);
+        setColorIndex(0);
+      }else if(ServiceInfo.main_status==="in_progress"){
+        setServiceDetailStatusLabel("ในการบริการ")
+        setShowDepositPayment(false);
+        setLabelIndex(3);
+        setColorIndex(0);
+        setProgressValue(64);
+        setGifIndex(3);
+        console.log("in_progress");
+      }else if(ServiceInfo.main_status==="end"){
+        setServiceDetailStatusLabel("สิ้นสุดบริการ")
+        setShowDepositPayment(false);
+        setLabelIndex(4);
+        setColorIndex(0);
+        setProgressValue(100);
+        setShowCancelService(false);
+        setGifIndex(5);
+        console.log("end");
+      }else if(ServiceInfo.main_status==="late"){
+        setServiceDetailStatusLabel("เลยเวลาบริการแล้ว")
+        setShowDepositPayment(false);
+        console.log("late");
+        setColorIndex(1);
+        setProgressValue(100);
+        setShowCancelService(false);
+        setShowLateService(true);
+        setGifIndex(6);
+        setLabelIndex(7);
+      }else if(ServiceInfo.main_status==="cancelled"){
+        setShowDepositPayment(false);
+        setServiceDetailStatusLabel("ยกเลิกบริการ")
+        console.log("cancelled");
+        setLabelIndex(6);
+        setGifIndex(6);
+        setShowCancelService(false);
+        setColorIndex(1);
+      }
   };
 
 

@@ -20,9 +20,7 @@ import {
   UncontrolledCarousel,
 } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faTimes
-} from "@fortawesome/free-solid-svg-icons";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import HostImgAPI from "../../../API/HostImgAPI";
 import { useCookies } from "react-cookie";
 import "./ManageTab.css";
@@ -143,9 +141,14 @@ export default function ImageBox() {
       >
         <div className="HostPicture">
           <img className="resize-imgHost" src={pic.picture} />
-          <Button onClick={() => onDelete(pic)}><FontAwesomeIcon icon={faTimes} className="mr-2" style={{position:"absolute", top:"18px",right:"10px"}}/></Button>
+          <Button onClick={() => onDelete(pic)}>
+            <FontAwesomeIcon
+              icon={faTimes}
+              className="mr-2"
+              style={{ position: "absolute", top: "18px", right: "10px" }}
+            />
+          </Button>
         </div>
-        
       </CarouselItem>
     );
   });
@@ -168,7 +171,7 @@ export default function ImageBox() {
               width: "50%",
               margin: "0",
               backgroundColor: "#264d59",
-              borderWidth:"1.5px"
+              borderWidth: "1.5px",
             }}
           />
         </FormGroup>

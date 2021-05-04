@@ -358,13 +358,16 @@ export default function ProgressPage({ match }) {
         console.log(error);
       });
   };
+  const printSomeThing=()=>{
+    console.log("asdfasdfadf")
+  }
 
   const [ServiceInfo, setServiceInfo] = useState(null);
   useEffect(() => {
     checkHostOrCustomer();
-    setInterval(()=>checkHostOrCustomer,6000);
+    setInterval(()=>checkHostOrCustomer(),60000);
   }, []);
-
+  
   /////////////expand info//////////////////
   const [isExpand, setisExpand] = useState(false);
   const [offset, setOffset] = useState(0);

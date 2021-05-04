@@ -60,8 +60,8 @@ export default function InformationForm({ selectState }) {
   // console.log(Information.is_host)
   const inputnumberonly = /^[0-9\b]+$/;
   const inputusername = /^[A-Za-z0-9]+$/;
-  const inputtfirstname = /^[ก-ฮะ-ไ่้๊๋็์ัํ]+$/;
-  const inputlastname = /^[ก-ฮะ-ไ่้๊๋็์ัํ ]+$/;
+  const inputtfirstname = /^[ก-ฮะ-ไ่้๊๋็์ัํ์]+$/;
+  const inputlastname = /^[ก-ฮะ-ไ่้๊๋็์ัํ์ ]+$/;
   const inputpassword = /^[A-Za-z0-9]/;
   const inputemail = /^[A-Za-z@0-9.!#$%&'*+-/=?^_`{|}~;]+$/;
 
@@ -200,7 +200,7 @@ export default function InformationForm({ selectState }) {
       setCookie("mytoken", resp.data.token);
       setCookie("user_id", resp.data.id);
     } catch (error) {
-      console.log(error.response)
+      console.log(error.response);
       // let errorMessage = "";
       // if (error.response.data.is_host !== undefined) {
       //   errorMessage += "email";
@@ -529,10 +529,8 @@ export default function InformationForm({ selectState }) {
                 กรุณาใส่รหัสผ่านให้ตรงกับรหัสผ่านก่อนหน้า
               </FormFeedback>
             </InputGroup>
-            <FormText style={{ textAlign: "left",marginLeft: "5px" }}>
-              <li>
-                ตัวอักษรภาษาอังกฤษพิมพ์ใหญ่อย่างน้อย 1 ตัว
-              </li>
+            <FormText style={{ textAlign: "left", marginLeft: "5px" }}>
+              <li>ตัวอักษรภาษาอังกฤษพิมพ์ใหญ่อย่างน้อย 1 ตัว</li>
               <li>ตัวอักษรภาษาอังกฤษพิมพ์เล็กอย่างน้อย 1 ตัว</li>
               <li>ตัวเลขอย่างน้อย 1 ตัว</li>
               <li>รหัสผ่านตั้งแต่ 8 ถึง 20 ตัว</li>
@@ -583,7 +581,12 @@ export default function InformationForm({ selectState }) {
               type="date"
               name="dob"
               placeholder="วัน/เดือน/ปี"
-              value={Information.dob||moment(moment().year() - 18 + "-01-01", dayformat).format(dayformat)}
+              value={
+                Information.dob ||
+                moment(moment().year() - 18 + "-01-01", dayformat).format(
+                  dayformat
+                )
+              }
               onKeyPress={(e) => e.preventDefault()}
               onChange={(e) =>
                 setInformation({ ...Information, dob: e.target.value })
@@ -669,9 +672,12 @@ export default function InformationForm({ selectState }) {
                         e.preventDefault();
                         getCurrentLocation();
                       }}
-                      style={{backgroundColor:"#f9e07f", border:"0px"}}
+                      style={{ backgroundColor: "#f9e07f", border: "0px" }}
                     >
-                      <FontAwesomeIcon icon={faMapMarkerAlt} style={{color:"black"}} />
+                      <FontAwesomeIcon
+                        icon={faMapMarkerAlt}
+                        style={{ color: "black" }}
+                      />
                     </Button>
 
                     <Button
@@ -679,9 +685,12 @@ export default function InformationForm({ selectState }) {
                         e.preventDefault();
                         geoCoding(userAddress);
                       }}
-                      style={{backgroundColor:"#f9e07f", border:"0px"}}
+                      style={{ backgroundColor: "#f9e07f", border: "0px" }}
                     >
-                      <FontAwesomeIcon icon={faSearch} style={{color:"black"}}/>
+                      <FontAwesomeIcon
+                        icon={faSearch}
+                        style={{ color: "black" }}
+                      />
                     </Button>
                   </InputGroupAddon>
                 </InputGroup>
@@ -695,7 +704,9 @@ export default function InformationForm({ selectState }) {
                 <small style={{ color: "red" }}>ขออภัย กรุณาลองใหม่</small>
               </div>
             ) : null}
-            <Button onClick={onSubmit} style={{backgroundColor:"#264d59"}}>ถัดไป</Button>
+            <Button onClick={onSubmit} style={{ backgroundColor: "#264d59" }}>
+              ถัดไป
+            </Button>
           </FormGroup>
         </Form>
       </Container>

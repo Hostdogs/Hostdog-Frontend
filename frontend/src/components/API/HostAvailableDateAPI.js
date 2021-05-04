@@ -1,5 +1,5 @@
 import axios from "axios";
-const API_URL = "http://127.0.0.1:8000/api/profilehost/";
+const API_URL = "https://hostdog-backend.herokuapp.com/api/profilehost/";
 
 export default class HostAvailableDateAPI {
   static AddHostAvailableDate(mytoken, host_id, date) {

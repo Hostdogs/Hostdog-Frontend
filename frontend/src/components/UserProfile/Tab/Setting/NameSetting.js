@@ -28,8 +28,8 @@ export default function NameSetting({
   const [firstName, setfirstName] = useState();
   const [lastName, setlastName] = useState();
 
-  const inputtfirstName = /^[ก-ฮะ-ไ่้๊๋็์ัํ]+$/;
-  const inputlastName = /^[ก-ฮะ-ไ่้๊๋็์ัํ ]+$/;
+  const inputtfirstName = /^[ก-ฮะ-ไ่้๊๋็์ัํ์]+$/;
+  const inputlastName = /^[ก-ฮ์ะ-ไ่้๊๋็์ัํ ]+$/;
 
   const onChangefirstName = (e) => {
     if (e.target.value === "" || inputtfirstName.test(e.target.value)) {

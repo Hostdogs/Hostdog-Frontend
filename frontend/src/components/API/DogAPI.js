@@ -1,5 +1,5 @@
 import axios from "axios";
-const API_URL = "http://127.0.0.1:8000/api/profilecustomer/";
+const API_URL = "https://hostdog-backend.herokuapp.com/api/profilecustomer/";
 export default class DogAPI {
   static UpdateDog(mytoken, user_id, dog_id, data) {
     const url = `${API_URL}${user_id}/dogs/${dog_id}/`;
@@ -40,7 +40,7 @@ export default class DogAPI {
       },
     });
   }
- 
+
   static GetDog(mytoken, user_id) {
     const url = `${API_URL}${user_id}/dogs/`;
     return axios.get(url, {
@@ -50,12 +50,12 @@ export default class DogAPI {
       },
     });
   }
-  static GetOneDog(mytoken,user_id,dog_id){
-    const url=`${API_URL}${user_id}/dogs/${dog_id}/`
-    return axios.get(url,{
-      headers:{
-        "content-type":"application/json",
-        Authorization:`Token ${mytoken}`,
+  static GetOneDog(mytoken, user_id, dog_id) {
+    const url = `${API_URL}${user_id}/dogs/${dog_id}/`;
+    return axios.get(url, {
+      headers: {
+        "content-type": "application/json",
+        Authorization: `Token ${mytoken}`,
       },
     });
   }
@@ -89,7 +89,7 @@ export default class DogAPI {
       },
     });
   }
-  static GetOneDog(mytoken, user_id,dog_id) {
+  static GetOneDog(mytoken, user_id, dog_id) {
     const url = `${API_URL}${user_id}/dogs/${dog_id}/`;
     return axios.get(url, {
       headers: {
@@ -98,5 +98,4 @@ export default class DogAPI {
       },
     });
   }
-
 }

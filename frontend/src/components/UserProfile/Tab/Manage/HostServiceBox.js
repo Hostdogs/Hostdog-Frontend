@@ -247,9 +247,9 @@ export default function HostServiceBox(props) {
                     }}
                   >
                     <Row>
-                      <Col xs="12" sm="5" lg="6">
+                      {/* <Col xs="12" sm="5" lg="6">
                         ราคาพาสุนัขไปเดินเล่น
-                      </Col>
+                      </Col> */}
                       <Col xs="5" sm="3" lg="3">
                         <Input
                           type="number"
@@ -285,9 +285,9 @@ export default function HostServiceBox(props) {
                     }}
                   >
                     <Row>
-                      <Col xs="12" sm="5" lg="6">
+                      {/* <Col xs="12" sm="5" lg="6">
                         ราคาไปรับสุนัขต่อกิโลเมตร
-                      </Col>
+                      </Col> */}
                       <Col xs="5" sm="3" lg="3">
                         <Input
                           type="number"
@@ -323,9 +323,9 @@ export default function HostServiceBox(props) {
                     }}
                   >
                     <Row>
-                      <Col xs="12" sm="5" lg="6">
+                      {/* <Col xs="12" sm="5" lg="6">
                         ราคาไปส่งสุนัขต่อกิโลเมตร
-                      </Col>
+                      </Col> */}
                       <Col xs="5" sm="3" lg="3">
                         <Input
                           type="number"
@@ -361,9 +361,9 @@ export default function HostServiceBox(props) {
                     }}
                   >
                     <Row>
-                      <Col xs="12" sm="5" lg="6">
+                      {/* <Col xs="12" sm="5" lg="6">
                         ราคาอาบน้ำสุนัข
-                      </Col>
+                      </Col> */}
                       <Col xs="5" sm="3" lg="3">
                         <Input
                           type="number"

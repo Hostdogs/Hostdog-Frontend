@@ -14,18 +14,18 @@ const filterItems = [
   "pending",
   "payment",
   "end",
-  "wait for progress",
-  "in progress",
+  "wait_for_progress",
+  "in_progress",
   "late",
   "cancelled"
 ];
 
 
-export default function HistoryList({ServiceList}) {
+export default function HistoryList({ serviceList }) {
 
 
- 
-  console.log(ServiceList)
+
+  console.log(serviceList)
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -44,7 +44,7 @@ export default function HistoryList({ServiceList}) {
     <>
       <br />
       {/* <InfiniteScroll
-        dataLength={ServiceList.length}
+        dataLength={serviceList.length}
         next={fetchMoreData}
         hasMore={hasMore}
         loader={
@@ -59,26 +59,31 @@ export default function HistoryList({ServiceList}) {
           </p>
         }
       > */}
-        <Container style={{paddingTop:"70px"}}>
- 
-          <h1 style={{color:"#264d59"}}>บริการของคุณ</h1>
-          <hr style={{ borderWidth: "3px", backgroundColor:"#264d59" }} />
-        </Container>
-        <Container style={{ paddingTop: "10px", paddingBottom: "10px" }}>
-          <FilterBox onFilter={handleFilter} />
-          {ServiceList
-            .filter((history) => {
-              if (filterIndex > 0) {
-                console.log(filterIndex,"::",history)
-                return history.main_status === filterItems[filterIndex];
-              } else {
-                return history;
-              }
-            })
-            .map((hd) => (
-              <History key={hd.id} history={hd} />
-            ))}
-        </Container>
+      <Container style={{ paddingTop: "70px" }}>
+
+        <h1 style={{ color: "#264d59" }}>บริการของคุณ</h1>
+        <hr style={{ borderWidth: "3px", backgroundColor: "#264d59" }} />
+      </Container>
+      <Container style={{ paddingTop: "10px", paddingBottom: "10px" }}>
+        <FilterBox onFilter={handleFilter} />
+        {serviceList ? (
+          <div>
+            {serviceList
+              .filter((history) => {
+                if (filterIndex > 0) {
+                  console.log(filterIndex, "::", history)
+                  return history.main_status === filterItems[filterIndex];
+                } else {
+                  return history;
+                }
+              })
+              .map((hd) => (
+                <History key={hd.id} history={hd} />
+              ))}
+          </div>
+        ) : (null)}
+
+      </Container>
       {/* </InfiniteScroll> */}
       <Button
         onClick={scrollToTop}

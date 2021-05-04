@@ -19,6 +19,7 @@ import DogFeedingTime from "./DogFeedingTime";
 import { useCookies } from "react-cookie";
 import DogAPI from "../../../API/DogAPI";
 import moment from "moment-timezone";
+import './DogTab.css'
 
 const startDogInfo = {
   customer: "",
@@ -123,8 +124,11 @@ export default function DogProfileAddForm(props) {
     } else if (value === "false" || value === false) {
       return false;
     } else if (!isNaN(value) && name !== "dog_bio" && value !== "") {
-      if (name === "dog_weight" && value > 100) {
+      if (name === "dog_weight" && Number(value) > 100) {
         return Number(100);
+      }
+      if (name === "dog_weight" && Number(value) < 0) {
+        return Number(1);
       }
       return Number(value);
     } else if (value === "" && name === "picture") {
@@ -138,8 +142,8 @@ export default function DogProfileAddForm(props) {
     <div>
       <Row>
         <Col xs="12">
-          <Button color="warning" onClick={toggle}>
-            <FontAwesomeIcon icon={faPlus} /> {labelBtn}
+          <Button onClick={toggle} style={{color:"black",backgroundColor:"#f9e07f", border:"0px", fontSize:"15px"}}>
+            <FontAwesomeIcon icon={faPlus} className="IconFaPlus"/> {labelBtn}
           </Button>
         </Col>
       </Row>
@@ -229,6 +233,7 @@ export default function DogProfileAddForm(props) {
                 value={dogInfo.dog_weight}
                 onChange={onDogInfoChange}
                 max="100"
+                min="0"
               />
             </FormGroup>
             <FormGroup>

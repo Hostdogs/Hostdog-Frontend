@@ -1,6 +1,6 @@
 .resize-imgDog {
   width: 400px;
-  height: 300px;
+  height: 200px;
   object-fit: contain;
 }
 
@@ -9,3 +9,6 @@
   height: 200px;
   object-fit: contain;
 }
+
+
+

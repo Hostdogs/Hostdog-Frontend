@@ -3,6 +3,8 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import DogFeedingTime from "./DogFeedingTime";
 import { useCookies } from "react-cookie";
 import DogAPI from "../../../API/DogAPI";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faClock } from "@fortawesome/free-solid-svg-icons";
 
 export default function EditFeedingTime(props) {
   const { isOwned, dog_status } = props;
@@ -53,7 +55,7 @@ export default function EditFeedingTime(props) {
   return (
     <div>
       <Button size="sm" color="primary" onClick={getFeedingTime}>
-        {props.labelBtn}
+      <FontAwesomeIcon icon={faClock} />{" "}{props.labelBtn}
       </Button>
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader toggle={toggle}>เวลาให้อาหาร</ModalHeader>

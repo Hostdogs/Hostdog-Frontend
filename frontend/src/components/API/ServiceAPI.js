@@ -41,5 +41,14 @@ export default class ServiceAPI {
     });
  
   }
+  static listService(mytoken){
+    const url=`${API_URL}`
+    return axios.get(url,{
+      headers: {
+        "content-type": "application/json",
+        Authorization: `Token ${mytoken}`,
+      },
+    });
+  }
 
 }

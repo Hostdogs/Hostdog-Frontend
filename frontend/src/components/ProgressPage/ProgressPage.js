@@ -21,7 +21,7 @@ export default function ProgressPage({ match }) {
   const [showLateService,setShowLateService]=useState(false);
   const [showCancelService,setShowCancelService]=useState(true);
   const [serviceDetailStatusLabel,setServiceDetailStatusLabel]=useState("");
-
+  
   const getService =  () => {
     ServiceAPI.getService(cookies.mytoken, servicePath).then((response)=>{
       setServiceInfo(response.data);

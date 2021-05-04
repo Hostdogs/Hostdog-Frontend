@@ -43,21 +43,21 @@ const filterColor = {
 }
 
 export default function History({ history }) {
-    const [hostName, sethostName] = useState("")
-    const [dogName, setdogName] = useState("")
+    // const [hostName, sethostName] = useState("")
+    // const [dogName, setdogName] = useState("")
     const [regDate, setregDate] = useState("")
     const [endDate, setendDate] = useState("")
     const [status, setstatus] = useState("")
   useEffect(() => {
-    HistoryAPI.fakeHostProfile(history.host_id).then(res=>{
-      sethostName(res.first_name+" "+res.last_name)
-    })    
-    HistoryAPI.fakeDog(history.dog_id).then(res=>{
-      setdogName(res.dog_name)
-    })
+    // HistoryAPI.fakeHostProfile(history.host_id).then(res=>{
+    //   sethostName(res.first_name+" "+res.last_name)
+    // })    
+    // HistoryAPI.fakeDog(history.dog_id).then(res=>{
+    //   setdogName(res.dog_name)
+    // })
     setregDate(moment(history.service_reg_time).format("ll"))
     setendDate(moment(history.service_end_time).format("ll"))
-    setstatus(filterItems[history.service_status])
+    setstatus(filterItems[history.main_status])
     // console.log("history",history)
     
   }, [history])
@@ -83,12 +83,12 @@ export default function History({ history }) {
         </h6> */}
         <Row>
           <Col>
-            <h3 className="fontSizeRepo3">สุนัขของคุณ: {dogName}</h3>
+            <h3 className="fontSizeRepo3">สุนัขของคุณ: {history.dog.dog_name}</h3>
           </Col>
         </Row>
         <CardText>
           <ul className="fontSizeRepo">
-            <div>ผู้ฝาก: {hostName}</div>
+            <div>ผู้ฝาก: {history.host.first_name+" "+history.host.last_name}</div>
             <div>วันที่เริ่มบริการ: {regDate}</div>
             <div>วันสิ้นสุดบริการ: {endDate}</div>
           </ul>
@@ -96,7 +96,7 @@ export default function History({ history }) {
             <Col xs="12" sm="5" md="4" lg="4">
               <h4 className="fontSizeRepo3"
                 style={{
-                  color: filterColor[history.service_status],
+                  color: filterColor[history.main_status],
                 }}
               >
                 {status}
@@ -108,7 +108,7 @@ export default function History({ history }) {
                 style={{
                   border: "none",
                   backgroundColor:
-                    filterColor[history.service_status],
+                    filterColor[history.main_status],
                 }}
               >
                 รายละเอียดเพิ่มเติม
@@ -121,7 +121,7 @@ export default function History({ history }) {
                 style={{
                   border: "none",
                   backgroundColor:
-                    filterColor[history.service_status],
+                    filterColor[history.main_status],
                 }}
               >
                 -

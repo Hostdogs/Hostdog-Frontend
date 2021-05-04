@@ -21,22 +21,10 @@ const filterItems = [
 ];
 
 
-export default function HistoryList() {
+export default function HistoryList({ServiceList}) {
 
 
-  const [ServiceList, setServiceList] = useState([])
-
-  useEffect(() => {
-    HistoryAPI.fakeAllService().then(res=>{
-      console.log(res)
-  
-        // setServiceList(ServiceList.concat(res[service]))
-        // ServiceList.push(res[service])
-  
-        setServiceList(res)
-
-    })
-  }, [])
+ 
   console.log(ServiceList)
 
   const scrollToTop = () => {
@@ -82,7 +70,7 @@ export default function HistoryList() {
             .filter((history) => {
               if (filterIndex > 0) {
                 console.log(filterIndex,"::",history)
-                return history.service_status === filterItems[filterIndex];
+                return history.main_status === filterItems[filterIndex];
               } else {
                 return history;
               }

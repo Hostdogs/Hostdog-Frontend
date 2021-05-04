@@ -182,29 +182,8 @@ export default function Pending({ service, pendingData, setpendingData }) {
                   <List type="unstyled">
                     <h4>ที่อยู่</h4>
                     <ul>
-                      <li>สุนัข: {dog ? dog.dog_name : ""}</li>
+                      <li>{service.customer.address||<Skeleton/>}</li>
 
-                      <li>สายพันธุ์: {dog ? dog.dog_breed : ""}</li>
-
-                      <li>อายุ: {dogAge ? dogAge : ""}</li>
-
-                      <li>
-                        เวลาให้อาหาร:
-                        {mealTime ? (
-                          <ul>
-                            <li>
-                              {mealTime.map((item) => (
-                                <span
-                                  key={item.id}
-                                  style={{ paddingRight: "10px" }}
-                                >
-                                  {item.time.slice(0, 5)}
-                                </span>
-                              ))}
-                            </li>
-                          </ul>
-                        ) : null}
-                      </li>
                     </ul>
                   </List>
                 </div>

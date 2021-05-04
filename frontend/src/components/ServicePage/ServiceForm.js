@@ -38,6 +38,7 @@ import AlertModal from "../ProgressPage/AlertModal";
 import moment from "moment-timezone";
 import { useHistory } from "react-router-dom"
 import LoadingScreen from "../Handle/LoadingScreen";
+import Skeleton from "react-loading-skeleton";
 export default function ServiceForm({ host, customerAccount, hostService,setisLoadScreen }) {
   let history = useHistory()
   const [cookies, setcookies] = useCookies(["mytoken", "user_id"]);
@@ -211,7 +212,7 @@ export default function ServiceForm({ host, customerAccount, hostService,setisLo
     } else if (customerDog.gender === "Female") {
       gender = "เพศ : เมีย";
     }
-
+    console.log(serviceInfo)
     return (
       <Card style={{borderRadius:"0"}}>
         <CardImg style={{objectFit:"contain",width:"100%",height:"200px", textAlign:"center"}} src={customerDog.picture} />
@@ -325,7 +326,7 @@ export default function ServiceForm({ host, customerAccount, hostService,setisLo
                     ผู้รับฝาก
                   </Col>
                   <Col xs="12" sm="6">
-                    {hostName}
+                    {hostName||<Skeleton style={{width:"150px"}}/>}
                   </Col>
                 </Row>
               </FormGroup>
@@ -393,6 +394,7 @@ export default function ServiceForm({ host, customerAccount, hostService,setisLo
                       max="100"
                       value={serviceInfo.service_meal_weight}
                       onChange={onServiceInfoChange}
+                      disabled={!serviceInfo.service_meal_type}
                     />
                   </Col>
                   <Col xs="5" sm="4">
@@ -405,7 +407,7 @@ export default function ServiceForm({ host, customerAccount, hostService,setisLo
               <FormGroup>
                 <h4>บริการเพิ่มเติม</h4>
               </FormGroup>
-            ) : null}
+            ) : <h4><Skeleton style={{width:"150px"}}/></h4>}
             <div className="list-service">
               {isWalk ? (
                 <FormGroup>

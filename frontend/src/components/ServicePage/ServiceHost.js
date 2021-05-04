@@ -13,11 +13,13 @@ import {
 import "./Service.css";
 import GoogleMapService from "./GoogleMapService.js";
 import Loading from "../Handle/Loading";
+import Skeleton from "react-loading-skeleton";
 
 export default function ServiceHost({ host, customerAccount }) {
   const [hostAddress, sethostAddress] = useState()
   const [hostImg, sethostImg] = useState()
   const [customerImg, setcustomerImg] = useState()
+ 
   useEffect(() => {
     if (host) {
       sethostAddress(host.address)
@@ -163,7 +165,7 @@ export default function ServiceHost({ host, customerAccount }) {
             </Col>
             <Col>
 
-              <p style={{ wordWrap: "break-word" }}>{hostAddress}</p>
+              <p style={{ wordWrap: "break-word" }}>{hostAddress||<Skeleton/>}</p>
 
             </Col>
 

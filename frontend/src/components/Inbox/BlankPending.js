@@ -9,24 +9,25 @@ export default function BlankPending() {
   const [cookies, setCookie] = useCookies(["mytoken", "user_id"])
   const [urllink, seturllink] = useState("")
   useEffect(() => {
-    if(cookies["user_id"]){
+    if (cookies["user_id"]) {
       seturllink(`profile/${cookies["user_id"]}`)
     }
   }, [cookies])
   return (
-    <div style={{  textAlign: "center",height: "100vh"}}>
+    <div style={{ textAlign: "center", height: "100vh" }}>
+      
       <Container>
-        <div className="blankPending" style={{ minHeight: "40vh"}}>
-        <img src="/blankPending.gif" className="blankPending"/>
+        <div className="blankPending" style={{ minHeight: "40vh" }}>
+          <img src="/blankPending.gif" className="blankPending" />
         </div>
         <h2>
           ดูเหมือนคุณจะยังไม่มีผู้ใช้บริการ จัดการโปรไฟล์ของคุณ{" "}
-          <a className="mobile_br"><br/></a>
+          <a className="mobile_br"><br /></a>
           <a href={urllink}>ที่นี่</a>{" "}
           <w className="iconHand">
-          <FontAwesomeIcon icon={faArrowLeft} className="mr-2 " style={{color:"#264d59"}}/>
+            <FontAwesomeIcon icon={faArrowLeft} className="mr-2 " style={{ color: "#264d59" }} />
           </w>
-          
+
         </h2>{" "}
       </Container>
     </div>

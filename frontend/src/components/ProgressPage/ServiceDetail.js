@@ -258,7 +258,7 @@ export default function ServiceDetail({
                   {reviewScore} คะแนน
                 </ModalBody>
                 <ModalFooter>
-                  <Button color="primary" onClick={handleReview}>
+                  <Button color="primary" onClick={()=>{handleReview();toggleReview();}}>
                     ยืนยัน
                   </Button>{" "}
                 </ModalFooter>
@@ -269,7 +269,7 @@ export default function ServiceDetail({
               >
                 สิ้นสุดบริการ
               </Button>{" "}
-              {showCancelService ? (
+              {/* {showCancelService ? (
                 <Button
                   onClick={toggle}
                   color="danger"
@@ -277,7 +277,14 @@ export default function ServiceDetail({
                 >
                   <div className="Cancel_Button">ยกเลิกบริการ</div>
                 </Button>
-              ) : null}
+              ) : null} */}
+                       <Button
+                  onClick={toggle}
+                  color="danger"
+                  style={{ marginLeft: "5px" }}
+                >
+                  <div className="Cancel_Button">ยกเลิกบริการ</div>
+                </Button>
               <Modal isOpen={modal} toggle={toggle}>
                 <ModalHeader>กรุณายืนยันที่จะยกเลิกบริการ</ModalHeader>
                 <ModalFooter>

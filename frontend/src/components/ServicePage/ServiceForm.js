@@ -340,9 +340,9 @@ export default function ServiceForm({ host, customerAccount, hostService }) {
                 </Row>
               </FormGroup>
             </div>
-            <FormGroup>
+            {(isWalk||isGet||isDeliver||isBath)?(<FormGroup>
               <h4>บริการเพิ่มเติม</h4>
-            </FormGroup>
+            </FormGroup>):null}
             <div className="list-service">
               {isWalk ? (
                 <FormGroup>

@@ -80,7 +80,7 @@ if(serviceInfo.service_start_time!==null&&serviceInfo.service_end_time!==null){
     detailServices[0].name =customerMealLabel+" "+serviceInfo.service_meal_weight +" กรัม/มื้อ จำนวน "+amountOfMeal+" มื้อ";
 
     let mealTotalPrice=(mealPrice*serviceInfo.service_meal_weight)*amountOfMeal
-    detailServices[0].price=mealTotalPrice;
+    detailServices[0].price=mealTotalPrice/100;
     // console.log(detailServices)
 
   }

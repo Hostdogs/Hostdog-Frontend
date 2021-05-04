@@ -66,11 +66,12 @@ export default function ServiceForm({ host, customerAccount, hostService }) {
       setServiceInfo({...serviceInfo,host:host.account})
     }
     if (hostService) {
+
       setMealTypes(hostService.available_meals);
-      setisWalk(hostService.is_dog_walk);
-      setisDeliver(hostService.is_delivery_dog);
-      setisBath(hostService.is_bath_dog);
-      setisGet(hostService.is_get_dog);
+      setisWalk(hostService.enable_dog_walk);
+      setisDeliver(hostService.enable_delivery_dog);
+      setisBath(hostService.enable_bath_dog);
+      setisGet(hostService.enable_get_dog);
 
     }
     if(customerAccount){

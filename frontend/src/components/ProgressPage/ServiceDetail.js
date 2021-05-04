@@ -24,6 +24,7 @@ import "moment/locale/th";
 import "./ServiceDetail.css";
 import { useCookies } from "react-cookie";
 import PaymentLateModal from "../Payment/PaymentLateModal";
+import AlertModal from "./AlertModal"
 export default function ServiceDetail({
   onCancel,
   isExpand,
@@ -61,6 +62,7 @@ export default function ServiceDetail({
   const [additionalService, setAdditionalService] = useState([]);
   const [dogFeedingTime, setDogFeedingTime] = useState([]);
   const [cookies, setcookies] = useCookies(["mytoken", "user_id"]);
+  const [timeLeft,setTimeLeft]=useState(null);
 
   useEffect(() => {
     moment.updateLocale("th");
@@ -117,7 +119,27 @@ export default function ServiceDetail({
       setdog(ServiceInfo.dog);
       setcustomer(ServiceInfo.customer);
       sethost(ServiceInfo.host);
+
+      let dayOne=moment(ServiceInfo.service_end_time)
+      let leftDays=dayOne.diff(moment(),'days')
+      let leftHours=dayOne.diff(moment(),'hours')
+      let leftMinutes=dayOne.diff(moment(),'minutes')
+      if(leftDays===0&&leftHours===0&&leftMinutes===0){
+        setTimeLeft("ภายใน 1 นาที");
+      }
+      else if(leftDays<0||leftHours<0||leftMinutes<0){
+        setTimeLeft("สิ้นสุดแล้ว");
+      }
+      else if (leftDays>0){
+        setTimeLeft(String(leftDays)+" วัน");
+      }else if(leftHours>0){
+        setTimeLeft(String(leftHours)+" ชั่วโมง");
+      }else{
+        setTimeLeft(String(leftMinutes)+" นาที");
+      }
+      
     }
+
   }, [ServiceInfo]);
   const listDogFeedingTime = dogFeedingTime.map((dogFeeding) => {
     return <li key={dogFeeding.id}>{dogFeeding.time}</li>;
@@ -130,6 +152,10 @@ export default function ServiceDetail({
   const [modalReview, setModalReview] = useState(false);
 
   const toggleReview = () => setModalReview(!modalReview);
+
+  const [alertModal, setAlertModal] = useState(false);
+
+  const toggleAlert = () => setAlertModal(!alertModal);
 
   return (
     <div>
@@ -160,8 +186,8 @@ export default function ServiceDetail({
                   <br />
                 </a>{" "}
                 ถึงวันที่: {timeEnd}{" "}
-              </p>
-              <p>การฝากจะสิ้นสุดในเวลา: </p>
+              </p> 
+              <p>การฝากจะสิ้นสุดในเวลา: {timeLeft} </p>
               <p>ค่าบริการทั้งหมด {totalPrice} บาท</p>
             </div>
 
@@ -238,7 +264,8 @@ export default function ServiceDetail({
                 customer={customer}
                 dog={dog}
               />{" "}
-              <Button onClick={handleHostReceiveDog}>รับสุนัข</Button>{" "}
+              <Button onClick={()=>{handleHostReceiveDog();toggleAlert();}}>รับสุนัข</Button>{" "}
+              <AlertModal message={"รับสุนัข"} alertModal={alertModal} alertToggle={toggleAlert}/>
               <Button onClick={handleHostReturnDog}>คืนสุนัข</Button>{" "}
               <Button onClick={toggleReview}>ให้คะแนนผู้รับฝาก</Button>{" "}
               <Modal isOpen={modalReview} fade={false} toggle={toggleReview}>

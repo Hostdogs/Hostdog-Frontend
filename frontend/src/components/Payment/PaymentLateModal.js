@@ -77,7 +77,7 @@ export default function PaymentLateModal({service_id,customer,dog,checkHostOrCus
       return (
           <div>
           
-              <Button color="success" onClick={handlePayment}>ชำระเงินค่าบริการเลยเวลา</Button>
+              <Button color="danger" onClick={handlePayment}>ชำระเงินค่าบริการเลยเวลา</Button>
               <Modal isOpen={modal} toggle={toggle} fade={false} >
           <ModalHeader toggle={toggle}><h2>ชำระเงินค่าบริการเลยเวลา</h2></ModalHeader>
           <ModalBody>

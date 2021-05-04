@@ -129,7 +129,8 @@ export default function Pending({ service, pendingData, setpendingData }) {
             </Label>
             <Row>
               <Col
-                md="4"
+                lg="4"
+                md="12"
                 xs="12"
                 sm="12"
                 style={{ alignItems: "center", textAlign: "center" }}
@@ -149,6 +150,37 @@ export default function Pending({ service, pendingData, setpendingData }) {
                 <div style={{ backgroundColor: "#f9e07f", padding: "10px 10px", borderTopLeftRadius: "10px", borderBottomRightRadius: "50px" }}>
                   <List type="unstyled">
                     <h4>รายละเอียดสุนัข</h4>
+                    <ul>
+                      <li>สุนัข: {dog ? dog.dog_name : ""}</li>
+
+                      <li>สายพันธุ์: {dog ? dog.dog_breed : ""}</li>
+
+                      <li>อายุ: {dogAge ? dogAge : ""}</li>
+
+                      <li>
+                        เวลาให้อาหาร:
+                        {mealTime ? (
+                          <ul>
+                            <li>
+                              {mealTime.map((item) => (
+                                <span
+                                  key={item.id}
+                                  style={{ paddingRight: "10px" }}
+                                >
+                                  {item.time.slice(0, 5)}
+                                </span>
+                              ))}
+                            </li>
+                          </ul>
+                        ) : null}
+                      </li>
+                    </ul>
+                  </List>
+                </div>
+                <br/>
+                <div style={{ backgroundColor: "#f9e07f", padding: "10px 10px", borderTopLeftRadius: "10px", borderBottomRightRadius: "50px" }}>
+                  <List type="unstyled">
+                    <h4>ที่อยู่</h4>
                     <ul>
                       <li>สุนัข: {dog ? dog.dog_name : ""}</li>
 
@@ -267,8 +299,9 @@ export default function Pending({ service, pendingData, setpendingData }) {
                 position: "absolute",
                 bottom: "10px",
                 right: "85px",
+                backgroundColor:"#264d59"
               }}
-              color="primary"
+              
               onClick={handleHostAccept}
             >
               ยืนยัน

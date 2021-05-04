@@ -13,15 +13,24 @@ import {
 import "./Service.css";
 import GoogleMapService from "./GoogleMapService.js";
 
-export default function ServiceHost({ host }) {
+export default function ServiceHost({ host ,customerAccount}) {
   const [hostAddress, sethostAddress] = useState()
+  const [hostImg, sethostImg] = useState()
+  const [customerImg, setcustomerImg] = useState()
   useEffect(() => {
     if (host) {
       sethostAddress(host.address)
       setitems(host.house_image)
+      sethostImg(host.picture)
       // console.log("wheremypicture",host)
     }
   }, [host])
+useEffect(() => {
+  if(customerAccount){
+    setcustomerImg(customerAccount.customer.picture)
+  }
+}, [customerAccount])
+
   const [items, setitems] = useState([])
 
 
@@ -141,8 +150,7 @@ export default function ServiceHost({ host }) {
 
       <Row className="host-row" style={{ marginTop: "10px", marginBottom: "10px", paddingRight:"25px" }}>
         <Col>
-          <GoogleMapService host={host} />
-          <br/>
+          <GoogleMapService host={host} hostImg={hostImg} customerImg={customerImg}/>
         </Col>
       </Row>
 

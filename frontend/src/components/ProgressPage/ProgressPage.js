@@ -97,7 +97,7 @@ export default function ProgressPage({ match }) {
       })
       .catch((error) => {
         console.log("error");
-        setMessage("ไม่สามารถคืนสุนัขได้");
+        setMessage("ผู้ฝากยังไม่ได้กดสิ้นสุดบริการ ยังไม่สามารถคืนสุนัขได้ ");
         toggleAlert();
         console.log(error);
       });
@@ -108,14 +108,14 @@ export default function ProgressPage({ match }) {
     })
       .then((response) => {
         console.log("handleCustomerEnd_customerReceiveDog");
-        console.log(response);
-        setMessage("คุณได้ทำการสิ้นสุดบริการ");
+        console.log(response.data);
+        setMessage("คุณได้ทำการสิ้นสุดบริการแล้ว บริการจะสิ้นสุดเมื่อผู้รับฝากกดคืนสนัข");
         toggleAlert();
         checkHostOrCustomer();
       })
       .catch((error) => {
         console.log("error");
-        setMessage("ไม่สามารถทำการสิ้นสุดบริการ");
+        setMessage("คุณได้ทำการสิ้นสุดบริการแล้ว");
         toggleAlert();
         console.log(error);
       });
@@ -128,6 +128,7 @@ export default function ProgressPage({ match }) {
       .then((response) => {
         console.log("handleReview");
         setMessage("ขอบคุณสำหรับคะแนนบริการ");
+        toggleAlert();
         console.log(response);
         checkHostOrCustomer();
       })
@@ -215,7 +216,7 @@ export default function ProgressPage({ match }) {
       console.log("payment");
     } else if (ServiceInfo.main_status === "wait_for_progress") {
       if (isHost) {
-        setShowHostRecieveDog(true);
+        setShowHostRecieveDog(false);
 
         setShowCustomerDepositPayment(false);
         setshowCustomerLatePayment(false);
@@ -242,14 +243,21 @@ export default function ProgressPage({ match }) {
       setColorIndex(0);
     } else if (ServiceInfo.main_status === "in_progress") {
       if (isHost) {
-        setHostReturnDog(true);
-
+        if(ServiceInfo.service_send_time!==null){
+          setShowHostRecieveDog(false);
+          setHostReturnDog(true);
+        }else{
+          setShowHostRecieveDog(true);
+          setHostReturnDog(false);
+        }
+        
+        
         setShowCustomerDepositPayment(false);
         setshowCustomerLatePayment(false);
         setShowCustomerCancelService(false);
         setShowCustomerReview(false);
         setShowCustomerReceiveDogToEnd(false);
-        setShowHostRecieveDog(false);
+  
       } else {
         setShowCustomerReceiveDogToEnd(true);
 

@@ -138,7 +138,10 @@ export default function ServiceDetail({
       let leftDays = dayOne.diff(moment(), "days");
       let leftHours = dayOne.diff(moment(), "hours");
       let leftMinutes = dayOne.diff(moment(), "minutes");
-      if (leftDays === 0 && leftHours === 0 && leftMinutes === 0) {
+      if(ServiceInfo.main_status==="end"){
+        setTimeLeft("สิ้นสุดแล้ว");
+      }
+      else if (leftDays === 0 && leftHours === 0 && leftMinutes === 0) {
         setTimeLeft("ภายใน 1 นาที");
       } else if (leftDays < 0 || leftHours < 0 || leftMinutes < 0) {
         setTimeLeft("สิ้นสุดแล้ว");
@@ -203,7 +206,7 @@ export default function ServiceDetail({
                 </a>{" "}
                 ถึงวันที่: {timeEnd}{" "}
               </p>
-              <p>การฝากจะสิ้นสุดในเวลา: {timeLeft} </p>
+              <p>การฝากจะสิ้นสุดในเวลาประมาณ: {timeLeft} </p>
               <p>ค่าบริการทั้งหมด {totalPrice} บาท</p>
             </div>
 

@@ -113,7 +113,7 @@ export default function History({ history }) {
               >
                 รายละเอียดเพิ่มเติม
               </Button>{" "}
-              <a className="mobile-br2">
+              {/* <a className="mobile-br2">
                 <br />
               </a>
               <Button
@@ -131,7 +131,7 @@ export default function History({ history }) {
               </a>
               <a className="mobile-br2">
                 <br />
-              </a>
+              </a> */}
             </Col>
           </Row>
         </CardText>

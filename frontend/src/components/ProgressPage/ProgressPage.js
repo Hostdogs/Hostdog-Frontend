@@ -21,11 +21,14 @@ export default function ProgressPage({ match }) {
   const [showLateService,setShowLateService]=useState(false);
   const [showCancelService,setShowCancelService]=useState(true);
   const [serviceDetailStatusLabel,setServiceDetailStatusLabel]=useState("");
+
   
-  setTimeout(() => {
-    getService();
-    console.log("send API");
-  }, 60000);
+  
+  // setTimeout(() => {
+  //   getService();
+  //   console.log("send API");
+  // }, 60000);
+  
   const getService =  () => {
     ServiceAPI.getService(cookies.mytoken, servicePath).then((response)=>{
       setServiceInfo(response.data);
@@ -38,6 +41,65 @@ export default function ProgressPage({ match }) {
 
  
   };
+  const handleHostReceiveDog=()=>{
+ 
+        ServiceAPI.responseService(cookies.mytoken,servicePath,{receive_dog	:true}).then((response)=>{
+          console.log("handleHostReceiveDog");
+          console.log(response);
+        }).catch((error)=>{
+          console.log("error");
+          console.log(error);
+        })
+
+  }
+  const handleHostReturnDog=()=>{
+
+        ServiceAPI.responseService(cookies.mytoken,servicePath,{return_dog:true}).then((response)=>{
+          console.log("handleHostReturnDog");
+          console.log(response);
+        }).catch((error)=>{
+          console.log("error");
+          console.log(error);
+        })
+
+  }
+  const handleCustomerEnd_customerReceiveDog=()=>{
+  
+    ServiceAPI.responseService(cookies.mytoken,servicePath,{receive_dog:true}).then((response)=>{
+      console.log("handleCustomerEnd_customerReceiveDog");
+      console.log(response);
+    }).catch((error)=>{
+      console.log("error");
+      console.log(error);
+    })
+
+  }
+  const [reviewScore,setReviewScore]=useState(5);
+  const handleReview=()=>{
+ 
+    ServiceAPI.responseService(cookies.mytoken,servicePath,{review:reviewScore}).then((response)=>{
+      console.log("handleReview");
+      console.log(response);
+    }).catch((error)=>{
+      console.log("error");
+      console.log(error);
+    })
+  }
+  const handleCancel = () => {
+    ServiceAPI.responseService(cookies.mytoken,servicePath,{cancel:true}).then((response)=>{
+      console.log("handleCancel");
+      console.log(response);
+    }).catch((error)=>{
+      console.log("error");
+      console.log(error);
+    })
+
+  };
+const onChangeReview=(e)=>{
+  setReviewScore(e.target.value);
+
+}
+
 
   const handleProgress = (ServiceInfo) => {
 
@@ -101,18 +163,7 @@ export default function ProgressPage({ match }) {
         setColorIndex(1);
       }
   };
-  const handleCancel = () => {
-    ServiceAPI.responseService(cookies.mytoken,servicePath,{cancel:true}).then((response)=>{
-      console.log("response");
-      console.log(response);
-    }).catch((error)=>{
-      console.log("error");
-      console.log(error);
-    })
-    setColorIndex(2);
-    setLabelIndex(6);
-    setGifIndex(6);
-  };
+
 
   const [ServiceInfo, setServiceInfo] = useState(null);
   useEffect(() => {
@@ -165,8 +216,15 @@ export default function ProgressPage({ match }) {
             showDepositPayment={showDepositPayment}
             serviceDetailStatusLabel={serviceDetailStatusLabel}
             showCancelService={showCancelService}
-            showLateService={showLateService}
- 
+            showLatePayment={showLateService}
+
+            handleCustomerEnd_customerReceiveDog={handleCustomerEnd_customerReceiveDog}
+            handleHostReceiveDog={handleHostReceiveDog}
+            handleHostReturnDog={handleHostReturnDog}
+            handleReview={handleReview}
+            
+            onChangeReview={onChangeReview}
+            reviewScore={reviewScore}
             />
 
         </Container>

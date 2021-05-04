@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Button, Label, Input, Row, Col, Table } from "reactstrap";
 import moment from "moment-timezone";
 export default function DogFeedingTime(props) {
-  const { isOwned } = props;
+  const { isOwned, dog_status } = props;
   const [time, setTime] = useState("");
   const { allTimes, setAllTimes, idTimeDelete, setIdTimeDelete } = props;
+
+  console.log(dog_status);
 
   function onTimeChange(event) {
     setTime(event.target.value);
@@ -47,7 +49,7 @@ export default function DogFeedingTime(props) {
           <td>
             <Row>
               <Col xs="6">{theTime.time.slice(0, 5)}</Col>
-              {isOwned ? (
+              {isOwned && dog_status !== "hosting" ? (
                 <Col xs="6" style={{ textAlign: "end" }}>
                   <Button
                     color="danger"
@@ -78,7 +80,7 @@ export default function DogFeedingTime(props) {
           <tbody>{timeElements}</tbody>
         </Table>
       ) : null}
-      {isOwned ? (
+      {isOwned && dog_status !== "hosting" ? (
         <div>
           <Input type="time" name="time" value={time} onChange={onTimeChange} />
           <Button

@@ -5,7 +5,7 @@ import { useCookies } from "react-cookie";
 import DogAPI from "../../../API/DogAPI";
 
 export default function EditFeedingTime(props) {
-  const { isOwned } = props;
+  const { isOwned, dog_status } = props;
   const [modal, setModal] = useState(false);
   const [allTimes, setAllTimes] = useState([]);
   const [cookies] = useCookies(["mytoken", "user_id"]);
@@ -64,15 +64,16 @@ export default function EditFeedingTime(props) {
             idTimeDelete={idTimeDelete}
             setIdTimeDelete={setIdTimeDelete}
             isOwned={isOwned}
+            dog_status={dog_status}
           />
         </ModalBody>
         <ModalFooter>
-          {isOwned ? (
+          {isOwned && dog_status === "idle" ? (
             <Button color="primary" onClick={submitBtn}>
               ยืนยัน
             </Button>
           ) : null}
-          {isOwned ? (
+          {isOwned && dog_status === "idle" ? (
             <Button color="secondary" onClick={cancelBtn}>
               ยกเลิก
             </Button>

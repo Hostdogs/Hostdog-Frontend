@@ -42,31 +42,31 @@ export default function ServiceDetail({ onCancel, isExpand, ServiceInfo,hostInfo
   useEffect(() => {
     moment.updateLocale("th");
     if (ServiceInfo) {
-      HostAPI.getHostDetails(cookies.mytoken,ServiceInfo.host.account).then((response)=>{
-        sethost(response.data);
-        console.log("getHostDetails")
-        console.log(response.data)
-      }).catch((error)=>{
-        console.log("HostAPI");
-        console.log(error);
-      })
+      // HostAPI.getHostDetails(cookies.mytoken,ServiceInfo.host.account).then((response)=>{
+      //   sethost(response.data);
+      //   console.log("getHostDetails")
+      //   console.log(response.data)
+      // }).catch((error)=>{
+      //   console.log("HostAPI");
+      //   console.log(error);
+      // })
 
-      CustomerAPI.getCustomerDetails(cookies.mytoken,ServiceInfo.customer.account).then((response)=>{
-        setcustomer(response.data);
-        console.log("getCustomerDetails")
-        console.log(response.data)
-      }).catch((error)=>{
-        console.log("customerAPI");
-        console.log(error);
-      })
-      DogAPI.GetOneDog(cookies.mytoken,ServiceInfo.customer.account,ServiceInfo.dog.id).then((response)=>{
-        setdog(response.data);
-        console.log("GetOneDog")
-        console.log(response.data)
-      }).catch((error)=>{
-        console.log("dogAPI");
-        console.log(error);
-      })
+      // CustomerAPI.getCustomerDetails(cookies.mytoken,ServiceInfo.customer.account).then((response)=>{
+      //   setcustomer(response.data);
+      //   console.log("getCustomerDetails")
+      //   console.log(response.data)
+      // }).catch((error)=>{
+      //   console.log("customerAPI");
+      //   console.log(error);
+      // })
+      // DogAPI.GetOneDog(cookies.mytoken,ServiceInfo.customer.account,ServiceInfo.dog.id).then((response)=>{
+      //   setdog(response.data);
+      //   console.log("GetOneDog")
+      //   console.log(response.data)
+      // }).catch((error)=>{
+      //   console.log("dogAPI");
+      //   console.log(error);
+      // })
       DogAPI.GetFeedingTime(cookies.mytoken,ServiceInfo.customer.account,ServiceInfo.dog.id).then((response)=>{
         setDogFeedingTime(response.data);
         console.log("GetFeedingTime");
@@ -88,8 +88,9 @@ export default function ServiceDetail({ onCancel, isExpand, ServiceInfo,hostInfo
       
       setServiceCreateTime(moment(ServiceInfo.service_create_time).format("lll"));
       
-   
-
+      setdog(ServiceInfo.dog);
+      setcustomer(ServiceInfo.customer);
+      sethost(ServiceInfo.host);
       // if (ServiceInfo.main_status==="pending"){
       //   setserviceDetailStatusLabel("กำลังรอคำตอบรับจากผู้รับฝาก");
       //   setShowDepositPayment(false);

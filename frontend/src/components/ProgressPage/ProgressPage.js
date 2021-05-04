@@ -23,7 +23,7 @@ export default function ProgressPage({ match }) {
   const [serviceDetailStatusLabel,setServiceDetailStatusLabel]=useState("");
   setTimeout(() => {
     getService();
-  }, 10000);
+  }, 60000);
   const getService =  () => {
     ServiceAPI.getService(cookies.mytoken, servicePath).then((response)=>{
       setServiceInfo(response.data);

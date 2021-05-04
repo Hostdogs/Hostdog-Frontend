@@ -5,7 +5,7 @@ import axios from "axios";
 import PaymentAPI from '../API/PaymentAPI'
 import AccountAPI from '../API/AccountAPI'
 import { useCookies } from "react-cookie";
-export default function PaymentLateModal({service_id,customer,dog}){
+export default function PaymentLateModal({service_id,customer,dog,checkHostOrCustomer}){
   const [cookies, setcookies] = useCookies(["mytoken", "user_id"]);
     const [modal, setModal] = useState(false);
     const [nestedModal, setNestedModal] = useState(false);
@@ -31,6 +31,7 @@ export default function PaymentLateModal({service_id,customer,dog}){
       toggleAll();
       const data={accept_payment:true}
       PaymentAPI.payLate(service_id,paymentID,data)
+      checkHostOrCustomer();
     }
     const setPaymentTotal=async(payment_id)=>{
         const response= await PaymentAPI.getPayment(service_id,payment_id)

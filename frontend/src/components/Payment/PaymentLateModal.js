@@ -94,8 +94,8 @@ export default function PaymentLateModal({service_id,customer,dog}){
            <Label >{accountNumber}</Label>
            </div>
            <div style={{justifyContent:"space-between",display:"flex"}}>
-           <h5>ยอดชำระเงินรวม:</h5>
-           <Label > {totalPrice} บาท</Label>
+           <h4>ยอดชำระเงินรวม:</h4>
+           <h4 > {totalPrice} บาท </h4>
            </div>
             <br />
             <Modal isOpen={nestedModal} fade={false} toggle={toggleNested} onClosed={closeAll ? toggle : undefined}>

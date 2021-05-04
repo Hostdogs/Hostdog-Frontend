@@ -7,7 +7,7 @@ import ServiceAPI from '../API/ServiceAPI'
 import Loading from '../Handle/Loading'
 export default function InboxPage() {
     const [cookies, setCookie] = useCookies(["mytoken", "user_id"])
-    const [pendingData, setpendingData] = useState()
+    const [pendingData, setpendingData] = useState([])
     const [isLoad, setisLoad] = useState(false)
     useEffect(() => {
         // setpendingData([{ service_id: "1", customer_id: "1", dog_id: "1", main_status: "Pending", }, { service_id: "1", customer_id: "1", dog_id: "1", main_status: "Pending", }])
@@ -27,8 +27,8 @@ export default function InboxPage() {
                 <h1 className="heading1">รายการคำร้องขอของคุณ :</h1>
             </Container>
             <div style={{ minHeight: "100vh" }}>
-                {isLoad && pendingData ? (<PendingList pendingData={pendingData}  />) : (null)}
-                {isLoad && !pendingData ? (<BlankPending />) : (null)}
+                {isLoad && pendingData.length > 0 ? (<PendingList pendingData={pendingData}  />) : (null)}
+                {isLoad && pendingData.length === 0 ? (<BlankPending />) : (null)}
             </div>
 
 

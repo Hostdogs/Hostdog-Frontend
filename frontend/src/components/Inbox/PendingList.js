@@ -5,6 +5,7 @@ import Pending from "./Pending";
 import './Pending.css'
 
 export default function PendingList({ pendingData ,isLoad}) {
+  
   // const [pendingList, setpendingList] = useState()
   useEffect(() => {
     if (pendingData) {
@@ -18,7 +19,7 @@ export default function PendingList({ pendingData ,isLoad}) {
       
       <div >
         <br />
-        {pendingData ? (
+        {pendingData.length>0 ? (
           <div>
             {pendingData.map((pendingTask) => (
  

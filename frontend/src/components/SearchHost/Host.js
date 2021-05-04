@@ -21,13 +21,17 @@ import "holderjs";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import HostAPI from "../API/HostAPI";
+import HostServiceAPI from "../API/HostServiceAPI";
+import { useCookies } from "react-cookie";
 
 export default function Host({ host }) {
+  const [cookies, setCookie] = useCookies(["mytoken", "user_id"])
   const [distance, setdistance] = useState("")
   const [urllink, seturllink] = useState("/")
   const [title, settitle] = useState("ผู้ฝากสุนัข")
   const [rating, setrating] = useState(0)
   const [hostInfo, sethostInfo] = useState({})
+  const [servicePrice, setservicePrice] = useState("")
   useEffect(() => {
     if (host.distance < 1) {
       setdistance(Math.round(host.distance * 1000) + " m")
@@ -39,6 +43,10 @@ export default function Host({ host }) {
     setrating(host.host_rating.toFixed(1))
     // console.log(host)
     sethostInfo(host)
+    HostServiceAPI.getHostService(cookies["mytoken"],host.account).then(res=>{
+      console.log("hostservice:",res.data)
+      setservicePrice(res.data.deposit_price)
+    })
   }, [host])
   let history = useHistory()
   const titleList = ["มือใหม่หัดเลี้ยง", "พี่เลี้ยงทั่วไป", "พี่เลี้ยงอาวุโส", "พี่เลี้ยงขั้นเซียน"]
@@ -119,6 +127,7 @@ export default function Host({ host }) {
                           <br />
                         </a>
                       </div>
+
                       <div>
                         ขนาดบริเวณพื้นที่เลี้ยง{" "}
                         <a className="mobile-br">
@@ -126,6 +135,7 @@ export default function Host({ host }) {
                         </a>
                         <b>{hostInfo.host_area} ตารางเมตร</b>
                       </div>
+
                       <a className="mobile-br2">
                         <br />
                       </a>

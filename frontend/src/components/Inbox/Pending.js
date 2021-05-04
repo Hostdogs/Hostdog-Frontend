@@ -79,6 +79,7 @@ export default function Pending({ service }) {
       .then((response) => {
         console.log("handleHostAccept");
         console.log(response);
+        
       })
       .catch((error) => {
         console.log("error");

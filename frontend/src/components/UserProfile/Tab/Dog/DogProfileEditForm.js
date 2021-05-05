@@ -113,6 +113,9 @@ export default function DogProfileEditForm(props) {
   } //update dog info
 
   function changeValue(name, value) {
+    if (value === " ") {
+      return "";
+    }
     if (value === "true" || value === true) {
       return true;
     } else if (value === "false" || value === false) {

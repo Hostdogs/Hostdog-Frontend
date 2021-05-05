@@ -73,6 +73,11 @@ export default function HostServiceBox(props) {
     } else if (value === "false" || value === false) {
       return false;
     } else if (!isNaN(value) && value !== "") {
+      if (Number(value) < 0) {
+        return "";
+      } else if (Number(value) > 10000) {
+        return 10000;
+      }
       return Number(value);
     } else if (value === "") {
       return null;
@@ -178,6 +183,8 @@ export default function HostServiceBox(props) {
                         <Input
                           type="number"
                           name="deposit_price"
+                          min="0"
+                          max="10000"
                           value={hostService.deposit_price}
                           onChange={onPriceChange}
                           style={{ blockSize: "30px" }}
@@ -261,6 +268,8 @@ export default function HostServiceBox(props) {
                         <Input
                           type="number"
                           name="price_dog_walk"
+                          min="0"
+                          max="10000"
                           value={hostService.price_dog_walk}
                           onChange={onPriceChange}
                           style={{ blockSize: "30px" }}
@@ -294,6 +303,8 @@ export default function HostServiceBox(props) {
                         <Input
                           type="number"
                           name="price_get_dog"
+                          min="0"
+                          max="10000"
                           value={hostService.price_get_dog}
                           onChange={onPriceChange}
                           style={{ blockSize: "30px" }}
@@ -327,6 +338,8 @@ export default function HostServiceBox(props) {
                         <Input
                           type="number"
                           name="price_deliver_dog"
+                          min="0"
+                          max="10000"
                           value={hostService.price_deliver_dog}
                           onChange={onPriceChange}
                           style={{ blockSize: "30px" }}
@@ -360,6 +373,8 @@ export default function HostServiceBox(props) {
                         <Input
                           type="number"
                           name="price_bath_dog"
+                          min="0"
+                          max="10000"
                           value={hostService.price_bath_dog}
                           onChange={onPriceChange}
                           style={{ blockSize: "30px" }}

@@ -1,9 +1,7 @@
 .progressbar-container {
-  max-width: 60vw;
   text-align: center;
 }
 .detail-container {
-  max-width: 50vw;
   min-height: 30vh;
   background: white;
   border-radius: 10px;

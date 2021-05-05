@@ -205,7 +205,6 @@ export default function ServiceDetail({
     <div>
       <Container className="detail-container">
         <Card style={{ borderRadius: "10px", border: "none" }}>
-          <Container>
             <div
               className="UpsideText_1"
               style={{ position: "absolute", right: "10px" }}
@@ -446,7 +445,6 @@ export default function ServiceDetail({
                 </ModalFooter>
               </Modal>
             </div>
-          </Container>
         </Card>
       </Container>
 

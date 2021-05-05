@@ -24,33 +24,55 @@ import "./SearchHost.css";
 import SearchBox from "./SearchBox";
 import moment from "moment";
 import { useCookies } from "react-cookie";
+import HostAPI from "../API/HostAPI";
 
-export default function FilterOptionPane({ setisSearch }) {
+
+export default function FilterOptionPane({ setisSearch ,setHostData ,setisLoad}) {
   const [isDateOpen, setIsDateOpen] = useState(false);
   const toggleDate = () => setIsDateOpen(!isDateOpen);
   const [userAddress, setUserAddress] = useState("");
   const [geocode, setGeoCode] = useState({lat:13.729025,lng:100.775613});
   const [cookies,setCookie] = useCookies(["mytoken","user_id"])
+  const [isSubmit,setIsSubmit] =useState(false)
+
   const handleSubmit = e =>{
       e.preventDefault();
       setisSearch(true);
-      // setTimeout(() => {
-      //   window.scrollTo({
-      //     top: 1250,
-      //     behavior: 'smooth',
-      //   })
-      // }, 100);
+      setShowSubmitFailed(false)
+      setTimeout(() => {
+        window.scrollTo({
+          top: 1250,
+          behavior: 'smooth',
+        })
+      }, 500);
 
       const stDate = moment(selectionRange[0].startDate).format("YYYY-MM-DD")
       const endDate = moment(selectionRange[0].endDate).format("YYYY-MM-DD")
-      console.log(userAddress,distance[choiceDistance],area[choiceArea],userAddress,stDate,endDate,geocode)
-      SearchAPI.getHostInformation(mytoken,distance,area[choiceArea],stDate,endDate,latitude,geocode.lat,geocode.lng).then(res=>{
-        console.log(res)
+      // console.log(userAddress,distance[choiceDistance],area[choiceArea],userAddress,stDate,endDate,geocode)
+      HostAPI.getHostInformation(cookies["mytoken"],distance[choiceDistance],stDate,endDate,geocode.lat,geocode.lng).then(res=>{
+        console.log(res.data)
+        // let data = []
+        // for(const object in res.data){
+        //   console.log(object)
+        //   data.push(object)
+        // }
+        setHostData(res.data)
+        setisLoad(true)
+      }).catch(error=>{
+        if(error.response){
+          console.log(error.response)
+        }
+        
       })
       
     }
-  
+   const handleSubmitFailed=(e)=>{
+    e.preventDefault();
 
+    setShowSubmitFailed(true)
+
+   }
+    const [showSubmitFailed, setShowSubmitFailed] = useState(false);
   const showDistance = [
     "ไม่เกิน 10 กิโลเมตร",
     "ไม่เกิน 20 กิโลเมตร",
@@ -64,18 +86,18 @@ export default function FilterOptionPane({ setisSearch }) {
 
   const [choiceDistance, setChoiceDistance] = useState(3);
 
-  const showArea = [
-    "เท่าไหร่ก็ได้",
-    "เล็ก(0-50 ตร.ม.)",
-    "กลาง(50-150 ตร.ม.)",
-    "ใหญ่(150-400 ตร.ม.)",
+  // const showArea = [
+  //   "เท่าไหร่ก็ได้",
+  //   "เล็ก(0-50 ตร.ม.)",
+  //   "กลาง(50-150 ตร.ม.)",
+  //   "ใหญ่(150-400 ตร.ม.)",
     
-  ];
+  // ];
 
-  const [choiceArea, setChoiceArea] = useState(0);
-  const area = [
-    [0,400],[0,50],[50,150],[150,400]
-  ]
+  // const [choiceArea, setChoiceArea] = useState(0);
+  // const area = [
+  //   [0,400],[0,50],[50,150],[150,400]
+  // ]
   const dayformat = "YYYY-MM-DD";
   const [selectionRange, setSelectionRange] = useState([
     {
@@ -109,8 +131,8 @@ export default function FilterOptionPane({ setisSearch }) {
             <hr style={{ borderWidth: "3px", borderColor:"#ffe080", width:"90%",textAlign:"left" }} />
             <br/>
             <Container style={{ paddingLeft: "10%", paddingRight: "10%" }}>
-              <Form>
-                <SearchBox userAddress={userAddress} setUserAddress={setUserAddress} geocode={geocode} setGeoCode={setGeoCode}/>
+    
+                <SearchBox userAddress={userAddress} setUserAddress={setUserAddress} geocode={geocode} setGeoCode={setGeoCode} setIsSubmit={setIsSubmit} />
 
                 <FormGroup>
                   <UncontrolledDropdown>
@@ -142,7 +164,7 @@ export default function FilterOptionPane({ setisSearch }) {
                     </DropdownMenu>
                   </UncontrolledDropdown>
                 </FormGroup>
-                <FormGroup>
+                {/* <FormGroup>
                   <UncontrolledDropdown>
                     <Label style={{ width: "225px" }}>
                       ขนาดบริเวณพื้นที่เลี้ยงขั้นต่ำ
@@ -168,7 +190,7 @@ export default function FilterOptionPane({ setisSearch }) {
                       </DropdownItem>
                     </DropdownMenu>
                   </UncontrolledDropdown>
-                </FormGroup>
+                </FormGroup> */}
                 <FormGroup>
                   <Label style={{ width: "300px" }}>
                     ช่วงเวลาที่ต้องการฝาก
@@ -187,16 +209,21 @@ export default function FilterOptionPane({ setisSearch }) {
                       style={{ width: "" }}
                     />
                   </div>
+                  
                 </FormGroup>
                 <FormGroup style={{ textAlign: "right" }}>
-                  <Button type="submit" onClick={e=>handleSubmit(e)} style={{ backgroundColor: "#ffe080", border: "0px", color:"black" }}>
+                <small style={{ color: "red",paddingRight: "10px"}}>{showSubmitFailed? ("กรุณาใส่ที่อยู่ใหม่อีกครั้ง "):(" ")}</small>
+                  <Button type="submit" onClick={e=>{isSubmit?handleSubmit(e):handleSubmitFailed(e)}} style={{ backgroundColor: "#ffe080", border: "0px", color:"black" }}>
                     ค้นหา
                   </Button>
-                </FormGroup>
-              </Form>
-            </Container>
 
-          
+                  {/* {showSubmitFailed? (
+          <div>
+            <small style={{ color: "red" }}>กรุณาใส่ที่อยู่ใหม่อีกครั้ง</small>
+          </div>
+        ) : null} */}
+                </FormGroup>
+            </Container>
           </CardBody>
         </Card>
       </Container>

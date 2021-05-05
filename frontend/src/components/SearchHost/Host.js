@@ -10,28 +10,43 @@ import {
   Row,
   Col,
   CardFooter,
+  CardLink,
 } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBone } from "@fortawesome/free-solid-svg-icons";
+import { faBone, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import HostGallery from "./HostGallery";
 import "./Host.css";
-import FreeDay from "./FreeDay";
+import FreeDay from "./AvailableHost";
 import "holderjs";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
+import HostAPI from "../API/HostAPI";
+import HostServiceAPI from "../API/HostServiceAPI";
+import { useCookies } from "react-cookie";
 
 export default function Host({ host }) {
-  const [displace, setdisplace] = useState("")
+  const [cookies, setCookie] = useCookies(["mytoken", "user_id"])
+  const [distance, setdistance] = useState("")
   const [urllink, seturllink] = useState("/")
   const [title, settitle] = useState("ผู้ฝากสุนัข")
+  const [rating, setrating] = useState(0)
+  const [hostInfo, sethostInfo] = useState({})
+  const [servicePrice, setservicePrice] = useState("")
   useEffect(() => {
-    if (host.displace >= 1000) {
-      setdisplace(host.displace / 1000 + " km")
+    if (host.distance < 1) {
+      setdistance(Math.round(host.distance * 1000) + " m")
     } else {
-      setdisplace(host.displace + " m")
+      setdistance(Math.round(host.distance) + " km")
     }
-    seturllink(`/profile/${host.userid}`)
+    seturllink(`/profile/${host.account}`)
     setHostTitle(host.host_hosted_count)
+    setrating(host.host_rating.toFixed(1))
+    // console.log(host)
+    sethostInfo(host)
+    HostServiceAPI.getHostService(cookies["mytoken"], host.account).then(res => {
+      console.log("hostservice:", res.data)
+      setservicePrice(res.data.deposit_price)
+    })
   }, [host])
   let history = useHistory()
   const titleList = ["มือใหม่หัดเลี้ยง", "พี่เลี้ยงทั่วไป", "พี่เลี้ยงอาวุโส", "พี่เลี้ยงขั้นเซียน"]
@@ -46,19 +61,22 @@ export default function Host({ host }) {
       settitle(titleList[3])
     }
   }
+  const placeholderPath = "user_placeholder.svg"
+
+
   return (
 
     <div>
-      <Card>
+      <Card className="card_host">
         <CardHeader style={{ backgroundColor: "#f9e07f", borderRadius: "0", color: "#264d59" }}>
-          <h4 style={{ position: "absolute", top: "5px", right: "10px" }}>{displace}</h4>
+          <h4 style={{ position: "absolute", top: "5px", right: "10px" }}>{distance}</h4>
           <div style={{ position: "absolute", top: "7px", left: "15px" }}>
-            <FreeDay />
+            <FreeDay host={host} />
           </div>
           <Row style={{ marginTop: "2%" }}>
             <Col xs="12" sm="12" md="2" lg="2" style={{ textAlign: "center" }}>
               <img
-                src={host.picture}
+                src={hostInfo.picture || placeholderPath}
                 className="img-responsive center-block"
                 style={{
                   borderRadius: "50%",
@@ -93,7 +111,7 @@ export default function Host({ host }) {
                       size="xs"
                       style={{ transform: "rotate(135deg)", color: "#43978d" }}
                     />
-                    {host.name} {host.surname}
+                    {hostInfo.first_name} {hostInfo.last_name}
                   </h3>
                   <h5 className="fontsizeLevel">{title}</h5>
                 </Col>
@@ -104,19 +122,27 @@ export default function Host({ host }) {
                         <div style={{ paddingTop: "3%" }}> </div>
                       </a>
                       <div>
-                        รับฝากมาแล้ว <b>{host.host_hosted_count} ตัว</b>{" "}
+                        รับเลี้ยงสุนัขมาแล้ว <b>{hostInfo.host_hosted_count} ตัว</b>{" "}
                         <a className="mobile-br">
                           <br />
                         </a>
-                        รวม <b>x ชั่วโมง</b>
                       </div>
+
                       <div>
-                        ขนาดบริเวณเลี้ยง{" "}
+                        ค่าบริการขั้นต่ำวันละ{" "}
                         <a className="mobile-br">
                           <br />
                         </a>
-                        <b>{host.host_area} ตารางเมตร</b>
+                        <b>{servicePrice} บาท(++)</b>
                       </div>
+                      {/* <div>
+                        ขนาดบริเวณพื้นที่เลี้ยง{" "}
+                        <a className="mobile-br">
+                          <br />
+                        </a>
+                        <b>{hostInfo.host_area} ตารางเมตร</b>
+                      </div> */}
+
                       <a className="mobile-br2">
                         <br />
                       </a>
@@ -126,7 +152,7 @@ export default function Host({ host }) {
 
                       <br />
                       <FontAwesomeIcon icon={faBone} size="xs" style={{ transform: "rotate(135deg)", color: "#43978d" }} />
-                      <b> {host.host_rating.toFixed(1)}/5.0</b>
+                      <b> {rating}/5.0</b>
                     </Col>
                   </Row>
                 </Col>
@@ -134,27 +160,30 @@ export default function Host({ host }) {
             </Col>
           </Row>
         </CardHeader>
-        <CardBody style={{ backgroundColor: "#f3f4f5" }}>
-          <Col style={{ padding: "0px" }}>
-            <Container fluid="sm">
-              <HostGallery />
-            </Container>
-          </Col>
-        </CardBody>
+        {host.house_image.length > 0 ? (
+          <CardBody style={{ backgroundColor: "#f3f4f5" }}>
+            <Col style={{ padding: "0px" }}>
+              <Container fluid="sm">
+                <HostGallery host={host} />
+              </Container>
+            </Col>
+          </CardBody>
+        ) : (null)}
 
-        <CardFooter
+
+        <CardBody
           style={{ textAlign: "center", backgroundColor: "#f9e07f", color: "#264d59" }}
         >
-          <a href="#" style={{ color: "black" }} onClick={e => {
+          <CardLink href="#" style={{ color: "#264d59" }} onClick={e => {
             history.push(urllink)
             history.go(0)
             e.preventDefault()
           }}
 
           >
-            รายละเอียดเพิ่มเติม
-            </a>
-        </CardFooter>
+            รายละเอียดเพิ่มเติม <FontAwesomeIcon icon={faChevronRight} /><FontAwesomeIcon icon={faChevronRight} />
+          </CardLink>
+        </CardBody>
 
       </Card>
     </div>

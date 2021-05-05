@@ -1,0 +1,14 @@
+.resize-imgDog {
+  width: 400px;
+  height: 200px;
+  object-fit: contain;
+}
+
+.resize-imgDog-preview {
+  width: 300px;
+  height: 200px;
+  object-fit: contain;
+}
+
+
+

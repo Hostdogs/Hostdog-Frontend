@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Container,
   UncontrolledCarousel,
@@ -11,27 +11,31 @@ import {
   CarouselCaption,
 } from "reactstrap";
 import "./Service.css";
-export default function ServiceHost() {
-  const items = [
-    {
-      src: "host.jpg",
-      key: "1",
-      altText: "",
-      caption: "",
-    },
-    {
-      src: "map.jpg",
-      key: "2",
-      altText: "",
-      caption: "",
-    },
-    {
-      src: "host.jpg",
-      key: "3",
-      altText: "",
-      caption: "",
-    },
-  ];
+import GoogleMapService from "./GoogleMapService.js";
+import Loading from "../Handle/Loading";
+import Skeleton from "react-loading-skeleton";
+
+export default function ServiceHost({ host, customerAccount }) {
+  const [hostAddress, sethostAddress] = useState()
+  const [hostImg, sethostImg] = useState()
+  const [customerImg, setcustomerImg] = useState()
+ 
+  useEffect(() => {
+    if (host) {
+      sethostAddress(host.address)
+      setitems(host.house_image)
+      sethostImg(host.picture)
+      // console.log("wheremypicture",host)
+    }
+  }, [host])
+  useEffect(() => {
+    if (customerAccount) {
+      setcustomerImg(customerAccount.customer.picture)
+    }
+  }, [customerAccount])
+
+  const [items, setitems] = useState([])
+
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [animating, setAnimating] = useState(false);
@@ -58,12 +62,12 @@ export default function ServiceHost() {
       <CarouselItem
         onExiting={() => setAnimating(true)}
         onExited={() => setAnimating(false)}
-        key={item.key}
+        key={item.id}
       >
         <img
           className="resize-img"
-          src={item.src}
-          alt={item.altText}
+          src={item.picture}
+
           onClick={onImageOpenClick}
         />
         <CarouselCaption
@@ -119,48 +123,60 @@ export default function ServiceHost() {
 
   return (
     <div>
-      <Row>
-        <Col>
-          <Carousel
-            className="hostImage-content-small"
-            activeIndex={activeIndex}
-            next={next}
-            previous={previous}
-          >
-            <CarouselIndicators
-              items={items}
-              activeIndex={activeIndex}
-              onClickHandler={goToIndex}
-            />
-            {slides}
-            <CarouselControl
-              direction="prev"
-              directionText="Previous"
-              onClickHandler={previous}
-            />
-            <CarouselControl
-              direction="next"
-              directionText="Next"
-              onClickHandler={next}
-            />
-          </Carousel>
-        </Col>
-      </Row>
-      <br />
-      <br />
-      <Row className="host-row">
-        <Col>
-          <img style={{ width: "100%" }} src="map.jpg" />
-        </Col>
-      </Row>
-      <br />
-      <br />
-      <Row className="host-row">
-        <h4>ที่อยู่</h4>
-        <p>  Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis, assumenda quae incidunt commodi eius fugit corrupti reprehenderit modi perspiciatis facilis magni culpa quisquam consectetur pariatur minus doloribus dicta deserunt neque.
-</p>
-      </Row>
-      <Row>{imageHost}</Row>
+      {host && customerAccount ? (
+        <div>
+          <Row style={{ paddingRight: "25px" }}>
+            <Col>
+              <Carousel
+                className="hostImage-content-small"
+                activeIndex={activeIndex}
+                next={next}
+                previous={previous}
+              >
+                <CarouselIndicators
+                  items={items}
+                  activeIndex={activeIndex}
+                  onClickHandler={goToIndex}
+                />
+                {slides}
+                <CarouselControl
+                  direction="prev"
+                  directionText="Previous"
+                  onClickHandler={previous}
+                />
+                <CarouselControl
+                  direction="next"
+                  directionText="Next"
+                  onClickHandler={next}
+                />
+              </Carousel>
+            </Col>
+          </Row>
+
+          <Row className="host-row" style={{ marginTop: "10px", marginBottom: "10px", paddingRight: "25px" }}>
+            <Col>
+              <GoogleMapService host={host} hostImg={hostImg} customerImg={customerImg} />
+            </Col>
+          </Row>
+
+          <Row className="host-row" style={{ paddingRight: "25px" }}>
+            <Col xs={12}>
+              <h4>ที่อยู่</h4>
+            </Col>
+            <Col>
+
+              <p style={{ wordWrap: "break-word" }}>{hostAddress||<Skeleton/>}</p>
+
+            </Col>
+
+
+
+          </Row>
+          <Row>{imageHost}</Row>
+        </div>
+      ) : (<Loading />)}
+
+
     </div>
   );
 }

@@ -23,9 +23,6 @@ const ContentNoAuth = (props) => {
           <br />
           <div style={{ wordWrap: "break-word", color: "white", textShadow: "0.5px 0.5px 2.5px black" }}>
             <p className="p">เว็บไซต์ฝากสุนัข<b style={{ fontSize: "30px" }}> อันดับที่ 1<small style={{ fontSize: "13px" }}> (แสน)</small> ในประเทศไทย</b></p>
-            <p>
-              รับประกันความลำบาก และใช้งานยาก
-          </p>
           </div>
 
         </div>

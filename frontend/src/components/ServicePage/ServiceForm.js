@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+
 import {
   Container,
   Row,
@@ -13,59 +14,177 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Card,
+  CardImg,
+  CardText,
+  CardBody,
+  CardTitle,
+  CardSubtitle,
 } from "reactstrap";
 import "./Service.css";
 import ServiceDetail from "./ServiceDetail";
-
-export default function ServiceForm() {
+import HostAPI from "../API/HostAPI";
+import MealAPI from "../API/MealAPI";
+import DogAPI from "../API/DogAPI";
+import HostServiceAPI from "../API/HostServiceAPI";
+import ServiceAPI from "../API/ServiceAPI";
+import HostAvailableDateAPI from "../API/HostAvailableDateAPI";
+import { useCookies } from "react-cookie";
+import AlertModal from "../ProgressPage/AlertModal";
+import moment from "moment-timezone";
+import { useHistory } from "react-router-dom";
+import LoadingScreen from "../Handle/LoadingScreen";
+import Skeleton from "react-loading-skeleton";
+import AvailableHost from "../SearchHost/AvailableHost";
+export default function ServiceForm({
+  host,
+  customerAccount,
+  hostService,
+  setisLoadScreen,
+}) {
+  let history = useHistory();
+  const [cookies, setcookies] = useCookies(["mytoken", "user_id"]);
+  const [modal, setModal] = useState(false);
+  const toggle = () => setModal(!modal);
   const [dropdownTypeOpen, setTypeOpen] = useState(false);
   const toggleType = () => setTypeOpen(!dropdownTypeOpen);
 
   const [dropdownFreqOpen, setFreqOpen] = useState(false);
   const toggleFreq = () => setFreqOpen(!dropdownFreqOpen);
+  const [hostName, setHostName] = useState("");
 
-  const mealPerDays = [
-    { label: "1 ครั้ง/วัน", value: 1 },
-    { label: "2 ครั้ง/วัน", value: 2 },
-    { label: "3 ครั้ง/วัน", value: 3 },
-    { label: "4 ครั้ง/วัน", value: 4 },
-    { label: "5 ครั้ง/วัน", value: 5 },
-  ];
+  const [mealTypes, setMealTypes] = useState([]);
 
-  const mealTypes = [
-    { label: "อาหารเปียก", value: 1, key: 1 },
-    { label: "อาหารแห้ง", value: 2, key: 2 },
-    { label: "เนื้อสด", value: 3, key: 3 },
-  ];
+  const [customerMealLabel, setCustomerMealLabel] = useState(
+    "เลือกประเภทอาหาร"
+  );
+  const [mealPrice, setMealPrice] = useState(0);
 
+  const [customerDogs, setCustomerDogs] = useState([]);
+  const [customerImg, setcustomerImg] = useState();
+  const [listDogFeedingTime, setListDogFeedingTime] = useState([]);
+
+  const [dogName, setDogName] = useState(null);
+  const [isWalk, setisWalk] = useState(false);
+  const [isDeliver, setisDeliver] = useState(false);
+  const [isBath, setisBath] = useState(false);
+  const [isGet, setisGet] = useState(false);
+
+  const [availableDates, setAvailableDates] = useState([]);
+  const [startDate1, setStartDate1] = useState(
+    moment(new Date()).format("YYYY-MM-DDTHH:mm")
+  );
+  let twoMonthsLater = new Date();
+  twoMonthsLater.setMonth(twoMonthsLater.getMonth() + 2);
+  const [endDate1, setEndDate1] = useState(
+    moment(twoMonthsLater).format("YYYY-MM-DDT23:59")
+  );
+  const [startDate2, setStartDate2] = useState(
+    moment(new Date()).format("YYYY-MM-DDTHH:mm")
+  );
+  let twoMonthsLater2 = new Date();
+  twoMonthsLater2.setMonth(twoMonthsLater2.getMonth() + 2);
+  const [endDate2, setEndDate2] = useState(
+    moment(twoMonthsLater2).format("YYYY-MM-DDT23:59")
+  );
+
+  useEffect(() => {
+    if (host) {
+      HostAvailableDateAPI.GetHostAvailableDate(
+        cookies["mytoken"],
+        host.account
+      ).then((resp) => {
+        const sortDate = resp.data.sort(function (a, b) {
+          return a.date.localeCompare(b.date);
+        });
+        setAvailableDates(sortDate);
+        setStartDate1(sortDate[0].date + "T00:00");
+        setEndDate1(sortDate[sortDate.length - 1].date + "T00:00");
+        setStartDate2(sortDate[0].date + "T00:00");
+        setEndDate2(sortDate[sortDate.length - 1].date + "T00:00");
+        //console.log(sortDate[0].date + "T:00:00");
+      });
+    }
+  }, [host]);
+
+  useEffect(() => {
+    if (host) {
+      setHostName(host.first_name + " " + host.last_name);
+      setServiceInfo({ ...serviceInfo, host: host.account });
+    }
+    if (hostService) {
+      setMealTypes(hostService.available_meals);
+      setisWalk(hostService.enable_dog_walk);
+      setisDeliver(hostService.enable_delivery_dog);
+      setisBath(hostService.enable_bath_dog);
+      setisGet(hostService.enable_get_dog);
+    }
+    if (customerAccount) {
+      setCustomerDogs(customerAccount.customer.dog_customer);
+      setServiceInfo({ ...serviceInfo, customer: customerAccount.id });
+    }
+  }, [host, customerAccount, hostService]);
+
+  const getDogFeedingTime = async () => {
+    const response = await DogAPI.GetFeedingTime(
+      cookies["mytoken"],
+      cookies["user_id"],
+      serviceInfo.dog
+    );
+
+    const dogFeedingTime = response.data;
+    console.log(dogFeedingTime);
+    setListDogFeedingTime(dogFeedingTime);
+  };
+  const getMealPrice = async () => {
+    const response = await MealAPI.getMeal(
+      cookies.mytoken,
+      serviceInfo.service_meal_type
+    );
+    const meal = response.data;
+    setMealPrice(meal.meal_price_per_gram);
+  };
   const [serviceInfo, setServiceInfo] = useState({
     host: null,
     customer: null,
     dog: null,
-    service_status: "",
-    service_is_over_night: null,
     service_start_time: null,
     service_end_time: null,
-    service_send_time: null,
-    service_get_time: null,
     service_meal_type: null,
-    service_meal_per_day: null,
-    service_meal_weight: 100,
-    service_is_walk: null,
-    service_is_get_dog: null,
-    service_is_deliver_dog: null,
-    service_is_dog_bath: null,
+    service_meal_weight: 20,
+    is_dog_walk: false,
+    is_get_dog: false,
+    is_delivery_dog: false,
+    is_bath_dog: false,
     service_bio: "",
-    service_is_rating: false,
-    service_rating: null,
   });
+  const [submitable, setsubmitable] = useState(false);
+  useEffect(() => {
+    if (
+      serviceInfo.service_start_time &&
+      serviceInfo.service_end_time &&
+      serviceInfo.service_meal_type &&
+      serviceInfo.dog
+    ) {
+      setsubmitable(true);
+    } else {
+      setsubmitable(false);
+    }
+    console.log(serviceInfo.service_start_time);
+  }, [serviceInfo]);
 
   function changeValue(name, value) {
     if (value === "true" || value === true) {
       return true;
     } else if (value === "false" || value === false) {
       return false;
-    } else if (!isNaN(value) && name !== "service_bio") {
+    } else if (name === "service_start_time" || name === "service_end_time") {
+      return value + ":00";
+    } else if (!isNaN(value) && name !== "service_bio" && value !== "") {
       return Number(value);
     } else {
       return value;
@@ -73,73 +192,143 @@ export default function ServiceForm() {
   }
   function onServiceInfoChange(event) {
     const { name, value } = event.target;
+
     setServiceInfo((prevServiceInfo) => {
       return {
         ...prevServiceInfo,
         [name]: changeValue(name, value),
       };
     });
+
+    if (name === "service_start_time") {
+      setStartDate2(value);
+    }
+    if (name === "service_end_time") {
+      setEndDate1(value);
+    }
+
+    if (name === "service_meal_type") {
+      for (var i = 0; i < mealTypes.length; i++) {
+        if (parseInt(value) === mealTypes[i].id) {
+          setCustomerMealLabel(mealTypes[i].meal_type);
+        }
+      }
+    }
+    if (name === "dog") {
+      for (var i = 0; i < customerDogs.length; i++) {
+        console.log(customerDogs);
+        console.log(customerDogs[i]);
+        if (parseInt(value) === customerDogs[i].id) {
+          setDogName(customerDogs[i].dog_name);
+        }
+      }
+    }
   }
 
   useEffect(() => {
-    console.log(serviceInfo);
-  }, [serviceInfo]);
+    getDogFeedingTime();
+    getMealPrice();
+  }, [serviceInfo.dog, serviceInfo.service_meal_type]);
 
-  const mealPerDayElements = mealPerDays.map((mealPerDay, index) => {
+  // useEffect(() => {
+  //   console.log("serviceInfo");
+  //   console.log(serviceInfo);
+  // }, [serviceInfo]);
+
+  const customerDogElements = customerDogs.map((customerDog) => {
+    let gender = "";
+    if (customerDog.gender === "Male") {
+      gender = "เพศ : ผู้";
+    } else if (customerDog.gender === "Female") {
+      gender = "เพศ : เมีย";
+    }
+    // console.log(serviceInfo)
     return (
-      <DropdownItem
-        key={index}
-        name="service_meal_per_day"
-        value={mealPerDay.value}
-        onClick={onServiceInfoChange}
-      >
-        {mealPerDay.label}
-      </DropdownItem>
+      <Card style={{ borderRadius: "0" }}>
+        <CardImg
+          style={{
+            objectFit: "contain",
+            width: "100%",
+            height: "200px",
+            textAlign: "center",
+          }}
+          src={customerDog.picture}
+        />
+        <CardBody>
+          <CardTitle tag="h5"> {customerDog.dog_name}</CardTitle>
+          <CardText>
+            สายพันธุ์ : {customerDog.dog_breed} , {gender} , วันเกิด :{" "}
+            {customerDog.dog_dob} , น้ำหนัก : {customerDog.dog_weight} กิโลกรัม
+          </CardText>
+          <Button
+            key={customerDog.id}
+            name="dog"
+            value={customerDog.id}
+            onClick={(customerDog) => {
+              onServiceInfoChange(customerDog);
+              toggle();
+            }}
+            style={{ backgroundColor: "#43978d", border: "0px" }}
+          >
+            เลือก
+          </Button>
+        </CardBody>
+      </Card>
     );
   });
 
   const mealTypeElements = mealTypes.map((mealType, index) => {
     return (
       <DropdownItem
-        key={mealType.key}
+        key={mealType.id}
         name="service_meal_type"
-        value={mealType.value}
+        value={mealType.id}
+        className={mealType.meal_type}
         onClick={onServiceInfoChange}
       >
-        {mealType.label}
+        {mealType.meal_type}
       </DropdownItem>
     );
   });
 
   function onServiceSubmit(event) {
     event.preventDefault();
-    if (serviceInfo.host === null) {
-      console.log("host");
-    }
-    if (serviceInfo.customer === null) {
-      console.log("customer");
-    }
-    if (serviceInfo.dog === null) {
-      console.log("dog");
-    }
-    if (serviceInfo.service_is_over_night === null) {
-      console.log("service_is_over_night");
-    }
-    if (serviceInfo.service_meal_type === null) {
-      console.log("service_meal_type");
-    }
-    if (serviceInfo.service_meal_per_day === null) {
-      console.log("service_meal_per_day");
-    }
-    //console.log(serviceInfo);
+    // console.log("serviceInfo");
+    // console.log(serviceInfo);
+    setisLoadScreen(true);
+    ServiceAPI.createService(cookies.mytoken, serviceInfo)
+      .then((response) => {
+        console.log(response);
+        setisLoadScreen(false);
+        history.push("/history");
+        history.go(0);
+      })
+      .catch((error) => {
+        console.log(error.response);
+        setisLoadScreen(false);
+        toggleError();
+      });
   }
+  const [modalSubmit, setModalSubmit] = useState(false);
+
+  const toggleSubmit = () => setModalSubmit(!modalSubmit);
+
+  const [modalError, setModalError] = useState(false);
+
+  const toggleError = () => setModalError(!modalError);
 
   return (
     <div>
       <Row>
-        <Col xs="12" sm="12" md="12" lg="8">
+        <Col
+          xs="12"
+          sm="12"
+          md="12"
+          lg="8"
+          style={{ backgroundColor: "#fef7ef" }}
+        >
           <Form>
-            <FormGroup>
+            <FormGroup style={{ paddingTop: "20px" }}>
               <h4>เลือกบริการของคุณ</h4>
             </FormGroup>
             <div className="list-service">
@@ -149,9 +338,31 @@ export default function ServiceForm() {
                     เลือกสุนัขของคุณ
                   </Col>
                   <Col xs="5" sm="4">
-                    <Button color="primary" size="sm">
+                    {dogName ? (
+                      <Label>{dogName}</Label>
+                    ) : (
+                      <Label disable>ยังไม่ได้เลือก</Label>
+                    )}{" "}
+                    <Button
+                      size="sm"
+                      onClick={toggle}
+                      style={{
+                        backgroundColor: "#43978d",
+                        color: "white",
+                        fontSize: "14px",
+                      }}
+                    >
                       เลือก
                     </Button>
+                    <Modal isOpen={modal} fade={false} toggle={toggle}>
+                      <ModalHeader
+                        toggle={toggle}
+                        style={{ backgroundColor: "#f9e07f" }}
+                      >
+                        เลือกสุนัขของคุณ
+                      </ModalHeader>
+                      <ModalBody>{customerDogElements}</ModalBody>
+                    </Modal>
                   </Col>
                 </Row>
               </FormGroup>
@@ -161,55 +372,38 @@ export default function ServiceForm() {
                     ผู้รับฝาก
                   </Col>
                   <Col xs="12" sm="6">
-                    นายคำนวย บางขุนเทียน
+                    {hostName || <Skeleton style={{ width: "150px" }} />}
                   </Col>
                 </Row>
               </FormGroup>
               <FormGroup>
                 <Row>
                   <Col xs="12" sm="4">
-                    ประเภทการฝาก
+                    วันที่ใช้บริการฝาก <AvailableHost host={host} />
                   </Col>
-                  <Col xs="6" sm="4">
-                    <CustomInput
-                      type="radio"
-                      id="DeTypeRadio"
-                      name="service_is_over_night"
-                      label="ฝากระหว่างวัน"
-                      value="false"
-                      onChange={onServiceInfoChange}
-                    />
-                  </Col>
-                  <Col xs="6" sm="4">
-                    <CustomInput
-                      type="radio"
-                      id="DeTypeRadio2"
-                      name="service_is_over_night"
-                      label="ฝากข้ามคืน"
-                      value="true"
-                      onChange={onServiceInfoChange}
-                    />
-                  </Col>
-                </Row>
-              </FormGroup>
-              <FormGroup>
-                <Row>
-                  <Col xs="12" sm="4">
-                    วันที่ใช้บริการฝาก
-                  </Col>
-                  <Col xs="12" sm="4">
-                    <Input
-                      type="date"
-                      name="service_start_time"
-                      onChange={onServiceInfoChange}
-                    />
-                  </Col>
-                  <Col xs="12" sm="4">
-                    <Input
-                      type="date"
-                      name="service_end_time"
-                      onChange={onServiceInfoChange}
-                    />
+                  <Col sm="6" xs="12">
+                    <Row>
+                      <Col xs="12" sm="12" md="12">
+                        เริ่ม:
+                        <Input
+                          type="datetime-local"
+                          name="service_start_time"
+                          min={startDate1}
+                          max={endDate1}
+                          onChange={onServiceInfoChange}
+                        />
+                      </Col>
+                      <Col xs="12" sm="12" md="12">
+                        ถึง:
+                        <Input
+                          type="datetime-local"
+                          name="service_end_time"
+                          min={startDate2}
+                          max={endDate2}
+                          onChange={onServiceInfoChange}
+                        />
+                      </Col>
+                    </Row>
                   </Col>
                 </Row>
               </FormGroup>
@@ -223,193 +417,246 @@ export default function ServiceForm() {
                       isOpen={dropdownTypeOpen}
                       toggle={toggleType}
                     >
-                      <DropdownToggle caret size="sm">
-                        {serviceInfo.service_meal_type === null
-                          ? "เลือกประเภทอาหาร"
-                          : serviceInfo.service_meal_type}
+                      <DropdownToggle
+                        caret
+                        size="sm"
+                        style={{
+                          backgroundColor: "#43978d",
+                          color: "white",
+                          fontSize: "14px",
+                        }}
+                      >
+                        {customerMealLabel}
                       </DropdownToggle>
                       <DropdownMenu>{mealTypeElements}</DropdownMenu>
                     </ButtonDropdown>
                   </Col>
                 </Row>
               </FormGroup>
+
               <FormGroup>
                 <Row>
                   <Col xs="12" sm="4">
-                    ความถี่ในการให้อาหาร
-                  </Col>
-                  <Col xs="12" sm="4">
-                    <ButtonDropdown
-                      isOpen={dropdownFreqOpen}
-                      toggle={toggleFreq}
-                    >
-                      <DropdownToggle caret size="sm">
-                        {serviceInfo.service_meal_per_day === null
-                          ? "เลือกความถี่ในการให้อาหาร"
-                          : serviceInfo.service_meal_per_day + " ครั้ง/วัน"}
-                      </DropdownToggle>
-                      <DropdownMenu>{mealPerDayElements}</DropdownMenu>
-                    </ButtonDropdown>
-                  </Col>
-                </Row>
-              </FormGroup>
-              <FormGroup>
-                <Row>
-                  <Col xs="12" sm="4">
-                    ปริมาณอาหารต่อวัน
+                    ปริมาณอาหารต่อมื้อ
                   </Col>
                   <Col xs="7" sm="4">
                     <Input
                       type="range"
                       id="weightRange"
                       name="service_meal_weight"
-                      min="30"
-                      max="200"
+                      min="10"
+                      max="100"
                       value={serviceInfo.service_meal_weight}
                       onChange={onServiceInfoChange}
+                      disabled={!serviceInfo.service_meal_type}
                     />
                   </Col>
                   <Col xs="5" sm="4">
-                    {serviceInfo.service_meal_weight} กรัม/วัน
+                    {serviceInfo.service_meal_weight} กรัม/มื้อ
                   </Col>
                 </Row>
               </FormGroup>
             </div>
-            <FormGroup>
-              <h4>บริการเพิ่มเติม</h4>
-            </FormGroup>
+            {isWalk || isGet || isDeliver || isBath ? (
+              <FormGroup>
+                <h4>บริการเพิ่มเติม</h4>
+              </FormGroup>
+            ) : (
+              <h4>
+                <Skeleton style={{ width: "150px" }} />
+              </h4>
+            )}
             <div className="list-service">
-              <FormGroup>
-                <Row>
-                  <Col xs="12" sm="4">
-                    พาสุนัขไปเดินเล่น
-                  </Col>
-                  <Col xs="6" sm="4">
-                    <CustomInput
-                      type="radio"
-                      id="walkRadio"
-                      name="service_is_walk"
-                      value="true"
-                      label="ต้องการ"
-                      onChange={onServiceInfoChange}
-                    />
-                  </Col>
-                  <Col xs="6" sm="4">
-                    <CustomInput
-                      type="radio"
-                      id="walkRadio2"
-                      name="service_is_walk"
-                      value="false"
-                      label="ไม่ต้องการ"
-                      onChange={onServiceInfoChange}
-                    />
-                  </Col>
-                </Row>
-              </FormGroup>
-              <FormGroup>
-                <Row>
-                  <Col xs="12" sm="4">
-                    ให้ผู้รับฝากไปรับสุนัข
-                  </Col>
-                  <Col xs="6" sm="4">
-                    <CustomInput
-                      type="radio"
-                      id="getDogRadio"
-                      name="service_is_get_dog"
-                      value="true"
-                      label="ต้องการ"
-                      onChange={onServiceInfoChange}
-                    />
-                  </Col>
-                  <Col xs="6" sm="4">
-                    <CustomInput
-                      type="radio"
-                      id="getDogRadio2"
-                      name="service_is_get_dog"
-                      value="false"
-                      label="ไม่ต้องการ"
-                      onChange={onServiceInfoChange}
-                    />
-                  </Col>
-                </Row>
-              </FormGroup>
-              <FormGroup>
-                <Row>
-                  <Col xs="12" sm="4">
-                    ให้ผู้รับฝากไปส่งสุนัข
-                  </Col>
-                  <Col xs="6" sm="4">
-                    <CustomInput
-                      type="radio"
-                      id="sendDogRadio"
-                      name="service_is_deliver_dog"
-                      value="true"
-                      label="ต้องการ"
-                      onChange={onServiceInfoChange}
-                    />
-                  </Col>
-                  <Col xs="6" sm="4">
-                    <CustomInput
-                      type="radio"
-                      id="sendDogRadio2"
-                      name="service_is_deliver_dog"
-                      value="false"
-                      label="ไม่ต้องการ"
-                      onChange={onServiceInfoChange}
-                    />
-                  </Col>
-                </Row>
-              </FormGroup>
-              <FormGroup>
-                <Row>
-                  <Col xs="12" sm="4">
-                    อาบน้ำสุนัข
-                  </Col>
-                  <Col xs="6" sm="4">
-                    <CustomInput
-                      type="radio"
-                      id="bathDogRadio"
-                      name="service_is_dog_bath"
-                      value="true"
-                      label="ต้องการ"
-                      onChange={onServiceInfoChange}
-                    />
-                  </Col>
-                  <Col xs="6" sm="4">
-                    <CustomInput
-                      type="radio"
-                      id="bathDogRadio2"
-                      name="service_is_dog_bath"
-                      value="false"
-                      label="ไม่ต้องการ"
-                      onChange={onServiceInfoChange}
-                    />
-                  </Col>
-                </Row>
-              </FormGroup>
+              {isWalk ? (
+                <FormGroup>
+                  <Row>
+                    <Col xs="12" sm="4">
+                      พาสุนัขไปเดินเล่น
+                    </Col>
+                    <Col xs="6" sm="4">
+                      <CustomInput
+                        type="radio"
+                        id="walkRadio"
+                        name="is_dog_walk"
+                        value="true"
+                        label="ต้องการ"
+                        checked={serviceInfo.is_dog_walk}
+                        onChange={onServiceInfoChange}
+                      />
+                    </Col>
+                    <Col xs="6" sm="4">
+                      <CustomInput
+                        type="radio"
+                        id="walkRadio2"
+                        name="is_dog_walk"
+                        value="false"
+                        label="ไม่ต้องการ"
+                        checked={!serviceInfo.is_dog_walk}
+                        onChange={onServiceInfoChange}
+                      />
+                    </Col>
+                  </Row>
+                </FormGroup>
+              ) : null}
+              {isGet ? (
+                <FormGroup>
+                  <Row>
+                    <Col xs="12" sm="4">
+                      ให้ผู้รับฝากไปรับสุนัข
+                    </Col>
+                    <Col xs="6" sm="4">
+                      <CustomInput
+                        type="radio"
+                        id="getDogRadio"
+                        name="is_get_dog"
+                        value="true"
+                        label="ต้องการ"
+                        checked={serviceInfo.is_get_dog}
+                        onChange={onServiceInfoChange}
+                      />
+                    </Col>
+                    <Col xs="6" sm="4">
+                      <CustomInput
+                        type="radio"
+                        id="getDogRadio2"
+                        name="is_get_dog"
+                        value="false"
+                        label="ไม่ต้องการ"
+                        checked={!serviceInfo.is_get_dog}
+                        onChange={onServiceInfoChange}
+                      />
+                    </Col>
+                  </Row>
+                </FormGroup>
+              ) : null}
+              {isDeliver ? (
+                <FormGroup>
+                  <Row>
+                    <Col xs="12" sm="4">
+                      ให้ผู้รับฝากไปส่งสุนัข
+                    </Col>
+                    <Col xs="6" sm="4">
+                      <CustomInput
+                        type="radio"
+                        id="sendDogRadio"
+                        name="is_delivery_dog"
+                        value="true"
+                        label="ต้องการ"
+                        checked={serviceInfo.is_delivery_dog}
+                        onChange={onServiceInfoChange}
+                      />
+                    </Col>
+                    <Col xs="6" sm="4">
+                      <CustomInput
+                        type="radio"
+                        id="sendDogRadio2"
+                        name="is_delivery_dog"
+                        value="false"
+                        label="ไม่ต้องการ"
+                        checked={!serviceInfo.is_delivery_dog}
+                        onChange={onServiceInfoChange}
+                      />
+                    </Col>
+                  </Row>
+                </FormGroup>
+              ) : null}
+              {isBath ? (
+                <FormGroup>
+                  <Row>
+                    <Col xs="12" sm="4">
+                      อาบน้ำสุนัข
+                    </Col>
+                    <Col xs="6" sm="4">
+                      <CustomInput
+                        type="radio"
+                        id="bathDogRadio"
+                        name="is_bath_dog"
+                        value="true"
+                        label="ต้องการ"
+                        checked={serviceInfo.is_bath_dog}
+                        onChange={onServiceInfoChange}
+                      />
+                    </Col>
+                    <Col xs="6" sm="4">
+                      <CustomInput
+                        type="radio"
+                        id="bathDogRadio2"
+                        name="is_bath_dog"
+                        value="false"
+                        label="ไม่ต้องการ"
+                        checked={!serviceInfo.is_bath_dog}
+                        onChange={onServiceInfoChange}
+                      />
+                    </Col>
+                  </Row>
+                </FormGroup>
+              ) : null}
             </div>
             <FormGroup>
-              <Row>
-                <h4>รายละเอียดเพิ่มเติมเพิ่มเติม</h4>
-                <Input
-                  rows="5"
-                  type="textarea"
-                  placeholder="ระบุรายละเอียดเพิ่มเติม"
-                  name="service_bio"
-                  value={serviceInfo.service_bio}
-                  onChange={onServiceInfoChange}
-                />
-              </Row>
-              <Row></Row>
+              <div>
+                <h4>รายละเอียดเพิ่มเติม</h4>
+                <div style={{ paddingLeft: "25px", paddingRight: "25px" }}>
+                  <Input
+                    rows="5"
+                    type="textarea"
+                    placeholder="ระบุรายละเอียดเพิ่มเติม"
+                    name="service_bio"
+                    value={serviceInfo.service_bio}
+                    onChange={onServiceInfoChange}
+                  />
+                </div>
+              </div>
             </FormGroup>
           </Form>
         </Col>
-        <Col xs="12" sm="12" md="12" lg="4">
-          <ServiceDetail serviceInfo={serviceInfo} />
+        <Col
+          xs="12"
+          sm="12"
+          md="12"
+          lg="4"
+          style={{ paddingTop: "20px", paddingLeft: "50px" }}
+        >
+          <ServiceDetail
+            serviceInfo={serviceInfo}
+            customerMealLabel={customerMealLabel}
+            listDogFeedingTime={listDogFeedingTime}
+            mealPrice={mealPrice}
+            hostService={hostService}
+          />
 
           <Row>
+            <AlertModal
+              message={"ไม่สามารถสร้างบริการได้ ลองใหม่อีกครั้ง"}
+              alertModal={modalError}
+              alertToggle={toggleError}
+            />
             <Col align="right">
-              <Button onClick={onServiceSubmit}>ยืนยัน</Button>
+              <Button
+                onClick={toggleSubmit}
+                style={{ backgroundColor: "#264d59" }}
+                disabled={!submitable}
+              >
+                ยืนยัน
+              </Button>
+              <Modal isOpen={modalSubmit} toggle={toggleSubmit}>
+                <ModalHeader>
+                  คุณต้องการยืนยันการสร้างบริการใช่หรือไม่
+                </ModalHeader>
+                <ModalFooter>
+                  <Button
+                    onClick={(e) => {
+                      onServiceSubmit(e);
+                      toggleSubmit();
+                    }}
+                    style={{ backgroundColor: "#264d59" }}
+                  >
+                    ยืนยัน
+                  </Button>{" "}
+                  <Button color="danger" onClick={toggleSubmit}>
+                    ยกเลิก
+                  </Button>
+                </ModalFooter>
+              </Modal>
             </Col>
           </Row>
         </Col>

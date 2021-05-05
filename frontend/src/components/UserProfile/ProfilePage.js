@@ -4,18 +4,23 @@ import ProfileCard from "./ProfileCard";
 import { Row, Col, Container } from "reactstrap";
 import NavbarIsAuth from "../Navbar/NavbarIsAuth";
 import SideBar from "../sidebar/SideBar";
-import ProfileAPI from "./ProfileAPI";
+// import ProfileAPI from "./ProfileAPI";
 import { useCookies } from "react-cookie";
 import NotFound from "../Handle/NotFound";
-import { useHistory } from "react-router";
-
+import {useHistory } from "react-router-dom";
+import HostAPI from "../API/HostAPI";
+import CustomerAPI from "../API/CustomerAPI";
+import AuthenAPI from "../API/AuthenAPI";
 export default function ProfilePage({ match }) {
   let history = useHistory();
   const [cookies, setcookies] = useCookies(["mytoken", "user_id"]);
   const [isOpen, setIsOpen] = useState(false);
-  const [Profile, setProfile] = useState({ name: "" });
+  // const [Profile, setProfile] = useState();
+  // const [dateJoin, setdateJoin] = useState()
   const [isOwned, setisOwned] = useState(false);
-  const [isCustomer, setisCustomer] = useState(false);
+  // const [isHost, setisHost] = useState(false);
+  const [Account, setAccount] = useState();
+  const [userIsHost, setuserIsHost] = useState(true)
   let path = match.params["profile_id"];
 
   const toggleSideBar = () => {
@@ -24,31 +29,33 @@ export default function ProfilePage({ match }) {
   };
 
   useEffect(() => {
-    ProfileAPI.fakeisOwned(path, cookies["user_id"]).then((res) => {
-      if (res.status === "200") {
+    if (!cookies["mytoken"]) {
+      history.push("/");
+      history.go(0);
+    } else {
+      if (path === cookies["user_id"]) {
         setisOwned(true);
-      } else if (res.status === "401") {
+      } else {
         setisOwned(false);
       }
-      ProfileAPI.fakeCustomerProfile(path)
-        .then((res) => {
-          setProfile(res);
-          setisCustomer(true);
-          // console.log(res)
-        })
-        .catch((error) => {
-          console.error(error);
-          ProfileAPI.fakeHostProfile(path)
-            .then((res) => {
-              setProfile(res);
-              setisCustomer(false);
-            })
-            .catch((error) => {
-              console.error(error);
-              history.push("/404");
-            });
-        });
-    });
+      AuthenAPI.getUserAllInfo(cookies["mytoken"], path).then((res) => {
+        console.log(res);
+        // setisHost(res.data.is_host)
+        // if(res.data.is_host){
+        //   setProfile(res.data.host)
+        // }else{
+        //   setProfile(res.data.customer)
+        // }
+
+        setAccount(res.data);
+
+        
+      });
+      AuthenAPI.getUserAllInfo(cookies["mytoken"], cookies["user_id"]).then(res=>{
+        console.log(res.data)
+        setuserIsHost(res.data.is_host)
+      })
+    }
   }, []);
 
   const [pageCollapse, setpageCollapse] = useState(true);
@@ -63,15 +70,21 @@ export default function ProfilePage({ match }) {
         <Container fluid="md">
           <ProfileCard
             pageCollapse={pageCollapse}
-            Profile={Profile}
-            isCustomer={isCustomer}
+            // Profile={Profile}
+            // isHost={isHost}
+            // dateJoin={dateJoin}
+            Account={Account}
+            isOwned={isOwned}
+            userIsHost={userIsHost}
           />
           <ProfileContent
             setpageCollapse={setpageCollapse}
-            Profile={Profile}
+            // Profile={Profile}
             isOwned={isOwned}
-            isCustomer={isCustomer}
+            // isHost={isHost}
             profileId={path}
+            Account={Account}
+            setAccount={setAccount}
           />
         </Container>
       </div>

@@ -2,16 +2,16 @@ import { Container, Label, Row, Col, Progress, Button } from "reactstrap";
 import "./ProgressPage.css";
 
 const progressLabel = [
-  "กำลังรอเริ่มบริการ",
-  "ถึงเวลาบริการแล้ว",
-  "ผู้รับฝากกำลังรอรับสุนัขของคุณ",
-  "กำลังดูแลสุนัขของคุณ",
-  "ครบกำหนดเวลาแล้ว กรุณามารับสุนัขของคุณ",
+  "กำลังรอคำตอบรับจากผู้รับฝาก",
+  "ผู้รับฝากกำลังรอรับสุนัข",
+  "กำลังรอการเริ่มบริการ",
+  "กำลังดูแลสุนัข",
+  "ครบกำหนดเวลาแล้ว กรุณามารับสุนัข",
   "บริการเสร็จสิ้นแล้ว",
-  "คุณได้ยกเลิกบริการแล้ว",
-  "",
+  "บริการได้ยกเลิกแล้ว",
+  "เลยเวลาบริการแล้ว",
 ];
-const color = ["warning", "info", "", "success", "danger"];
+const color = [ "success", "danger"];
 const gif = [
   "/waiting.gif",
   "/congrat.gif",
@@ -27,7 +27,11 @@ export default function ProgressBar({
   labelIndex,
   gifIndex,
   handleProgress,
+  ServiceInfo
 }) {
+
+
+
   return (
     <div >
 
@@ -40,19 +44,13 @@ export default function ProgressBar({
           // style={{borderRadius:"50%", border:"10px solid white", backgroundColor:"white",objectFit:"contain"}}
         />
         <br/>
-        <h2 className="fontSize_h2">{progressValue / 16.67}/6</h2>
+        {/* <h2 className="fontSize_h2">{progressValue / 16.67}/6</h2> */}
 
         <Progress animated color={color[colorIndex]} value={progressValue}>
         {/* {progressValue}% */}
         </Progress>
       </Container>
 
-      <Button
-        onClick={handleProgress}
-        style={{ position: "fixed", bottom: 0, right: 0,zIndex:"0" }}
-      >
-        Progress
-      </Button>
 
     </div>
   );

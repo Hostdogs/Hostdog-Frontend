@@ -14,42 +14,32 @@ import {
 } from "reactstrap";
 
 import ShowAvailableDate from "./ShowAvailableDate";
+import ServiceImgHost from "./ServiceImgHost";
+import ServiceMealHost from "./ServiceMealHost";
 
-const startHostService = {
-  price_dog_walk: 50,
-  price_get_dog: 20,
-  price_delivery_dog: 20,
-  price_bath_dog: 100,
-  dog_walk_enable: true,
-  get_dog_enable: true,
-  delivery_dog_enable: true,
-  bath_dog_enable: true,
-  deposit_price: 300,
-  late_price: 300,
-};
+export default function ServiceDetailBox(props) {
+  const { serviceDetail, newAvailableDates, profileId } = props;
 
-export default function ServiceDetailBox() {
-  const [serviceDetail, setServiceDetail] = useState(startHostService);
   const etcServicesDetail = [
     {
-      name: "ราคาพาสุนัขไปเดินเล่น",
+      name: "พาสุนัขไปเดินเล่น",
       price: serviceDetail.price_dog_walk,
-      enable: serviceDetail.dog_walk_enable,
+      enable: serviceDetail.enable_dog_walk,
     },
     {
-      name: "ราคาไปรับสุนัขต่อกิโลเมตร",
+      name: "ไปรับสุนัขเมื่อเริ่มบริการ",
       price: serviceDetail.price_get_dog,
-      enable: serviceDetail.get_dog_enable,
+      enable: serviceDetail.enable_get_dog,
     },
     {
-      name: "ราคาไปส่งสุนัขต่อกิโลเมตร",
-      price: serviceDetail.price_delivery_dog,
-      enable: serviceDetail.delivery_dog_enable,
+      name: "ไปส่งสุนัขเมื่อสิ้นสุดบริการ",
+      price: serviceDetail.price_deliver_dog,
+      enable: serviceDetail.enable_delivery_dog,
     },
     {
-      name: "ราคาอาบน้ำสุนัข",
+      name: "อาบน้ำสุนัข",
       price: serviceDetail.price_bath_dog,
-      enable: serviceDetail.bath_dog_enable,
+      enable: serviceDetail.enable_bath_dog,
     },
   ];
 
@@ -77,9 +67,10 @@ export default function ServiceDetailBox() {
           <Row>
             <Col xs="12" sm="12" md="12" lg="6" style={{ marginTop: "15px" }}>
               <div
+                className="col-left-manage"
                 style={{
                   backgroundColor: "#43978d",
-                  padding: "10px 10px",
+                  padding: "20px 20px",
                   color: "white",
                   borderRadius: "3%",
                 }}
@@ -106,14 +97,6 @@ export default function ServiceDetailBox() {
                       <Col xs="auto">{serviceDetail.deposit_price} บาท</Col>
                     </Row>
                   </FormGroup>
-                  <FormGroup>
-                    <Row>
-                      <Col xs="8" sm="5" lg="6">
-                        ค่ามัดจำในการฝากสุนัข
-                      </Col>
-                      <Col xs="auto">{serviceDetail.deposit_price} บาท</Col>
-                    </Row>
-                  </FormGroup>
                 </div>
                 <FormGroup>
                   <Row>
@@ -129,14 +112,29 @@ export default function ServiceDetailBox() {
                       }}
                     >
                       <br />
-                      <ShowAvailableDate />
+                      <ShowAvailableDate
+                        newAvailableDates={newAvailableDates}
+                      />
                     </Col>
                   </Row>
                 </FormGroup>
               </div>
             </Col>
 
-            <Col xs="12" sm="12" md="12" lg="6" style={{ marginTop: "15px" }}>
+            <Col
+              xs="12"
+              sm="12"
+              md="12"
+              lg="6"
+              className="col-right-manage"
+              style={{
+                marginTop: "15px",
+                backgroundColor: "#43978d",
+                padding: "20px 20px",
+                color: "white",
+                borderRadius: "3%",
+              }}
+            >
               <div
                 style={{
                   backgroundColor: "#43978d",
@@ -162,7 +160,27 @@ export default function ServiceDetailBox() {
                 <div className="list-service">{etcServicesElement}</div>
               </div>
             </Col>
+            <Col xs="12" sm="12" md="12" lg="6" style={{ marginTop: "15px" }}>
+              <ServiceImgHost profileId={profileId} />
+            </Col>
+            <Col
+              xs="12"
+              sm="12"
+              md="12"
+              lg="6"
+              className="col-bottom-right"
+              style={{
+                marginTop: "15px",
+                backgroundColor: "#43978d",
+                padding: "15px 15px",
+                color: "white",
+                borderRadius: "3%",
+              }}
+            >
+              <ServiceMealHost profileId={profileId} />
+            </Col>
           </Row>
+          <br/>
         </div>
       </Form>
     </div>

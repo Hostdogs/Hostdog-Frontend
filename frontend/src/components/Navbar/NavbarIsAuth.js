@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
+import Skeleton from "react-loading-skeleton";
 import {
   Collapse,
   Navbar,
@@ -12,24 +14,74 @@ import {
   DropdownMenu,
   DropdownItem,
   NavbarText,
-  Button
-} from 'reactstrap';
+  Button,
+} from "reactstrap";
+import AuthenAPI from "../API/AuthenAPI";
 
+export default function NavbarIsAuth({ toggleSideBar }) {
+  const [cookie, setcookie] = useCookies(["mytoken", "user_id"]);
+  const [Name, setName] = useState();
+  const [img, setimg] = useState();
+  const placeholderPath = "/user_placeholder.svg";
+  const urllink = `/profile/${cookie["user_id"]}`;
+  const [Account, setAccount] = useState()
+  useEffect(() => {
+    if (cookie["user_id"]) {
+      AuthenAPI.getUserAllInfo(cookie["mytoken"], cookie["user_id"]).then(
+        (res) => {
+          // console.log(res)
+          setAccount(res.data)
+        }
+      );
+    }
 
+  }, [cookie]);
+  useEffect(() => {
+    if (Account) {
+      if (Account.is_host) {
+        setName(Account.host.first_name + " " + Account.host.last_name);
+        setimg(Account.host.picture)
+      } else {
+        setName(
+          Account.customer.first_name + " " + Account.customer.last_name
+        );
+        setimg(Account.customer.picture)
+      }
+    }
 
-export default function NavbarIsAuth({toggleSideBar}) {
-  
-
+  }, [Account])
   return (
     <div>
       <Navbar
-        style={{ backgroundColor: "#f9e07f", position: "fixed", width:"100%", zIndex:"3" ,height:"70px"}}
+        style={{
+          backgroundColor: "#f9e07f",
+          position: "fixed",
+          width: "100%",
+          zIndex: "3",
+          height: "70px",
+        }}
         light
       >
         <NavbarToggler onClick={toggleSideBar} className="mr-2" />
         <NavbarBrand href="/" className="mr-auto">
-        <h3 style={{color:"#264d59", margin:"5%"}}>HOSTDOG</h3>
+          <h3 style={{ color: "#264d59", margin: "5%" }}>HOSTDOG</h3>
         </NavbarBrand>
+        <Nav className="mr-auto"></Nav>
+        <div>
+          <w className="display_desktop">{Name||<Skeleton style={{ width:"120px"}}/>} </w>
+          <a href={urllink}>
+            <img
+              src={img || placeholderPath}
+              class="img-responsive center-block"
+              style={{
+                borderRadius: "50%",
+                width: "40px",
+                height: "40px",
+                objectFit: "cover",
+              }}
+            />
+          </a>
+        </div>
       </Navbar>
     </div>
   );

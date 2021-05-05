@@ -8,20 +8,22 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-  Spinner
+  Spinner,
+  Label
 } from "reactstrap";
 import { useState, useEffect } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import SearchAPI from "./SearchAPI";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFilter } from "@fortawesome/free-solid-svg-icons";
 
-export default function HostList() {
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFilter, faSortAmountDown } from "@fortawesome/free-solid-svg-icons";
+import Loading from "../Handle/Loading";
+
+export default function HostList({ hostData, setHostData, isLoad }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const toggle = () => setDropdownOpen((prevState) => !prevState);
 
-  const [hostData, setHostData] = useState([]);
+  // const [hostData, setHostData] = useState([]);
   const [ShowedHost, setShowedHost] = useState([])
   const [hasMore, setHasMore] = useState(true);
 
@@ -30,26 +32,13 @@ export default function HostList() {
   }
 
   useEffect(() => {
-    console.log("Hostlist Invoked")
-    SearchAPI.fakeGetHostInformation(hostData.length).then(res => {
-      setHostData(res)
-    })
+    // console.log("Hostlist Invoked")
+    // SearchAPI.fakeGetHostInformation(hostData.length).then(res => {
+    //   setHostData(res)
+    // })
   }, [])
 
-  // const showMoreData = () => {
-  //   console.log("Showmore trigger")
-  //   setTimeout(() => {
-  //     if (hostData.length > 0) {
-  //       setShowedHost(ShowedHost.concat(hostData[0]))
-  //       hostData.shift()
-  //     } else {
-  //       setHasMore(false)
-  //     }
-  //   }, 1000);
 
-
-
-  // };
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -58,41 +47,41 @@ export default function HostList() {
     });
   };
 
-  const handleSort = (a,b) =>{
-    
-    if(selectedSort%2===0){
-      if(a[sortcmp[selectedSort]]>b[sortcmp[selectedSort]]){
+  const handleSort = (a, b) => {
+
+    if (selectedSort % 2 === 0) {
+      if (a[sortcmp[selectedSort]] > b[sortcmp[selectedSort]]) {
         // console.log("rtn 1")
         return 1
       }
-      else if(a[sortcmp[selectedSort]]===b[sortcmp[selectedSort]]){
+      else if (a[sortcmp[selectedSort]] === b[sortcmp[selectedSort]]) {
         // console.log("rtn 0")
         return 0
       }
-      else{
+      else {
         // console.log("rtn -1")
         return -1
       }
-    }else{
-      if(a[sortcmp[selectedSort]]>b[sortcmp[selectedSort]]){
+    } else {
+      if (a[sortcmp[selectedSort]] > b[sortcmp[selectedSort]]) {
         // console.log("rtn 1")
         return -1
       }
-      else if(a[sortcmp[selectedSort]]===b[sortcmp[selectedSort]]){
+      else if (a[sortcmp[selectedSort]] === b[sortcmp[selectedSort]]) {
         // console.log("rtn 0")
         return 0
       }
-      else{
+      else {
         // console.log("rtn -1")
         return 1
       }
     }
-    
 
-    
+
+
   }
-  const sortcmp = ["displace","host_rating","host_area","host_area"]
-  const sortingList = ["ระยะทางใกล้ที่สุด","คะแนนรีวิวสูงที่สุด","พื้นที่เลี้ยงเล็กที่สุด","พื้นที่เลี้ยงใหญ่ที่สุด","ราคา"]
+  const sortcmp = ["distance", "host_rating", "host_hosted_count", "host_hosted_count"]
+  const sortingList = ["ระยะทางใกล้ที่สุด", "คะแนนรีวิวสูงที่สุด", "ประวัติการรับฝากน้อยที่สุด","ประวัติการรับฝากมากที่สุด","อัตราค่าบริการต่ำถูกที่สุด", "อัตราค่าบริการแพงที่สุด"]
   const [selectedSort, setselectedSort] = useState(0)
   // console.log(selectedSort)
   // useEffect(() => {
@@ -100,47 +89,51 @@ export default function HostList() {
   // }, [selectedSort])
   return (
     <>
-      {/* <InfiniteScroll
-        dataLength={ShowedHost.length}
-        next={showMoreData}
-        hasMore={hasMore}
-        loader={<h4 style={{ textAlign: "center" }}> <Spinner size="lg" color="warning" /></h4>}
-        endMessage={
-          <p style={{ textAlign: "center" }}>
-            <b>-------</b>
-          </p>
-        }
-        style={{ overflowX: "hidden" }}
-      > */}
-        <Container className="host-container" fluid="xl" >
-          <Dropdown isOpen={dropdownOpen} toggle={toggle}>
-            <DropdownToggle caret><FontAwesomeIcon icon={faFilter}/> {sortingList[selectedSort]}</DropdownToggle>
-            <DropdownMenu>
-              <DropdownItem onClick={()=>setselectedSort(0)}>{sortingList[0]}</DropdownItem>
-              <DropdownItem onClick={()=>setselectedSort(1)}>{sortingList[1]}</DropdownItem>
-              <DropdownItem onClick={()=>setselectedSort(2)}>{sortingList[2]}</DropdownItem>
-              <DropdownItem onClick={()=>setselectedSort(3)}>{sortingList[3]}</DropdownItem>
-            </DropdownMenu>
-          </Dropdown>
-          <br />
-          {hostData.sort(
-            (a,b)=> handleSort(a,b)
-          )
-          .map((hd) => (
-            <div>
-              <Host key={hd.id} host={hd} />
-              <br />
-            </div>
-          ))}
 
-          <Button
-            onClick={scrollToTop}
-            style={{ position: "fixed", bottom: 0, right: 0 }}
-          >
-            ขึ้นข้างบน
+      <Container className="host-container" fluid="xl"  >
+        <Dropdown isOpen={dropdownOpen} toggle={toggle} style={{ marginTop: "10px", marginBottom: "10px" }}>
+          <DropdownToggle caret style={{backgroundColor:"#f9e07f", border:"3px solid #264d59", color:"#264d59"}}><FontAwesomeIcon icon={faSortAmountDown} /> {sortingList[selectedSort]}</DropdownToggle>
+          <DropdownMenu>
+            <DropdownItem onClick={() => setselectedSort(0)}>{sortingList[0]}</DropdownItem>
+            <DropdownItem onClick={() => setselectedSort(1)}>{sortingList[1]}</DropdownItem>
+            <DropdownItem onClick={() => setselectedSort(2)}>{sortingList[2]}</DropdownItem>
+            <DropdownItem onClick={() => setselectedSort(3)}>{sortingList[3]}</DropdownItem>
+          </DropdownMenu>
+        </Dropdown>
+        {isLoad && hostData.length === 0 ? (
+          <Container style={{ height: "5vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "space-around" }}>
+            <Label>ขออภัย เหมือนจะไม่มีผู้ฝากตามที่คุณต้องการ</Label>
+
+          </Container>
+        ) : (null)}
+        {isLoad && hostData.length > 0 ? (<div>
+          {hostData.sort(
+            (a, b) => handleSort(a, b)
+          )
+            .map((hd) => (
+              <div>
+                <Host key={hd.id} host={hd} />
+                <br />
+              </div>
+            ))}
+        </div>
+
+        ) : (null)}
+
+        {!isLoad ? (<Loading />) : (null)}
+        <div style={{ textAlign: "center"}}>
+          <Label>- - - - - - - - - - - - - - - - - - </Label>
+        </div>
+
+
+        <Button
+          onClick={scrollToTop}
+          style={{ position: "fixed", bottom: 0, right: 0, backgroundColor:"#f9e07f", border:"none", color:"black" }}
+        >
+          ขึ้นข้างบน
           </Button>
-        </Container>
-      {/* </InfiniteScroll> */}
+      </Container>
+
     </>
   );
 }

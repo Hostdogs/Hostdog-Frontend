@@ -14,9 +14,9 @@
 }
 
 .Button2 {
-  width: 150px;
+  width: 180;
   position: absolute;
-  right: 0px;
+  right: 10px;
 }
 
 @media only screen and (max-width: 576px) {
@@ -35,19 +35,26 @@
   .fontSizeRepo3 {
     font-size: 23px;
   }
-}
 
 @media all and (max-width: 575px) {
   .mobile-br {
     display: inline;
     margin-top: 10px;
   }
+  .Responsivedouble_br{
+    display: inline;
+  }
+}
 }
 @media all and (min-width: 576px) {
   .mobile-br {
     display: none;
   }
+  .Responsivedouble_br{
+    display: none;
+  }
 }
+
 
 @media only screen and (max-width: 399px) {
   .Button1 {

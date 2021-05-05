@@ -11,39 +11,17 @@ import {
 import DogProfileAddForm from "./DogProfileAddForm";
 import DogProfileList from "./DogProfileList";
 import axios from "axios";
-const startDogInfo = [
-  {
-    customer: "1",
-    dog_name: "แพท",
-    gender: "male",
-    dog_dob: "2020-01-01",
-    dog_breed: "บางขุนเทียน",
-    dog_weight: "10",
-    dog_status: "",
-    dog_bio: "5555555555555555555555",
-  },
-  {
-    customer: "1",
-    dog_name: "แพท",
-    gender: "male",
-    dog_dob: "2020-01-01",
-    dog_breed: "บางขุนเทียน",
-    dog_weight: "10",
-    dog_status: "",
-    dog_bio: "5555555555555555555555",
-  },
-];
-export default function DogProfileTab({ profileId }) {
-  const [dogInfos, setDogInfos] = useState(startDogInfo);
+import { useCookies } from "react-cookie";
+import DogAPI from "../../../API/DogAPI";
 
-  async function getDogs() {
-    const resp = await axios.get(
-      `http://127.0.0.1:8000/api/profilecustomer/${profileId}/`
-    );
-    setDogInfos(resp.data.dogs);
-  }
+export default function DogProfileTab({ profileId, isOwned ,setdogCount}) {
+  const [dogInfos, setDogInfos] = useState([]);
+  const [cookies, setCookie] = useCookies(["mytoken", "user_id"]);
+
   useEffect(() => {
-    getDogs();
+    DogAPI.GetDog(cookies["mytoken"], profileId).then((resp) => {
+      setDogInfos(resp.data);
+    });
   }, []);
 
   const updateDogInfo = (dogInfo) => {
@@ -61,6 +39,7 @@ export default function DogProfileTab({ profileId }) {
     console.log(dogInfo);
     const new_dogInfos = [...dogInfos, dogInfo];
     setDogInfos(new_dogInfos);
+    setdogCount(new_dogInfos.length)
   };
 
   const deleteDogInfo = (dogInfo) => {
@@ -69,18 +48,31 @@ export default function DogProfileTab({ profileId }) {
     });
 
     setDogInfos(new_dogInfos);
+    setdogCount(new_dogInfos.length)
   };
 
   return (
     <div>
-      <ButtonGroup style={{ marginTop: "9px" }}>
-        <DogProfileAddForm labelBtn="เพิ่มสุนัข" addDogInfo={addDogInfo} />
-      </ButtonGroup>
-      <hr />
+      {isOwned ? (
+        <div>
+          <ButtonGroup style={{ marginTop: "9px" }}>
+            <DogProfileAddForm
+              labelBtn="เพิ่มสุนัข"
+              addDogInfo={addDogInfo}
+              isOwned={isOwned}
+            />
+          </ButtonGroup>
+          <hr />
+        </div>
+      ) : (
+        <br />
+      )}
+
       <DogProfileList
         dogInfos={dogInfos}
         updateDogInfo={updateDogInfo}
         deleteDogInfo={deleteDogInfo}
+        isOwned={isOwned}
       />
     </div>
   );

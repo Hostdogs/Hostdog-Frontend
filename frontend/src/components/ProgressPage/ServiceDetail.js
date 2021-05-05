@@ -203,9 +203,9 @@ export default function ServiceDetail({
 
   return (
     <div>
-      <Container className="detail-container">
+      <Container className="detail-container" >
         <Card style={{ borderRadius: "10px", border: "none" }}>
-          <Container>
+          <Container >
             <div
               className="UpsideText_1"
               style={{ position: "absolute", right: "10px" }}

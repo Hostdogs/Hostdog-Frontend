@@ -213,7 +213,7 @@ export default function ServiceForm({ host, customerAccount, hostService, setisL
     } else if (customerDog.gender === "Female") {
       gender = "เพศ : เมีย";
     }
-    console.log(serviceInfo)
+    // console.log(serviceInfo)
     return (
       <Card style={{ borderRadius: "0" }}>
         <CardImg style={{ objectFit: "contain", width: "100%", height: "200px", textAlign: "center" }} src={customerDog.picture} />
@@ -256,8 +256,8 @@ export default function ServiceForm({ host, customerAccount, hostService, setisL
 
   function onServiceSubmit(event) {
     event.preventDefault();
-    console.log("serviceInfo");
-    console.log(serviceInfo);
+    // console.log("serviceInfo");
+    // console.log(serviceInfo);
     setisLoadScreen(true)
     ServiceAPI.createService(cookies.mytoken, serviceInfo)
       .then((response) => {

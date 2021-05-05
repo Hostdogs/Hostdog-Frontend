@@ -174,6 +174,7 @@ export default function ServiceForm({
     } else {
       setsubmitable(false);
     }
+    console.log(serviceInfo.service_start_time);
   }, [serviceInfo]);
 
   function changeValue(name, value) {
@@ -181,6 +182,8 @@ export default function ServiceForm({
       return true;
     } else if (value === "false" || value === false) {
       return false;
+    } else if (name === "service_start_time" || name === "service_end_time") {
+      return value + ":00";
     } else if (!isNaN(value) && name !== "service_bio" && value !== "") {
       return Number(value);
     } else {
@@ -292,7 +295,7 @@ export default function ServiceForm({
     event.preventDefault();
     // console.log("serviceInfo");
     // console.log(serviceInfo);
-    setisLoadScreen(true)
+    setisLoadScreen(true);
     ServiceAPI.createService(cookies.mytoken, serviceInfo)
       .then((response) => {
         console.log(response);

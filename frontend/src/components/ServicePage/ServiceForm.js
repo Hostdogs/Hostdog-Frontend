@@ -36,12 +36,17 @@ import HostAvailableDateAPI from "../API/HostAvailableDateAPI";
 import { useCookies } from "react-cookie";
 import AlertModal from "../ProgressPage/AlertModal";
 import moment from "moment-timezone";
-import { useHistory } from "react-router-dom"
+import { useHistory } from "react-router-dom";
 import LoadingScreen from "../Handle/LoadingScreen";
 import Skeleton from "react-loading-skeleton";
 import AvailableHost from "../SearchHost/AvailableHost";
-export default function ServiceForm({ host, customerAccount, hostService, setisLoadScreen }) {
-  let history = useHistory()
+export default function ServiceForm({
+  host,
+  customerAccount,
+  hostService,
+  setisLoadScreen,
+}) {
+  let history = useHistory();
   const [cookies, setcookies] = useCookies(["mytoken", "user_id"]);
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
@@ -60,7 +65,7 @@ export default function ServiceForm({ host, customerAccount, hostService, setisL
   const [mealPrice, setMealPrice] = useState(0);
 
   const [customerDogs, setCustomerDogs] = useState([]);
-  const [customerImg, setcustomerImg] = useState()
+  const [customerImg, setcustomerImg] = useState();
   const [listDogFeedingTime, setListDogFeedingTime] = useState([]);
 
   const [dogName, setDogName] = useState(null);
@@ -70,13 +75,21 @@ export default function ServiceForm({ host, customerAccount, hostService, setisL
   const [isGet, setisGet] = useState(false);
 
   const [availableDates, setAvailableDates] = useState([]);
-  const [startDate, setStartDate] = useState(
+  const [startDate1, setStartDate1] = useState(
     moment(new Date()).format("YYYY-MM-DDTHH:mm")
   );
   let twoMonthsLater = new Date();
   twoMonthsLater.setMonth(twoMonthsLater.getMonth() + 2);
-  const [endDate, setEndDate] = useState(
+  const [endDate1, setEndDate1] = useState(
     moment(twoMonthsLater).format("YYYY-MM-DDT23:59")
+  );
+  const [startDate2, setStartDate2] = useState(
+    moment(new Date()).format("YYYY-MM-DDTHH:mm")
+  );
+  let twoMonthsLater2 = new Date();
+  twoMonthsLater2.setMonth(twoMonthsLater2.getMonth() + 2);
+  const [endDate2, setEndDate2] = useState(
+    moment(twoMonthsLater2).format("YYYY-MM-DDT23:59")
   );
 
   useEffect(() => {
@@ -89,8 +102,10 @@ export default function ServiceForm({ host, customerAccount, hostService, setisL
           return a.date.localeCompare(b.date);
         });
         setAvailableDates(sortDate);
-        setStartDate(sortDate[0].date + "T00:00");
-        setEndDate(sortDate[sortDate.length - 1].date + "T00:00");
+        setStartDate1(sortDate[0].date + "T00:00");
+        setEndDate1(sortDate[sortDate.length - 1].date + "T00:00");
+        setStartDate2(sortDate[0].date + "T00:00");
+        setEndDate2(sortDate[sortDate.length - 1].date + "T00:00");
         //console.log(sortDate[0].date + "T:00:00");
       });
     }
@@ -111,7 +126,6 @@ export default function ServiceForm({ host, customerAccount, hostService, setisL
     if (customerAccount) {
       setCustomerDogs(customerAccount.customer.dog_customer);
       setServiceInfo({ ...serviceInfo, customer: customerAccount.id });
-
     }
   }, [host, customerAccount, hostService]);
 
@@ -148,15 +162,19 @@ export default function ServiceForm({ host, customerAccount, hostService, setisL
     is_bath_dog: false,
     service_bio: "",
   });
-  const [submitable, setsubmitable] = useState(false)
+  const [submitable, setsubmitable] = useState(false);
   useEffect(() => {
-    if (serviceInfo.service_start_time && serviceInfo.service_end_time && serviceInfo.service_meal_type && serviceInfo.dog) {
-      setsubmitable(true)
+    if (
+      serviceInfo.service_start_time &&
+      serviceInfo.service_end_time &&
+      serviceInfo.service_meal_type &&
+      serviceInfo.dog
+    ) {
+      setsubmitable(true);
     } else {
-      setsubmitable(false)
+      setsubmitable(false);
     }
-  }, [serviceInfo])
-
+  }, [serviceInfo]);
 
   function changeValue(name, value) {
     if (value === "true" || value === true) {
@@ -171,12 +189,20 @@ export default function ServiceForm({ host, customerAccount, hostService, setisL
   }
   function onServiceInfoChange(event) {
     const { name, value } = event.target;
+
     setServiceInfo((prevServiceInfo) => {
       return {
         ...prevServiceInfo,
         [name]: changeValue(name, value),
       };
     });
+
+    if (name === "service_start_time") {
+      setStartDate2(value);
+    }
+    if (name === "service_end_time") {
+      setEndDate1(value);
+    }
 
     if (name === "service_meal_type") {
       for (var i = 0; i < mealTypes.length; i++) {
@@ -216,7 +242,15 @@ export default function ServiceForm({ host, customerAccount, hostService, setisL
     // console.log(serviceInfo)
     return (
       <Card style={{ borderRadius: "0" }}>
-        <CardImg style={{ objectFit: "contain", width: "100%", height: "200px", textAlign: "center" }} src={customerDog.picture} />
+        <CardImg
+          style={{
+            objectFit: "contain",
+            width: "100%",
+            height: "200px",
+            textAlign: "center",
+          }}
+          src={customerDog.picture}
+        />
         <CardBody>
           <CardTitle tag="h5"> {customerDog.dog_name}</CardTitle>
           <CardText>
@@ -262,13 +296,13 @@ export default function ServiceForm({ host, customerAccount, hostService, setisL
     ServiceAPI.createService(cookies.mytoken, serviceInfo)
       .then((response) => {
         console.log(response);
-        setisLoadScreen(false)
-        history.push("/history")
-        history.go(0)
+        setisLoadScreen(false);
+        history.push("/history");
+        history.go(0);
       })
       .catch((error) => {
         console.log(error.response);
-        setisLoadScreen(false)
+        setisLoadScreen(false);
         toggleError();
       });
   }
@@ -280,10 +314,8 @@ export default function ServiceForm({ host, customerAccount, hostService, setisL
 
   const toggleError = () => setModalError(!modalError);
 
-
   return (
     <div>
-
       <Row>
         <Col
           xs="12"
@@ -307,13 +339,23 @@ export default function ServiceForm({ host, customerAccount, hostService, setisL
                       <Label>{dogName}</Label>
                     ) : (
                       <Label disable>ยังไม่ได้เลือก</Label>
-                    )}
-                    {" "}
-                    <Button size="sm" onClick={toggle} style={{ backgroundColor: "#43978d", color: "white", fontSize: "14px" }}>
+                    )}{" "}
+                    <Button
+                      size="sm"
+                      onClick={toggle}
+                      style={{
+                        backgroundColor: "#43978d",
+                        color: "white",
+                        fontSize: "14px",
+                      }}
+                    >
                       เลือก
                     </Button>
                     <Modal isOpen={modal} fade={false} toggle={toggle}>
-                      <ModalHeader toggle={toggle} style={{ backgroundColor: "#f9e07f" }}>
+                      <ModalHeader
+                        toggle={toggle}
+                        style={{ backgroundColor: "#f9e07f" }}
+                      >
                         เลือกสุนัขของคุณ
                       </ModalHeader>
                       <ModalBody>{customerDogElements}</ModalBody>
@@ -334,9 +376,7 @@ export default function ServiceForm({ host, customerAccount, hostService, setisL
               <FormGroup>
                 <Row>
                   <Col xs="12" sm="4">
-                    
-                  วันที่ใช้บริการฝาก  <AvailableHost host={host} />
-                    
+                    วันที่ใช้บริการฝาก <AvailableHost host={host} />
                   </Col>
                   <Col sm="6" xs="12">
                     <Row>
@@ -345,8 +385,8 @@ export default function ServiceForm({ host, customerAccount, hostService, setisL
                         <Input
                           type="datetime-local"
                           name="service_start_time"
-                          min={startDate}
-                          max={endDate}
+                          min={startDate1}
+                          max={endDate1}
                           onChange={onServiceInfoChange}
                         />
                       </Col>
@@ -355,8 +395,8 @@ export default function ServiceForm({ host, customerAccount, hostService, setisL
                         <Input
                           type="datetime-local"
                           name="service_end_time"
-                          min={serviceInfo.service_start_time}
-                          max={endDate}
+                          min={startDate2}
+                          max={endDate2}
                           onChange={onServiceInfoChange}
                         />
                       </Col>
@@ -374,7 +414,15 @@ export default function ServiceForm({ host, customerAccount, hostService, setisL
                       isOpen={dropdownTypeOpen}
                       toggle={toggleType}
                     >
-                      <DropdownToggle caret size="sm" style={{ backgroundColor: "#43978d", color: "white", fontSize: "14px" }}>
+                      <DropdownToggle
+                        caret
+                        size="sm"
+                        style={{
+                          backgroundColor: "#43978d",
+                          color: "white",
+                          fontSize: "14px",
+                        }}
+                      >
                         {customerMealLabel}
                       </DropdownToggle>
                       <DropdownMenu>{mealTypeElements}</DropdownMenu>
@@ -410,7 +458,11 @@ export default function ServiceForm({ host, customerAccount, hostService, setisL
               <FormGroup>
                 <h4>บริการเพิ่มเติม</h4>
               </FormGroup>
-            ) : <h4><Skeleton style={{ width: "150px" }} /></h4>}
+            ) : (
+              <h4>
+                <Skeleton style={{ width: "150px" }} />
+              </h4>
+            )}
             <div className="list-service">
               {isWalk ? (
                 <FormGroup>
@@ -576,7 +628,13 @@ export default function ServiceForm({ host, customerAccount, hostService, setisL
               alertToggle={toggleError}
             />
             <Col align="right">
-              <Button onClick={toggleSubmit} style={{ backgroundColor: "#264d59" }} disabled={!submitable}>ยืนยัน</Button>
+              <Button
+                onClick={toggleSubmit}
+                style={{ backgroundColor: "#264d59" }}
+                disabled={!submitable}
+              >
+                ยืนยัน
+              </Button>
               <Modal isOpen={modalSubmit} toggle={toggleSubmit}>
                 <ModalHeader>
                   คุณต้องการยืนยันการสร้างบริการใช่หรือไม่

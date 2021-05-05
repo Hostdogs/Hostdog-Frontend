@@ -65,7 +65,7 @@ export default function History({ history }) {
     //   setdogName(res.dog_name)
     // })
     if (history) {
-      setregDate(moment(history.service_reg_time).format("lll"))
+      setregDate(moment(history.service_start_time).format("lll"))
       setendDate(moment(history.service_end_time).format("lll"))
       setstatus(filterItems[history.main_status])
       seturllink("/progress/" + history.id)

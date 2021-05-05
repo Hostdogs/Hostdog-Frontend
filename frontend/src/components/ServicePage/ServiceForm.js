@@ -239,7 +239,7 @@ export default function ServiceForm({
     } else if (customerDog.gender === "Female") {
       gender = "เพศ : เมีย";
     }
-    console.log(serviceInfo);
+    // console.log(serviceInfo)
     return (
       <Card style={{ borderRadius: "0" }}>
         <CardImg
@@ -290,9 +290,9 @@ export default function ServiceForm({
 
   function onServiceSubmit(event) {
     event.preventDefault();
-    console.log("serviceInfo");
-    console.log(serviceInfo);
-    setisLoadScreen(true);
+    // console.log("serviceInfo");
+    // console.log(serviceInfo);
+    setisLoadScreen(true)
     ServiceAPI.createService(cookies.mytoken, serviceInfo)
       .then((response) => {
         console.log(response);

@@ -67,7 +67,7 @@ export default function Host({ host }) {
   return (
 
     <div>
-      <Card>
+      <Card className="card_host">
         <CardHeader style={{ backgroundColor: "#f9e07f", borderRadius: "0", color: "#264d59" }}>
           <h4 style={{ position: "absolute", top: "5px", right: "10px" }}>{distance}</h4>
           <div style={{ position: "absolute", top: "7px", left: "15px" }}>
